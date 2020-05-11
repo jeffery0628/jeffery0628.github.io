@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="BERT 及其后续模型了解这些后续的模型，方便在后续的研究和应用中来更好的选择模型。 BERTBERT模型的主要创新点都在pre-train方法上，即用了Masked LM和Next Sentence Prediction两种方法分别捕捉词语和句子级别的representation。  对比OpenAI GPT(Generative pre-trained transformer)，BERT是双向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bert系列">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:description" content="BERT 及其后续模型了解这些后续的模型，方便在后续的研究和应用中来更好的选择模型。 BERTBERT模型的主要创新点都在pre-train方法上，即用了Masked LM和Next Sentence Prediction两种方法分别捕捉词语和句子级别的representation。  对比OpenAI GPT(Generative pre-trained transformer)，BERT是双向">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_input.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_finetune.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_tokenize.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_wwm_exam.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/xlnet.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/123.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/content_representation.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/query_representation.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/two_stream.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_fenci.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_token.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_a_o.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_ar.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_extra_task.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_experiment.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn_al.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/quantization.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/Pruning.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/Knowledge-distillation.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/next_word.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_embedding.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/cross.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_crosslayer.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_sop.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_dropout.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_bert.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/tinyBert.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/transormers_distillation.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/two_step.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/fastbert.jpg">
+<meta property="article:published_time" content="2020-04-13T12:16:42.000Z">
+<meta property="article:modified_time" content="2020-05-08T12:31:50.612Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="BERT">
+<meta property="article:tag" content="BERT-WWM">
+<meta property="article:tag" content="XLNet">
+<meta property="article:tag" content="RoBERTa">
+<meta property="article:tag" content="SpanBERT">
+<meta property="article:tag" content="ernie">
+<meta property="article:tag" content="MT-DNN">
+<meta property="article:tag" content="DistillBERT">
+<meta property="article:tag" content="ALBERT">
+<meta property="article:tag" content="TinyBERT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/bert.jpg">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>bert系列 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+        <li class="menu-item menu-item-games">
+
+    <a href="/games/" rel="section"><i class="fa fa-gamepad fa-fw"></i>游戏</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bert系列
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-08 20:31:50" itemprop="dateModified" datetime="2020-05-08T20:31:50+08:00">2020-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/13/bert%E7%B3%BB%E5%88%97/" class="post-meta-item leancloud_visitors" data-flag-title="bert系列" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/13/bert%E7%B3%BB%E5%88%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/13/bert%E7%B3%BB%E5%88%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="BERT-及其后续模型"><a href="#BERT-及其后续模型" class="headerlink" title="BERT 及其后续模型"></a>BERT 及其后续模型</h2><p>了解这些后续的模型，方便在后续的研究和应用中来更好的选择模型。</p>
+<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>BERT模型的主要创新点都在pre-train方法上，即用了Masked LM和Next Sentence Prediction两种方法分别捕捉词语和句子级别的representation。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert.jpg" alt="avatar"></p>
+<p>对比OpenAI GPT(Generative pre-trained transformer)，BERT是双向的Transformer block连接；就像单向rnn和双向rnn的区别，直觉上来讲效果会好一些。</p>
+<p>对比ELMo，虽然都是“双向”，但目标函数其实是不同的。ELMo是分别以 $P(w_i|w_1,\cdots,w_{i-1})$ 和$P(w_i|w_{i+1},\cdots,w_n)$作为目标函数，独立训练处两个representation然后拼接，而BERT则是以$P(w_i|w_1,\cdots,w_{i-1},w_{i+1}\cdots,w_n)$  作为目标函数训练LM。</p>
+<a id="more"></a>
+<h4 id="Task-1-MLM"><a href="#Task-1-MLM" class="headerlink" title="Task 1: MLM"></a>Task 1: MLM</h4><p>由于BERT需要通过上下文信息，来预测中心词的信息，同时又不希望模型提前看见中心词的信息，因此提出了一种 Masked Language Model 的预训练方式，即随机从输入预料上 mask 掉一些单词，然后通过的上下文预测该单词，类似于一个完形填空任务。</p>
+<p>在预训练任务中，15%的 Word Piece 会被mask，这15%的 Word Piece 中，80%的时候会直接替换为 [Mask] ，10%的时候将其替换为其它任意单词，10%的时候会保留原始Token</p>
+<ul>
+<li>没有100%mask的原因<ul>
+<li>如果句子中的某个Token100%都会被mask掉，那么在fine-tuning的时候模型就会有一些没有见过的单词</li>
+</ul>
+</li>
+<li>加入10%随机token的原因<ul>
+<li>Transformer要保持对每个输入token的分布式表征，否则模型就会记住这个[mask]是token ’hairy‘</li>
+<li>另外编码器不知道哪些词需要预测的，哪些词是错误的，因此被迫需要学习每一个token的表示向量</li>
+</ul>
+</li>
+<li>另外，每个batchsize只有15%的单词被mask的原因，是因为性能开销的问题，双向编码器比单项编码器训练要更慢</li>
+</ul>
+<h4 id="Task-2-NSP"><a href="#Task-2-NSP" class="headerlink" title="Task 2: NSP"></a>Task 2: NSP</h4><p>仅仅一个MLM任务是不足以让 BERT 解决阅读理解等句子关系判断任务的，因此添加了额外的一个预训练任务，即 Next Sequence Prediction。</p>
+<p>具体任务即为一个句子关系判断任务，即判断句子B是否是句子A的下文，如果是的话输出’IsNext‘，否则输出’NotNext‘。</p>
+<p>训练数据的生成方式是从平行语料中随机抽取的连续两句话，其中50%保留抽取的两句话，它们符合IsNext关系，另外50%的第二句话是随机从预料中提取的，它们的关系是NotNext的。这个关系保存在图4中的[CLS]符号中.</p>
+<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_input.jpg" alt="avatar"></p>
+<ul>
+<li>Token Embeddings：即传统的词向量层，每个输入样本的首字符需要设置为[CLS]，可以用于之后的分类任务，若有两个不同的句子，需要用[SEP]分隔，且最后一个字符需要用[SEP]表示终止</li>
+<li>Segment Embeddings：为[0,1]序列，用来在NSP任务中区别两个句子，便于做句子关系判断任务</li>
+<li>Position Embeddings：与Transformer中的位置向量不同，BERT中的位置向量是直接训练出来的</li>
+</ul>
+<h4 id="Fine-tunninng"><a href="#Fine-tunninng" class="headerlink" title="Fine-tunninng"></a>Fine-tunninng</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_finetune.jpg" alt="avatar"></p>
+<p>对于不同的下游任务，我们仅需要对BERT不同位置的输出进行处理即可，或者直接将BERT不同位置的输出直接输入到下游模型当中。具体的如下所示：</p>
+<ul>
+<li>对于情感分析等单句分类任务，可以直接输入单个句子（不需要[SEP]分隔双句），将[CLS]的输出直接输入到分类器进行分类</li>
+<li>对于句子对任务（句子关系判断任务），需要用[SEP]分隔两个句子输入到模型中，然后同样仅须将[CLS]的输出送到分类器进行分类</li>
+<li>对于问答任务，将问题与答案拼接输入到BERT模型中，然后将答案位置的输出向量进行二分类并在句子方向上进行softmax（只需预测开始和结束位置即可）</li>
+<li>对于命名实体识别任务，对每个位置的输出进行分类即可，如果将每个位置的输出作为特征输入到CRF将取得更好的效果。</li>
+</ul>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>考虑双向信息（上下文信息）</li>
+<li>不用考虑很长的时序问题（梯度弥散，梯度爆炸）：long-term dependency</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>BERT的预训练任务MLM使得能够借助上下文对序列进行编码，但同时也使得其预训练过程与中的数据与微调的数据不匹配，难以适应生成式任务(训练数据缺乏mask)</li>
+<li>缺乏生成能力</li>
+<li>另外，BERT没有考虑预测[MASK]之间的相关性，是对语言模型联合概率的有偏估计。（朴素贝叶斯，naive）</li>
+<li>由于最大输入长度的限制，适合句子和段落级别的任务，不适用于文档级别的任务（如长文本分类）</li>
+<li>适合处理自然语义理解类任务(NLU)，而不适合自然语言生成类任务(NLG)</li>
+</ul>
+<h4 id="torch使用"><a href="#torch使用" class="headerlink" title="torch使用"></a>torch使用</h4><ol>
+<li>导入相关库</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> transformers <span class="keyword">as</span> ppb <span class="comment"># pytorch transformers</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>导入预训练好的 DistilBERT 模型与分词器</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model_class, tokenizer_class, pretrained_weights = (ppb.DistilBertModel, ppb.DistilBertTokenizer, <span class="string">'distilbert-base-uncased'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Want BERT instead of distilBERT? Uncomment the following line:</span></span><br><span class="line"><span class="comment">#model_class, tokenizer_class, pretrained_weights = (ppb.BertModel, ppb.BertTokenizer, 'bert-base-uncased')# </span></span><br><span class="line"></span><br><span class="line">Load pretrained model/tokenizertokenizer = tokenizer_class.from_pretrained(pretrained_weights)</span><br><span class="line">model = model_class.from_pretrained(pretrained_weights)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>tokenize：分词+[cls]+[sep]<br><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_tokenize.png" alt="avatar"></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer.encode(<span class="string">'a visually stunning rumination on love'</span>, add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>padding</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">max_len = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tokenized.values:</span><br><span class="line"> <span class="keyword">if</span> len(i) &gt; max_len:</span><br><span class="line">     max_len = len(i)</span><br><span class="line">padded = np.array([i + [<span class="number">0</span>]*(max_len-len(i)) <span class="keyword">for</span> i <span class="keyword">in</span> tokenized.values])</span><br></pre></td></tr></table></figure>
+<ol>
+<li>masking</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">attention_mask = np.where(padded != <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用bert进行编码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    <span class="comment"># last_hidden_states = [batch_size, max_sentence_len, 768]</span></span><br><span class="line">    last_hidden_states = model(input_ids, attention_mask=attention_mask)</span><br></pre></td></tr></table></figure>
+<p><a href="http://fancyerii.github.io/2019/03/09/bert-codes/#dataprocessor" target="_blank" rel="noopener">bert代码阅读</a></p>
+<hr>
+<p>谷歌对BERT进行了改版，下面将对改版后的bert进行学习，对比改版前后主要的相似点和不同点，以便可以选择在研究或应用中使用哪一种。提出的几种方法改进BERT的预测指标或计算速度，但是始终达不到两者兼顾。<strong>XLNet和RoBERTa改善了性能，而DistilBERT提高了推理速度</strong>。</p>
+<h3 id="BERT-WWM"><a href="#BERT-WWM" class="headerlink" title="BERT-WWM"></a><strong>BERT-WWM</strong></h3><p><a href>论文</a></p>
+<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>wwm 即 Whole Word Masking（对全词进行Mask）。相比于bert的改进是用Mask标签替换一个完整的词而不是字，中文和英文不同，英文最小的token是一个单词，而中文中最小的token却是字，词是由一个或多个字组成，且每个词之间没有明显的分割，包含更多信息的是词，对全词mask就是对整个词都通过mask进行掩码。<br><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_wwm_exam.png" alt="avatar"></p>
+<h4 id="Bert-wwm-ext"><a href="#Bert-wwm-ext" class="headerlink" title="Bert-wwm-ext"></a><strong>Bert-wwm-ext</strong></h4><p>它是BERT-wwm的一个升级版，相比于BERT-wwm的改进是增加了训练数据集同时也增加了训练步数。<br>BERT-wwm-ext主要是有两点改进：<br>1）预训练数据集做了增加，达到5.4B；<br>2）训练步数增大，训练第一阶段1M步，训练第二阶段400K步。</p>
+<p><a href="https://github.com/ymcui/Chinese-BERT-wwm" target="_blank" rel="noopener">模型下载</a></p>
+<h3 id="XLNet"><a href="#XLNet" class="headerlink" title="XLNet"></a>XLNet</h3><p>XLNet作为bert的升级模型，主要在以下三个方面进行了优化:</p>
+<ul>
+<li>采用AR模型替代AE模型，解决mask带来的负面影响</li>
+<li>双流注意力机制</li>
+<li>引入transformer-xl</li>
+</ul>
+<h4 id="AR与AE语言模型"><a href="#AR与AE语言模型" class="headerlink" title="AR与AE语言模型"></a>AR与AE语言模型</h4><p>目前主流的nlp预训练模型包括两类 Auto Regressive (<strong>AR</strong>) Language Model 与Auto Encoding (AE) Language Model。</p>
+<h5 id="AR模型"><a href="#AR模型" class="headerlink" title="AR模型"></a>AR模型</h5><p>AR模型的主要任务在于评估语料的概率分布，例如，给定一个序列 $X=(x_1, \cdots ,x_T)$ ，AR模型就是在计算其极大似然估计$p(X)=\prod_{t=1}^Tp(x_t∣x_{<t})$即已知$x_t$之前的序列，预测$x_t$ 的值，当然也可以反着来$p(x)="\prod_{t=1}^Tp(x_t∣x_{">t})$即已知$x_t$之后的序列，预测$x_t$的值。AR模型一个很明显的缺点就是：模型是单向的，我们更希望的是根据上下文来预测目标，而不单是上文或者下文，之前open AI提出的GPT就是采用的AR模式，包括GPT2.0也是该模式。</t})$即已知$x_t$之前的序列，预测$x_t$></p>
+<p>优点：</p>
+<ol>
+<li>具备生成能力</li>
+<li>考虑了相关性</li>
+<li>无监督</li>
+<li>严格的数学表达</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>单向的</li>
+<li>（难考虑 long term dependency）</li>
+</ol>
+<h5 id="AE模型"><a href="#AE模型" class="headerlink" title="AE模型"></a>AE模型</h5><p>AE模型采用的就是以上下文的方式，最典型的成功案例就是bert。简单回顾下bert的预训练阶段，预训练包括了两个任务，Masked Language Model与Next Sentence Prediction，Next Sentence Prediction即判断两个序列的推断关系，Masked Language Model采用了一个标志位[MASK]来随机替换一些词，再用[MASK]的上下文来预测[MASK]的真实值，bert的最大问题也是处在这个MASK的点，因为在微调阶段，没有MASK这就导致预训练和微调数据的不统一，从而引入了一些人为误差。</p>
+<p>在xlnet中，采用了<strong>AR模型</strong>，但是怎么解决这个上下文的问题呢？</p>
+<h4 id="排列语言模型-为了考虑上下文信息"><a href="#排列语言模型-为了考虑上下文信息" class="headerlink" title="排列语言模型(为了考虑上下文信息)"></a>排列语言模型(为了考虑上下文信息)</h4><p>为了解决上文提到的问题，作者提出了排列语言模型，该模型不再对传统的AR模型的序列的值按顺序进行建模，而是最大化所有可能的序列的因式分解顺序的期望对数似然，这句话可能有点不好理解，举个栗子，假如我们有一个序列$[1,2,3,4]$，如果我们的预测目标是3，对于传统的AR模型来说，结果是$p(3)=\prod^3_{t=1}p(3|x_{&lt;t})$，如果采用本文的方法，先对该序列进行因式分解，最终会有24种排列方式，下图是其中可能的四种情况，对于第一种情况因为3的左边没有其他的值，所以该情况无需做对应的计算，第二种情况3的左边还包括了2与4，所以得到的结果是$p(3)=p(3|2)p(3|2,4)$，后续的情况类似，这样处理过后不但保留了序列的上下文信息，也<strong>避免了采用mask标记位，巧妙的改进了bert与传统AR模型的缺点</strong>。<br><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/xlnet.png" alt="avatar"></p>
+<h5 id="如何训练？"><a href="#如何训练？" class="headerlink" title="如何训练？"></a>如何训练？</h5><ol>
+<li>假如句子长度为20，则会产生$20$!种排列，在这$20$!种排列中随机抽样，得到训练样本。</li>
+<li>为获得丰富的上下文语义信息，对抽取的样本最后的几个单词进行预测。</li>
+</ol>
+<h4 id="基于目标感知表征的双流自注意力-为了解决位置信息"><a href="#基于目标感知表征的双流自注意力-为了解决位置信息" class="headerlink" title="基于目标感知表征的双流自注意力(为了解决位置信息)"></a>基于目标感知表征的<strong>双流自注意力</strong>(为了解决位置信息)</h4><p>虽然排列语言模型能满足目前的目标，但是对于普通的transformer结构来说是存在一定的问题的，为什么这么说呢，假设我们要求这样的一个对数似然，$p_\theta(X_{z_t}|x_{z_{&lt;t}})$，如果采用标准的softmax的话，那么</p>
+<script type="math/tex; mode=display">
+p_{\theta}\left(X_{z_t} | x_{z_{<t}}\right)=\frac{\exp \left(e(x)^{T} h_{\theta}\left(x_{z_{<t}}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} h_{\theta}\left(x_{z_{<t}}\right)\right)}</script><p>其中$h_\theta (x_{z_{&lt;t}})$表示的是添加了mask后的transformer的输出值，可以发现$h_\theta (x_{z_{&lt;t}})$并不依赖于其要预测的内容的位置信息，因为无论预测目标的位置在哪里，因式分解后得到的所有情况都是一样的，并且transformer的权重对于不同的情况是一样的，因此无论目标位置怎么变都能得到相同的分布结果，如下图所示，假如我们的序列index表示为[1,2,3]，对于目标2与3来说，其因式分解后的结果是一样的，那么经过transformer之后得到的结果肯定也是一样的。<br><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/123.png" alt="avatar"></p>
+<p>这就导致模型没法得到正确的表述，为了解决这个问题，论文中提出来新的分布计算方法，来实现目标位置感知</p>
+<script type="math/tex; mode=display">
+p_{\theta}\left(X_{zt}=x | x_{z<t}\right)=\frac{\exp \left(e(x)^{T} g_{\theta}\left(x_{z<t}, z_{t}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} g_{\theta}\left(x_{z<t}, z_{t}\right)\right)}</script><p>其中$g_{\theta}\left(x_{z_{&lt;t}}, z_{t}\right)$是新的表示形式，并且把位置信息$z_t$作为了其输入。<br>这个新的表示形式，论文把该方法称为Two-Stream Self-Attention，双流自注意力，该机制需要解决了两个问题:</p>
+<ul>
+<li>如果目标是预测$x_{z_t}$，$g_\theta (x_{z&lt;t},z_t)$那么只能有其位置信息$z_t$ 而不能包含内容信息$x_{z_t}$</li>
+<li>如果目标是预测其他tokens即$x_{z_j}$那么应该包含$x_{z_t}$的内容信息这样才有完整的上下文信息</li>
+</ul>
+<p>传统的transformer并不满足这样的需求，因此作者采用了两种表述来代替原来的表述，这也是为什么称为<strong>双流</strong>的原因:</p>
+<ul>
+<li><p>content representation内容表述，即$h_\theta (x_{z_{\leq t}})$下文用$h_{z_t}$表示，该表述和传统的transformer一样，同时编码了上下文和$x_{z_t}$自身</p>
+<script type="math/tex; mode=display">
+h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=h_{z \leq t}^{(m-1)} ; \theta\right)</script><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/content_representation.png" alt="avatar"></p>
+</li>
+<li><p>query representation查询表述，即$g_\theta (x_{z_{&lt;t}})$，下文用$g_{z_t}$ 表示，该表述包含上下文的内容信息$x_{z_{&lt;t}}$ 和目标的位置信息$z_t$，但是不包括目标的内容信息$x_{z_{t}}$ ，从图中可以看到，K与V的计算并没有包括Q，自然也就无法获取到目标的内容信息，但是目标的位置信息在计算Q的时候保留了下来，</p>
+<script type="math/tex; mode=display">
+g_{z_{t}}^{(m)}=\text {Attention}\left(Q=g_{z_{t}}^{(m-1)}, K V=h_{z<t}^{(m-1)} ; \theta\right)</script></li>
+</ul>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/query_representation.png" alt="avatar"></p>
+<p>总的计算过程，首先，第一层的查询流是随机初始化了一个向量即$g_i^{0}=w$，内容流是采用的词向量即$h_i^{0}=e(x_i)$，self-attention的计算过程中两个流的网络权重是共享的，最后在微调阶段，只需要简单的把query stream移除，只采用content stream即可。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/two_stream.png" alt="avatar"></p>
+<h4 id="引入transformer-XL"><a href="#引入transformer-XL" class="headerlink" title="引入transformer XL"></a>引入transformer XL</h4><p>作者还将transformer-xl的两个最重要的技术点应用了进来，即片段循环机制与相对位置编码。</p>
+<h5 id="片段循环机制"><a href="#片段循环机制" class="headerlink" title="片段循环机制"></a>片段循环机制</h5><p>ransformer-xl的提出主要是为了解决超长序列的依赖问题，对于普通的transformer由于有一个最长序列的超参数控制其长度（如果不对文本控制，则会极大消耗内存，因为在计算score矩阵的时候，会开辟$n^2$大小的矩阵，对于一篇文本，长度为$10^5$,则需要开辟$10^5 * 10^5 = 10^10$大小的score矩阵，极其消耗内存。），对于特别长的序列就会导致丢失一些信息，transformer-xl就能解决这个问题。我们看个例子，假设我们有一个长度为1000的序列，如果我们设置transformer的最大序列长度是100，那么这个1000长度的序列需要计算十次，并且每一次的计算都没法考虑到每一个段之间的关系，如果采用transformer-xl，首先取第一个段进行计算，然后把得到的结果的隐藏层的值进行缓存，第二个段计算的过程中，把缓存的值拼接起来再进行计算（RNN）。该机制不但能保留长依赖关系还能加快训练，因为每一个前置片段都保留了下来，不需要再重新计算，在transformer-xl的论文中，经过试验其速度比transformer快了1800倍。<br>在xlnet中引入片段循环机制其实也很简单，只需要在计算KV的时候做简单的修改，其中$\tilde{h}^{m-1}$表示的是缓存值。</p>
+<script type="math/tex; mode=display">
+h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=\left[\tilde{h}^{(m-1)}, h_{z \leq t}^{(m-1)}\right] ; \theta\right)</script><h5 id="相对位置编码"><a href="#相对位置编码" class="headerlink" title="相对位置编码"></a>相对位置编码</h5><p>bert的position embedding采用的是绝对位置编码，但是绝对位置编码在transformer-xl中有一个致命的问题，因为没法区分到底是哪一个片段里的，这就导致了一些位置信息的损失，这里被替换为了transformer-xl中的相对位置编码。假设给定一对位置$i$与$j$，如果$i$与$j$是同一个片段里的那么我们令这个片段编码$s_{ij}=s_+$，如果不在一个片段里则令这个片段编码为$s_{ij}=s_-$，这个值是在训练的过程中得到的，也是用来计算attention weight时候用到的，在传统的transformer中$\text {attention weight}= softmax(\frac{Q⋅K}{d}V)$，在引入相对位置编码后，首先要计算出$a_{ij}=(q_i+b)^T_{s_{sj}}$，其中$b$也是一个需要训练得到的偏执量，最后把得到的$a_ij$与传统的transformer的weight相加从而得到最终的attention weight。</p>
+<p><a href="https://github.com/huggingface/transformers/blob/master/src/transformers/modeling_xlnet.py" target="_blank" rel="noopener">源码</a></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>在实验中发现，xlnet更多还是在长文本的阅读理解类的任务上提升更明显一些，这也很符合上文中介绍的这些优化点，在实际工业场景中，机器翻译、本文摘要类的任务应该会有更好的效果，当然在其他的文本分类、自然语言推理等任务上xlnet也有一定的效果提升。nlp领域的模型目前已经完全采用了pretrain+fine tuning的模式，GPT2.0的单向模式在增大训练语料的情况下效果就已经超越了bert，可想而知该领域的研究还有很大的上升空间</p>
+<h3 id="RoBERTa"><a href="#RoBERTa" class="headerlink" title="RoBERTa"></a>RoBERTa</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><p>在XLNet全面超越Bert后没多久，Facebook提出了RoBERTa（a Robustly Optimized BERT Pretraining Approach）。再度在多个任务上达到SOTA。</p>
+<p>它在模型层面没有改变Google的Bert，<strong>改变的只是预训练的方法</strong>。</p>
+<h4 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h4><p>Yinhan Liu等人[6]认为超参数的选择对最终结果有重大影响，为此他们提出了BERT预训练的重复研究，其中包括对超参数调整和训练集大小的影响的仔细评估。<strong>最终，他们发现了BERT的训练不足</strong>，并提出了一种改进的模型来训练BERT模型。</p>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><h5 id="静态Masking-vs-动态Masking"><a href="#静态Masking-vs-动态Masking" class="headerlink" title="静态Masking vs 动态Masking"></a>静态Masking vs 动态Masking</h5><p>原来Bert对每一个序列随机选择15%的Tokens替换成[MASK]，为了消除与下游任务的不匹配，还对这15%的Tokens进行（1）80%的概率替换成[MASK]；（2）10%的概率不变；（3）10%的概率替换成其他词。但整个训练过程，这15%的Tokens一旦被选择就不再改变，也就是说从一开始随机选择了这15%的Tokens，之后的N个epoch里都不再改变了。这就叫做静态Masking。</p>
+<p>而RoBERTa一开始把预训练的数据复制10份，每一份都随机选择15%的Tokens进行Masking，也就是说，同样的一句话有10种不同的mask方式。然后每份数据都训练N/10个epoch。这就相当于在这N个epoch的训练中，每个序列的被mask的tokens是会变化的。这就叫做动态Masking。作者在只将静态Masking改成动态Masking，其他参数不变的情况下做了实验，动态Masking确实能提高性能。</p>
+<h5 id="with-NSP-vs-without-NSP"><a href="#with-NSP-vs-without-NSP" class="headerlink" title="with NSP vs without NSP"></a>with NSP vs without NSP</h5><p>原本的Bert为了捕捉句子之间的关系，使用了NSP任务进行预训练，就是输入一对句子A和B，判断这两个句子是否是连续的。在训练的数据中，50%的B是A的下一个句子，50%的B是随机抽取的。</p>
+<p>而RoBERTa去除了NSP，而是每次输入连续的多个句子，直到最大长度512（可以跨文章）。这种训练方式叫做（FULL - SENTENCES），而原来的Bert每次只输入两个句子。实验表明在MNLI这种推断句子关系的任务上RoBERTa也能有更好性能。（？？？？）</p>
+<h5 id="更大的mini-batch"><a href="#更大的mini-batch" class="headerlink" title="更大的mini-batch"></a>更大的mini-batch</h5><p>原本的BERTbase 的batch size是256，训练1M个steps。RoBERTa的batch size为8k。为什么要用更大的batch size呢？作者借鉴了在机器翻译中，用更大的batch size配合更大学习率能提升模型优化速率和模型性能的现象，并且也用实验证明了确实Bert还能用更大的batch size。</p>
+<h5 id="更多的数据，更长的训练时间"><a href="#更多的数据，更长的训练时间" class="headerlink" title="更多的数据，更长的训练时间"></a>更多的数据，更长的训练时间</h5><p>借鉴XLNet用了比Bert多10倍的数据，RoBERTa也用了更多的数据。性能确实再次彪升。当然，也需要配合更长时间的训练。</p>
+<h5 id="Byte-Pair-Encoding-BPE-字符编码"><a href="#Byte-Pair-Encoding-BPE-字符编码" class="headerlink" title="Byte-Pair Encoding (BPE)字符编码"></a>Byte-Pair Encoding (BPE)字符编码</h5><p>使用Sennrich[8]等人提出的Byte-Pair Encoding (BPE)字符编码，它是字符级和单词级表示之间的混合体，可以处理自然语言语料库中常见的大词汇，避免训练数据出现更多的“[UNK]”标志符号，从而影响预训练模型的性能。其中，“[UNK]”标记符表示当在BERT自带字典vocab.txt找不到某个字或者英文单词时，则用“[UNK]”表示。</p>
+<h3 id="SpanBERT"><a href="#SpanBERT" class="headerlink" title="SpanBERT"></a>SpanBERT</h3><p><a href="https://arxiv.org/pdf/1907.10529.pdf" target="_blank" rel="noopener">论文</a></p>
+<h4 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h4><p>在许多 NLP 任务中都涉及对多个文本分词间关系的推理。例如，在抽取式问答任务中，在回答问题“Which NFL team won Super Bown 50?”时，判断“Denver Broncos” 是否属于“NFL team”是非常重要的步骤。相比于在已知“Broncos”预测“Denver”的情况，直接预测“Denver Broncos”难度更大，这意味着这类分词对自监督任务提出了更多的挑战。</p>
+<p>SpanBert对 BERT 模型进行了如下改进：</p>
+<ol>
+<li>没有segment embedding，只有一个长的句子，类似RoBERTa。</li>
+<li><strong>Span Masking</strong>:对随机的邻接分词（span）而非随机的单个词语（token）添加mask；</li>
+<li>MLM+SBO:通过使用分词边界的表示来预测被添加mask的分词的内容，不再依赖分词内单个 token 的表示。</li>
+</ol>
+<p>SpanBERT 能够对分词进行更好地表示和预测。该模型和 BERT 在mask机制和训练目标上存在差别。首先，SpanBERT 不再对随机的单个 token 添加mask，而是对随机对邻接分词添加mask。其次，SpanBert提出了一个新的训练目标 span-boundary objective (SBO) 进行模型训练。通过对分词添加mask，作者能够使模型依据其所在语境预测整个分词。另外，SBO 能使模型在边界词中存储其分词级别的信息，使得模型的调优更佳容易。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert.png" alt="avatar"></p>
+<p>模型使用边界词 was和 to来预测分词中的每个单词。</p>
+<p>为了搭建 SpanBERT ，作者首先构建了一个 BERT 模型的并进行了微调，SpanBERT的表现优于原始 BERT 模型。在搭建baseline的时候，作者发现对单个部分进行预训练的效果，比使用 next sentence prediction (NSP) 目标对两个长度为一半的部分进行训练的效果更优，在下游任务中表现尤其明显。因此，作者在经过调优的 BERT 模型的顶端对模型进行了改进。</p>
+<h4 id="Span-Masking"><a href="#Span-Masking" class="headerlink" title="Span Masking(????)"></a>Span Masking(????)</h4><p>对于每一个单词序列 $X = (x_1, \ldots , x_n )$，作者通过迭代地采样文本的分词选择单词，直到达到掩膜要求的大小（例如 X 的 15%），并形成 X 的子集 Y。在每次迭代中，作者首先从几何分布 $l \sim Geo(p)$中采样得到分词的长度，该几何分布是偏态分布，偏向于较短的分词。之后，作者随机（均匀地）选择分词的起点。</p>
+<p>根据几何分布，先随机选择一段（span）的长度，之后再根据均匀分布随机选择这一段的起始位置，最后按照长度遮盖。作者设定几何分布取 p=0.2，并裁剪最大长度只能是 10（不应当是长度 10 以上修剪，而应当为丢弃），利用此方案获得平均采样长度分布。因此分词的平均长度为 3.8 。作者还测量了词语（word）中的分词程度，使得添加掩膜的分词更长。下图展示了分词掩膜长度的分布情况。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_fenci.png" alt="avatar"></p>
+<p>和在 BERT 中一样，作者将 Y 的规模设定为 X 的15%，其中 80% 使用 [MASK] 进行替换，10% 使用随机单词替换，10%保持不变。与之不同的是，作者是在分词级别进行的这一替换，而非将每个单词单独替换。</p>
+<h4 id="分词边界目标-SBO"><a href="#分词边界目标-SBO" class="headerlink" title="分词边界目标(SBO)???"></a>分词边界目标(SBO)???</h4><p>分词选择模型一般使用其边界词创建一个固定长度的分词表示。为了于该模型相适应，作者希望结尾分词的表示的总和与中间分词的内容尽量相同。为此，作者引入了 SBO ，其仅使用观测到的边界词来预测带掩膜的分词的内容。</p>
+<p>具体做法是，在训练时取 Span 前后边界的两个词，值得指出，这两个词不在 Span 内，然后<strong>用这两个词向量加上 Span 中被遮盖掉词的位置向量，来预测原词</strong>。</p>
+<script type="math/tex; mode=display">
+\mathbf{y}_{i}=f\left(\mathbf{x}_{s-1}, \mathbf{x}_{e+1}, \mathbf{p}_{i}\right)</script><p>详细做法是将词向量和位置向量拼接起来，作者使用一个两层的前馈神经网络作为表示函数，该网络使用 GeLu 激活函数，并使用层正则化：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{h} &=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{1} \cdot\left[\mathbf{x}_{s-1} ; \mathbf{x}_{e+1} ; \mathbf{p}_{i}\right]\right)\right) \\
+f(\cdot) &=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \mathbf{h}\right)\right)
+\end{aligned}</script><p>作者使用向量表示$y_i$来预测$x_i$，并和 MLM 一样使用交叉熵作为损失函数，就是 SBO 目标的损失，之后将这个损失和 BERT 的 <strong>Mased Language Model （MLM）</strong>的损失加起来，一起用于训练模型。</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(\text { football })=\mathcal{L}_{\mathrm{MLM}}\left(\mathbf{x}_{7}\right)+\mathcal{L}_{\mathrm{SBO}}\left(\mathbf{x}_{4}, \mathbf{x}_{9}, \mathbf{p}_{7}\right)</script><h4 id="单序列训练"><a href="#单序列训练" class="headerlink" title="单序列训练"></a>单序列训练</h4><p>SpanBERT 没用 Next Sentence Prediction (NSP) 任务，而是直接用 Single-Sequence Training，也就是不加入 NSP 任务来判断是否两句是上下句，直接用一句来训练，片段长度最多为512个单词。</p>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ol>
+<li>训练时用了 <strong>Dynamic Masking</strong> 而不是像 BERT 在预处理时做 静态Mask。</li>
+<li><strong>取消 BERT 中随机采样短句的策略</strong></li>
+<li>对Adam优化器中的一些参数做了改变。</li>
+</ol>
+<h5 id="mask机制"><a href="#mask机制" class="headerlink" title="mask机制"></a>mask机制</h5><p>作者在子单词、完整词语、命名实体、名词短语和随机分词方面进行了比较：发现使用随机分词掩膜机制效果更优。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_token.png" alt="avatar"></p>
+<h5 id="辅助目标"><a href="#辅助目标" class="headerlink" title="辅助目标"></a>辅助目标</h5><p>使用 SBO 替换 NSP 并使用单序列进行预测的效果更优。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_a_o.png" alt="avatar"></p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p>SpanBERT是基于分词的预训练模型，在多个评测任务中的得分都超越了 BERT 且在分词选择类任务中的提升尤其明显。</p>
+<h3 id="ERNIE"><a href="#ERNIE" class="headerlink" title="ERNIE"></a>ERNIE</h3><p><a href="https://arxiv.org/pdf/1905.07129" target="_blank" rel="noopener">论文</a></p>
+<h4 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h4><p>无论是Elmo、GPT, 还是能力更强的 BERT 模型，其建模对象主要聚焦在原始语言信号上，较少利用语义知识单元建模。这个问题在中文方面尤为明显，例如，BERT 在处理中文语言时，通过预测汉字进行建模，模型很难学出更大语义单元的完整语义表示。例如，对于乒 [mask] 球，清明上 [mask] 图，[mask] 颜六色这些词，BERT 模型通过字的搭配，很容易推测出掩码的字信息，但没有显式地对语义概念单元 (如乒乓球、清明上河图) 以及其对应的语义关系进行建模。如果能够让模型学习到海量文本中蕴含的潜在知识，势必会进一步提升各个 NLP 任务效果。</p>
+<p>ERNIE 模型通过建模海量数据中的实体概念等先验语义知识，学习真实世界的语义关系。具体来说，ERNIE 模型通过对词、实体等语义单元的掩码，使得模型学习完整概念的语义表示。相较于 BERT 学习原始语言信号，ERNIE 直接对先验语义知识单元进行建模，增强了模型语义表示能力。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie.png" alt="avatar"></p>
+<p>在 BERT 模型中，通过『哈』与『滨』的局部共现，即可判断出『尔』字，模型没有学习与『哈尔滨』相关的知识。而 ERNIE 通过学习词与实体的表达，使模型能够建模出『哈尔滨』与『黑龙江』的关系，学到『哈尔滨』是『黑龙江』的省会以及『哈尔滨』是个冰雪城市。</p>
+<h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_ar.png" alt="avatar"></p>
+<p>模型上主要的改进是在bert的后段加入了实体向量和经过bert编码后的向量拼接，另外在输出时多加了实体自编码的任务，从而帮助模型注入实体知识信息。</p>
+<h5 id="T-Encoder"><a href="#T-Encoder" class="headerlink" title="T-Encoder"></a>T-Encoder</h5><p>这部分就是纯粹的bert结构，在该部分模型中主要负责对输入句子（token embedding, segment embedding和positional embedding）进行编码.</p>
+<h5 id="K-Encoder"><a href="#K-Encoder" class="headerlink" title="K-Encoder"></a>K-Encoder</h5><p>引入实体信息，使用了TransE训练实体向量，再通过多头Attention进行编码，然后通过实体对齐技术，将实体向量加入到对应实体的第一个token编码后的向量上。（例如姚明是一个实体，在输入时会被分割成姚、明，最后在这部分引入的姚明这个实体的向量会被加入到“姚”这个字经过bert之后的向量上去）</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left\{\tilde{\boldsymbol{w}}_{1}^{(i)}, \ldots, \tilde{\boldsymbol{w}}_{n}^{(i)}\right\} &=\mathrm{MH}-\mathrm{ATT}\left(\left\{\boldsymbol{w}_{1}^{(i-1)}, \ldots, \boldsymbol{w}_{n}^{(i-1)}\right\}\right) \\
+\left\{\tilde{\boldsymbol{e}}_{1}^{(i)}, \ldots, \tilde{\boldsymbol{e}}_{m}^{(i)}\right\} &=\mathrm{MH}-\mathrm{ATT}\left(\left\{\boldsymbol{e}_{1}^{(i-1)}, \ldots, \boldsymbol{e}_{m}^{(i-1)}\right\}\right)
+\end{aligned}</script><p>由于直接拼接后向量维度会与其他未拼接的向量维度不同，所以加入information fusion layer，另外考虑到后面的实体自编码任务，所以这里在融合信息之后，有实体向量加入的部分需要另外多输出一个实体向量。</p>
+<p>加入实体信息之后的融合输出过程：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\boldsymbol{h}_{j} &=\sigma\left(\tilde{\boldsymbol{W}}_{t}^{(i)} \tilde{\boldsymbol{w}}_{j}^{(i)}+\tilde{\boldsymbol{W}}_{e}^{(i)} \tilde{\boldsymbol{e}}_{k}^{(i)}+\tilde{\boldsymbol{b}}^{(i)}\right) \\
+\boldsymbol{w}_{j}^{(i)} &=\sigma\left(\boldsymbol{W}_{t}^{(i)} \boldsymbol{h}_{j}+\boldsymbol{b}_{t}^{(i)}\right) \\
+\boldsymbol{e}_{k}^{(i)} &=\sigma\left(\boldsymbol{W}_{e}^{(i)} \boldsymbol{h}_{j}+\boldsymbol{b}_{e}^{(i)}\right)
+\end{aligned}</script><p>未加入实体信息之后的融合输出过程：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\boldsymbol{h}_{j} &=\sigma\left(\tilde{\boldsymbol{W}}_{t}^{(i)} \tilde{\boldsymbol{w}}_{j}^{(i)}+\tilde{\boldsymbol{b}}^{(i)}\right) \\
+\boldsymbol{w}_{j}^{(i)} &=\sigma\left(\boldsymbol{W}_{t}^{(i)} \boldsymbol{h}_{j}+\boldsymbol{b}_{t}^{(i)}\right)
+\end{aligned}</script><h5 id="实体自编码"><a href="#实体自编码" class="headerlink" title="实体自编码????"></a>实体自编码????</h5><p>为了更好地使用实体信息，作者在这里多加入了一个预训练任务 entity auto-encoder(dEA)。</p>
+<script type="math/tex; mode=display">
+p\left(e_{j} | w_{i}\right)=\frac{\exp \left(\operatorname{linear}\left(\boldsymbol{w}_{i}^{o}\right) \cdot \boldsymbol{e}_{j}\right)}{\sum_{k=1}^{m} \exp \left(\operatorname{linear}\left(\boldsymbol{w}_{i}^{o}\right) \cdot \boldsymbol{e}_{k}\right)}</script><p>该预训练任务和bert相似，按以下方式进行训练：</p>
+<ol>
+<li>15% 的情况下：用 [MASK] 替换被选择的单词，例如，my dog is hairy → my dog is [MASK]</li>
+<li>5% 的情况下：用一个随机单词替换被选择的单词，例如，my dog is hairy → my dog is apple</li>
+<li>80% 的情况下：保持被选择的单词不变，例如，my dog is hairy → my dog is hairy</li>
+</ol>
+<h5 id="Extra-task"><a href="#Extra-task" class="headerlink" title="Extra-task"></a>Extra-task</h5><p>除了正常的任务之外，ERNIE引入了两个新任务Entity Typing和Relation Classification</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_extra_task.png" alt="avatar"></p>
+<h5 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h5><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_experiment.png" alt="avatar"></p>
+<p>ERNIE在通用任务其实相比bert优势不大，尽管文章提到了ERNIE更鲁棒以及GLUE的评估对ERNIE不是很友好，在增加复杂度的同时，并没有取得期待的效果。ERNIE提供了一种很好的实体信息引入思路，并且其新提出的预训练方法也给希望将bert这一模型引入关系抽取领域提供了很好的例子。</p>
+<h3 id="MT-DNN（预训练-多任务）"><a href="#MT-DNN（预训练-多任务）" class="headerlink" title="MT-DNN（预训练+多任务）"></a>MT-DNN（预训练+多任务）</h3><p><a href="https://arxiv.org/pdf/1901.11504.pdf" target="_blank" rel="noopener">论文</a>,<a href="https://github.com/namisan/mt-dnn" target="_blank" rel="noopener">源码</a></p>
+<h4 id="简介-4"><a href="#简介-4" class="headerlink" title="简介"></a>简介</h4><p>学习文本的向量空间表示，是许多自然语言理解(NLU)任务的基础。两种流行的方法是<strong>多任务学习</strong>和<strong>语言模型的预训练</strong>。MT-DNN通过提出一种新的多任务深度神经网络（MT-DNN）来综合两种方法的优点。</p>
+<p><strong>预训练</strong>，如BERT、GPT等，就不多说了。</p>
+<p><strong>多任务</strong>学习( MTL )的灵感来自于人的学习活动。在人类的学习活动中，人们经常应用从以前的任务中学到的知识来帮助学习新的任务。例如，在学习滑冰这件事情上，一个知道如何滑雪的人比什么都不知道的人容易。同样，<strong>联合学习多个(相关)</strong>任务也很有用，这样在一个任务中学习到的知识有益于其他任务。对于MTL（Multi-task Learning，多任务学习）来说，其优点有两个：1）弥补了有些任务的数据不足问题；2）有正则的作用，防止模型过拟合。</p>
+<p><strong>两者结合</strong>（强强联手！）：MT-DNN认为，MTL和pretrain有很好的互补作用，那么是不是可以结合一下，发挥两者的作用。更具体的就是，先用BERT进行pretrain，然后用MTL进行finetune，这就形成了MT-DNN。可见，与BERT的不同在于finetune的过程，这里用MTL作为目标。</p>
+<h4 id="模型-1"><a href="#模型-1" class="headerlink" title="模型"></a>模型</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn.png" alt="avatar"></p>
+<p>表征学习 MT-DNN 模型的架构。下面的网络层在所有任务中都共享，上面的两层是针对特定任务。输入$X$(一句话或句子对)首先表征为一个序列的嵌入向量，在$l_1$  中每个词对应一个向量。然后 Transformer 编码器捕捉每个单词的语境信息并在$l_2$中生成共享的语境嵌入向量。最后，针对每个任务，特定任务层生成特定任务的表征，而后是分类、相似性打分、关联排序等必需的操作。</p>
+<h5 id="多任务"><a href="#多任务" class="headerlink" title="多任务"></a>多任务</h5><p>MT-DNN是结合了4种类型的NLU任务：单句分类、句子对分类、文本相似度打分和相关度排序。</p>
+<ul>
+<li>单句分类：CoLA任务是预测英语句子是否合乎语法，SST-2任务预测电影评论是正向还是负向。</li>
+<li>文本相似度：这是一个回归任务。对于给定的句子对，模型计算二者之间的相似度。在GLUE中只有STS-B这个任务是处理文本相似度。</li>
+<li>成对文本分类（文本蕴含）：对于给定的句子对，推理两个句子之间的关系。RET和MNLI是语言推理任务，推理句子之间是否存在蕴含关系、矛盾的关系或者中立关系。QQP和MRPC是预测句子是否语义等价。</li>
+<li>相关性排序：给定一个问题和一系列候选答案，模型根据问题对所有候选答案进行排序。QNLI是斯坦福问答数据集的一个版本，任务是预测候选答案中是否包含对问题的正确答案。尽管这是一个二分类任务，但我们依旧把它当作排序任务，因为模型重排了候选答案，将正确答案排在更前。</li>
+</ul>
+<h6 id="单句分类"><a href="#单句分类" class="headerlink" title="单句分类"></a>单句分类</h6><p>用[CLS]的表征作为特征，设为$x$，则对于单句的分类任务，直接在后面接入一个分类层即可.</p>
+<script type="math/tex; mode=display">
+P_{r}(c | X)=\operatorname{softmax}\left(W^{T} \cdot x\right)</script><p>loss是交叉熵损失：</p>
+<script type="math/tex; mode=display">
+-\sum_{c} I(X, c) \log \left(P_{r}(c | X)\right)</script><h6 id="句子相似度"><a href="#句子相似度" class="headerlink" title="句子相似度"></a>句子相似度</h6><p>将两句话pack后送进去，得到的[CLS]的表征，可拿出来计算分数：</p>
+<script type="math/tex; mode=display">
+\operatorname{sim}\left(X_{1}, X_{2}\right)=\operatorname{sigmoid}\left(w^{T} \cdot x\right)</script><p>loss是MSE：</p>
+<script type="math/tex; mode=display">
+\left(y-\operatorname{Sim}\left(X_{1}, X_{2}\right)\right)^{2}</script><h6 id="句子对分类"><a href="#句子对分类" class="headerlink" title="句子对分类"></a>句子对分类</h6><p>对这个任务不熟悉。。。</p>
+<h6 id="相关性排序"><a href="#相关性排序" class="headerlink" title="相关性排序"></a>相关性排序</h6><p>先计算两个句子之间的相似度，输入两个句子pack，采用[CLS]的输出作为表征。</p>
+<script type="math/tex; mode=display">
+\operatorname{Rel}(Q, A)=g\left(w^{T} \cdot x\right)</script><p>loss采用排序损失：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&-\sum_{Q, A^{+}} P_{r}\left(A^{+} | Q\right) \\
+P_{r}\left(A^{+} | Q\right) &=\frac{\exp \left(\gamma \operatorname{Rel}\left(Q, A^{+}\right)\right)}{\sum_{A^{\prime} \in A} \exp \left(\gamma \operatorname{Rel}\left(Q, A^{\prime}\right)\right)}
+\end{aligned}</script><h5 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h5><p>MT-DNN 的训练程序包含两个阶段：预训练和多任务微调。</p>
+<ol>
+<li>预训练阶段遵循 BERT 模型的方式。lexicon encoder和Transformer encoder参数的学习是通过两个无监督预测任务：掩码语言建模(masked language modeling)和下一句预测(next sentence pre-<br>diction)。</li>
+<li>在多任务微调阶段，使用基于minibatch的随机梯度下降（SGD）来学习模型参数（也就是，所有共享层和任务特定层的参数），算法流程如下图所示。每个epoch，选择一个mini-batch $b_t$(在9个GLUE任务中)，再对特定任务$k$进行模型参数的更新。这近似地优化所有多任务的和。</li>
+</ol>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn_al.png" alt="avatar"></p>
+<h3 id="DistilBERT"><a href="#DistilBERT" class="headerlink" title="DistilBERT"></a>DistilBERT</h3><p><a href="https://arxiv.org/pdf/1910.01108" target="_blank" rel="noopener">论文</a></p>
+<h4 id="动机-1"><a href="#动机-1" class="headerlink" title="动机"></a>动机</h4><p>预训练的语言模型正变得日益庞大，这些庞大的模型尽管能够带来准确率的提升，但是在这些预训练模型投入使用的过程中，往往需要对模型进行微调，而这需要大量的资源，而且模型投入使用的时候，由于计算量巨大，模型处理数据的时延过长。一种比较好的解决方案是对模型进行压缩。</p>
+<h4 id="模型压缩的方法"><a href="#模型压缩的方法" class="headerlink" title="模型压缩的方法"></a>模型压缩的方法</h4><ol>
+<li><p>量化</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/quantization.jpg" alt="avatar"></p>
+</li>
+</ol>
+<p>量化方法意味着降低模型权重的精度。比如K-means 量化方法：对模型权重矩阵W进行分组，分成n簇，然后把权重矩阵里的值转化成$1,\cdots,n$的正数。通过这种方式把矩阵中的32位的float型转化成只有8位（或者1位，binarizing matrix）的整数。</p>
+<h5 id="裁剪（Pruning）"><a href="#裁剪（Pruning）" class="headerlink" title="裁剪（Pruning）"></a>裁剪（Pruning）</h5><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/Pruning.png" alt="avatar"></p>
+<h6 id="weight-pruning"><a href="#weight-pruning" class="headerlink" title="weight pruning"></a>weight pruning</h6><p>   把权重矩阵中数值较大的值设置为0，从而构造稀疏矩阵。（理论上稀疏矩阵乘法速度快于normal(danse)矩阵乘法。）</p>
+<h6 id="Removing-neurons"><a href="#Removing-neurons" class="headerlink" title="Removing neurons"></a>Removing neurons</h6><p>   直接删除权重矩阵中不重要的的某一行或某一列。（删除和fine-tune交替进行，这样剩下的神经元在一定程度上可以弥补被删除的神经元）</p>
+<h6 id="Removing-weight-matrices"><a href="#Removing-weight-matrices" class="headerlink" title="Removing weight matrices"></a>Removing weight matrices</h6><p>   [10]从big transformers中直接删除对accuracy贡献不大的整个attention head。但是这种方式不能保证能够并行加速，因为相邻的权重矩阵的size变的不同了。</p>
+<h5 id="知识蒸馏"><a href="#知识蒸馏" class="headerlink" title="知识蒸馏"></a>知识蒸馏</h5><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/Knowledge-distillation.jpg" alt="avatar"></p>
+<p>DistilBert使用模型蒸馏技术：这是一种能够将大型模型（被称为「老师」）压缩为较小模型（即「学生」）的技术。</p>
+<p><a href="https://blog.csdn.net/nature553863/article/details/80568658" target="_blank" rel="noopener">知识蒸馏方法</a></p>
+<h6 id="知识蒸馏：迁移泛化能力"><a href="#知识蒸馏：迁移泛化能力" class="headerlink" title="知识蒸馏：迁移泛化能力"></a>知识蒸馏：迁移泛化能力</h6><p>知识蒸馏是一种压缩技术，要求对小型模型进行训练，以使其拥有类似于大型模型的行为特征。在监督学习领域，我们在训练分类模型时往往会利用对数似然信号实现概率最大化（logits 的 softmax），进而预测出正确类。在大多数情况下，性能良好的模型能够利用具有高概率的正确类预测输出分布，同时其它类的发生概率则接近于零。</p>
+<p><strong>但是，某些“接近于零”的概率要比其它概率更大，这在一定程度上反映出模型的泛化能力</strong>。例如，把普通椅子误认为扶手椅虽然属于错误，但这种错误远比将其误认为蘑菇来得轻微。这种不确定性，有时被称为“暗知识”。也可以从另一个角度来理解蒸馏——用于防止模型对预测结果太过确定（类似于标签平滑）。</p>
+<p>在语言建模当中，可以通过查看词汇表中的分布轻松观察到这种不确定性。下图为 BERT 对《卡萨布兰卡》电影当中经典台词下一句用词的猜测：</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/next_word.png" alt="avatar"></p>
+<p>BERT 提出的 20 大高概率用词猜测结果。语言模型确定了两个可能性最高的选项（day 与 life），接下来的词汇相比之下概率要低得多。</p>
+<h6 id="如何复制这些“暗知识”"><a href="#如何复制这些“暗知识”" class="headerlink" title="如何复制这些“暗知识”"></a>如何复制这些“暗知识”</h6><p>在训练当中，通过训练学生网络，来模拟老师网络的全部输出分布（也就是知识），也就是通过匹配输出分布的方式训练学生网络，从而实现与老师网络相同的泛化方式，即通过软目标（老师概率）将交叉熵从老师处传递给学生。</p>
+<script type="math/tex; mode=display">
+L=-\sum_{i} t_{i} * \log \left(s_{i}\right)</script><p>其中 $t_i$为来自老师的 $logit$，$s_i$ 为学生的 $logit$。以老师的行为$t_i$作为标签，让学生去学习老师的行为。<strong>这个损失函数属于更丰富的训练信号，因为单一示例要比单一硬目标拥有更高的强制约束效果。</strong>为了进一步揭示分类结果的质量，Hinton 等人提出了 softmax 温度的概念：</p>
+<script type="math/tex; mode=display">
+p_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} / T\right)}</script><p>T 为温度参数。当$T \rightarrow 0$时，分布变为 Kronecker（相当于独热目标矢量）；当 $T \rightarrow +\infty$时，则变为均匀分布。在训练过程中，将相同的温度参数应用于学生与老师网络，即可进一步为每个训练示例揭示更多信号。T 被设置为 1 即为标准 Softmax。</p>
+<p>在蒸馏方面，使用 Kullback-Leibler 损失函数，因为其拥有相同的优化效果：</p>
+<script type="math/tex; mode=display">
+K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_{i} * \log \left(p_{i}\right)-\sum_{i} p_{i} * \log \left(q_{i}\right)</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> torch.optim <span class="keyword">import</span> Optimizer</span><br><span class="line"></span><br><span class="line">KD_loss = nn.KLDivLoss(reduction=<span class="string">'batchmean'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kd_step</span><span class="params">(teacher: nn.Module,</span></span></span><br><span class="line"><span class="function"><span class="params">            student: nn.Module,</span></span></span><br><span class="line"><span class="function"><span class="params">            temperature: float,</span></span></span><br><span class="line"><span class="function"><span class="params">            inputs: torch.tensor,</span></span></span><br><span class="line"><span class="function"><span class="params">            optimizer: Optimizer)</span>:</span></span><br><span class="line">    teacher.eval()</span><br><span class="line">    student.train()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        logits_t = teacher(inputs=inputs) <span class="comment"># 老师的输出</span></span><br><span class="line">    logits_s = student(inputs=inputs) <span class="comment"># 学生的输出</span></span><br><span class="line">    <span class="comment"># 计算kd_loss</span></span><br><span class="line">    loss = KD_loss(input=F.log_softmax(logits_s/temperature, dim=<span class="number">-1</span>),</span><br><span class="line">                   target=F.softmax(logits_t/temperature, dim=<span class="number">-1</span>))</span><br><span class="line">    </span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line">    optimizer.zero_grad()</span><br></pre></td></tr></table></figure>
+<p>利用老师信号，能够训练出一套较小的语言模型 DistilBERT，属于 BERT 的监督产物。</p>
+<h4 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h4><p>DistilBERT想较于BERT删除了 token-type 嵌入与 pooler（用于下一句分类任务），但其余部分架构保持不变，而层数也减少至原本的二分之一。总体而言，蒸馏模型 DistilBERT 在总体参数数量上约为 BERT 的一半，但在 GLUE 语言理解基准测试中能够保留 95% 的 BERT 性能表现。</p>
+<ol>
+<li><strong>为什么不降低隐藏层的大小？</strong><br>将 768 减至 512 ，意味着总参数量约下降至原本的二分之一。在现代框架当中，大多数运算都经过高度优化，而且张量的最终维度（隐藏维度）的变化会对 Transformer 架构（线性分层与层规范化）中的大部分运算产生小幅影响。实验中发现，层数对于推理时间的影响要远高于隐藏层的大小。因此，更小并不代表着一定更快。</li>
+</ol>
+<p>训练子网络的核心不只是建立架构，还要求为子网络找到正确的初始化方式以实现收敛。 DistilBERT 使用bert的参数进行初始化，将层数削减一半，并采用相同的隐藏大小。DistilBERT还用到了最近 RoBERTa 论文当中提到的一些训练技巧，这也再次证明 BERT 模型的训练方式对其最终表现有着至关重要的影响。与 RoBERTa 类似，对 DIstilBERT 进行大批次训练，使用梯度累积（每批最多 4000 个例子）、配合动态遮挡并删除了下一句预测目标。</p>
+<h4 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h4><p>DistilBERT 的表现：保留了BERT  95% 以上的性能，同时将参数减少了 40%。推理时间方面，DistilBERT 比 BERT 快 60%，体积比 BERT 小 60%。</p>
+<h3 id="ALBERT"><a href="#ALBERT" class="headerlink" title="ALBERT"></a>ALBERT</h3><p><a href="[PDF](https://arxiv.org/pdf/1909.11942">论文</a>)</p>
+<h4 id="简介-5"><a href="#简介-5" class="headerlink" title="简介"></a>简介</h4><p>自BERT的成功以来，预训练模型都采用了很大的参数量以取得更好的模型表现。但是模型参数量越来越大也带来了很多问题，比如对算力要求越来越高、模型需要更长的时间去训练、甚至有些情况下参数量更大的模型表现却更差。为了解决目前预训练模型参数量过大的问题，albert提出了两种能够大幅减少预训练模型参数量的方法，此外还提出用Sentence-order prediction（SOP）任务代替BERT中的Next-sentence prediction（NSP）任务。</p>
+<h4 id="模型-2"><a href="#模型-2" class="headerlink" title="模型"></a>模型</h4><h5 id="嵌入向量因式分解（Factorized-embedding-parameterization）"><a href="#嵌入向量因式分解（Factorized-embedding-parameterization）" class="headerlink" title="嵌入向量因式分解（Factorized embedding parameterization）"></a>嵌入向量因式分解（Factorized embedding parameterization）</h5><p>在BERT、XLNet、RoBERTa等模型中，由于模型结构的限制，WordePiece embedding的大小$E$ 总是与隐层大小$H$相同，即 $E \equiv H$ 。从建模的角度考虑，词嵌入学习的是单词与上下文无关的表示，而隐层则是学习与上下文相关的表示。显然后者更加复杂，需要更多的参数，也就是说模型应当增大隐层大小$H$，或者说满足 $H \gg E$。但实际上词汇表的大小$V$通常非常大，如果$E=H$的话，增加隐层大小$H$后将会使embedding matrix的维度$V \times E$非常巨大。</p>
+<p>因此ALBERT想要打破$E$与$H$ 之间的绑定关系，从而减小模型的参数量，同时提升模型表现。具体做法是将embedding matrix分解为两个大小分别为$V \times  E$ 和$E \times H$ 矩阵，也就是说先将单词投影到一个低维的embedding空间 $E$ ，再将其投影到高维的隐藏空间$H$  。这使得embedding matrix的维度从$O(V \times H)$  减小到$O(v \times E + E \times H)$ 。当 $H \gg E$时，参数量减少非常明显。在实现时，随机初始化$V\times E$和$E\times H$的矩阵，计算某个单词的表示需用一个单词的one-hot向量乘以$V\times E$维的矩阵（也就是lookup），再用得到的结果乘$E\times H$维的矩阵即可。两个矩阵的参数通过模型学习。</p>
+<p>从下图实验结果可见，对于不共享参数的情况，$E$几乎是与大越好；而共享参数之后， $E$太大反而会使模型表现变差，$E=128$模型表现最好，因此ALBERT的默认参数设置中$E=128$.</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_embedding.png" alt="avatar"></p>
+<p>考虑到ALBERT-base的 $h=768$，那么 $E=768$时，模型应该可以看作没有减少embedding参数量的情况。而不共享参数的实验结果表明此时模型表现更好，那么似乎说明了Factorized embedding在一定程度上降低了模型的表现。</p>
+<h5 id="跨层参数共享（参数量减少主要共享）"><a href="#跨层参数共享（参数量减少主要共享）" class="headerlink" title="跨层参数共享（参数量减少主要共享）"></a>跨层参数共享（参数量减少主要共享）</h5><p>另一个减少参数量的方法就是层之间的参数共享，即多个层使用相同的参数。参数共享有三种方式：只共享feed-forward network的参数、只共享attention的参数、共享全部参数。ALBERT默认是共享全部参数的。实验表明加入参数共享之后，每一层的输入embedding和输出embedding的L2距离和余弦相似度都比BERT稳定了很多。这证明参数共享能够使模型参数更加稳定。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/cross.png" alt="avatar"></p>
+<p>如下图所示，可以看出参数共享几乎也是对模型结果有负面影响的。但是考虑到其能够大幅削减参数量，并且对结果影响不是特别大，因此权衡之下选择了参数共享。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_crosslayer.png" alt="avatar"></p>
+<h5 id="句间连贯性"><a href="#句间连贯性" class="headerlink" title="句间连贯性"></a>句间连贯性</h5><ul>
+<li><strong>NSP</strong>：下一句预测， 正样本=上下相邻的2个句子，负样本=随机2个句子</li>
+<li><strong>SOP</strong>：句子顺序预测，正样本=正常顺序的2个相邻句子，负样本=调换顺序的2个相邻句子</li>
+</ul>
+<p>NSP任务过于简单，只要模型发现两个句子的主题不一样就行了，所以SOP预测任务能够让模型学习到更多的信息。</p>
+<p>除了减少模型参数外，还对BERT的预训练任务Next-sentence prediction (NSP)进行了改进。在BERT中，NSP任务的正例是文章中连续的两个句子，而负例则是从两篇文档中各选一个句子构造而成。在先前的研究中，已经证明NSP是并不是一个合适的预训练任务。作者推测其原因是模型在判断两个句子的关系时不仅考虑了两个句子之间的连贯性（coherence），还会考虑到两个句子的话题（topic）。而两篇文档的话题通常不同，模型会更多的通过话题去分析两个句子的关系，而不是句子间的连贯性，这使得NSP任务变成了一个相对简单的任务。</p>
+<p>因此本文提出了Sentence-order prediction (SOP)来取代NSP。具体来说，其正例与NSP相同，但负例是通过选择一篇文档中的两个连续的句子并将它们的顺序交换构造的。这样两个句子就会有相同的话题，模型学习到的就更多是句子间的连贯性。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_sop.png" alt="avatar"></p>
+<p>如上实验结果所示，如果不使用NSP或SOP作为预训练任务的话，模型在NSP和SOP两个任务上表现都很差；如果使用NSP作为预训练任务的话，模型确实能很好的解决NSP问题，但是在SOP问题上表现却很差，几乎相当于随机猜，因此说明NSP任务确实很难学到句子间的连贯性；而如果用SOP作为预训练任务，则模型也可以较好的解决NSP问题，同时模型在下游任务上表现也更好。说明SOP确实是更好的预训练任务。</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><h5 id="额外的训练数据和dropout"><a href="#额外的训练数据和dropout" class="headerlink" title="额外的训练数据和dropout"></a>额外的训练数据和dropout</h5><p>ALBERT训练时还加入了XLNet和RoBERTa训练时用的额外数据，实验表明加入额外数据（W additional data）确实会提升模型表现。此外，作者还观察到模型似乎一直没有过拟合数据，因此去除了Dropout，从对比试验可以看出，去除Dropout（W/O Dropout）后模型表现确实更好。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_dropout.png" alt="avatar"></p>
+<h4 id="总结-4"><a href="#总结-4" class="headerlink" title="总结"></a>总结</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_bert.png" alt="avatar"></p>
+<p>ALBERT的训练速度明显比BERT快，ALBERT-xxlarge的表现更是全方面超过了BERT。</p>
+<p>本文有两个小细节可以学习，一个是在模型不会过拟合的情况下不使用dropout；另一个则是warm-start，即在训练深层网络（例如12层）时，可以先训练浅层网络（例如6层），再在其基础上做fine-tune，这样可以加快深层模型的收敛。</p>
+<h3 id="TinyBERT"><a href="#TinyBERT" class="headerlink" title="TinyBERT"></a>TinyBERT</h3><p><a href="https://arxiv.org/abs/1909.10351" target="_blank" rel="noopener">论文</a></p>
+<h4 id="简介-6"><a href="#简介-6" class="headerlink" title="简介"></a>简介</h4><p>在 NLP 领域，BERT 由于模型过于庞大，单个样本计算一次的开销动辄上百毫秒，很难应用到实际生产中。中科技大学、华为诺亚方舟实验室的研究者提出了 TinyBERT，这是一种为基于 transformer 的模型专门设计的知识蒸馏方法，模型大小为 BERT 的 13.3%，推理速度是 BERT 的 9.4 倍，而且性能没有出现明显下降。</p>
+<p>目前主流的几种蒸馏方法大概分成 1. 利用 transformer 结构蒸馏, 2. 利用其它简单的结构比如 BiLSTM 等蒸馏。由于 BiLSTM 等结构简单，且一般是用 BERT 最后一层的输出结果进行蒸馏，不能学到 transformer 中间层的信息，对于复杂的语义匹配任务，效果有点不尽人意。</p>
+<p>基于 transformer 结构的蒸馏方法目前比较出名的有微软的 BERT-PKD (Patient Knowledge Distillation for BERT)，huggingface 的 DistilBERT，以及华为的 TinyBERT。他们的基本思路都是减少 transformer encoding 的层数和 hidden size 大小，实现细节上各有不同，主要差异体现在 loss 的设计上。</p>
+<h4 id="模型-3"><a href="#模型-3" class="headerlink" title="模型"></a>模型</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/tinyBert.jpg" alt="avatar"></p>
+<p>整个 TinyBERT 的 loss 设计分为三部分：</p>
+<h5 id="Embedding-layer-Distillation"><a href="#Embedding-layer-Distillation" class="headerlink" title="Embedding-layer Distillation"></a>Embedding-layer Distillation</h5><script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{embd}}=\operatorname{MSE}\left(\boldsymbol{E}^{S} \boldsymbol{W}_{e}, \boldsymbol{E}^{T}\right)</script><p>其中，$E^s \in R^{l \times ds}$,$E^T \ in R^{l \times dt}$分别表示 student 网络的 embedding 和 teacher 网络的 embedding. 其中 l 代表 sequence length, ds 代表 student embedding 维度， dt 代表 teacher embedding 维度。由于 student 网络的 embedding 层通常较 teacher 会变小以获得更小的模型和加速，所以 $W_e$ 是一个 $d_s \times d_t$维的可训练的线性变换矩阵，把 student 的 embedding 投影到 teacher embedding 所在的空间。最后再算 MSE，得到 embedding loss.</p>
+<h5 id="Transformer-layer-Distillation"><a href="#Transformer-layer-Distillation" class="headerlink" title="Transformer-layer Distillation"></a>Transformer-layer Distillation</h5><p>TinyBERT 的 transformer 蒸馏采用隔 k 层蒸馏的方式。举个例子，teacher BERT 一共有 12 层，若是设置 student BERT 为 4 层，就是每隔 3 层计算一个 transformer loss. 映射函数为 g(m) = 3 * m(???), m 为 student encoder 层数。具体对应为 student 第 1 层 transformer 对应 teacher 第 3 层，第 2 层对应第 6 层，第 3 层对应第 9 层，第 4 层对应第 12 层。每一层的 transformer loss 又分为两部分组成，attention based distillation 和 hidden states based distillation.</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/transormers_distillation.jpg" alt="avatar"></p>
+<h6 id="Attention-based-loss"><a href="#Attention-based-loss" class="headerlink" title="Attention based loss"></a>Attention based loss</h6><script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{attn}}=\frac{1}{h} \sum_{i=1}^{h} \operatorname{MSE}\left(\boldsymbol{A}_{i}^{S}, \boldsymbol{A}_{i}^{T}\right)</script><p>其中，$A_i \in R^{l \times l}$ $h$代表attention的头数，$l$代表输入长度，$A_i^S$代表student网络第i个attention头的attention score矩阵。$A_i^T$代表teacher网络的第i个attention头的attention score 矩阵。为什么要做这个损失？在What Does BERT Look At? An Analysis of BERT’s Attention [12]中研究了attention 权重到底学到了什么，实验发现与语义还有语法相关的词比如第一个动词宾语，第一个介词宾语，以及[CLS], [SEP], 逗号等 token，有很高的注意力权重。为了确保这部分信息能被 student 网络学到，TinyBERT 在 loss 设计中加上了 student 和 teacher 的 attention matrix 的 MSE。这样语言知识可以很好的从 teacher BERT 转移到 student BERT.</p>
+<h6 id="hidden-states-based-distillation"><a href="#hidden-states-based-distillation" class="headerlink" title="hidden states based distillation"></a>hidden states based distillation</h6><script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{hidn}}=\mathrm{MSE}\left(\boldsymbol{H}^{S} \boldsymbol{W}_{h}, \boldsymbol{H}^{T}\right)</script><p>其中，$H^S \in R^{l \times ds}$,$H^T \in R^{l \times dt}$分别是 student transformer 和 teacher transformer 的隐层输出。和 embedding loss 同理，$W_h$把$H^S$投影到$H^T$所在的空间。</p>
+<h6 id="Prediction-Layer-Distillation"><a href="#Prediction-Layer-Distillation" class="headerlink" title="Prediction-Layer Distillation"></a>Prediction-Layer Distillation</h6><script type="math/tex; mode=display">
+\mathcal{L}_{\text {pred }}=-\operatorname{softmax}\left(\boldsymbol{z}^{T}\right) \cdot \log \_ \left(\boldsymbol{z}^{S} / t\right)</script><p>其中 t 是 temperature value，暂时设为 1.除了模仿中间层的行为外，这一层用来模拟 teacher 网络在 predict 层的表现。具体来说，这一层计算了 teacher 输出的概率分布和 student 输出的概率分布的 softmax 交叉熵。这一层的实现和具体任务相关.</p>
+<p> prediction loss 有很多变化。</p>
+<ol>
+<li>在 TinyBERT 中，这个 loss 是 teacher BERT 预测的概率和 student BERT 预测概率的 softmax 交叉熵.</li>
+<li>在 BERT-PKD 模型中，这个 loss 是 teacher BERT 和 student BERT 的交叉熵和 student BERT 和 hard target( one-hot)的交叉熵的加权平均。</li>
+</ol>
+<p>直接用 hard target loss，效果比使用 teacher student softmax 交叉熵下降 5-6 个点。因为 softmax 比 one-hot 编码了更多概率分布的信息。并且softmax cross-entropy loss 容易发生不收敛的情况，把 softmax 交叉熵改成 MSE, 收敛效果变好，但泛化效果变差。这是因为使用 softmax cross-entropy 需要学到整个概率分布，更难收敛，因为拟合了 teacher BERT 的概率分布，有更强的泛化性。MSE 对极值敏感，收敛的更快，但泛化效果不如前者。</p>
+<p>所以总的loss：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\text {model }}=\sum_{m=0}^{M+1} \lambda_{m} \mathcal{L}_{\text {layer }}\left(S_{m}, T_{g(m)}\right)</script><p>其中</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\text {layer }}\left(S_{m}, T_{g(m)}\right)=\left\{\begin{array}{ll}
+\mathcal{L}_{\text {embd }}\left(S_{0}, T_{0}\right), & m=0 \\
+\mathcal{L}_{\text {hidn }}\left(S_{m}, T_{g(m)}\right)+\mathcal{L}_{\text {attn }}\left(S_{m}, T_{g(m)}\right), & M \geq m>0 \\
+\mathcal{L}_{\text {pred }}\left(S_{M+1}, T_{N+1}\right), & m=M+1
+\end{array}\right.</script><h4 id="两阶段学习框架"><a href="#两阶段学习框架" class="headerlink" title="两阶段学习框架"></a>两阶段学习框架</h4><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/two_step.jpg" alt="avatar"></p>
+<p>类似于原生的 BERT 先 pre-train, 根据具体任务再 fine-tine。TinyBERT 先在 general domain 数据集上用未经微调的 BERT 充当教师蒸馏出一个 base 模型，在此基础上，具体任务通过数据增强，利用微调后的 BERT 再进行重新执行蒸馏。这种两阶段的方法给 TinyBERT 提供了像 BERT 一样的泛化能力。 </p>
+<h4 id="总结-5"><a href="#总结-5" class="headerlink" title="总结"></a>总结</h4><p> TinyBERT 作为一种蒸馏方法，能有效的提取 BERT transformer 结构中丰富的语意信息，在不牺牲性能的情况下，速度能获得 8 到 9 倍的提升。</p>
+<h3 id="FastBert"><a href="#FastBert" class="headerlink" title="FastBert"></a>FastBert</h3><h4 id="简介-7"><a href="#简介-7" class="headerlink" title="简介"></a>简介</h4><p>FastBERT的创新点很容易理解，就是在每层Transformer后都去预测样本标签，如果某样本预测结果的置信度很高，就不用继续计算了。论文把这个逻辑称为样本自适应机制（Sample-wise adaptive mechanism），就是自适应调整每个样本的计算量，容易的样本通过一两层就可以预测出来，较难的样本则需要走完全程。</p>
+<p>举个例子，比如 text_a = ‘北京鲜花快递’ text_b = ‘北京鲜花速递’ 这种case可能浅层的bert就已经能够很好的算出其相关性打分，所以算完两层bert的打分和12层的结果基本一致，而text_a = ‘北京鲜花快递’ text_b = ‘有没有哪个地方卖花卉，而且包送，位置北京’ 这种case可能需要深层的bert去抽取两边的语义特征，并计算其是否匹配，所以在inference阶段就需要算完12层。</p>
+<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/fastbert.jpg" alt="avatar"></p>
+<p>作者将原BERT模型称为主干（Backbone），每个分类器称为分支（Branch）。这里的分支Classifier都是最后一层的分类器蒸馏来的，作者将这称为自蒸馏（Self-distillation）。就是在预训练和精调阶段都只更新主干参数，精调完后<strong>freeze主干参数，用分支分类器（图中的student）蒸馏主干分类器（图中的teacher）的概率分布</strong>。之所以叫自蒸馏，是因为之前的蒸馏都是用两个模型去做，一个模型学习另一个模型的知识，而FastBERT是自己（分支）蒸馏自己（主干）的知识。值得注意的是，蒸馏时需要freeze主干部分，保证pretrain和finetune阶段学习的知识不被影响，仅用brach 来尽可能的拟合teacher的分布。同时，使用自蒸馏还有一点重要的好处，就是<strong>不再依赖于标注数据</strong>。蒸馏的效果可以通过源源不断的无标签数据来提升。</p>
+<h4 id="总结-6"><a href="#总结-6" class="headerlink" title="总结"></a>总结</h4><p>FastBERT通过提前输出简单样本的预测结果，减少模型的计算负担，从而提高推理速度。虽然每层都多了一个分类器，但分类器的计算量也比Transformer小了两个数量级，对速度影响较小。后续的分支自蒸馏也设计的比较巧妙，可以利用无监督数据不断提升分支分类器的效果。</p>
+<h3 id="总结-7"><a href="#总结-7" class="headerlink" title="总结"></a>总结</h3><p>性能：</p>
+<ol>
+<li>BERT-WWM</li>
+<li>XLNet（长文本表现更好一些）</li>
+<li>RoBERTa（动态mask、without NSP、更大batch，更多数据，更长训练时间）</li>
+<li>SpanBERT(基于分词的预训练模型)</li>
+<li>MT-DNN(预训练+多任务)</li>
+<li>ERNIR（引入实体信息）</li>
+</ol>
+<p>效率：</p>
+<ol>
+<li>DistilBert（知识蒸馏）</li>
+<li>ALBert（因式分解、跨层权重共享）</li>
+<li>TinyBert（知识蒸馏）</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/46652512" target="_blank" rel="noopener">【NLP】Google BERT详解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/81157740" target="_blank" rel="noopener">带你读论文丨8篇论文梳理BERT相关模型进展与反思</a></li>
+<li><a href="https://blog.csdn.net/u012526436/article/details/93196139" target="_blank" rel="noopener">最通俗易懂的XLNET详解</a></li>
+<li><a href="https://www.jianshu.com/p/eddf04ba8545" target="_blank" rel="noopener">改进版的RoBERTa到底改进了什么？</a></li>
+<li><a href="https://www.bilibili.com/video/av73657563/" target="_blank" rel="noopener">【AI模型】最通俗易懂的XLNet详解</a></li>
+<li>Liu Y, Ott M, Goyal N, et al. Roberta: A robustly optimized bert pretraining approach[J]. arXiv preprint arXiv:1907.11692, 2019</li>
+<li>Sennrich R, Haddow B, Birch A. Neural machine translation of rare words with subword units[J]. arXiv preprint arXiv:1508.07909, 2015.</li>
+<li><a href="http://fancyerii.github.io/2019/03/09/bert-codes/#dataprocessor" target="_blank" rel="noopener">bert代码阅读</a></li>
+<li><a href="https://www.infoq.cn/article/STabowUeFupgc4gRqRQj" target="_blank" rel="noopener">更小、更快、更便宜、更轻量：开源 DistilBERT，BERT 的精简版本</a></li>
+<li>Michel, P., Levy, O., &amp; Neubig, G. (2019). Are Sixteen Heads Really Better than One? Retrieved from <a href="https://arxiv.org/abs/1905.10650" target="_blank" rel="noopener">https://arxiv.org/abs/1905.10650</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/94359189" target="_blank" rel="noopener">比 Bert 体积更小速度更快的 TinyBERT</a></li>
+<li><a href="https://arxiv.org/abs/1906.04341" target="_blank" rel="noopener">https://arxiv.org/abs/1906.04341</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/87562926" target="_blank" rel="noopener">【论文阅读】ALBERT</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/59436589" target="_blank" rel="noopener">中文任务全面超越BERT：百度正式发布NLP预训练模型ERNIE</a></li>
+<li><a href="https://www.jianshu.com/p/5e12e6edbd59" target="_blank" rel="noopener">BERT泛读系列（三）—— ERNIE: Enhanced Language Representation with Informative Entities论文笔记</a></li>
+<li><a href="https://blog.csdn.net/ljp1919/article/details/90269059" target="_blank" rel="noopener">文献阅读：MT-DNN模型</a></li>
+<li><a href="https://blog.csdn.net/Magical_Bubble/article/details/89517709" target="_blank" rel="noopener">MT-DNN解读(论文 + PyTorch源码)</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/BERT/" rel="tag"><i class="fa fa-tag"></i> BERT</a>
+              <a href="/tags/BERT-WWM/" rel="tag"><i class="fa fa-tag"></i> BERT-WWM</a>
+              <a href="/tags/XLNet/" rel="tag"><i class="fa fa-tag"></i> XLNet</a>
+              <a href="/tags/RoBERTa/" rel="tag"><i class="fa fa-tag"></i> RoBERTa</a>
+              <a href="/tags/SpanBERT/" rel="tag"><i class="fa fa-tag"></i> SpanBERT</a>
+              <a href="/tags/ernie/" rel="tag"><i class="fa fa-tag"></i> ernie</a>
+              <a href="/tags/MT-DNN/" rel="tag"><i class="fa fa-tag"></i> MT-DNN</a>
+              <a href="/tags/DistillBERT/" rel="tag"><i class="fa fa-tag"></i> DistillBERT</a>
+              <a href="/tags/ALBERT/" rel="tag"><i class="fa fa-tag"></i> ALBERT</a>
+              <a href="/tags/TinyBERT/" rel="tag"><i class="fa fa-tag"></i> TinyBERT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/" rel="prev" title="文本多标签分类">
+      <i class="fa fa-chevron-left"></i> 文本多标签分类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/21/%E5%85%B3%E9%94%AE%E8%AF%8D%E6%8A%BD%E5%8F%96/" rel="next" title="关键词抽取">
+      关键词抽取 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BERT-及其后续模型"><span class="nav-number">1.</span> <span class="nav-text">BERT 及其后续模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT"><span class="nav-number">1.1.</span> <span class="nav-text">BERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Task-1-MLM"><span class="nav-number">1.1.1.</span> <span class="nav-text">Task 1: MLM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Task-2-NSP"><span class="nav-number">1.1.2.</span> <span class="nav-text">Task 2: NSP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入"><span class="nav-number">1.1.3.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fine-tunninng"><span class="nav-number">1.1.4.</span> <span class="nav-text">Fine-tunninng</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">1.1.5.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">1.1.6.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch使用"><span class="nav-number">1.1.7.</span> <span class="nav-text">torch使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT-WWM"><span class="nav-number">1.2.</span> <span class="nav-text">BERT-WWM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bert-wwm-ext"><span class="nav-number">1.2.2.</span> <span class="nav-text">Bert-wwm-ext</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XLNet"><span class="nav-number">1.3.</span> <span class="nav-text">XLNet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AR与AE语言模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">AR与AE语言模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排列语言模型-为了考虑上下文信息"><span class="nav-number">1.3.2.</span> <span class="nav-text">排列语言模型(为了考虑上下文信息)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于目标感知表征的双流自注意力-为了解决位置信息"><span class="nav-number">1.3.3.</span> <span class="nav-text">基于目标感知表征的双流自注意力(为了解决位置信息)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引入transformer-XL"><span class="nav-number">1.3.4.</span> <span class="nav-text">引入transformer XL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">1.3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RoBERTa"><span class="nav-number">1.4.</span> <span class="nav-text">RoBERTa</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动机"><span class="nav-number">1.4.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进"><span class="nav-number">1.4.3.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpanBERT"><span class="nav-number">1.5.</span> <span class="nav-text">SpanBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Span-Masking"><span class="nav-number">1.5.2.</span> <span class="nav-text">Span Masking(????)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分词边界目标-SBO"><span class="nav-number">1.5.3.</span> <span class="nav-text">分词边界目标(SBO)???</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单序列训练"><span class="nav-number">1.5.4.</span> <span class="nav-text">单序列训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#细节"><span class="nav-number">1.5.5.</span> <span class="nav-text">细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-1"><span class="nav-number">1.5.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERNIE"><span class="nav-number">1.6.</span> <span class="nav-text">ERNIE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-3"><span class="nav-number">1.6.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型"><span class="nav-number">1.6.2.</span> <span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MT-DNN（预训练-多任务）"><span class="nav-number">1.7.</span> <span class="nav-text">MT-DNN（预训练+多任务）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-4"><span class="nav-number">1.7.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型-1"><span class="nav-number">1.7.2.</span> <span class="nav-text">模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DistilBERT"><span class="nav-number">1.8.</span> <span class="nav-text">DistilBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动机-1"><span class="nav-number">1.8.1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型压缩的方法"><span class="nav-number">1.8.2.</span> <span class="nav-text">模型压缩的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型结构"><span class="nav-number">1.8.3.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-3"><span class="nav-number">1.8.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALBERT"><span class="nav-number">1.9.</span> <span class="nav-text">ALBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-5"><span class="nav-number">1.9.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型-2"><span class="nav-number">1.9.2.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">1.9.3.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-4"><span class="nav-number">1.9.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TinyBERT"><span class="nav-number">1.10.</span> <span class="nav-text">TinyBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-6"><span class="nav-number">1.10.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型-3"><span class="nav-number">1.10.2.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两阶段学习框架"><span class="nav-number">1.10.3.</span> <span class="nav-text">两阶段学习框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-5"><span class="nav-number">1.10.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FastBert"><span class="nav-number">1.11.</span> <span class="nav-text">FastBert</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-7"><span class="nav-number">1.11.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结-6"><span class="nav-number">1.11.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-7"><span class="nav-number">1.12.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.13.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">但行好事，莫问前程！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="hhttps://github.com/jeffery0628" title="GitHub → hhttps:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">363k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
+      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
