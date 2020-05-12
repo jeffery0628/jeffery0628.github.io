@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="后面需要补充序列标注在分词、词性标注、命名实体识别等相关任务的代码实践(走过的坑。。)及相关理论知识。 条件随机场(CRF)crf 用于序列标注问题在 CRF 的序列标注问题中，要计算的是条件概率：  P\left(y_{1}, \ldots, y_{n} | x_{1}, \ldots, x_{n}\right)&#x3D;P\left(y_{1}, \ldots, y_{n} | \boldsymbol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="序列标注">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:description" content="后面需要补充序列标注在分词、词性标注、命名实体识别等相关任务的代码实践(走过的坑。。)及相关理论知识。 条件随机场(CRF)crf 用于序列标注问题在 CRF 的序列标注问题中，要计算的是条件概率：  P\left(y_{1}, \ldots, y_{n} | x_{1}, \ldots, x_{n}\right)&#x3D;P\left(y_{1}, \ldots, y_{n} | \boldsymbol">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/decode-crf.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/encoder.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/encoder-crf.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/crf-v.png">
+<meta property="article:published_time" content="2020-04-09T12:32:44.000Z">
+<meta property="article:modified_time" content="2020-05-04T06:16:31.850Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="序列标注">
+<meta property="article:tag" content="条件随机场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/decode-crf.png">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>序列标注 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+        <li class="menu-item menu-item-games">
+
+    <a href="/games/" rel="section"><i class="fa fa-gamepad fa-fw"></i>游戏</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          序列标注
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-04 14:16:31" itemprop="dateModified" datetime="2020-05-04T14:16:31+08:00">2020-05-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/" class="post-meta-item leancloud_visitors" data-flag-title="序列标注" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>22k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>20 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>后面需要补充序列标注在分词、词性标注、命名实体识别等相关任务的代码实践(走过的坑。。)及相关理论知识。</p>
+<h3 id="条件随机场-CRF"><a href="#条件随机场-CRF" class="headerlink" title="条件随机场(CRF)"></a>条件随机场(CRF)</h3><h4 id="crf-用于序列标注问题"><a href="#crf-用于序列标注问题" class="headerlink" title="crf 用于序列标注问题"></a>crf 用于序列标注问题</h4><p>在 CRF 的序列标注问题中，要计算的是条件概率：</p>
+<script type="math/tex; mode=display">
+P\left(y_{1}, \ldots, y_{n} | x_{1}, \ldots, x_{n}\right)=P\left(y_{1}, \ldots, y_{n} | \boldsymbol{x}\right), \quad \boldsymbol{x}=\left(x_{1}, \ldots, x_{n}\right) \tag{1}</script><a id="more"></a>
+<p>为了得到这个概率的估计，CRF 做了两个假设：</p>
+<h5 id="假设一：该分布是指数族分布。"><a href="#假设一：该分布是指数族分布。" class="headerlink" title="假设一：该分布是指数族分布。"></a><strong>假设一：该分布是指数族分布。</strong></h5><p>这个假设意味着存在函数 $f(y_1,…,y_n;x)$，使得：</p>
+<script type="math/tex; mode=display">
+P\left(y_{1}, \ldots, y_{n} | \boldsymbol{x}\right)=\frac{1}{Z(\boldsymbol{x})} \exp \left(f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)\right) \tag{2}</script><p>其中 Z(x) 是归一化因子，因为这个是条件分布，所以归一化因子跟 x 有关。这个 f 函数可以视为一个打分函数，打分函数取指数并归一化后就得到概率分布。 </p>
+<h5 id="假设二：输出之间的关联仅发生在相邻位置，并且关联是指数加性的。"><a href="#假设二：输出之间的关联仅发生在相邻位置，并且关联是指数加性的。" class="headerlink" title="假设二：输出之间的关联仅发生在相邻位置，并且关联是指数加性的。"></a><strong>假设二：输出之间的关联仅发生在相邻位置，并且关联是指数加性的。</strong></h5><p>这个假设意味着 f(y1,…,yn;x) 可以更进一步简化为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)=h\left(y_{1} ; \boldsymbol{x}\right) &+g\left(y_{1}, y_{2} ; \boldsymbol{x}\right)+h\left(y_{2} ; \boldsymbol{x}\right)+\ldots \\
+&+g\left(y_{n-1}, y_{n} ; \boldsymbol{x}\right)+h\left(y_{n} ; \boldsymbol{x}\right)
+\end{aligned} \tag{3}</script><p>这也就是说，现在我们只需要对每一个标签和每一个相邻标签对分别打分，然后将所有打分结果求和得到总分。</p>
+<h5 id="线性链crf"><a href="#线性链crf" class="headerlink" title="线性链crf"></a>线性链crf</h5><p>尽管已经做了大量简化，但一般来说，(3)式所表示的概率模型还是过于复杂，难以求解。<strong>于是考虑到当前深度学习模型中，RNN 或者层叠 CNN 等模型已经能够比较充分捕捉各个 y 与输出 x 的联系</strong>，因此，不妨考虑函数 g 跟 x 无关，那么：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)=h\left(y_{1} ; \boldsymbol{x}\right) &+g\left(y_{1}, y_{2}\right)+h\left(y_{2} ; \boldsymbol{x}\right)+\ldots \\
+&+g\left(y_{n-1}, y_{n}\right)+h\left(y_{n} ; \boldsymbol{x}\right)
+\end{aligned}</script><p>这时候 g 实际上就是一个有限的、待训练的参数矩阵而已，而单标签的打分函数 $h(y_i;x$) 可以通过 RNN 或者 CNN 来建模。因此，该模型是可以建立的，其中概率分布变为：</p>
+<script type="math/tex; mode=display">
+P\left(y_{1}, \ldots, y_{n} | x\right)=\frac{1}{Z(x)} \exp \left(h\left(y_{1} ; x\right)+\sum_{k=1}^{n-1} g\left(y_{k}, y_{k+1}\right)+h\left(y_{k+1} ; x\right)\right)</script><h5 id="归一化因子"><a href="#归一化因子" class="headerlink" title="归一化因子"></a>归一化因子</h5><p>为了训练 CRF 模型，用最大似然方法，也就是用：$-\log P\left(y_{1}, \ldots, y_{n} | x\right)$，作为损失函数，可以算出它等于：</p>
+<script type="math/tex; mode=display">
+-\left(h\left(y_{1} ; \boldsymbol{x}\right)+\sum_{k=1}^{n-1} g\left(y_{k}, y_{k+1}\right)+h\left(y_{k+1} ; \boldsymbol{x}\right)\right)+\log Z(\boldsymbol{x})</script><p>其中第一项是原来概率式的<strong>分子</strong>的对数，它是对目标的序列的打分，虽然它看上去挺迂回的，但是并不难计算。真正的难度在于<strong>分母</strong>的对数 $logZ(x)$ 这一项。</p>
+<p>归一化因子，在物理上也叫配分函数，在这里它需要我们对所有可能的路径的打分进行指数求和，而我们前面已经说到，这样的路径数是指数量级的（k^n），因此直接来算几乎是不可能的。</p>
+<p>事实上，<strong>归一化因子难算，几乎是所有概率图模型的公共难题</strong>。幸运的是，在 CRF 模型中，由于我们只考虑了临近标签的联系（马尔可夫假设），因此我们可以递归地算出归一化因子，这使得原来是指数级的计算量降低为线性级别。</p>
+<p>具体来说，我们将计算到时刻 $t$ 的归一化因子记为$Z_t$，并将它分为 $k$ 个部分：</p>
+<script type="math/tex; mode=display">
+Z_{t}=Z_{t}^{(1)}+Z_{t}^{(2)}+\cdots+Z_{t}^{(k)}</script><p>分别是截止到当前时刻 $t$ 中、以标签 $1,…,k$ 为终点的所有路径的得分指数和。那么，我们可以递归地计算：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Z_{t+1}^{(1)} &=\left(Z_{t}^{(1)} G_{11}+Z_{t}^{(2)} G_{21}+\cdots+Z_{t}^{(k)} G_{k 1}\right) h_{t+1}(1 | x) \\
+Z_{t+1}^{(2)} &=\left(Z_{t}^{(1)} G_{12}+Z_{t}^{(2)} G_{22}+\cdots+Z_{t}^{(k)} G_{k 2}\right) h_{t+1}(2 | x) \\
+& \vdots \\
+Z_{t+1}^{(k)} &=\left(Z_{t}^{(1)} G_{1 k}+Z_{t}^{(2)} G_{2 k}+\cdots+Z_{t}^{(k)} G_{k k}\right) h_{t+1}(k | x)
+\end{aligned}</script><p>它可以简单写为矩阵形式：</p>
+<script type="math/tex; mode=display">
+\mathbf{Z}_{t+1}=\mathbf{Z}_{t} \boldsymbol{G} \otimes H\left(y_{t+1} | \boldsymbol{x}\right)</script><p>其中,$Z_{t}=\left[Z_{t}^{(1)}, \ldots, Z_{t}^{(k)}\right]$,而 G 是对 g(yi,yj) (状态转移)各个元素取指数后的矩阵，即$G=e^{g(y i, y j)}$,而$H(y_{t+1}|x)$,是编码模型$h(y_{t+1}|x)$,（RNN、CNN等）对位置 t+1 的各个标签的打分的指数，即$H\left(y_{t+1} | x\right)=e^{h\left(y_{t+1} | x\right)}$，也是一个向量。$Z_tG$ 这一步是矩阵乘法，得到一个向量，而 $⊗$ 是两个向量的逐位对应相乘。</p>
+<p><img src="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/decode-crf.png" alt="avatar"></p>
+<p>从t到t+1时刻的计算，包括转移概率和j+1节点本身的概率</p>
+<h5 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h5><p>写出损失函数 $-logP(y_1,…,y_n|x)$ 后，就可以完成模型的训练了，因为目前的深度学习框架都已经带有自动求导的功能，只要我们能写出可导的 loss，就可以帮我们完成优化过程了。 </p>
+<p>那么剩下的最后一步，就是模型训练完成后，如何根据输入找出最优路径来。跟前面一样，这也是一个从 $k^n$ 条路径中选最优的问题，而同样地，因为马尔可夫假设的存在，它可以转化为一个动态规划问题，用 viterbi 算法解决，计算量正比于 n。 </p>
+<p>动态规划在本博客已经出现了多次了，<strong>它的递归思想就是：一条最优路径切成两段，那么每一段都是一条（局部）最优路径</strong>。</p>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List, Optional</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CRF</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="string">"""Conditional random field.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    This module implements a conditional random field [LMP01]_. The forward computation</span></span><br><span class="line"><span class="string">    of this class computes the log likelihood of the given sequence of tags and</span></span><br><span class="line"><span class="string">    emission score tensor. This class also has `~CRF.decode` method which finds</span></span><br><span class="line"><span class="string">    the best tag sequence given an emission score tensor using `Viterbi algorithm`_.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        num_tags: Number of tags.</span></span><br><span class="line"><span class="string">        batch_first: Whether the first dimension corresponds to the size of a minibatch.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        start_transitions (`~torch.nn.Parameter`): Start transition score tensor of size</span></span><br><span class="line"><span class="string">            ``(num_tags,)``.</span></span><br><span class="line"><span class="string">        end_transitions (`~torch.nn.Parameter`): End transition score tensor of size</span></span><br><span class="line"><span class="string">            ``(num_tags,)``.</span></span><br><span class="line"><span class="string">        transitions (`~torch.nn.Parameter`): Transition score tensor of size</span></span><br><span class="line"><span class="string">            ``(num_tags, num_tags)``.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .. [LMP01] Lafferty, J., McCallum, A., Pereira, F. (2001).</span></span><br><span class="line"><span class="string">       "Conditional random fields: Probabilistic models for segmenting and</span></span><br><span class="line"><span class="string">       labeling sequence data". *Proc. 18th International Conf. on Machine</span></span><br><span class="line"><span class="string">       Learning*. Morgan Kaufmann. pp. 282–289.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .. _Viterbi algorithm: https://en.wikipedia.org/wiki/Viterbi_algorithm</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num_tags: int, batch_first: bool = False)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">if</span> num_tags &lt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f'invalid number of tags: <span class="subst">&#123;num_tags&#125;</span>'</span>)</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.num_tags = num_tags</span><br><span class="line">        self.batch_first = batch_first</span><br><span class="line">        self.start_transitions = nn.Parameter(torch.empty(num_tags))</span><br><span class="line">        self.end_transitions = nn.Parameter(torch.empty(num_tags))</span><br><span class="line">        self.transitions = nn.Parameter(torch.empty(num_tags, num_tags))</span><br><span class="line"></span><br><span class="line">        self.reset_parameters()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset_parameters</span><span class="params">(self)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""Initialize the transition parameters.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        The parameters will be initialized randomly from a uniform distribution</span></span><br><span class="line"><span class="string">        between -0.1 and 0.1.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        nn.init.uniform_(self.start_transitions, <span class="number">-0.1</span>, <span class="number">0.1</span>)</span><br><span class="line">        nn.init.uniform_(self.end_transitions, <span class="number">-0.1</span>, <span class="number">0.1</span>)</span><br><span class="line">        nn.init.uniform_(self.transitions, <span class="number">-0.1</span>, <span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span> -&gt; str:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f'<span class="subst">&#123;self.__class__.__name__&#125;</span>(num_tags=<span class="subst">&#123;self.num_tags&#125;</span>)'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            self,</span></span></span><br><span class="line"><span class="function"><span class="params">            emissions: torch.Tensor,</span></span></span><br><span class="line"><span class="function"><span class="params">            tags: torch.LongTensor,</span></span></span><br><span class="line"><span class="function"><span class="params">            mask: Optional[torch.ByteTensor] = None,</span></span></span><br><span class="line"><span class="function"><span class="params">            reduction: str = <span class="string">'sum'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span> -&gt; torch.Tensor:</span></span><br><span class="line">        <span class="string">"""Compute the conditional log likelihood of a sequence of tags given emission scores.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            emissions (`~torch.Tensor`): Emission score tensor of size</span></span><br><span class="line"><span class="string">                ``(seq_length, batch_size, num_tags)`` if ``batch_first`` is ``False``,</span></span><br><span class="line"><span class="string">                ``(batch_size, seq_length, num_tags)`` otherwise.</span></span><br><span class="line"><span class="string">            tags (`~torch.LongTensor`): Sequence of tags tensor of size</span></span><br><span class="line"><span class="string">                ``(seq_length, batch_size)`` if ``batch_first`` is ``False``,</span></span><br><span class="line"><span class="string">                ``(batch_size, seq_length)`` otherwise.</span></span><br><span class="line"><span class="string">            mask (`~torch.ByteTensor`): Mask tensor of size ``(seq_length, batch_size)``</span></span><br><span class="line"><span class="string">                if ``batch_first`` is ``False``, ``(batch_size, seq_length)`` otherwise.</span></span><br><span class="line"><span class="string">            reduction: Specifies  the reduction to apply to the output:</span></span><br><span class="line"><span class="string">                ``none|sum|mean|token_mean``. ``none``: no reduction will be applied.</span></span><br><span class="line"><span class="string">                ``sum``: the output will be summed over batches. ``mean``: the output will be</span></span><br><span class="line"><span class="string">                averaged over batches. ``token_mean``: the output will be averaged over tokens.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            `~torch.Tensor`: The log likelihood. This will have size ``(batch_size,)`` if</span></span><br><span class="line"><span class="string">            reduction is ``none``, ``()`` otherwise.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self._validate(emissions, tags=tags, mask=mask)</span><br><span class="line">        <span class="keyword">if</span> reduction <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'none'</span>, <span class="string">'sum'</span>, <span class="string">'mean'</span>, <span class="string">'token_mean'</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f'invalid reduction: <span class="subst">&#123;reduction&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">if</span> mask <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            mask = torch.ones_like(tags, dtype=torch.uint8)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.batch_first:</span><br><span class="line">            emissions = emissions.transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            tags = tags.transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            mask = mask.transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        numerator = self._compute_score(emissions, tags, mask)</span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        denominator = self._compute_normalizer(emissions, mask)</span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        llh = numerator - denominator</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> reduction == <span class="string">'none'</span>:</span><br><span class="line">            <span class="keyword">return</span> llh</span><br><span class="line">        <span class="keyword">if</span> reduction == <span class="string">'sum'</span>:</span><br><span class="line">            <span class="keyword">return</span> llh.sum()</span><br><span class="line">        <span class="keyword">if</span> reduction == <span class="string">'mean'</span>:</span><br><span class="line">            <span class="keyword">return</span> llh.mean()</span><br><span class="line">        <span class="keyword">assert</span> reduction == <span class="string">'token_mean'</span></span><br><span class="line">        <span class="keyword">return</span> llh.sum() / mask.type_as(emissions).sum()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decode</span><span class="params">(self, emissions: torch.Tensor,</span></span></span><br><span class="line"><span class="function"><span class="params">               mask: Optional[torch.ByteTensor] = None)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="string">"""Find the most likely tag sequence using Viterbi algorithm.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            emissions (`~torch.Tensor`): Emission score tensor of size</span></span><br><span class="line"><span class="string">                ``(seq_length, batch_size, num_tags)`` if ``batch_first`` is ``False``,</span></span><br><span class="line"><span class="string">                ``(batch_size, seq_length, num_tags)`` otherwise.</span></span><br><span class="line"><span class="string">            mask (`~torch.ByteTensor`): Mask tensor of size ``(seq_length, batch_size)``</span></span><br><span class="line"><span class="string">                if ``batch_first`` is ``False``, ``(batch_size, seq_length)`` otherwise.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Returns:</span></span><br><span class="line"><span class="string">            List of list containing the best tag sequence for each batch.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self._validate(emissions, mask=mask)</span><br><span class="line">        <span class="keyword">if</span> mask <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            mask = emissions.new_ones(emissions.shape[:<span class="number">2</span>], dtype=torch.uint8)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.batch_first:</span><br><span class="line">            emissions = emissions.transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            mask = mask.transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self._viterbi_decode(emissions, mask)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_validate</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            self,</span></span></span><br><span class="line"><span class="function"><span class="params">            emissions: torch.Tensor,</span></span></span><br><span class="line"><span class="function"><span class="params">            tags: Optional[torch.LongTensor] = None,</span></span></span><br><span class="line"><span class="function"><span class="params">            mask: Optional[torch.ByteTensor] = None)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="keyword">if</span> emissions.dim() != <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f'emissions must have dimension of 3, got <span class="subst">&#123;emissions.dim()&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">if</span> emissions.size(<span class="number">2</span>) != self.num_tags:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">f'expected last dimension of emissions is <span class="subst">&#123;self.num_tags&#125;</span>, '</span></span><br><span class="line">                <span class="string">f'got <span class="subst">&#123;emissions.size(<span class="number">2</span>)&#125;</span>'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> tags <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> emissions.shape[:<span class="number">2</span>] != tags.shape:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(</span><br><span class="line">                    <span class="string">'the first two dimensions of emissions and tags must match, '</span></span><br><span class="line">                    <span class="string">f'got <span class="subst">&#123;tuple(emissions.shape[:<span class="number">2</span>])&#125;</span> and <span class="subst">&#123;tuple(tags.shape)&#125;</span>'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> mask <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">if</span> emissions.shape[:<span class="number">2</span>] != mask.shape:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(</span><br><span class="line">                    <span class="string">'the first two dimensions of emissions and mask must match, '</span></span><br><span class="line">                    <span class="string">f'got <span class="subst">&#123;tuple(emissions.shape[:<span class="number">2</span>])&#125;</span> and <span class="subst">&#123;tuple(mask.shape)&#125;</span>'</span>)</span><br><span class="line">            no_empty_seq = <span class="keyword">not</span> self.batch_first <span class="keyword">and</span> mask[<span class="number">0</span>].all()</span><br><span class="line">            no_empty_seq_bf = self.batch_first <span class="keyword">and</span> mask[:, <span class="number">0</span>].all()</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> no_empty_seq <span class="keyword">and</span> <span class="keyword">not</span> no_empty_seq_bf:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">'mask of the first timestep must all be on'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_compute_score</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            self, emissions: torch.Tensor, tags: torch.LongTensor,</span></span></span><br><span class="line"><span class="function"><span class="params">            mask: torch.ByteTensor)</span> -&gt; torch.Tensor:</span></span><br><span class="line">        <span class="comment"># emissions: (seq_length, batch_size, num_tags)</span></span><br><span class="line">        <span class="comment"># tags: (seq_length, batch_size)</span></span><br><span class="line">        <span class="comment"># mask: (seq_length, batch_size)</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.dim() == <span class="number">3</span> <span class="keyword">and</span> tags.dim() == <span class="number">2</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.shape[:<span class="number">2</span>] == tags.shape</span><br><span class="line">        <span class="keyword">assert</span> emissions.size(<span class="number">2</span>) == self.num_tags</span><br><span class="line">        <span class="keyword">assert</span> mask.shape == tags.shape</span><br><span class="line">        <span class="keyword">assert</span> mask[<span class="number">0</span>].all()</span><br><span class="line"></span><br><span class="line">        seq_length, batch_size = tags.shape</span><br><span class="line">        mask = mask.type_as(emissions)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Start transition score and first emission</span></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        score = self.start_transitions[tags[<span class="number">0</span>]]</span><br><span class="line">        score += emissions[<span class="number">0</span>, torch.arange(batch_size), tags[<span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, seq_length):</span><br><span class="line">            <span class="comment"># Transition score to next tag, only added if next timestep is valid (mask == 1)</span></span><br><span class="line">            <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">            score += self.transitions[tags[i - <span class="number">1</span>], tags[i]] * mask[i]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Emission score for next tag, only added if next timestep is valid (mask == 1)</span></span><br><span class="line">            <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">            score += emissions[i, torch.arange(batch_size), tags[i]] * mask[i]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># End transition score</span></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        seq_ends = mask.long().sum(dim=<span class="number">0</span>) - <span class="number">1</span></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        last_tags = tags[seq_ends, torch.arange(batch_size)]</span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        score += self.end_transitions[last_tags]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> score</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_compute_normalizer</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            self, emissions: torch.Tensor, mask: torch.ByteTensor)</span> -&gt; torch.Tensor:</span></span><br><span class="line">        <span class="comment"># emissions: (seq_length, batch_size, num_tags)</span></span><br><span class="line">        <span class="comment"># mask: (seq_length, batch_size)</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.dim() == <span class="number">3</span> <span class="keyword">and</span> mask.dim() == <span class="number">2</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.shape[:<span class="number">2</span>] == mask.shape</span><br><span class="line">        <span class="keyword">assert</span> emissions.size(<span class="number">2</span>) == self.num_tags</span><br><span class="line">        <span class="keyword">assert</span> mask[<span class="number">0</span>].all()</span><br><span class="line"></span><br><span class="line">        seq_length = emissions.size(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Start transition score and first emission; score has size of</span></span><br><span class="line">        <span class="comment"># (batch_size, num_tags) where for each batch, the j-th column stores</span></span><br><span class="line">        <span class="comment"># the score that the first timestep has tag j</span></span><br><span class="line">        <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">        score = self.start_transitions + emissions[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, seq_length):</span><br><span class="line">            <span class="comment"># Broadcast score for every possible next tag</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags, 1)</span></span><br><span class="line">            broadcast_score = score.unsqueeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Broadcast emission score for every possible current tag</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, 1, num_tags)</span></span><br><span class="line">            broadcast_emissions = emissions[i].unsqueeze(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Compute the score tensor of size (batch_size, num_tags, num_tags) where</span></span><br><span class="line">            <span class="comment"># for each sample, entry at row i and column j stores the sum of scores of all</span></span><br><span class="line">            <span class="comment"># possible tag sequences so far that end with transitioning from tag i to tag j</span></span><br><span class="line">            <span class="comment"># and emitting</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags, num_tags)</span></span><br><span class="line">            next_score = broadcast_score + self.transitions + broadcast_emissions</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Sum over all possible current tags, but we're in score space, so a sum</span></span><br><span class="line">            <span class="comment"># becomes a log-sum-exp: for each sample, entry i stores the sum of scores of</span></span><br><span class="line">            <span class="comment"># all possible tag sequences so far, that end in tag i</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">            next_score = torch.logsumexp(next_score, dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Set score to the next score if this timestep is valid (mask == 1)</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">            score = torch.where(mask[i].unsqueeze(<span class="number">1</span>), next_score, score)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># End transition score</span></span><br><span class="line">        <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">        score += self.end_transitions</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Sum (log-sum-exp) over all possible tags</span></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        <span class="keyword">return</span> torch.logsumexp(score, dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_viterbi_decode</span><span class="params">(self, emissions: torch.FloatTensor,</span></span></span><br><span class="line"><span class="function"><span class="params">                        mask: torch.ByteTensor)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        <span class="comment"># emissions: (seq_length, batch_size, num_tags)</span></span><br><span class="line">        <span class="comment"># mask: (seq_length, batch_size)</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.dim() == <span class="number">3</span> <span class="keyword">and</span> mask.dim() == <span class="number">2</span></span><br><span class="line">        <span class="keyword">assert</span> emissions.shape[:<span class="number">2</span>] == mask.shape</span><br><span class="line">        <span class="keyword">assert</span> emissions.size(<span class="number">2</span>) == self.num_tags</span><br><span class="line">        <span class="keyword">assert</span> mask[<span class="number">0</span>].all()</span><br><span class="line"></span><br><span class="line">        seq_length, batch_size = mask.shape</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Start transition and first emission</span></span><br><span class="line">        <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">        score = self.start_transitions + emissions[<span class="number">0</span>]</span><br><span class="line">        history = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># score is a tensor of size (batch_size, num_tags) where for every batch,</span></span><br><span class="line">        <span class="comment"># value at column j stores the score of the best tag sequence so far that ends</span></span><br><span class="line">        <span class="comment"># with tag j</span></span><br><span class="line">        <span class="comment"># history saves where the best tags candidate transitioned from; this is used</span></span><br><span class="line">        <span class="comment"># when we trace back the best tag sequence</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Viterbi algorithm recursive case: we compute the score of the best tag sequence</span></span><br><span class="line">        <span class="comment"># for every possible next tag</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, seq_length):</span><br><span class="line">            <span class="comment"># Broadcast viterbi score for every possible next tag</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags, 1)</span></span><br><span class="line">            broadcast_score = score.unsqueeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Broadcast emission score for every possible current tag</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, 1, num_tags)</span></span><br><span class="line">            broadcast_emission = emissions[i].unsqueeze(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Compute the score tensor of size (batch_size, num_tags, num_tags) where</span></span><br><span class="line">            <span class="comment"># for each sample, entry at row i and column j stores the score of the best</span></span><br><span class="line">            <span class="comment"># tag sequence so far that ends with transitioning from tag i to tag j and emitting</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags, num_tags)</span></span><br><span class="line">            next_score = broadcast_score + self.transitions + broadcast_emission</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Find the maximum score over all possible current tag</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">            next_score, indices = next_score.max(dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Set score to the next score if this timestep is valid (mask == 1)</span></span><br><span class="line">            <span class="comment"># and save the index that produces the next score</span></span><br><span class="line">            <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">            score = torch.where(mask[i].unsqueeze(<span class="number">1</span>), next_score, score)</span><br><span class="line">            history.append(indices)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># End transition score</span></span><br><span class="line">        <span class="comment"># shape: (batch_size, num_tags)</span></span><br><span class="line">        score += self.end_transitions</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Now, compute the best path for each sample</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># shape: (batch_size,)</span></span><br><span class="line">        seq_ends = mask.long().sum(dim=<span class="number">0</span>) - <span class="number">1</span></span><br><span class="line">        best_tags_list = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> range(batch_size):</span><br><span class="line">            <span class="comment"># Find the tag which maximizes the score at the last timestep; this is our best tag</span></span><br><span class="line">            <span class="comment"># for the last timestep</span></span><br><span class="line">            _, best_last_tag = score[idx].max(dim=<span class="number">0</span>)</span><br><span class="line">            best_tags = [best_last_tag.item()]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># We trace back where the best last tag comes from, append that to our best tag</span></span><br><span class="line">            <span class="comment"># sequence, and trace it back again, and so on</span></span><br><span class="line">            <span class="keyword">for</span> hist <span class="keyword">in</span> reversed(history[:seq_ends[idx]]):</span><br><span class="line">                best_last_tag = hist[idx][best_tags[<span class="number">-1</span>]]</span><br><span class="line">                best_tags.append(best_last_tag.item())</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Reverse the order because we start from the last timestep</span></span><br><span class="line">            best_tags.reverse()</span><br><span class="line">            best_tags_list.append(best_tags)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> best_tags_list</span><br></pre></td></tr></table></figure>
+<h4 id="逐帧-softmax-和-CRF-的异同"><a href="#逐帧-softmax-和-CRF-的异同" class="headerlink" title="逐帧 softmax 和 CRF 的异同?"></a>逐帧 softmax 和 CRF 的异同?</h4><p><strong>逐帧softmax</strong></p>
+<p>CRF 主要用于序列标注问题，可以简单理解为是<strong>给序列中的每一帧都进行分类</strong>，既然是分类，很自然想到将这个序列用 CNN 或者 RNN 进行编码后，接一个全连接层用 softmax 激活，如下图所示：</p>
+<p><img src="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/encoder.png" alt="avatar"></p>
+<p>然而，<strong>逐帧softmax并没有直接考虑输出的上下文关联</strong>。比如：当我们设计标签时，比如用 s、b、m、e 的 4 个标签来做字标注法的分词，目标输出序列本身会带有一些上下文关联，如 s 后面就不能接 m 和 e，等等。逐标签 softmax 并没有考虑这种输出层面的上下文关联，所以它意味着把这些关联放到了编码层面，希望模型能自己学到这些内容，但有时候会“强模型所难”。 </p>
+<p>而 CRF 则更直接一点，它<strong>将输出层面的关联分离了出来</strong>，这使得模型在学习上更为“从容”,CRF在输出端显式地考虑了上下文关联.</p>
+<p><img src="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/encoder-crf.png" alt="avatar"></p>
+<p>如果仅仅是引入输出的关联，还不仅仅是 CRF 的全部，CRF 的真正精巧的地方，是它以路径为单位，考虑的是路径的概率。 </p>
+<p>假如一个输入有 n 帧，每一帧的标签有 k 中可能性，那么理论上就有$k^n$中不同的输入。我们将它用如下的网络图进行简单的可视化。在下图中，每个点代表一个标签的可能性，点之间的连线表示标签之间的关联，而每一种标注结果，都对应着图上的一条完整的路径。</p>
+<p><img src="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/crf-v.png" alt="avatar"></p>
+<p>而在序列标注任务中，我们的正确答案是一般是唯一的。比如“今天天气不错”，如果对应的分词结果是“今天/天气/不/错”，那么目标输出序列就是 bebess，除此之外别的路径都不符合要求。</p>
+<p>换言之，在序列标注任务中，我们的研究的基本单位应该是路径，我们要做的事情，是从 $k^n$ 条路径选出正确的一条，那就意味着，如果将它视为一个分类问题，那么将是 $k^n$ 类中选一类的分类问题。</p>
+<p>这就是逐帧 softmax 和 CRF 的根本不同了：<strong>前者将序列标注看成是 n 个 k 分类问题，后者将序列标注看成是 1 个$ k^n$ 分类问题</strong>。</p>
+<h4 id="CRF"><a href="#CRF" class="headerlink" title="CRF++"></a>CRF++</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>CRF++ 是C++ 实现的CRF 工具。</p>
+<p><a href="https://taku910.github.io/crfpp/" target="_blank" rel="noopener">文档</a></p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/taku910/crfpp.git</span><br><span class="line">cd crfpp</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>如果make的时候发生找不到winmain.h的错误: 可以下面这种方式修复：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">'/#include "winmain.h"/d'</span> crf_test.cpp</span><br><span class="line">sed -i <span class="string">'/#include "winmain.h"/d'</span> crf_learn.cpp</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>后面需要用到Python 使用训练好的模型所以也一起安装CRFPP, cd python 目录下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd python</span><br><span class="line">python setup.py build</span><br><span class="line">sudo python setup.py install</span><br></pre></td></tr></table></figure>
+<p>然后在Python 或者Ipython 里输入 <code>import CRFPP</code> 如果发生如下错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: libcrfpp.so<span class="number">.0</span>: cannot open shared object file: No such file <span class="keyword">or</span> directory</span><br></pre></td></tr></table></figure>
+<p>可用下面的方法解决</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf</span><br><span class="line"><span class="comment"># 添加</span></span><br><span class="line">include /usr/local/lib</span><br><span class="line"><span class="comment"># 保存后加载一下</span></span><br><span class="line">sudo /sbin/ldconfig -v</span><br></pre></td></tr></table></figure>
+<h5 id="训练数据格式"><a href="#训练数据格式" class="headerlink" title="训练数据格式"></a>训练数据格式</h5><p>对于训练数据，首先需要多列，但不能不一致，既在一个文件里有的行是两列，有的行是三列（这种格式是错误的）；其次第一列代表的是需要标注的<strong>字或词</strong>，最后一列是输出位标记tag，\如果有额外的特征，例如词性什么的，可以加到中间列里，所以训练集或者测试集的文件最少要有两列。以分词举例，标签为BMES</p>
+<p>东    N    B<br>南    N    M<br>大    N    M<br>学    N    E<br>欢    V    B<br>迎    V    E<br>您    N    S</p>
+<p>其中第3列是标签，也是测试文件中需要预测的结果，有BMES 4种状态。第二列是词性，不是必须的。</p>
+<h5 id="特征模板"><a href="#特征模板" class="headerlink" title="特征模板"></a>特征模板</h5><p>每一行模板生成一组状态特征函数，数量是$L<em>N$ 个，$L$是标签状态数是4个。$N$是此行模板在训练集上展开后的唯一样本数，在这个例子中，第一列的唯一字数是7个，所以有$L</em>N = 4*7=28$。例如：U01:%x[0,0]，生成如下28个函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func1 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func2 = <span class="keyword">if</span> (output = M and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func3 = <span class="keyword">if</span> (output = E and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func4 = <span class="keyword">if</span> (output = S and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func5 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"南"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">...</span><br><span class="line">func25 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func26 = <span class="keyword">if</span> (output = M and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func27 = <span class="keyword">if</span> (output = E and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func28 = <span class="keyword">if</span> (output = S and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这些函数经过训练后，其权值表示函数内文字对应该标签的概率（形象说法，概率和可大于1）。</p>
+<h6 id="unigram"><a href="#unigram" class="headerlink" title="unigram"></a>unigram</h6><p>U00:%x[-2,0]<br>U01:%x[-1,0]<br>U02:%x[0,0]<br>U03:%x[1,0]<br>U04:%x[2,0]<br>U05:%x[-2,0]/%x[-1,0]/%x[0,0]<br>U06:%x[-1,0]/%x[0,0]/%x[1,0]<br>U07:%x[0,0]/%x[1,0]/%x[2,0]<br>U08:%x[-1,0]/%x[0,0]<br>U09:%x[0,0]/%x[1,0] </p>
+<p>这是CRF++例子中给出的模板，一共有９个模板，先看第一个模板，表示当前词和前面的第二个词组成的特征，以‘小明今天穿了一件红色上衣’为例，符合CRF++处理格式的这句话应该变成如下形式：<br>小　Ｂ<br>明　Ｉ<br>今　Ｂ   &lt;— current word<br>天　Ｉ<br>穿　Ｓ<br>了　Ｓ<br>一　Ｂ<br>件　Ｉ<br>红　Ｂ<br>色　Ｉ<br>上　Ｂ<br>衣　Ｉ<br>假设我们有三个标记tag，Ｂ（表示一个词的开头那个字），Ｉ（表示一个词的结尾那个字），Ｓ（表示单个字的词），先看第一个模板Ｕ00:%x[-2,0],第一个模板产生的特征如下： 如果当前词是‘今’，那-2位置对应的字就是‘小’， 每个特征对应的字如下： </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征模板</th>
+<th>意义</th>
+<th>代表特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U00:%x[-2,0]</td>
+<td>-2行，0列</td>
+<td>小</td>
+</tr>
+<tr>
+<td>U01:%x[-1,0]</td>
+<td>-1行，0列</td>
+<td>明</td>
+</tr>
+<tr>
+<td>U02:%x[0,0]</td>
+<td>0行，0列</td>
+<td>今</td>
+</tr>
+<tr>
+<td>U03:%x[1,0]</td>
+<td>1行，0列</td>
+<td>天</td>
+</tr>
+<tr>
+<td>U04:%x[2,0]</td>
+<td>2行，0列</td>
+<td>穿</td>
+</tr>
+<tr>
+<td>U05:%x[-2,0]/%x[-1,0]/%x[0,0]</td>
+<td>-2行0列、-1行0列与0行0列的组合</td>
+<td>小/明/今</td>
+</tr>
+<tr>
+<td>U06:%x[-1,0]/%x[0,0]/%x[1,0]</td>
+<td>-1行0列、0行0列与1行0列的组合</td>
+<td>明/今/天</td>
+</tr>
+<tr>
+<td>U07:%x[0,0]/%x[1,0]/%x[2,0]</td>
+<td>0行0列、1行0列与2行0列的组合</td>
+<td>今/天/穿</td>
+</tr>
+<tr>
+<td>U08:%x[-1,0]/%x[0,0]</td>
+<td>-1行0列与0行0列的组合</td>
+<td>明/今</td>
+</tr>
+<tr>
+<td>U09:%x[0,0]/%x[1,0]</td>
+<td>0行0列与1行0列的组合</td>
+<td>今/天</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>根据第一个模板U00:%x[-2,0]能得到的转移特征函数如下：<br><code>func1=if(output=B and feature=&#39;U00:小&#39; )　return 1 else return 0</code><br>其中output=B 指的是当前词（字）的预测标记，也就是’今‘的预测标记，每个模板会把所有可能的标记输出都列一遍，然后通过训练确定每种标记的权重，合理的标记在训练样本中出现的次数多，对应的权重就高，不合理的标记在训练样本中出现的少，对应的权重就少，但是在利用模板生成转移特征函数是会把所有可能的特征函数都列出来，由模型通过训练决定每个特征的重要程度。<br><code>func2=if(output=M and feature=’U00:小’) return 1 else return 0</code><br><code>func3=if(output=E and feature=’U00:小’) return 1 else return 0</code><br><code>func4=if(output=S and feature=’U00:小) return 1 else return 0</code><br>得到4个特征函数之后当前这个字’今‘的特征函数利用第一个模板就得到全部了，然后扫描下一个字‘天‘，以’天‘字作为当前字预测这个字的标记tag,同样会得到4个特征函数：<br><code>func5=if(output=B and feature=’U00:明’) return 1 else return 0</code><br><code>func6=if(output=M and feature=’U00:明’) return 1 else return 0</code><br><code>func7=if(output=E and feature=’U00:明’) return 1 else return 0</code><br><code>func7=if(output=S and feature=’U00:明’) return 1 else return 0</code><br>特征函数中的feature指的是当前词的-2位置对应的词或对应的词的特征，因为在这里没有其他特征了，所以用字本身做特征，有的会有词性，那feature就会是’明‘这个字对应的词性而不是字本身了。 这个feature的作用就是确定模板所确定的当前词和临近词</p>
+<h6 id="bigram"><a href="#bigram" class="headerlink" title="bigram"></a>bigram</h6><p>与Unigram不同的是，Bigram类型模板生成的函数会多一个参数：上个节点的标签 $y_{i-1}$。生成函B01:%x[0,0] (当前词为“东南大学欢迎您” 的“您”)：<code>func1 = if (prev_output = E and output = S and feature=B01:&quot;您&quot;) return 1 else return 0</code></p>
+<p>这样，每行模板则会生成 $L<em>L</em>N$ 个特征函数。经过训练后，这些函数的权值反映了上一个节点的标签对当前节点的影响。(L表示隐状态的个数，如BMES为四个隐状态，N表示训练语料的大小。)</p>
+<p>trigam理论上也是可行的，考虑前$y_{i-2},y_{i-1}$对$y_i$的影响，不过crf++并没有实现，这实际和二阶HMM模型类似的，有论文详细描述过其求解，比较复杂，但是其效果提升并未多大，所以一般不使用。</p>
+<h6 id="产生特征函数"><a href="#产生特征函数" class="headerlink" title="产生特征函数"></a>产生特征函数</h6><p>训练阶段将遍历数据逐一产生特征函数，写成伪码过程为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">m：样本个数</span><br><span class="line">k：模板个数</span><br><span class="line">templates：一组特征模板</span><br><span class="line">genFeatureFunc：根据模板和序列x，y和位置i产生特征函数</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; k; j++)&#123;</span><br><span class="line">        genFeatureFunc(templates[j],x,y,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="特征函数"><a href="#特征函数" class="headerlink" title="特征函数"></a>特征函数</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> B</span><br><span class="line"><span class="number">16</span> U00:-</span><br><span class="line"><span class="number">20</span> U00:<span class="number">0</span></span><br><span class="line"><span class="number">24</span> U00:<span class="number">1</span></span><br><span class="line"><span class="number">28</span> U00:<span class="number">2</span></span><br><span class="line"><span class="number">32</span> U00:<span class="number">3</span></span><br><span class="line"><span class="number">36</span> U00:<span class="number">4</span></span><br><span class="line"><span class="number">40</span> U00:<span class="number">5</span></span><br><span class="line"><span class="number">44</span> U00:<span class="number">6</span></span><br><span class="line"><span class="number">48</span> U00:<span class="number">7</span></span><br><span class="line"><span class="number">52</span> U00:<span class="number">8</span></span><br><span class="line"><span class="number">56</span> U00:<span class="number">9</span></span><br><span class="line"><span class="number">60</span> U00:_B<span class="number">-1</span></span><br><span class="line"><span class="number">64</span> U00:_B<span class="number">-2</span></span><br><span class="line">……</span><br><span class="line"><span class="number">17404</span> U01:厨</span><br><span class="line"><span class="number">17408</span> U01:去</span><br><span class="line"><span class="number">17412</span> U01:县</span><br><span class="line"><span class="number">17416</span> U01:参</span><br><span class="line"><span class="number">17420</span> U01:又</span><br><span class="line"><span class="number">17424</span> U01:叉</span><br><span class="line"><span class="number">17428</span> U01:及</span><br><span class="line"><span class="number">17432</span> U01:友</span><br><span class="line"><span class="number">17436</span> U01:双</span><br><span class="line"><span class="number">17440</span> U01:反</span><br><span class="line"><span class="number">17444</span> U01:发</span><br><span class="line"><span class="number">17448</span> U01:叔</span><br><span class="line"><span class="number">17452</span> U01:取</span><br><span class="line"><span class="number">17456</span> U01:受</span><br><span class="line">……</span><br><span class="line"><span class="number">77800</span> U05:_B<span class="number">-1</span>/一/个</span><br><span class="line"><span class="number">107540</span> U05:一/方/面</span><br><span class="line"><span class="number">107544</span> U05:一/无/所</span><br><span class="line"><span class="number">107548</span> U05:一/日/三</span><br><span class="line"><span class="number">107552</span> U05:一/日/为</span><br><span class="line"><span class="number">107556</span> U05:一/日/之</span><br><span class="line">……</span><br><span class="line"><span class="number">566536</span> U06:万/吨/_B+<span class="number">1</span></span><br><span class="line">……</span><br><span class="line"><span class="number">2159864</span> U09:ｖ/ｅ</span><br></pre></td></tr></table></figure>
+<p>按照[id] [参数o]的格式排列，注意到id不是连续的，而是隔了四个（状态s隐藏起来了），这表示这四个标签（BMES）和公共的参数o组合成了四个特征函数。特别的，0-15为BEMS转移到BEMS的转移函数，也就是f(s’, s, o=null)。_B-1表示句子第一个单词前面的一个单词，_B+1表示末尾后面的一个单词.</p>
+<h6 id="特征函数权值"><a href="#特征函数权值" class="headerlink" title="特征函数权值"></a>特征函数权值</h6><p>后面的小数依id顺序对应每个特征函数的权值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.0491453814148901</span></span><br><span class="line"><span class="number">7.0388286231971700</span></span><br><span class="line"><span class="number">-7.2545558164093009</span></span><br><span class="line"><span class="number">5.2799470769112835</span></span><br><span class="line"><span class="number">-8.5333633546653758</span></span><br><span class="line"><span class="number">-5.3549190735606933</span></span><br><span class="line"><span class="number">5.2575182675282477</span></span><br><span class="line"><span class="number">-5.4259109736696054</span></span><br></pre></td></tr></table></figure>
+<p>比如说有一个句子“商品和服务”，对于每个字都按照上述模板生成一系列U特征函数的参数代入，得到一些类似010101的函数返回值，乘上这些函数的权值求和，就得到了各个标签的分数，由大到小代表输出这些标签的可能性。至于B特征函数（这里特指简单的f(s’, s)），在Viterbi后向解码的时候，前一个标签确定了后就可以代入当前的B特征函数，计算出每个输出标签的分数，再次求和排序即可。</p>
+<h5 id="训练及预测"><a href="#训练及预测" class="headerlink" title="训练及预测"></a>训练及预测</h5><p>CRF++的训练命令一般格式如下：<br><code>crf_learn  -f 3 -c 4.0 template train.data model -t</code><br>其中，template为模板文件，train.data为训练语料，-t表示可以得到一个model文件和一个model.txt文件，其他可选参数说明如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-f, –freq=INT使用属性的出现次数不少于INT(默认为<span class="number">1</span>)</span><br><span class="line">-m, –maxiter=INT设置INT为LBFGS的最大迭代次数 (默认<span class="number">10</span>k)</span><br><span class="line">-c, –cost=FLOAT    设置FLOAT为代价参数，过大会过度拟合 (默认<span class="number">1.0</span>)</span><br><span class="line">-e, –eta=FLOAT设置终止标准FLOAT(默认<span class="number">0.0001</span>)</span><br><span class="line">-C, –convert将文本模式转为二进制模式</span><br><span class="line">-t, –textmodel为调试建立文本模型文件</span><br><span class="line">-a, –algorithm=(CRF|MIRA)    选择训练算法，默认为CRF-L2</span><br><span class="line">-p, –thread=INT线程数(默认<span class="number">1</span>)，利用多个CPU减少训练时间</span><br><span class="line">-H, –shrinking-size=INT    设置INT为最适宜的跌代变量次数 (默认<span class="number">20</span>)</span><br><span class="line">-v, –version显示版本号并退出</span><br><span class="line">-h, –help显示帮助并退出</span><br></pre></td></tr></table></figure>
+<p>在训练过程中，会输出一些信息，其意义如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iter：迭代次数。当迭代次数达到maxiter时，迭代终止</span><br><span class="line">terr：标记错误率</span><br><span class="line">serr：句子错误率</span><br><span class="line">obj：当前对象的值。当这个值收敛到一个确定值的时候，训练完成</span><br><span class="line">diff：与上一个对象值之间的相对差。当此值低于eta时，训练完成</span><br></pre></td></tr></table></figure>
+<p>在训练完模型后，我们可以使用训练好的模型对新数据进行预测，预测命令格式如下：<br><code>crf_test -m model seg_word_predict.data &gt; predict.txt</code></p>
+<p><code>-m model</code>表示使用我们刚刚训练好的model模型，预测的数据文件为seg_word_predict.data, <code>&gt; predict.txt</code>表示将预测后的数据写入到predict.txt中。</p>
+<h6 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> CRFPP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CRFModel</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, model=<span class="string">'model_name'</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        函数说明: 类初始化</span></span><br><span class="line"><span class="string">        :param model: 模型名称</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.model = model</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_tagger</span><span class="params">(self, tag_data)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        函数说明: 添加语料</span></span><br><span class="line"><span class="string">        :param tag_data: 数据</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        word_str = tag_data.strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(self.model):</span><br><span class="line">            print(<span class="string">'模型不存在,请确认模型路径是否正确!'</span>)</span><br><span class="line">            exit()</span><br><span class="line">        tagger = CRFPP.Tagger(<span class="string">"-m &#123;&#125; -v 3 -n2"</span>.format(self.model))</span><br><span class="line">        tagger.clear()</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word_str:</span><br><span class="line">            tagger.add(word)</span><br><span class="line">        tagger.parse()</span><br><span class="line">        <span class="keyword">return</span> tagger</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">text_mark</span><span class="params">(self, tag_data, begin=<span class="string">'B'</span>, middle=<span class="string">'I'</span>, end=<span class="string">'E'</span>, single=<span class="string">'S'</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        文本标记</span></span><br><span class="line"><span class="string">        :param tag_data: 数据</span></span><br><span class="line"><span class="string">        :param begin: 开始标记</span></span><br><span class="line"><span class="string">        :param middle: 中间标记</span></span><br><span class="line"><span class="string">        :param end: 结束标记</span></span><br><span class="line"><span class="string">        :param single: 单字结束标记</span></span><br><span class="line"><span class="string">        :return result: 标记列表</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tagger = self.add_tagger(tag_data)</span><br><span class="line">        size = tagger.size()</span><br><span class="line">        tag_text = <span class="string">""</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, size):</span><br><span class="line">            word, tag = tagger.x(i, <span class="number">0</span>), tagger.y2(i)</span><br><span class="line">            <span class="keyword">if</span> tag <span class="keyword">in</span> [begin, middle]:</span><br><span class="line">                tag_text += word</span><br><span class="line">            <span class="keyword">elif</span> tag <span class="keyword">in</span> [end, single]:</span><br><span class="line">                tag_text += word + <span class="string">"*&amp;*"</span></span><br><span class="line">        result = tag_text.split(<span class="string">'*&amp;*'</span>)</span><br><span class="line">        result.pop()</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">crf_test</span><span class="params">(self, tag_data, separator=<span class="string">'/'</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        函数说明: crf测试</span></span><br><span class="line"><span class="string">        :param tag_data:</span></span><br><span class="line"><span class="string">        :param separator:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        result = self.text_mark(tag_data)</span><br><span class="line">        data = separator.join(result)</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">crf_learn</span><span class="params">(self, filename)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        函数说明: 训练模型</span></span><br><span class="line"><span class="string">        :param filename: 已标注数据源</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        crf_bash = <span class="string">"crf_learn -f 3 -c 4.0 api/template.txt &#123;&#125; &#123;&#125;"</span>.format(filename, self.model)</span><br><span class="line">        process = subprocess.Popen(crf_bash.split(), stdout=subprocess.PIPE)</span><br><span class="line">        output = process.communicate()[<span class="number">0</span>]</span><br><span class="line">        print(output.decode(encoding=<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li><p><a href="https://zhuanlan.zhihu.com/p/37163081" target="_blank" rel="noopener">简明条件随机场CRF介绍 | 附带纯Keras实现</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/qq_37667364/article/details/82919560" target="_blank" rel="noopener">CRF++/CRF/条件随机场的特征函数模板</a></p>
+</li>
+<li><p><a href="https://www.hankcs.com/nlp/the-crf-model-format-description.html" target="_blank" rel="noopener">CRF++模型格式说明</a></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+              <a href="/tags/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/" rel="tag"><i class="fa fa-tag"></i> 序列标注</a>
+              <a href="/tags/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA/" rel="tag"><i class="fa fa-tag"></i> 条件随机场</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/29/%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E5%8F%8A%E6%AF%94%E8%BE%83/" rel="prev" title="文本分类模型及比较">
+      <i class="fa fa-chevron-left"></i> 文本分类模型及比较
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/" rel="next" title="python数据科学速查">
+      python数据科学速查 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#条件随机场-CRF"><span class="nav-number">1.</span> <span class="nav-text">条件随机场(CRF)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#crf-用于序列标注问题"><span class="nav-number">1.1.</span> <span class="nav-text">crf 用于序列标注问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逐帧-softmax-和-CRF-的异同"><span class="nav-number">1.2.</span> <span class="nav-text">逐帧 softmax 和 CRF 的异同?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CRF"><span class="nav-number">1.3.</span> <span class="nav-text">CRF++</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">但行好事，莫问前程！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">399k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
+      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

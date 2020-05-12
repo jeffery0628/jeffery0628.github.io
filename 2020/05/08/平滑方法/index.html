@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="平滑方法">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://protao.github.io/img/2gramsmooth.png">
+<meta property="article:published_time" content="2020-05-08T08:58:53.000Z">
+<meta property="article:modified_time" content="2020-05-11T15:42:34.559Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="自然语言处理基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://protao.github.io/img/2gramsmooth.png">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>平滑方法 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+        <li class="menu-item menu-item-games">
+
+    <a href="/games/" rel="section"><i class="fa fa-gamepad fa-fw"></i>游戏</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          平滑方法
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-11 23:42:34" itemprop="dateModified" datetime="2020-05-11T23:42:34+08:00">2020-05-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">自然语言处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="平滑方法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/08/%E5%B9%B3%E6%BB%91%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://protao.github.io/img/2gramsmooth.png" alt></p>
+<a id="more"></a>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在一个概率模型中，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)：</p>
+<script type="math/tex; mode=display">
+P_{M L E}=\frac{c(x)}{\sum_{e} c(e)}</script><p>然而，由于并没有足够的数据，很多事件 $x$ 并没有在训练数据中出现，也就是 $c(x)=0$，$P_{MLE}=0$这是有问题的，没有在训练数据中出现的数据，并不代表不会在测试数据中出现，如果没有考虑到数据稀疏性，模型就显得太简单了。</p>
+<p>Data sparsity 是 smoothing 的最大原因。Chen &amp; Goodman 在1998 年提到过，几乎所有数据稀疏的场景下，smoothing 都可以帮助提高 performance，而数据稀疏性几乎是所有统计模型都会遇到的问题。而如果你有足够多的训练数据，所有的 parameters 都可以在没有 smoothing 的情况下被准确的估计，那么你总是可以扩展模型，如原来是 bigram，没有数据稀疏，完全可以扩展到 trigram 来提高 performance，如果还没有出现稀疏，就再往高层推，当 parameters 越来越多的时候，数据稀疏再次成为了问题，这时候，用合适的平滑方法可以得到更准确的模型。实际上，无论有多少的数据，平滑几乎总是可以以很小的代价来提高 performance。</p>
+<h3 id="平滑方法"><a href="#平滑方法" class="headerlink" title="平滑方法"></a>平滑方法</h3><h4 id="add-one-smoothing"><a href="#add-one-smoothing" class="headerlink" title="add-one smoothing"></a>add-one smoothing</h4><p>(也叫laplace smoothing),以bigram为例：</p>
+<p>MLE estimate：</p>
+<script type="math/tex; mode=display">
+P_{M L E}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)}{c\left(w_{i-1}\right)}</script><p>Add-one estimate:</p>
+<script type="math/tex; mode=display">
+P_{A d d-1}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+1}{c\left(w_{i-1}\right)+V}</script><p>其中，$V$表示词典大小。</p>
+<p>假设语料库为：</p>
+<blockquote>
+<ol>
+<li>john read moby dick</li>
+<li>mary read a different book</li>
+<li>she read a book by cher</li>
+</ol>
+</blockquote>
+<p>那么，john read a book 这个句子的概率为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(\text { john read a book })&=p(\text { john } |<s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
+&=\frac{c(<s>,john)}{\sum_{w} c(<s>,w)} \frac{c(john,read)}{\sum_{w} c(john,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,<e>)}{\sum_{w} c(book,w)}\\
+&= \frac{1}{3} * \frac{1}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
+&\approx 0.006
+\end{aligned}</script><p>而，cher read a book 这个句子出现的概率是：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(\text { cher read a book })&=p(\text { cher } |<s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
+&=\frac{c(<s>,cher)}{\sum_{w} c(<s>,w)} \frac{c(cher,read)}{\sum_{w} c(cher,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,<e>)}{\sum_{w} c(book,w)}\\
+&= \frac{0}{3} * \frac{0}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
+&\approx 0
+\end{aligned}</script><p>如果使用add-one smoothing：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(\text { john read a book })&=p(\text { john } |<s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
+&= \frac{1+1}{3+11} * \frac{1+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
+&\approx 0.0001
+\end{aligned}</script><script type="math/tex; mode=display">
+\begin{aligned}
+p(\text { cher read a book })&=p(\text { cher } |<s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
+&= \frac{0+1}{3+11} * \frac{0+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
+&\approx 0.00003
+\end{aligned}</script><p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
+<h4 id="Additive-smoothing"><a href="#Additive-smoothing" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h4><p>对加 1 平滑的改进就是把 1 改成 $\delta$，且 $0&lt;\delta$</p>
+<script type="math/tex; mode=display">
+P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\delta}{c\left(w_{i-1}\right)+\delta V}</script><p>可以把$\delta$看作是一个可以调节的超参数。</p>
+<h4 id="Good-Turing-smoothing"><a href="#Good-Turing-smoothing" class="headerlink" title="Good-Turing smoothing"></a>Good-Turing smoothing</h4><p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram.</p>
+<p>举个例子：假设你在钓鱼，然后抓到了 18 条鱼，种类如下：10条鲤鱼, 3条黑鱼, 2条刀鱼, 1条鲨鱼, 1条草鱼, 1条鳗鱼，那么</p>
+<ol>
+<li><p>下一个钓到的鱼是鲨鱼的概率是多少？</p>
+<p>1/18</p>
+</li>
+<li><p>下一条与是新鱼种（之前没有出现过）的概率是多少？</p>
+<p>3/18(没有出现过的按出现过一次算)</p>
+</li>
+<li><p>下一条抓到的鱼是鲨鱼的概率是多少？</p>
+<p>首先肯定的是概率小于1/18  —&gt; good turing</p>
+</li>
+</ol>
+<p>在good turing 下,对参数的估计分两种情况：</p>
+<ol>
+<li>没有出现过的：$P_{GT}=\frac{N_1}{N}$</li>
+<li>出现过的：$P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}$</li>
+</ol>
+<p>其中，$N_c$表示出现c次的单词个数,$N$代表样本总数。<br>比如：</p>
+<blockquote>
+<p>sam i am i am sam i do not eat </p>
+<p>sam：2次</p>
+<p>i：3次</p>
+<p>am：2次</p>
+<p>do：1次</p>
+<p>not：1次</p>
+<p>eat：1次</p>
+</blockquote>
+<p>有：$N_3=1,N_2=2,N_1=3$</p>
+<p>对于第3个问题：$P_{GT}=\frac{(1+1)<em>1}{3</em>18}=\frac{1}{27}$.</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>由公式：$P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}$在计算当前项$c$ 的时候，需要计算到$c+1$的$N_{c+1}$,若$N_{c+1}=0$，则会导致概率为0.</p>
+<p>解决方法：可以利用机器学习中回归算法对$N_1,N_2,\ldots,N_c,N_{c+1}$进行拟合，进而得出$N_{c+1}$的值。</p>
+<h4 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h4><p><strong>基本思想</strong>：在计算Trigram概率的同时，考虑Unigram，Bigram，Trigram出现的次数。</p>
+<p>举个例子：有</p>
+<p><code>C(in the kitchen)=0</code>,<code>C(the kitchen)=3</code>,<code>C(kitchen)=4</code>,<code>C(arboretum)=0</code>.在计算<code>p(kitchen|in the)</code>和<code>p(arboretum|in the)</code>的时候，从语料计算得出：$p(kitchen|in,the)=p(arboretum|in,the)=0$,但是从经验上来讲$p(kitchen|in,the)&gt;p(arboretum|in,the)$，因为kitchen要比arboretum常见的多。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right)=& \lambda_{1} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right) \\
+&+\lambda_{2} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}\right) \\
+&+\lambda_{3} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}}\right)\\
+\sum_i\lambda_i=1
+\end{aligned}</script><h5 id="怎样设置-lambdas？？？？"><a href="#怎样设置-lambdas？？？？" class="headerlink" title="怎样设置 lambdas？？？？"></a>怎样设置 lambdas？？？？</h5>
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 自然语言处理基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/28/%E5%88%86%E8%AF%8D%E7%AE%97%E6%B3%95/" rel="prev" title="分词算法">
+      <i class="fa fa-chevron-left"></i> 分词算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/11/transformer/" rel="next" title="Transformer">
+      Transformer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平滑方法"><span class="nav-number">2.</span> <span class="nav-text">平滑方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#add-one-smoothing"><span class="nav-number">2.1.</span> <span class="nav-text">add-one smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Additive-smoothing"><span class="nav-number">2.2.</span> <span class="nav-text">Additive smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Good-Turing-smoothing"><span class="nav-number">2.3.</span> <span class="nav-text">Good-Turing smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Interpolation"><span class="nav-number">2.4.</span> <span class="nav-text">Interpolation</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">但行好事，莫问前程！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">399k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
+      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
