@@ -59,7 +59,7 @@
 <script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
-    <title>bert</title>
+    <title>bert源码</title>
     <url>/2020/05/13/bert/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/13/bert/bert.jpg" alt></p>
 <a id="more"></a>
@@ -238,7 +238,7 @@
 <li>过程:<code>简单取第一个token -&gt; 加一层dense -&gt; Tanh激活函数输出</code></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BertPooler</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.dense = nn.Linear(config.hidden_size, config.hidden_size)</span><br><span class="line">        self.activation = nn.Tanh()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, hidden_states)</span>:</span></span><br><span class="line">        first_token_tensor = hidden_states[:, <span class="number">0</span>]</span><br><span class="line">        pooled_output = self.dense(first_token_tensor)</span><br><span class="line">        pooled_output = self.activation(pooled_output)</span><br><span class="line">        <span class="keyword">return</span> pooled_output</span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>数据流：</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>数据流：</p>
 <ol>
 <li>输入的数据首先经过<strong>BertEmbeddings</strong>类。在BertEmbeddings中将每个单词变为words_embeddings + position_embeddings +token_type_embeddings三项embeddings的和。</li>
 <li>然后，把已经变为词向量的数据输入BertSelfAttention类中。BertSelfAttention类中是一个Multi-Head Attention（少一个Linear层）， 也就是说数据流入这个<strong>少一个Linear层的Multi-Head Attention</strong>。</li>
@@ -279,15 +279,13 @@
 <li><p>BertForQuestionAnswering<br>计算问答任务的loss</p>
 </li>
 </ol>
-<h3 id="使用预训练模型"><a href="#使用预训练模型" class="headerlink" title="使用预训练模型"></a>使用预训练模型</h3><p>在BertModel class中有两个函数。get_pool_output表示获取每个batch第一个词的[CLS]表示结果。BERT认为这个词包含了整条语料的信息；适用于句子级别的分类问题。get_sequence_output表示BERT最终的输出结果,shape为[batch_size,seq_length,hidden_size]。可以直观理解为对每条语料的最终表示，适用于seq2seq问题。<br>对于其它序列标注或生成任务，我们也可以使用 BERT 对应的输出信息作出预测，例如每一个时间步输出一个标注或词等。下图展示了 BERT 在 11 种任务中的微调方法，它们都只添加了一个额外的输出层。在下图中，Tok 表示不同的词、E 表示输入的嵌入向量、$T_i$表示第 i 个词在经过 BERT 处理后输出的上下文向量。</p>
+<h3 id="使用预训练模型"><a href="#使用预训练模型" class="headerlink" title="使用预训练模型"></a>使用预训练模型</h3><p>在BertModel class中有两个函数。get_pool_output表示获取每个batch第一个词的[CLS]表示结果。BERT认为这个词包含了整条语料的信息；适用于句子级别的分类问题。get_sequence_output表示BERT最终的输出结果,shape为[batch_size,seq_length,hidden_size]。可以直观理解为对每条语料的最终表示，适用于seq2seq问题。<br>对于其它序列标注或生成任务，也可以使用 BERT 对应的输出信息作出预测，例如每一个时间步输出一个标注或词等。下图展示了 BERT 在 11 种任务中的微调方法，它们都只添加了一个额外的输出层。在下图中，Tok 表示不同的词、E 表示输入的嵌入向量、$T_i$表示第$i$ 个词在经过 BERT 处理后输出的上下文向量。</p>
 <p><img src="/2020/05/13/bert/bert-specific-models.png" alt></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://blog.csdn.net/qqywm/article/details/85454531" target="_blank" rel="noopener">https://blog.csdn.net/qqywm/article/details/85454531</a></li>
-<li><a href="https://blog.csdn.net/cpluss/article/details/88418176" target="_blank" rel="noopener">https://blog.csdn.net/cpluss/article/details/88418176</a></li>
-<li><a href="http://fancyerii.github.io/2019/03/09/bert-codes/" target="_blank" rel="noopener">http://fancyerii.github.io/2019/03/09/bert-codes/</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/56103665" target="_blank" rel="noopener">重要</a></li>
-<li><a href="https://daiwk.github.io/posts/nlp-bert.html#pytorch版本" target="_blank" rel="noopener">https://daiwk.github.io/posts/nlp-bert.html#pytorch%E7%89%88%E6%9C%AC</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/75558363" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/75558363</a></li>
+<li><a href="http://fancyerii.github.io/2019/03/09/bert-codes/" target="_blank" rel="noopener">BERT代码阅读</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/56103665" target="_blank" rel="noopener">一起读Bert文本分类代码 </a></li>
+<li><a href="https://daiwk.github.io/posts/nlp-bert.html#pytorch版本" target="_blank" rel="noopener">bert</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/75558363" target="_blank" rel="noopener">快速掌握BERT源代码（pytorch）</a></li>
 </ol>
 ]]></content>
       <categories>
