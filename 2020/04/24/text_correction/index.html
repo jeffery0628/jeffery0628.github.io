@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -454,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见错误类型"><span class="nav-number">1.1.</span> <span class="nav-text">常见错误类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纠错方法"><span class="nav-number">1.2.</span> <span class="nav-text">纠错方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规则的解决思路"><span class="nav-number">1.2.1.</span> <span class="nav-text">规则的解决思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度模型的解决思路"><span class="nav-number">1.2.2.</span> <span class="nav-text">深度模型的解决思路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编辑距离"><span class="nav-number">2.</span> <span class="nav-text">编辑距离</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拼写自动纠错系统"><span class="nav-number">3.</span> <span class="nav-text">拼写自动纠错系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Candidate-Model"><span class="nav-number">3.1.</span> <span class="nav-text">Candidate Model:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Language-Model"><span class="nav-number">3.2.</span> <span class="nav-text">Language Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Model"><span class="nav-number">3.3.</span> <span class="nav-text">Error Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-Mechanism"><span class="nav-number">3.4.</span> <span class="nav-text">Selection Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.5.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见错误类型"><span class="nav-text">常见错误类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纠错方法"><span class="nav-text">纠错方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规则的解决思路"><span class="nav-text">规则的解决思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度模型的解决思路"><span class="nav-text">深度模型的解决思路</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编辑距离"><span class="nav-text">编辑距离</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-1"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拼写自动纠错系统"><span class="nav-text">拼写自动纠错系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Candidate-Model"><span class="nav-text">Candidate Model:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Language-Model"><span class="nav-text">Language Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Model"><span class="nav-text">Error Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-Mechanism"><span class="nav-text">Selection Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -472,7 +472,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -485,7 +485,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -531,7 +531,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">399k</span>
+    <span title="站点总字数">441k</span>
 </div>
 
         

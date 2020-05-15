@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="但行好事，莫问前程！">
@@ -324,6 +324,415 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/15/XGBoost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/XGBoost/" class="post-title-link" itemprop="url">XGBoost</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 16:53:07" itemprop="dateModified" datetime="2020-05-15T16:53:07+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span id="/2020/05/15/XGBoost/" class="post-meta-item leancloud_visitors" data-flag-title="XGBoost" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/XGBoost/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/XGBoost/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>51</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          此文章已被加密，需要输入密码访问。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/XGBoost/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/15/data-structures-and-algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/data-structures-and-algorithms/" class="post-title-link" itemprop="url">data_structures_and_algorithms</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 16:52:43" itemprop="dateModified" datetime="2020-05-15T16:52:43+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span id="/2020/05/15/data-structures-and-algorithms/" class="post-meta-item leancloud_visitors" data-flag-title="data_structures_and_algorithms" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/data-structures-and-algorithms/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/data-structures-and-algorithms/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>128</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          此文章已被加密，需要输入密码访问。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/data-structures-and-algorithms/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/15/dynamic-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/dynamic-programming/" class="post-title-link" itemprop="url">dynamic_programming</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 16:52:52" itemprop="dateModified" datetime="2020-05-15T16:52:52+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span id="/2020/05/15/dynamic-programming/" class="post-meta-item leancloud_visitors" data-flag-title="dynamic_programming" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/dynamic-programming/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/dynamic-programming/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>38</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          此文章已被加密，需要输入密码访问。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/dynamic-programming/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/13/bert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="但行好事，莫问前程！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/bert/" class="post-title-link" itemprop="url">bert</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 16:51:09" itemprop="dateModified" datetime="2020-05-15T16:51:09+08:00">2020-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">技术/自然语言处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/13/bert/" class="post-meta-item leancloud_visitors" data-flag-title="bert" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/13/bert/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/13/bert/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>41k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>37 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2020/05/13/bert/bert.jpg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/13/bert/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/12/phrase-extraction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -348,7 +757,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-12 12:10:21" itemprop="dateModified" datetime="2020-05-12T12:10:21+08:00">2020-05-12</time>
+                <time title="修改时间：2020-05-12 18:19:43" itemprop="dateModified" datetime="2020-05-12T18:19:43+08:00">2020-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -387,7 +796,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>609</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -407,7 +816,15 @@
 
       
           <a id="more"></a>
-
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>在很多关键词提取任务中，使用tfidf、textrank等方法提取得到的仅仅是若干零碎词汇。这样的零碎词汇无法真正的表达文章的原本含义。我们往往需要更细化的短语描述，来作为文本的关键信息展示。这样的需求在搜索引擎的自动推荐、生成词云、提供摘要阅读、关键信息检索等任务中都非常重要。</p>
+<p>一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">text = <span class="string">'朝鲜确认金正恩出访俄罗斯 将与普京举行会谈...'</span></span><br><span class="line"></span><br><span class="line">keywords = [<span class="string">'俄罗斯'</span>, <span class="string">'朝鲜'</span>, <span class="string">'普京'</span>, <span class="string">'金正恩'</span>, <span class="string">'俄方'</span>]</span><br><span class="line">phrases = [<span class="string">'俄罗斯克里姆林宫'</span>, <span class="string">'邀请金正恩访俄'</span>, <span class="string">'最高司令官金正恩'</span>, </span><br><span class="line">               <span class="string">'朝方转交普京'</span>, <span class="string">'举行会谈'</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="基于互信息和左右信息熵实现短语抽取"><a href="#基于互信息和左右信息熵实现短语抽取" class="headerlink" title="基于互信息和左右信息熵实现短语抽取"></a>基于互信息和左右信息熵实现短语抽取</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><strong>互信息</strong>体现了两个变量之间的相互依赖程度。二元互信息是指两个事件相关性的量，互信息值越高, 表明X和Y相关性越高, 则X和Y 组成短语的可能性越大; 反之, 互信息值越低,X 和Y之间相关性越高, 则X 和Y组合成短语的可能性越大。互信息的计算公式：</p>
+<p><strong>信息熵</strong>是对于分布纯净度的一个度量，信息熵会随着分布的纯净度增加而降低，当分布中只有一种情况时，信息熵最小。</p>
+<p>既然信息熵有这样的特性，那就可以用来衡量两个词是不是经常组合在一起的情况，因为如果这两个词是固定搭配的时候，那么它们互为对方的唯一连接，也就是从任何一个词的角度来说其连接词的分布都是唯一的。</p>
+<p>那么信息熵该如何计算呢？对于离散型随机变量<code>X</code>：</p>
+<script type="math/tex; mode=display">
+H(x)=-\sum_x{p(x)log\,p(x)}</script>
       
     </div>
 
@@ -450,7 +867,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-11 14:56:31" itemprop="dateModified" datetime="2020-05-11T14:56:31+08:00">2020-05-11</time>
+                <time title="修改时间：2020-05-13 22:26:23" itemprop="dateModified" datetime="2020-05-13T22:26:23+08:00">2020-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -508,7 +925,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="/2020/05/11/transformer/transformer.jpeg" alt></p>
+          <p><img src="/2020/05/11/transformer/Cg-4jlOszDCIbmRNAAo_4amaeggAAOn7APf2hoACj_5550.jpg" alt></p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>自2017年提出以来，Transformer在众多自然语言处理问题中取得了非常好的效果。它不但训练速度更快，而且更适合建模长距离依赖关系，因此大有取代循环或卷积神经网络，一统自然语言处理的深度模型江湖之势。本文结合<a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">《Attention is all you need》</a>论文与Harvard的代码<a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html" target="_blank" rel="noopener">《Annotated Transformer》</a>深入理解transformer模型。 </p>
           <!--noindex-->
             <div class="post-button">
@@ -859,433 +1276,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/21/keyword_extraction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="但行好事，莫问前程！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/21/keyword_extraction/" class="post-title-link" itemprop="url">关键词抽取</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-12 11:58:32" itemprop="dateModified" datetime="2020-05-12T11:58:32+08:00">2020-05-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">技术/自然语言处理</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/04/21/keyword_extraction/" class="post-meta-item leancloud_visitors" data-flag-title="关键词抽取" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/21/keyword_extraction/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/21/keyword_extraction/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>14 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/2020/04/21/keyword_extraction/gjc01.png" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/21/keyword_extraction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/13/bert%E7%B3%BB%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="但行好事，莫问前程！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/13/bert%E7%B3%BB%E5%88%97/" class="post-title-link" itemprop="url">bert系列</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-08 20:31:50" itemprop="dateModified" datetime="2020-05-08T20:31:50+08:00">2020-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/04/13/bert%E7%B3%BB%E5%88%97/" class="post-meta-item leancloud_visitors" data-flag-title="bert系列" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/13/bert%E7%B3%BB%E5%88%97/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/13/bert%E7%B3%BB%E5%88%97/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="BERT-及其后续模型"><a href="#BERT-及其后续模型" class="headerlink" title="BERT 及其后续模型"></a>BERT 及其后续模型</h2><p>了解这些后续的模型，方便在后续的研究和应用中来更好的选择模型。</p>
-<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>BERT模型的主要创新点都在pre-train方法上，即用了Masked LM和Next Sentence Prediction两种方法分别捕捉词语和句子级别的representation。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert.jpg" alt="avatar"></p>
-<p>对比OpenAI GPT(Generative pre-trained transformer)，BERT是双向的Transformer block连接；就像单向rnn和双向rnn的区别，直觉上来讲效果会好一些。</p>
-<p>对比ELMo，虽然都是“双向”，但目标函数其实是不同的。ELMo是分别以 $P(w_i|w_1,\cdots,w_{i-1})$ 和$P(w_i|w_{i+1},\cdots,w_n)$作为目标函数，独立训练处两个representation然后拼接，而BERT则是以$P(w_i|w_1,\cdots,w_{i-1},w_{i+1}\cdots,w_n)$  作为目标函数训练LM。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/13/bert%E7%B3%BB%E5%88%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="但行好事，莫问前程！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">文本多标签分类</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-11 23:26:44" itemprop="dateModified" datetime="2020-04-11T23:26:44+08:00">2020-04-11</time>
-              </span>
-
-          
-            <span id="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/" class="post-meta-item leancloud_visitors" data-flag-title="文本多标签分类" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>对于事件抽取中单句多事件的问题，打算用文本多标签分类来进行解决。</p>
-<h3 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h3><ol>
-<li>类标数量不确定，有些样本可能只有一个类标，有些样本的类标可能高达几十甚至上百个。 </li>
-<li>类标之间相互依赖，例如包含蓝天类标的样本很大概率上包含白云，如何解决类标之间的依赖性问题也是一大难点。</li>
-<li>多标签的训练集比较难以获取。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="但行好事，莫问前程！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/" class="post-title-link" itemprop="url">python数据科学速查</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-11 23:27:44" itemprop="dateModified" datetime="2020-04-11T23:27:44+08:00">2020-04-11</time>
-              </span>
-
-          
-            <span id="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/" class="post-meta-item leancloud_visitors" data-flag-title="python数据科学速查" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>60k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>54 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="速查表"><a href="#速查表" class="headerlink" title="速查表"></a>速查表</h2><h3 id="python-基础"><a href="#python-基础" class="headerlink" title="python 基础"></a>python 基础</h3><p><img src="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/python.png" alt="avatar"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/11/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E9%80%9F%E6%9F%A5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1359,7 +1349,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1372,7 +1362,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1418,7 +1408,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">399k</span>
+    <span title="站点总字数">441k</span>
 </div>
 
         
