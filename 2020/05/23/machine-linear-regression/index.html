@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":15,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="线性回归">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/71505f8a532d4d5e9b259634ff1c99c3.jpeg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/00630Defgy1g4ns9qha1nj308u089aav.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/00630Defgy1g4nse7rf9xj308u089gme.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343030663535342e706e67.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/image-20200524102417564.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/image-20200524103226890.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343039346539362e706e67.png">
+<meta property="article:published_time" content="2020-05-23T00:43:13.000Z">
+<meta property="article:modified_time" content="2020-05-24T04:20:06.370Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="线性回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/71505f8a532d4d5e9b259634ff1c99c3.jpeg">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>线性回归 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+        <li class="menu-item menu-item-games">
+
+    <a href="/games/" rel="section"><i class="fa fa-gamepad fa-fw"></i>游戏</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/23/machine-linear-regression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线性回归
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-24 12:20:06" itemprop="dateModified" datetime="2020-05-24T12:20:06+08:00">2020-05-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/23/machine-linear-regression/" class="post-meta-item leancloud_visitors" data-flag-title="线性回归" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/23/machine-linear-regression/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/23/machine-linear-regression/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/05/23/machine-linear-regression/71505f8a532d4d5e9b259634ff1c99c3.jpeg" alt></p>
+<a id="more"></a>
+<h1 id="什么是线性回归"><a href="#什么是线性回归" class="headerlink" title="什么是线性回归"></a>什么是线性回归</h1><ul>
+<li>线性：两个变量之间的关系是一次函数关系的——图象<strong>是直线</strong>，叫做线性。</li>
+<li>非线性：两个变量之间的关系不是一次函数关系的——图象<strong>不是直线</strong>，叫做非线性。</li>
+<li>回归：人们在测量事物的时候因为客观条件所限，求得的都是测量值，而不是事物真实的值，为了能够得到真实值，无限次的进行测量，最后通过这些测量数据计算<strong>回归到真实值</strong>，这就是回归的由来。</li>
+</ul>
+<h1 id="能够解决什么样的问题"><a href="#能够解决什么样的问题" class="headerlink" title="能够解决什么样的问题"></a>能够解决什么样的问题</h1><p>对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p>
+<h2 id="表达式是什么"><a href="#表达式是什么" class="headerlink" title="表达式是什么"></a>表达式是什么</h2><script type="math/tex; mode=display">
+Y=wx+b</script><p>$w$叫做$x$的系数，$b$叫做偏置项。</p>
+<h1 id="如何计算"><a href="#如何计算" class="headerlink" title="如何计算"></a>如何计算</h1><h2 id="Loss-Function—MSE"><a href="#Loss-Function—MSE" class="headerlink" title="Loss Function—MSE"></a>Loss Function—MSE</h2><script type="math/tex; mode=display">
+J=\frac{1}{2m}\sum^{i=1}_{m}(y^{'}-y)^2</script><p>利用<strong>梯度下降法</strong>找到最小值点，也就是最小误差，最后把$w$ 和$b$ 给求出来。</p>
+<h1 id="过拟合、欠拟合如何解决"><a href="#过拟合、欠拟合如何解决" class="headerlink" title="过拟合、欠拟合如何解决"></a>过拟合、欠拟合如何解决</h1><p>使用正则化项，也就是给loss function加上一个参数项，正则化项有<strong>L1正则化、L2正则化、ElasticNet</strong>。加入这个正则化项好处：</p>
+<ul>
+<li>控制参数幅度，不让模型“无法无天”。</li>
+<li>限制参数搜索空间</li>
+<li>解决欠拟合与过拟合的问题。</li>
+</ul>
+<h2 id="什么是L2正则化-岭回归"><a href="#什么是L2正则化-岭回归" class="headerlink" title="什么是L2正则化(岭回归)"></a>什么是L2正则化(岭回归)</h2><p>方程：</p>
+<script type="math/tex; mode=display">
+J=J_0+\lambda\sum_{w}w^2</script><p>$J_0$表示上面的 loss function ，在loss function的基础上加入$w$参数的平方和乘以 $\lambda$ ，假设：</p>
+<script type="math/tex; mode=display">
+L=\lambda({w_1}^2 + {w_2}^2)</script><p>回忆以前学过的单位元的方程：</p>
+<script type="math/tex; mode=display">
+x^2+y^2=1</script><p>和L2正则化项一样，此时的任务变成在$L$约束下求出$J$取最小值的解。求解$J_0$的过程可以画出等值线。同时L2正则化的函数L也可以在$w_1w_2$的二维平面上画出来。如下图：</p>
+<p><img src="/2020/05/23/machine-linear-regression/00630Defgy1g4ns9qha1nj308u089aav.jpg" alt></p>
+<p>L表示为图中的黑色圆形，随着梯度下降法的不断逼近，与圆第一次产生交点，而这个交点很难出现在坐标轴上。这就说明了L2正则化不容易得到稀疏矩阵，同时为了求出损失函数的最小值，使得$w_1$和$w_2$无限接近于0，达到防止过拟合的问题。</p>
+<h2 id="什么场景下用L2正则化"><a href="#什么场景下用L2正则化" class="headerlink" title="什么场景下用L2正则化"></a>什么场景下用L2正则化</h2><p>只要数据线性相关，用LinearRegression拟合的不是很好，<strong>需要正则化</strong>，可以考虑使用岭回归(L2), 如果输入特征的维度很高,而且是稀疏线性关系的话， 岭回归就不太合适,考虑使用Lasso回归。</p>
+<h2 id="什么是L1正则化-Lasso回归"><a href="#什么是L1正则化-Lasso回归" class="headerlink" title="什么是L1正则化(Lasso回归)"></a>什么是L1正则化(Lasso回归)</h2><p>L1正则化与L2正则化的区别在于惩罚项的不同：</p>
+<script type="math/tex; mode=display">
+J=J_0+\lambda(|w_1|+|w_2|)</script><p>求解J0的过程可以画出等值线。同时L1正则化的函数也可以在w1w2的二维平面上画出来。如下图：</p>
+<p><img src="/2020/05/23/machine-linear-regression/00630Defgy1g4nse7rf9xj308u089gme.jpg" alt></p>
+<p>惩罚项表示为图中的黑色棱形，随着梯度下降法的不断逼近，与棱形第一次产生交点，而这个交点很容易出现在坐标轴上。<strong>这就说明了L1正则化容易得到稀疏矩阵。</strong></p>
+<h2 id="什么场景下使用L1正则化"><a href="#什么场景下使用L1正则化" class="headerlink" title="什么场景下使用L1正则化"></a>什么场景下使用L1正则化</h2><p><strong>L1正则化(Lasso回归)可以使得一些特征的系数变小,甚至还使一些绝对值较小的系数直接变为0</strong>，从而增强模型的泛化能力 。对于高的特征数据,尤其是线性关系是稀疏的，就采用L1正则化(Lasso回归),或者是要在一堆特征里面找出主要的特征，那么L1正则化(Lasso回归)更是首选了。</p>
+<h2 id="什么是ElasticNet回归"><a href="#什么是ElasticNet回归" class="headerlink" title="什么是ElasticNet回归"></a>什么是ElasticNet回归</h2><p><strong>ElasticNet综合了L1正则化项和L2正则化项</strong>，它的公式是:</p>
+<script type="math/tex; mode=display">
+min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2]+\lambda\sum_{j=1}^{n}|\theta|</script><h2 id="什么场景下使用ElasticNet回归"><a href="#什么场景下使用ElasticNet回归" class="headerlink" title="什么场景下使用ElasticNet回归"></a>什么场景下使用ElasticNet回归</h2><p>ElasticNet在我们发现用Lasso回归太过(太多特征被稀疏为0),而岭回归也正则化的不够(回归系数衰减太慢)的时候，可以考虑使用ElasticNet回归来综合，得到比较好的结果。</p>
+<h1 id="线性回归要求因变量服从正态分布？"><a href="#线性回归要求因变量服从正态分布？" class="headerlink" title="线性回归要求因变量服从正态分布？"></a>线性回归要求因变量服从正态分布？</h1><p>我们假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布$N(0,\delta^2)$时，因变量则符合正态分布$N(wx(i)+b,\delta^2)$，其中预测函数$y=wx(i)+b$。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。 </p>
+<p><strong>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</strong></p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="数据介绍"><a href="#数据介绍" class="headerlink" title="数据介绍"></a>数据介绍</h2><p>数据主要包括2014年5月至2015年5月美国King County的房屋销售价格以及房屋的基本信息。 数据分为训练数据和测试数据，分别保存在kc_train.csv和kc_test.csv两个文件中。 其中训练数据主要包括10000条记录，14个字段，主要字段说明如下：</p>
+<blockquote>
+<ol>
+<li>第一列“销售日期”：2014年5月到2015年5月房屋出售时的日期 </li>
+<li>第二列“销售价格”：房屋交易价格，单位为美元，是目标预测值 </li>
+<li>第三列“卧室数”：房屋中的卧室数目 </li>
+<li>第四列“浴室数”：房屋中的浴室数目 </li>
+<li>第五列“房屋面积”：房屋里的生活面积 </li>
+<li>第六列“停车面积”：停车坪的面积 </li>
+<li>第七列“楼层数”：房屋的楼层数 </li>
+<li>第八列“房屋评分”：King County房屋评分系统对房屋的总体评分 </li>
+<li>第九列“建筑面积”：除了地下室之外的房屋建筑面积 </li>
+<li>第十列“地下室面积”：地下室的面积 </li>
+<li>第十一列“建筑年份”：房屋建成的年份 </li>
+<li>第十二列“修复年份”：房屋上次修复的年份 </li>
+<li>第十三列”纬度”：房屋所在纬度 </li>
+<li>第十四列“经度”：房屋所在经度。</li>
+</ol>
+</blockquote>
+<p>测试数据主要包括3000条记录，13个字段，跟训练数据的不同是测试数据并不包括房屋销售价格，需要通过由训练数据所建立的模型以及所给的测试数据，得出测试数据相应的房屋销售价格预测值。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p><img src="/2020/05/23/machine-linear-regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343030663535342e706e67.png" alt></p>
+<blockquote>
+<ol>
+<li>选择合适的模型，对模型的好坏进行评估和选择。</li>
+<li>对缺失的值进行补齐操作，可以使用均值的方式补齐数据，使得准确度更高。</li>
+<li>数据的取值一般跟属性有关系，但世界万物的属性是很多的，有些值小，但不代表不重要，所有为了提高预测的准确度，统一数据维度进行计算，方法有特征缩放和归一法等。</li>
+<li>数据处理好之后就可以进行调用模型库进行训练了。</li>
+<li>使用测试数据进行目标函数预测输出，观察结果是否符合预期。或者通过画出对比函数进行结果线条对比。</li>
+</ol>
+</blockquote>
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><p>一元线性回归</p>
+<script type="math/tex; mode=display">
+y:h(x)=wx+b</script><p>n元线性回归</p>
+<script type="math/tex; mode=display">
+y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b</script><p>这里，y表示要求的销售价格，x表示特征值。需要调用sklearn库来进行训练。</p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取训练数据</span></span><br><span class="line">housing = pd.read_csv(<span class="string">'kc_train.csv'</span>)</span><br><span class="line"><span class="comment">#销售价格</span></span><br><span class="line">target=pd.read_csv(<span class="string">'kc_train2.csv'</span>)  </span><br><span class="line"><span class="comment">#测试数据</span></span><br><span class="line">t=pd.read_csv(<span class="string">'kc_test.csv'</span>)   </span><br><span class="line"></span><br><span class="line">train_set.info()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/23/machine-linear-regression/image-20200524102417564.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">label = train_set[<span class="number">1</span>]</span><br><span class="line">train_set = train_set.drop([<span class="number">1</span>],axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#特征缩放</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">minmax_scaler=MinMaxScaler()</span><br><span class="line"><span class="comment">#进行拟合，内部参数会发生变化</span></span><br><span class="line">minmax_scaler.fit(train_set)   </span><br><span class="line">scaler_train_set=minmax_scaler.transform(train_set)</span><br><span class="line">scaler_test_set = minmax_scaler.transform(test_set)</span><br><span class="line">scaler_train_set=pd.DataFrame(scaler_train_set,columns=train_set.columns)</span><br><span class="line">scaler_test_set = pd.DataFrame(scaler_test_set,columns=train_set.columns)</span><br><span class="line">scaler_train_set.head()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/23/machine-linear-regression/image-20200524103226890.png" alt></p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>使用sklearn库的线性回归函数进行调用训练。梯度下降法获得误差最小值。最后使用均方误差法来评价模型的好坏程度，并画图进行比较。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选择基于梯度下降的线性回归模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">LR_reg=LinearRegression()</span><br><span class="line"><span class="comment">#进行拟合</span></span><br><span class="line">LR_reg.fit(scaler_housing,target)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用均方误差用于评价模型好坏</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line">preds=LR_reg.predict(scaler_housing)   <span class="comment">#输入数据进行预测得到结果</span></span><br><span class="line">mse=mean_squared_error(preds,target)   <span class="comment">#使用均方误差来评价模型好坏，可以输出mse进行查看评价值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#绘图进行比较</span></span><br><span class="line">plot.figure(figsize=(<span class="number">10</span>,<span class="number">7</span>))       <span class="comment">#画布大小</span></span><br><span class="line">num=<span class="number">100</span></span><br><span class="line">x=np.arange(<span class="number">1</span>,num+<span class="number">1</span>)              <span class="comment">#取100个点进行比较</span></span><br><span class="line">plot.plot(x,target[:num],label=<span class="string">'target'</span>)      <span class="comment">#目标取值</span></span><br><span class="line">plot.plot(x,preds[:num],label=<span class="string">'preds'</span>)        <span class="comment">#预测取值</span></span><br><span class="line">plot.legend(loc=<span class="string">'upper right'</span>)  <span class="comment">#线条显示位置</span></span><br><span class="line">plot.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/23/machine-linear-regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343039346539362e706e67.png" alt></p>
+<p>这张结果对比图中就可以看出模型是否得到精确的目标函数，是否能够精确预测房价。如果想要预测test文件里的数据，那就把test文件里的数据进行读取，并且进行特征缩放，调用： <strong>LR_reg.predict(test)</strong> 就可以得到预测结果，并进行输出操作。</p>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> 线性回归</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/20/pytorch_bugs/" rel="prev" title="Pytorch Bugs">
+      <i class="fa fa-chevron-left"></i> Pytorch Bugs
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/23/machine-learning-logistic-regression/" rel="next" title="逻辑回归与最大熵模型">
+      逻辑回归与最大熵模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是线性回归"><span class="nav-number">1.</span> <span class="nav-text">什么是线性回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#能够解决什么样的问题"><span class="nav-number">2.</span> <span class="nav-text">能够解决什么样的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#表达式是什么"><span class="nav-number">2.1.</span> <span class="nav-text">表达式是什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何计算"><span class="nav-number">3.</span> <span class="nav-text">如何计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Loss-Function—MSE"><span class="nav-number">3.1.</span> <span class="nav-text">Loss Function—MSE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过拟合、欠拟合如何解决"><span class="nav-number">4.</span> <span class="nav-text">过拟合、欠拟合如何解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是L2正则化-岭回归"><span class="nav-number">4.1.</span> <span class="nav-text">什么是L2正则化(岭回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么场景下用L2正则化"><span class="nav-number">4.2.</span> <span class="nav-text">什么场景下用L2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是L1正则化-Lasso回归"><span class="nav-number">4.3.</span> <span class="nav-text">什么是L1正则化(Lasso回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么场景下使用L1正则化"><span class="nav-number">4.4.</span> <span class="nav-text">什么场景下使用L1正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是ElasticNet回归"><span class="nav-number">4.5.</span> <span class="nav-text">什么是ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么场景下使用ElasticNet回归"><span class="nav-number">4.6.</span> <span class="nav-text">什么场景下使用ElasticNet回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归要求因变量服从正态分布？"><span class="nav-number">5.</span> <span class="nav-text">线性回归要求因变量服从正态分布？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">6.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据介绍"><span class="nav-number">6.1.</span> <span class="nav-text">数据介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">6.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型选择"><span class="nav-number">6.3.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理"><span class="nav-number">6.4.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练模型"><span class="nav-number">6.5.</span> <span class="nav-text">训练模型</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">470k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
+      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

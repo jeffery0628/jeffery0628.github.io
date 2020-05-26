@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":15,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="命名实体识别">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/05/26/named-entity-recognition/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/26/named-entity-recognition/3c5ea3534a4143adbca52823c5b757f1.jpg">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=w">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=n">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=%7B(x%5Ei%252C+s%5Ei)%7D_%7Bi%253D1%7D%5En">
+<meta property="article:published_time" content="2020-05-26T03:30:17.000Z">
+<meta property="article:modified_time" content="2020-05-26T13:40:18.197Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="ner">
+<meta property="article:tag" content="命名实体识别">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/05/26/named-entity-recognition/3c5ea3534a4143adbca52823c5b757f1.jpg">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/05/26/named-entity-recognition/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>命名实体识别 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+        <li class="menu-item menu-item-games">
+
+    <a href="/games/" rel="section"><i class="fa fa-gamepad fa-fw"></i>游戏</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/26/named-entity-recognition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          命名实体识别
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-26 21:40:18" itemprop="dateModified" datetime="2020-05-26T21:40:18+08:00">2020-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">技术/自然语言处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/26/named-entity-recognition/" class="post-meta-item leancloud_visitors" data-flag-title="命名实体识别" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/26/named-entity-recognition/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/26/named-entity-recognition/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/05/26/named-entity-recognition/3c5ea3534a4143adbca52823c5b757f1.jpg" alt></p>
+<a id="more"></a>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>命名实体识别(Named Entity Recognition,NER)的主要任务是识别出文本中的人名、地名等专有名称和有意义的时间、日期等数量短语并加以归类。命名实体识别技术是信息抽取、信息检索、机器翻译、问答系统等多种自然语言处理技术必不可少的组成部分。</p>
+<p>中文命名实体识别的难度要比英文的难度大（<strong>英文专有名词会大写</strong>）。</p>
+<h1 id="研究主体"><a href="#研究主体" class="headerlink" title="研究主体"></a>研究主体</h1><p>命名实体是命名实体识别的研究主体,一般包括3大类(实体类、时间类和数字类)和7小类(人名、地名、机构名、时间、日期、货币和百分比)命名实体。实际研究中,命名实体的确切含义需要根据具体应用来确定。</p>
+<h1 id="特点及难点"><a href="#特点及难点" class="headerlink" title="特点及难点"></a>特点及难点</h1><p>评判一个命名实体是否被正确识别包括两个方面:</p>
+<ol>
+<li>实体的边界是否正确</li>
+<li>实体的类型是否标注正确。</li>
+</ol>
+<p>英语中的命名实体具有比较明显的形态标志,如人名、地名等实体中的每个词的第一个字母要大写等,所以实体边界识别相对汉语来说比较容易,任务的重点是确定实体的类型。</p>
+<p>和英语相比,汉语命名实体识别任务更加复杂,一方面由于分词等因素的影响难度较大,另一方面，其难点主要表现在如下几个方面:</p>
+<ol>
+<li>命名实体类型多样,数量众多,不断有新的命名实体涌现,如新的人名、地名等,<strong>难以建立大而全的</strong>姓氏库、名字库、地址库等<strong>数据库</strong>。</li>
+<li>命名实体构成结构比较复杂,<strong>存在大量的嵌套、别名、缩略词等问题</strong>,没有严格的规律可以遵循,对这类命名实体识别的<strong>召回率</strong>相对偏低。</li>
+<li><strong>存在大量的交叉和互相包含现象</strong>,组织名称中也存在大量的人名、地名、数字的现象,要正确标注这些命名实体类型,要涉及上下文语义层面的分析,这些都给命名实体的识别带来困难。</li>
+<li>误差传播，<strong>分词、语法分析系统的可靠性</strong>也直接决定命名实体识别的有效性,使得中文命名实体识别更加困难。</li>
+</ol>
+<h1 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h1><p>命名实体识别的主要技术方法分为:基于规则和词典的方法、基于统计的方法、基于深度学习的方法、混合方法等。</p>
+<h2 id="基于规则和词典的方法"><a href="#基于规则和词典的方法" class="headerlink" title="基于规则和词典的方法"></a>基于规则和词典的方法</h2><p>基于规则的方法多采用语言学专家手工构造规则模板,特征包括统计信息、标点符号、关键字、指示词和方向词、位置词(如尾字)、中心词等, 以模式和字符串相匹配为主要手段,这类系统大多<strong>依赖于知识库和词典</strong>的建立。</p>
+<h2 id="基于统计的方法"><a href="#基于统计的方法" class="headerlink" title="基于统计的方法"></a>基于统计的方法</h2><p>基于统计的方法利用人工标注的语料进行训练,标注语料时不需要广博的语言学知识,并且可以在较短时间内完成。基于统计机器学习的方法主要包括:隐马尔可夫模型(Hidden Markov Model,HMM)、最大熵(Maximum Entropy,ME)、支持向量机(Support Vector Machine,SVM)、条件随机场(Conditional Random Fields,CRF)等。</p>
+<p>在这4种学习方法中,<strong>最大熵模型</strong>结构紧凑, 具有<strong>较好的通用性</strong>,主要缺点是<strong>训练时间复杂性非常高</strong>, 有时甚至导致训练代价难以承受,另外由于需要明确的归一化计算, 导致开销比较大。而<strong>条件随机场</strong>为命名实体识别提供了一个<strong>特征灵活、全局最优</strong>的标注框架,但同时存在<strong>收敛速度慢、训练时间长</strong>的问题。一般说来,最大熵和支持向量机在正确率上要比隐马尔可夫模型高一些,但是<strong>隐马尔可夫模型</strong>在训练和识别时的<strong>速度要快一些</strong>,主要是由于在利用Viterbi算法求解命名实体类别序列的效率较高。隐马尔可夫模型更适用于一些对实时性有要求以及像信息检索这样需要处理大量文本的应用,如短文本命名实体识别。</p>
+<p><strong>基于统计的方法对特征选取的要求较高,需要从文本中选择对该项任务有影响的各种特征,并将这些特征加入到特征向量中</strong>（所以目前crf前面常常会用：rnn，cnn，预训练模型来提取特征）。依据特定命名实体识别所面临的主要困难和所表现出的特性,考虑选择能有效反映该类实体特性的特征集合。主要做法是通过对训练语料所包含的语言信息进行统计和分析,从训练语料中挖掘出特征。有关特征可以分为具体的单词特征、上下文特征、词典及词性特征、停用词特征、核心词特征以及语义特征等。</p>
+<h3 id="隐马尔科夫模型"><a href="#隐马尔科夫模型" class="headerlink" title="隐马尔科夫模型"></a>隐马尔科夫模型</h3><p>隐马尔可夫模型描述由一个隐藏的马尔科夫链随机生成不可观测的状态随机序列，再由各个状态生成一个观测而产生观测随机序列的过程。隐马尔可夫模型由初始状态分布，状态转移概率矩阵以及观测概率矩阵所确定。</p>
+<p>NER本质上可以看成是一种序列标注问题，在使用HMM解决NER这种序列标注问题的时候，我们所能观测到的是字组成的序列（观测序列），观测不到的是每个字对应的标注（状态序列）。对应的，HMM的<strong>三个要素</strong>可以解释为，<strong>初始状态分布</strong>就是每一个标注作为句子第一个字的标注的概率，<strong>状态转移概率矩阵</strong>就是由某一个标注转移到下一个标注的概率，<strong>观测概率矩阵</strong>就是指在某个标注下，生成某个词的概率。根据HMM的三个要素，可以定义如下的HMM模型:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HMM</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, N, M)</span>:</span></span><br><span class="line">        <span class="string">"""Args:</span></span><br><span class="line"><span class="string">            N: 状态数，这里对应存在的标注的种类</span></span><br><span class="line"><span class="string">            M: 观测数，这里对应有多少不同的字</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.N = N</span><br><span class="line">        self.M = M</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 状态转移概率矩阵 A[i][j]表示从i状态转移到j状态的概率</span></span><br><span class="line">        self.A = torch.zeros(N, N)</span><br><span class="line">        <span class="comment"># 观测概率矩阵, B[i][j]表示i状态下生成j观测的概率</span></span><br><span class="line">        self.B = torch.zeros(N, M)</span><br><span class="line">        <span class="comment"># 初始状态概率  Pi[i]表示初始时刻为状态i的概率</span></span><br><span class="line">        self.Pi = torch.zeros(N)</span><br></pre></td></tr></table></figure>
+<p>HMM模型的训练过程对应隐马尔可夫模型的学习问题，根据训练数据利用<strong>最大似然</strong>的方法估计模型的三个要素：初始状态分布、状态转移概率矩阵以及观测概率矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HMM</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, N, M)</span>:</span></span><br><span class="line">        ....</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, word_lists, tag_lists, word2id, tag2id)</span>:</span></span><br><span class="line">        <span class="string">"""HMM的训练，即根据训练语料对模型参数进行估计,</span></span><br><span class="line"><span class="string">           因为我们有观测序列以及其对应的状态序列，所以我们</span></span><br><span class="line"><span class="string">           可以使用极大似然估计的方法来估计隐马尔可夫模型的参数</span></span><br><span class="line"><span class="string">        参数:</span></span><br><span class="line"><span class="string">            word_lists: 列表，其中每个元素由字组成的列表，如 ['担','任','科','员']</span></span><br><span class="line"><span class="string">            tag_lists: 列表，其中每个元素是由对应的标注组成的列表，如 ['O','O','B-TITLE', 'E-TITLE']</span></span><br><span class="line"><span class="string">            word2id: 将字映射为ID</span></span><br><span class="line"><span class="string">            tag2id: 字典，将标注映射为ID</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">assert</span> len(tag_lists) == len(word_lists)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 估计转移概率矩阵</span></span><br><span class="line">        <span class="keyword">for</span> tag_list <span class="keyword">in</span> tag_lists:</span><br><span class="line">            seq_len = len(tag_list)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(seq_len - <span class="number">1</span>):</span><br><span class="line">                current_tagid = tag2id[tag_list[i]]</span><br><span class="line">                next_tagid = tag2id[tag_list[i+<span class="number">1</span>]]</span><br><span class="line">                self.A[current_tagid][next_tagid] += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 一个重要的问题：如果某元素没有出现过，该位置为0，这在后续的计算中是不允许的</span></span><br><span class="line">        <span class="comment"># 解决方法：我们将等于0的概率加上很小的数</span></span><br><span class="line">        self.A[self.A == <span class="number">0.</span>] = <span class="number">1e-10</span></span><br><span class="line">        self.A = self.A / self.A.sum(dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 估计观测概率矩阵</span></span><br><span class="line">        <span class="keyword">for</span> tag_list, word_list <span class="keyword">in</span> zip(tag_lists, word_lists):</span><br><span class="line">            <span class="keyword">assert</span> len(tag_list) == len(word_list)</span><br><span class="line">            <span class="keyword">for</span> tag, word <span class="keyword">in</span> zip(tag_list, word_list):</span><br><span class="line">                tag_id = tag2id[tag]</span><br><span class="line">                word_id = word2id[word]</span><br><span class="line">                self.B[tag_id][word_id] += <span class="number">1</span></span><br><span class="line">        self.B[self.B == <span class="number">0.</span>] = <span class="number">1e-10</span></span><br><span class="line">        self.B = self.B / self.B.sum(dim=<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 估计初始状态概率</span></span><br><span class="line">        <span class="keyword">for</span> tag_list <span class="keyword">in</span> tag_lists:</span><br><span class="line">            init_tagid = tag2id[tag_list[<span class="number">0</span>]]</span><br><span class="line">            self.Pi[init_tagid] += <span class="number">1</span></span><br><span class="line">        self.Pi[self.Pi == <span class="number">0.</span>] = <span class="number">1e-10</span></span><br><span class="line">        self.Pi = self.Pi / self.Pi.sum()</span><br></pre></td></tr></table></figure>
+<p>模型训练完毕之后，要利用训练好的模型进行解码，就是对给定的模型未见过的句子，求句子中的每个字对应的标注，针对解码问题，使用的是维特比（viterbi）算法。实现的细节如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HMM</span><span class="params">(object)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decoding</span><span class="params">(self, word_list, word2id, tag2id)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        使用维特比算法对给定观测序列求状态序列， 这里就是对字组成的序列,求其对应的标注。</span></span><br><span class="line"><span class="string">        维特比算法实际是用动态规划解隐马尔可夫模型预测问题，即用动态规划求概率最大路径（最优路径）</span></span><br><span class="line"><span class="string">        这时一条路径对应着一个状态序列</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 问题:整条链很长的情况下，十分多的小概率相乘，最后可能造成下溢</span></span><br><span class="line">        <span class="comment"># 解决办法：采用对数概率，这样源空间中的很小概率，就被映射到对数空间的大的负数</span></span><br><span class="line">        <span class="comment">#  同时相乘操作也变成简单的相加操作</span></span><br><span class="line">        A = torch.log(self.A)</span><br><span class="line">        B = torch.log(self.B)</span><br><span class="line">        Pi = torch.log(self.Pi)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化 维比特矩阵viterbi 它的维度为[状态数, 序列长度]</span></span><br><span class="line">        <span class="comment"># 其中viterbi[i, j]表示标注序列的第j个标注为i的所有单个序列(i_1, i_2, ..i_j)出现的概率最大值</span></span><br><span class="line">        seq_len = len(word_list)</span><br><span class="line">        viterbi = torch.zeros(self.N, seq_len)</span><br><span class="line">        <span class="comment"># backpointer是跟viterbi一样大小的矩阵</span></span><br><span class="line">        <span class="comment"># backpointer[i, j]存储的是 标注序列的第j个标注为i时，第j-1个标注的id</span></span><br><span class="line">        <span class="comment"># 等解码的时候，我们用backpointer进行回溯，以求出最优路径</span></span><br><span class="line">        backpointer = torch.zeros(self.N, seq_len).long()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.Pi[i] 表示第一个字的标记为i的概率</span></span><br><span class="line">        <span class="comment"># Bt[word_id]表示字为word_id的时候，对应各个标记的概率</span></span><br><span class="line">        <span class="comment"># self.A.t()[tag_id]表示各个状态转移到tag_id对应的概率</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 所以第一步为</span></span><br><span class="line">        start_wordid = word2id.get(word_list[<span class="number">0</span>], <span class="literal">None</span>)</span><br><span class="line">        Bt = B.t()</span><br><span class="line">        <span class="keyword">if</span> start_wordid <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 如果字不再字典里，则假设状态的概率分布是均匀的</span></span><br><span class="line">            bt = torch.log(torch.ones(self.N) / self.N)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            bt = Bt[start_wordid]</span><br><span class="line">        viterbi[:, <span class="number">0</span>] = Pi + bt</span><br><span class="line">        backpointer[:, <span class="number">0</span>] = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 递推公式：</span></span><br><span class="line">        <span class="comment"># viterbi[tag_id, step] = max(viterbi[:, step-1]* self.A.t()[tag_id] * Bt[word])</span></span><br><span class="line">        <span class="comment"># 其中word是step时刻对应的字</span></span><br><span class="line">        <span class="comment"># 由上述递推公式求后续各步</span></span><br><span class="line">        <span class="keyword">for</span> step <span class="keyword">in</span> range(<span class="number">1</span>, seq_len):</span><br><span class="line">            wordid = word2id.get(word_list[step], <span class="literal">None</span>)</span><br><span class="line">            <span class="comment"># 处理字不在字典中的情况</span></span><br><span class="line">            <span class="comment"># bt是在t时刻字为wordid时，状态的概率分布</span></span><br><span class="line">            <span class="keyword">if</span> wordid <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="comment"># 如果字不再字典里，则假设状态的概率分布是均匀的</span></span><br><span class="line">                bt = torch.log(torch.ones(self.N) / self.N)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                bt = Bt[wordid]  <span class="comment"># 否则从观测概率矩阵中取bt</span></span><br><span class="line">            <span class="keyword">for</span> tag_id <span class="keyword">in</span> range(len(tag2id)):</span><br><span class="line">                max_prob, max_id = torch.max(</span><br><span class="line">                    viterbi[:, step<span class="number">-1</span>] + A[:, tag_id],</span><br><span class="line">                    dim=<span class="number">0</span></span><br><span class="line">                )</span><br><span class="line">                viterbi[tag_id, step] = max_prob + bt[tag_id]</span><br><span class="line">                backpointer[tag_id, step] = max_id</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 终止， t=seq_len 即 viterbi[:, seq_len]中的最大概率，就是最优路径的概率</span></span><br><span class="line">        best_path_prob, best_path_pointer = torch.max(</span><br><span class="line">            viterbi[:, seq_len<span class="number">-1</span>], dim=<span class="number">0</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 回溯，求最优路径</span></span><br><span class="line">        best_path_pointer = best_path_pointer.item()</span><br><span class="line">        best_path = [best_path_pointer]</span><br><span class="line">        <span class="keyword">for</span> back_step <span class="keyword">in</span> range(seq_len<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">            best_path_pointer = backpointer[best_path_pointer, back_step]</span><br><span class="line">            best_path_pointer = best_path_pointer.item()</span><br><span class="line">            best_path.append(best_path_pointer)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将tag_id组成的序列转化为tag</span></span><br><span class="line">        <span class="keyword">assert</span> len(best_path) == len(word_list)</span><br><span class="line">        id2tag = dict((id_, tag) <span class="keyword">for</span> tag, id_ <span class="keyword">in</span> tag2id.items())</span><br><span class="line">        tag_list = [id2tag[id_] <span class="keyword">for</span> id_ <span class="keyword">in</span> reversed(best_path)]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> tag_list</span><br></pre></td></tr></table></figure>
+<h3 id="条件随机场"><a href="#条件随机场" class="headerlink" title="条件随机场"></a>条件随机场</h3><p>HMM模型中存在两个假设，一是输出观察值之间严格独立（观测独立性假设），二是状态转移过程中当前状态只与前一状态有关（齐次马尔科夫性假设）。在命名实体识别的场景下，HMM认为观测到的句子中的每个字都是相互独立的，而且当前时刻的标注只与前一时刻的标注相关。但实际上，命名实体识别往往需要更多的特征，比如词性，词的上下文等等，同时当前时刻的标注应该与前一时刻以及后一时刻的标注都相关联。由于这两个假设的存在，显然HMM模型在解决命名实体识别的问题上是存在缺陷的。</p>
+<p>而条件随机场就没有这种问题，它通过引入自定义的特征函数，不仅可以表达观测之间的依赖，还可表示当前观测与前后多个状态之间的复杂依赖，可以有效克服HMM模型面临的问题。</p>
+<p>为了建立一个条件随机场，首先要定义一个<strong>特征函数集</strong>，该函数集内的每个特征函数都以标注序列作为输入，提取的特征作为输出。假设该函数集为：</p>
+<script type="math/tex; mode=display">
+\Phi\left(x_{1}, \ldots, x_{m}, s_{1}, \ldots, s_{m}\right) \in \mathbb{R}^{d}</script><p>其中 $x=(x_1,x_2,\ldots,x_m)$表示观测序列， $s=(s_1,s_2,\ldots,s_m)$表示状态序列。然后，条件随机场使用对数线性模型来计算给定观测序列下状态序列的条件概率：</p>
+<script type="math/tex; mode=display">
+p(s | x ; w)=\frac{\exp (w \cdot \Phi(x, s))}{\sum_{s^{\prime}} \exp \left(w \cdot \Phi\left(x, s^{\prime}\right)\right)}</script><p>其中 $s^\prime$是是所有可能的状态序列，$w$是条件随机场模型的参数，可以把它看成是每个特征函数的权重。CRF模型的训练其实就是对参数 <img src="https://www.zhihu.com/equation?tex=w" alt="[公式]"> 的估计。假设有 <img src="https://www.zhihu.com/equation?tex=n" alt="[公式]"> 个已经标注好的数据 <img src="https://www.zhihu.com/equation?tex=%7B%28x%5Ei%2C+s%5Ei%29%7D_%7Bi%3D1%7D%5En" alt="[公式]"> ，则其对数似然函数的正则化形式如下：</p>
+<script type="math/tex; mode=display">
+L(w)=\sum_{i=1}^{n} \log p\left(s^{i} | x^{i} ; w\right)-\frac{\lambda_{2}}{2}\|w\|_{2}^{2}-\lambda_{1}\|w\|_{1}</script><p>那么，最优参数 $w^\star$ 就是：</p>
+<script type="math/tex; mode=display">
+w^{*}=\arg \max _{w \in \mathbb{R}^{d}} L\left(w\right)</script><p>解码采用维特比算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn_crfsuite <span class="keyword">import</span> CRF   <span class="comment"># 借助一个外部的库</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">word2features</span><span class="params">(sent, i)</span>:</span></span><br><span class="line">    <span class="string">"""抽取单个字的特征"""</span></span><br><span class="line">    word = sent[i]</span><br><span class="line">    prev_word = <span class="string">"&lt;s&gt;"</span> <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">else</span> sent[i<span class="number">-1</span>]</span><br><span class="line">    next_word = <span class="string">"&lt;/s&gt;"</span> <span class="keyword">if</span> i == (len(sent)<span class="number">-1</span>) <span class="keyword">else</span> sent[i+<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># 因为每个词相邻的词会影响这个词的标记</span></span><br><span class="line">    <span class="comment"># 所以我们使用：</span></span><br><span class="line">    <span class="comment"># 前一个词，当前词，后一个词，</span></span><br><span class="line">    <span class="comment"># 前一个词+当前词， 当前词+后一个词</span></span><br><span class="line">    <span class="comment"># 作为特征</span></span><br><span class="line">    features = &#123;</span><br><span class="line">        <span class="string">'w'</span>: word,</span><br><span class="line">        <span class="string">'w-1'</span>: prev_word,</span><br><span class="line">        <span class="string">'w+1'</span>: next_word,</span><br><span class="line">        <span class="string">'w-1:w'</span>: prev_word+word,</span><br><span class="line">        <span class="string">'w:w+1'</span>: word+next_word,</span><br><span class="line">        <span class="string">'bias'</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> features</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sent2features</span><span class="params">(sent)</span>:</span></span><br><span class="line">    <span class="string">"""抽取序列特征"""</span></span><br><span class="line">    <span class="keyword">return</span> [word2features(sent, i) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(sent))]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CRFModel</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,</span></span></span><br><span class="line"><span class="function"><span class="params">                 algorithm=<span class="string">'lbfgs'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 c1=<span class="number">0.1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 c2=<span class="number">0.1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 max_iterations=<span class="number">100</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 all_possible_transitions=False</span></span></span><br><span class="line"><span class="function"><span class="params">                 )</span>:</span></span><br><span class="line"></span><br><span class="line">        self.model = CRF(algorithm=algorithm,</span><br><span class="line">                         c1=c1,</span><br><span class="line">                         c2=c2,</span><br><span class="line">                         max_iterations=max_iterations,</span><br><span class="line">                         all_possible_transitions=all_possible_transitions)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, sentences, tag_lists)</span>:</span></span><br><span class="line">        <span class="string">"""训练模型"""</span></span><br><span class="line">        features = [sent2features(s) <span class="keyword">for</span> s <span class="keyword">in</span> sentences]</span><br><span class="line">        self.model.fit(features, tag_lists)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, sentences)</span>:</span></span><br><span class="line">        <span class="string">"""解码,对给定句子预测其标注"""</span></span><br><span class="line">        features = [sent2features(s) <span class="keyword">for</span> s <span class="keyword">in</span> sentences]</span><br><span class="line">        pred_tag_lists = self.model.predict(features)</span><br><span class="line">        <span class="keyword">return</span> pred_tag_lists</span><br></pre></td></tr></table></figure>
+<h2 id="深度学习的方法"><a href="#深度学习的方法" class="headerlink" title="深度学习的方法"></a><strong>深度学习的方法</strong></h2><p>LSTM也常常被用来解决序列标注问题。和HMM、CRF不同的是，LSTM是依靠神经网络超强的非线性拟合能力，在训练时将样本通过高维空间中的复杂非线性变换，学习到从样本到标注的函数，之后使用这个函数为指定的样本预测每个token的标注。LSTM比起CRF模型最大的好处就是<strong>简单粗暴</strong>，不需要做繁杂的特征工程，直接训练即可.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn.utils.rnn <span class="keyword">import</span> pad_packed_sequence, pack_padded_sequence</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BiLSTM</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, vocab_size, emb_size, hidden_size, out_size)</span>:</span></span><br><span class="line">        <span class="string">"""初始化参数：</span></span><br><span class="line"><span class="string">            vocab_size:字典的大小</span></span><br><span class="line"><span class="string">            emb_size:词向量的维数</span></span><br><span class="line"><span class="string">            hidden_size：隐向量的维数</span></span><br><span class="line"><span class="string">            out_size:标注的种类</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        super(BiLSTM, self).__init__()</span><br><span class="line">        self.embedding = nn.Embedding(vocab_size, emb_size)</span><br><span class="line">        self.bilstm = nn.LSTM(emb_size, hidden_size,</span><br><span class="line">                              batch_first=<span class="literal">True</span>,</span><br><span class="line">                              bidirectional=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        self.lin = nn.Linear(<span class="number">2</span>*hidden_size, out_size)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, sents_tensor, lengths)</span>:</span></span><br><span class="line">        emb = self.embedding(sents_tensor)  <span class="comment"># [B, L, emb_size]</span></span><br><span class="line"></span><br><span class="line">        packed = pack_padded_sequence(emb, lengths, batch_first=<span class="literal">True</span>)</span><br><span class="line">        rnn_out, _ = self.bilstm(packed)</span><br><span class="line">        <span class="comment"># rnn_out:[B, L, hidden_size*2]</span></span><br><span class="line">        rnn_out, _ = pad_packed_sequence(rnn_out, batch_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        scores = self.lin(rnn_out)  <span class="comment"># [B, L, out_size]</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> scores</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, sents_tensor, lengths, _)</span>:</span></span><br><span class="line">        <span class="string">"""解码"""</span></span><br><span class="line">        logits = self.forward(sents_tensor, lengths)  <span class="comment"># [B, L, out_size]</span></span><br><span class="line">        _, batch_tagids = torch.max(logits, dim=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> batch_tagid</span><br></pre></td></tr></table></figure>
+<h2 id="混合方法"><a href="#混合方法" class="headerlink" title="混合方法"></a>混合方法</h2><h3 id="LSTM-CRF"><a href="#LSTM-CRF" class="headerlink" title="LSTM + CRF"></a>LSTM + CRF</h3><p>简单的LSTM的优点是能够通过<strong>双向</strong>的设置学习到观测序列（输入的字）之间的依赖，在训练过程中，LSTM能够根据目标，自动提取观测序列的特征，但是缺点是无法学习到状态序列（输出的标注）之间的关系，而在命名实体识别任务中，标注之间是有一定的关系的，比如O类标注后面不会接一个I类标注，所以LSTM在解决NER这类序列标注任务时，虽然可以省去很繁杂的特征工程，但是也存在无法学习到标注上下文的缺点。</p>
+<p>相反，CRF的优点就是能对隐含状态建模，学习状态序列的特点，但它的缺点是需要手动提取序列特征。所以一般的做法是，在LSTM后面再加一层CRF，以获得两者的优点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BiLSTM_CRF</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, vocab_size, emb_size, hidden_size, out_size)</span>:</span></span><br><span class="line">        <span class="string">"""初始化参数：</span></span><br><span class="line"><span class="string">            vocab_size:字典的大小</span></span><br><span class="line"><span class="string">            emb_size:词向量的维数</span></span><br><span class="line"><span class="string">            hidden_size：隐向量的维数</span></span><br><span class="line"><span class="string">            out_size:标注的种类</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        super(BiLSTM_CRF, self).__init__()</span><br><span class="line">        <span class="comment"># 这里的BiLSTM就是LSTM模型部分所定义的BiLSTM模型</span></span><br><span class="line">        self.bilstm = BiLSTM(vocab_size, emb_size, hidden_size, out_size)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># CRF实际上就是多学习一个转移矩阵 [out_size, out_size] 初始化为均匀分布</span></span><br><span class="line">        self.transition = nn.Parameter(</span><br><span class="line">            torch.ones(out_size, out_size) * <span class="number">1</span>/out_size)</span><br><span class="line">        <span class="comment"># self.transition.data.zero_()</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, sents_tensor, lengths)</span>:</span></span><br><span class="line">        <span class="comment"># [B, L, out_size]</span></span><br><span class="line">        emission = self.bilstm(sents_tensor, lengths)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算CRF scores, 这个scores大小为[B, L, out_size, out_size]</span></span><br><span class="line">        <span class="comment"># 也就是每个字对应对应一个 [out_size, out_size]的矩阵</span></span><br><span class="line">        <span class="comment"># 这个矩阵第i行第j列的元素的含义是：上一时刻tag为i，这一时刻tag为j的分数</span></span><br><span class="line">        batch_size, max_len, out_size = emission.size()</span><br><span class="line">        crf_scores = emission.unsqueeze(</span><br><span class="line">            <span class="number">2</span>).expand(<span class="number">-1</span>, <span class="number">-1</span>, out_size, <span class="number">-1</span>) + self.transition.unsqueeze(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> crf_scores</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, test_sents_tensor, lengths, tag2id)</span>:</span></span><br><span class="line">        <span class="string">"""使用维特比算法进行解码"""</span></span><br><span class="line">        start_id = tag2id[<span class="string">'&lt;start&gt;'</span>]</span><br><span class="line">        end_id = tag2id[<span class="string">'&lt;end&gt;'</span>]</span><br><span class="line">        pad = tag2id[<span class="string">'&lt;pad&gt;'</span>]</span><br><span class="line">        tagset_size = len(tag2id)</span><br><span class="line"></span><br><span class="line">        crf_scores = self.forward(test_sents_tensor, lengths)</span><br><span class="line">        device = crf_scores.device</span><br><span class="line">        <span class="comment"># B:batch_size, L:max_len, T:target set size</span></span><br><span class="line">        B, L, T, _ = crf_scores.size()</span><br><span class="line">        <span class="comment"># viterbi[i, j, k]表示第i个句子，第j个字对应第k个标记的最大分数</span></span><br><span class="line">        viterbi = torch.zeros(B, L, T).to(device)</span><br><span class="line">        <span class="comment"># backpointer[i, j, k]表示第i个句子，第j个字对应第k个标记时前一个标记的id，用于回溯</span></span><br><span class="line">        backpointer = (torch.zeros(B, L, T).long() * end_id).to(device)</span><br><span class="line">        lengths = torch.LongTensor(lengths).to(device)</span><br><span class="line">        <span class="comment"># 向前递推</span></span><br><span class="line">        <span class="keyword">for</span> step <span class="keyword">in</span> range(L):</span><br><span class="line">            batch_size_t = (lengths &gt; step).sum().item()</span><br><span class="line">            <span class="keyword">if</span> step == <span class="number">0</span>:</span><br><span class="line">                <span class="comment"># 第一个字它的前一个标记只能是start_id</span></span><br><span class="line">                viterbi[:batch_size_t, step,</span><br><span class="line">                        :] = crf_scores[: batch_size_t, step, start_id, :]</span><br><span class="line">                backpointer[: batch_size_t, step, :] = start_id</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                max_scores, prev_tags = torch.max(</span><br><span class="line">                    viterbi[:batch_size_t, step<span class="number">-1</span>, :].unsqueeze(<span class="number">2</span>) +</span><br><span class="line">                    crf_scores[:batch_size_t, step, :, :],     <span class="comment"># [B, T, T]</span></span><br><span class="line">                    dim=<span class="number">1</span></span><br><span class="line">                )</span><br><span class="line">                viterbi[:batch_size_t, step, :] = max_scores</span><br><span class="line">                backpointer[:batch_size_t, step, :] = prev_tags</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 在回溯的时候我们只需要用到backpointer矩阵</span></span><br><span class="line">        backpointer = backpointer.view(B, <span class="number">-1</span>)  <span class="comment"># [B, L * T]</span></span><br><span class="line">        tagids = []  <span class="comment"># 存放结果</span></span><br><span class="line">        tags_t = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">for</span> step <span class="keyword">in</span> range(L<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">            batch_size_t = (lengths &gt; step).sum().item()</span><br><span class="line">            <span class="keyword">if</span> step == L<span class="number">-1</span>:</span><br><span class="line">                index = torch.ones(batch_size_t).long() * (step * tagset_size)</span><br><span class="line">                index = index.to(device)</span><br><span class="line">                index += end_id</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                prev_batch_size_t = len(tags_t)</span><br><span class="line"></span><br><span class="line">                new_in_batch = torch.LongTensor(</span><br><span class="line">                    [end_id] * (batch_size_t - prev_batch_size_t)).to(device)</span><br><span class="line">                offset = torch.cat(</span><br><span class="line">                    [tags_t, new_in_batch],</span><br><span class="line">                    dim=<span class="number">0</span></span><br><span class="line">                )  <span class="comment"># 这个offset实际上就是前一时刻的</span></span><br><span class="line">                index = torch.ones(batch_size_t).long() * (step * tagset_size)</span><br><span class="line">                index = index.to(device)</span><br><span class="line">                index += offset.long()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            tags_t = backpointer[:batch_size_t].gather(</span><br><span class="line">                dim=<span class="number">1</span>, index=index.unsqueeze(<span class="number">1</span>).long())</span><br><span class="line">            tags_t = tags_t.squeeze(<span class="number">1</span>)</span><br><span class="line">            tagids.append(tags_t.tolist())</span><br><span class="line"></span><br><span class="line">        <span class="comment"># tagids:[L-1]（L-1是因为扣去了end_token),大小的liebiao</span></span><br><span class="line">        <span class="comment"># 其中列表内的元素是该batch在该时刻的标记</span></span><br><span class="line">        <span class="comment"># 下面修正其顺序，并将维度转换为 [B, L]</span></span><br><span class="line">        tagids = list(zip_longest(*reversed(tagids), fillvalue=pad))</span><br><span class="line">        tagids = torch.Tensor(tagids).long()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 返回解码的结果</span></span><br><span class="line">        <span class="keyword">return</span> tagids</span><br></pre></td></tr></table></figure>
+<h3 id="BERT-（LSTM）-CRF"><a href="#BERT-（LSTM）-CRF" class="headerlink" title="BERT+（LSTM）+CRF"></a>BERT+（LSTM）+CRF</h3><p>BERT中蕴含了大量的通用知识，利用预训练好的BERT模型，再用少量的标注数据进行FINETUNE是一种快速的获得效果不错的NER的方法。</p>
+<h1 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h1><p>一般来说越复杂的标签结构，效果越好，当然复杂的标签结构处理起来也很麻烦。</p>
+<h1 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h1><ol>
+<li>医疗数据集</li>
+<li>kaggle数据集</li>
+<li>BosonNLP命名实体识别数据</li>
+</ol>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>工具</strong></th>
+<th style="text-align:left"><strong>简介</strong></th>
+<th style="text-align:left"><strong>访问地址</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Stanford NER</td>
+<td style="text-align:left">斯坦福大学开发的基于条件随机场的命名实体识别系统，该系统参数是基于CoNLL、MUC-6、MUC-7和ACE命名实体语料训练出来的。</td>
+<td style="text-align:left"><a href="https://nlp.stanford.edu/software/CRF-NER.shtml" target="_blank" rel="noopener">官网</a> \</td>
+<td><a href="https://github.com/Lynten/stanford-corenlp" target="_blank" rel="noopener">GitHub 地址</a></td>
+</tr>
+<tr>
+<td style="text-align:left">MALLET</td>
+<td style="text-align:left">麻省大学开发的一个统计自然语言处理的开源包，其序列标注工具的应用中能够实现命名实体识别。</td>
+<td style="text-align:left"><a href="http://mallet.cs.umass.edu/" target="_blank" rel="noopener">官网</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Hanlp</td>
+<td style="text-align:left">HanLP是一系列模型与算法组成的NLP工具包，由大快搜索主导并完全开源，目标是普及自然语言处理在生产环境中的应用。支持命名实体识别。</td>
+<td style="text-align:left"><a href="http://hanlp.linrunsoft.com/" target="_blank" rel="noopener">官网</a> \</td>
+<td><a href="https://github.com/hankcs/pyhanlp" target="_blank" rel="noopener">GitHub 地址</a></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://easyai.tech/ai-definition/nltk/" target="_blank" rel="noopener">NLTK</a></td>
+<td style="text-align:left">NLTK是一个高效的Python构建的平台,用来处理人类自然语言数据。</td>
+<td style="text-align:left"><a href="http://www.nltk.org/" target="_blank" rel="noopener">官网</a> \</td>
+<td><a href="https://github.com/nltk/nltk" target="_blank" rel="noopener">GitHub 地址</a></td>
+</tr>
+<tr>
+<td style="text-align:left">SpaCy</td>
+<td style="text-align:left">工业级的自然语言处理工具，遗憾的是不支持中文。</td>
+<td style="text-align:left"><a href="https://spacy.io/" target="_blank" rel="noopener">官网</a> \</td>
+<td><a href="https://github.com/explosion/spaCy" target="_blank" rel="noopener">GitHub 地址</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Crfsuite</td>
+<td style="text-align:left">可以载入自己的数据集去训练CRF实体识别模型。</td>
+<td style="text-align:left"><a href="https://sklearn-crfsuite.readthedocs.io/en/latest/?badge=latest" target="_blank" rel="noopener">文档</a> \</td>
+<td><a href="https://github.com/yuquanle/StudyForNLP/blob/master/NLPbasic/NER.ipynb" target="_blank" rel="noopener">GitHub 地址</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/61227299" target="_blank" rel="noopener">NLP实战-中文命名实体识别</a></li>
+<li><a href="https://blog.csdn.net/u014033218/article/details/89304699" target="_blank" rel="noopener">命名实体识别研究综述</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ner/" rel="tag"><i class="fa fa-tag"></i> ner</a>
+              <a href="/tags/%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB/" rel="tag"><i class="fa fa-tag"></i> 命名实体识别</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/23/machine-learning-logistic-regression/" rel="prev" title="逻辑回归与最大熵模型">
+      <i class="fa fa-chevron-left"></i> 逻辑回归与最大熵模型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究主体"><span class="nav-number">2.</span> <span class="nav-text">研究主体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特点及难点"><span class="nav-number">3.</span> <span class="nav-text">特点及难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主要方法"><span class="nav-number">4.</span> <span class="nav-text">主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于规则和词典的方法"><span class="nav-number">4.1.</span> <span class="nav-text">基于规则和词典的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于统计的方法"><span class="nav-number">4.2.</span> <span class="nav-text">基于统计的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#隐马尔科夫模型"><span class="nav-number">4.2.1.</span> <span class="nav-text">隐马尔科夫模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件随机场"><span class="nav-number">4.2.2.</span> <span class="nav-text">条件随机场</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习的方法"><span class="nav-number">4.3.</span> <span class="nav-text">深度学习的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合方法"><span class="nav-number">4.4.</span> <span class="nav-text">混合方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LSTM-CRF"><span class="nav-number">4.4.1.</span> <span class="nav-text">LSTM + CRF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT-（LSTM）-CRF"><span class="nav-number">4.4.2.</span> <span class="nav-text">BERT+（LSTM）+CRF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标签"><span class="nav-number">5.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据集"><span class="nav-number">6.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工具"><span class="nav-number">7.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">470k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
+      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
