@@ -25,20 +25,20 @@
 
   <meta property="og:type" content="article">
 <meta property="og:title" content="逻辑回归与最大熵模型">
-<meta property="og:url" content="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/index.html">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/Logistic-Regression-learning.png">
-<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/00630Defly1g4pvk2ctatj30cw0b63yq.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/Logistic-Regression-learning.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/00630Defly1g4pvk2ctatj30cw0b63yq.jpg">
 <meta property="article:published_time" content="2020-05-23T15:05:47.000Z">
-<meta property="article:modified_time" content="2020-05-24T05:14:22.289Z">
+<meta property="article:modified_time" content="2020-05-27T06:29:45.028Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="logistic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/Logistic-Regression-learning.png">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/Logistic-Regression-learning.png">
 
-<link rel="canonical" href="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/">
+<link rel="canonical" href="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/">
 
 
 <script id="page-configurations">
@@ -212,7 +212,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/23/machine-learning-logistic-regression/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/05/23/machine_learning_logistic_regression/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-24 13:14:22" itemprop="dateModified" datetime="2020-05-24T13:14:22+08:00">2020-05-24</time>
+                <time title="修改时间：2020-05-27 14:29:45" itemprop="dateModified" datetime="2020-05-27T14:29:45+08:00">2020-05-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,7 +248,7 @@
             </span>
 
           
-            <span id="/2020/05/23/machine-learning-logistic-regression/" class="post-meta-item leancloud_visitors" data-flag-title="逻辑回归与最大熵模型" title="阅读次数">
+            <span id="/2020/05/23/machine_learning_logistic_regression/" class="post-meta-item leancloud_visitors" data-flag-title="逻辑回归与最大熵模型" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -263,8 +263,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/05/23/machine-learning-logistic-regression/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/23/machine-learning-logistic-regression/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/05/23/machine_learning_logistic_regression/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/23/machine_learning_logistic_regression/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -293,12 +293,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/05/23/machine-learning-logistic-regression/Logistic-Regression-learning.png" alt></p>
+        <p><img src="/2020/05/23/machine_learning_logistic_regression/Logistic-Regression-learning.png" alt></p>
 <a id="more"></a>
 <h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><h2 id="什么是逻辑回归"><a href="#什么是逻辑回归" class="headerlink" title="什么是逻辑回归"></a>什么是逻辑回归</h2><p>逻辑回归是用来做分类算法的，线性回归，一般形式是$y=w \ast x + b$，y的取值范围是$[- \infty, +\infty]$，有这么多取值，把$y$的结果带入一个非线性变换的<strong>Sigmoid函数</strong>中，即可得到[0,1]之间取值范围的数$S$，$S$可以看成是一个概率值，如果设置概率阈值为0.5，那么$S$大于0.5可以看成是正样本，小于0.5看成是负样本，这样就可以进行分类了。</p>
 <h2 id="什么是对数几率"><a href="#什么是对数几率" class="headerlink" title="什么是对数几率"></a>什么是对数几率</h2><p>如果某事件发生的概率是p,则该事件发生的<strong>几率</strong>(此处几率指该事件发生概率与不发生概率之比)是$\frac{p}{1-p}$,<strong>对数几率</strong>是$log(\frac{p}{1-p})$,那么$\log \frac{P(Y=1 | x)}{1-P(Y=1 | x)}=w \cdot x$，也就是说在逻辑斯谛回归模型中,输出Y=1的对数几率是输入x的<strong>线性函数</strong>,线性函数值越接近正无穷,概率值就越接近1,反之则越接近0.</p>
 <h2 id="什么是Sigmoid函数"><a href="#什么是Sigmoid函数" class="headerlink" title="什么是Sigmoid函数"></a>什么是Sigmoid函数</h2><p>公式及图像如下：</p>
-<p><img src="/2020/05/23/machine-learning-logistic-regression/00630Defly1g4pvk2ctatj30cw0b63yq.jpg" alt></p>
+<p><img src="/2020/05/23/machine_learning_logistic_regression/00630Defly1g4pvk2ctatj30cw0b63yq.jpg" alt></p>
 <p>函数中$t$无论取什么值，其结果都在$[0,1]$的区间内，一个分类问题就有两种答案，一种是“是”，一种是“否”，那0对应着“否”，1对应着“是”，假设分类的<strong>阈值</strong>是0.5，那么超过0.5的归为1分类，低于0.5的归为0分类，阈值是可以自己设定的。把$w \ast x + b$带入t中就得到了逻辑回归的一般模型方程：</p>
 <script type="math/tex; mode=display">
 H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}</script><p>结果可以理解为概率，概率大于0.5的属于1分类，概率小于0.5的属于0分类，这样就达到了分类的目的。</p>
@@ -420,11 +420,11 @@ L(P, w) & \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w_{i}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/23/machine-linear-regression/" rel="prev" title="线性回归">
+    <a href="/2020/05/23/machine_linear_regression/" rel="prev" title="线性回归">
       <i class="fa fa-chevron-left"></i> 线性回归
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/26/named-entity-recognition/" rel="next" title="命名实体识别">
+    <a href="/2020/05/26/named_entity_recognition/" rel="next" title="命名实体识别">
       命名实体识别 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -859,8 +859,8 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       el         : '#valine-comments',
       verify     : false,
       notify     : false,
-      appId      : 'wocKAhd8E1IRPHNgYbfFVsKf-gzGzoHsz',
-      appKey     : '0SDY7WADR3m02c4hBcUv3T0B',
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
       placeholder: "留下你的小脚印吧！",
       avatar     : 'mm',
       meta       : guest,
