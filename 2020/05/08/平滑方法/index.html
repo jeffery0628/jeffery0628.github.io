@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":15,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -272,7 +272,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -293,16 +293,25 @@
       
         <p><img src="https://protao.github.io/img/2gramsmooth.png" alt></p>
 <a id="more"></a>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在一个概率模型中，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)：</p>
-<script type="math/tex; mode=display">
-P_{M L E}=\frac{c(x)}{\sum_{e} c(e)}</script><p>然而，由于并没有足够的数据，很多事件 $x$ 并没有在训练数据中出现，也就是 $c(x)=0$，$P_{MLE}=0$这是有问题的，没有在训练数据中出现的数据，并不代表不会在测试数据中出现，如果没有考虑到数据稀疏性，模型就显得太简单了。</p>
+<h3 id="jian-jie">简介</h3>
+<p>在一个概率模型中，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)：
+\[
+P_{M L E}=\frac{c(x)}{\sum_{e} c(e)}
+\]
+然而，由于并没有足够的数据，很多事件 \(x\) 并没有在训练数据中出现，也就是 \(c(x)=0\)，\(P_{MLE}=0\)这是有问题的，没有在训练数据中出现的数据，并不代表不会在测试数据中出现，如果没有考虑到数据稀疏性，模型就显得太简单了。</p>
 <p>Data sparsity 是 smoothing 的最大原因。Chen &amp; Goodman 在1998 年提到过，几乎所有数据稀疏的场景下，smoothing 都可以帮助提高 performance，而数据稀疏性几乎是所有统计模型都会遇到的问题。而如果你有足够多的训练数据，所有的 parameters 都可以在没有 smoothing 的情况下被准确的估计，那么你总是可以扩展模型，如原来是 bigram，没有数据稀疏，完全可以扩展到 trigram 来提高 performance，如果还没有出现稀疏，就再往高层推，当 parameters 越来越多的时候，数据稀疏再次成为了问题，这时候，用合适的平滑方法可以得到更准确的模型。实际上，无论有多少的数据，平滑几乎总是可以以很小的代价来提高 performance。</p>
-<h3 id="平滑方法"><a href="#平滑方法" class="headerlink" title="平滑方法"></a>平滑方法</h3><h4 id="add-one-smoothing"><a href="#add-one-smoothing" class="headerlink" title="add-one smoothing"></a>add-one smoothing</h4><p>(也叫laplace smoothing),以bigram为例：</p>
-<p>MLE estimate：</p>
-<script type="math/tex; mode=display">
-P_{M L E}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)}{c\left(w_{i-1}\right)}</script><p>Add-one estimate:</p>
-<script type="math/tex; mode=display">
-P_{A d d-1}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+1}{c\left(w_{i-1}\right)+V}</script><p>其中，$V$表示词典大小。</p>
+<h3 id="ping-hua-fang-fa">平滑方法</h3>
+<h4 id="add-one-smoothing">add-one smoothing</h4>
+<p>(也叫laplace smoothing),以bigram为例：</p>
+<p>MLE estimate：
+\[
+P_{M L E}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)}{c\left(w_{i-1}\right)}
+\]
+Add-one estimate:
+\[
+P_{A d d-1}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+1}{c\left(w_{i-1}\right)+V}
+\]
+其中，\(V\)表示词典大小。</p>
 <p>假设语料库为：</p>
 <blockquote>
 <ol>
@@ -312,55 +321,71 @@ P_{A d d-1}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+1}{c\l
 </ol>
 </blockquote>
 <p>那么，john read a book 这个句子的概率为：</p>
-<script type="math/tex; mode=display">
+<p>\[
 \begin{aligned}
-p(\text { john read a book })&=p(\text { john } |<s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
-&=\frac{c(<s>,john)}{\sum_{w} c(<s>,w)} \frac{c(john,read)}{\sum_{w} c(john,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,<e>)}{\sum_{w} c(book,w)}\\
-&= \frac{1}{3} * \frac{1}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
-&\approx 0.006
-\end{aligned}</script><p>而，cher read a book 这个句子出现的概率是：</p>
-<script type="math/tex; mode=display">
+p(\text { john read a book })&amp;=p(\text { john } |&lt;s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(&lt;e> | \text {book}) \\
+&amp;=\frac{c(&lt;s>,john)}{\sum_{w} c(&lt;s>,w)} \frac{c(john,read)}{\sum_{w} c(john,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,&lt;e>)}{\sum_{w} c(book,w)}\\
+&amp;= \frac{1}{3} * \frac{1}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
+&amp;\approx 0.006
+\end{aligned}
+\]</p>
+<p>而，cher read a book 这个句子出现的概率是：</p>
+<p>\[
 \begin{aligned}
-p(\text { cher read a book })&=p(\text { cher } |<s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
-&=\frac{c(<s>,cher)}{\sum_{w} c(<s>,w)} \frac{c(cher,read)}{\sum_{w} c(cher,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,<e>)}{\sum_{w} c(book,w)}\\
-&= \frac{0}{3} * \frac{0}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
-&\approx 0
-\end{aligned}</script><p>如果使用add-one smoothing：</p>
-<script type="math/tex; mode=display">
+p(\text { cher read a book })&amp;=p(\text { cher } |&lt;s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(&lt;e> | \text {book}) \\
+&amp;=\frac{c(&lt;s>,cher)}{\sum_{w} c(&lt;s>,w)} \frac{c(cher,read)}{\sum_{w} c(cher,w)} \frac{c(read,a)}{\sum_{w} c(read,w)} \frac{c(a,book)}{\sum_{w} c(a,w)} \frac{c(book,&lt;e>)}{\sum_{w} c(book,w)}\\
+&amp;= \frac{0}{3} * \frac{0}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
+&amp;\approx 0
+\end{aligned}
+\]
+如果使用add-one smoothing：
+\[
 \begin{aligned}
-p(\text { john read a book })&=p(\text { john } |<s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
-&= \frac{1+1}{3+11} * \frac{1+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
-&\approx 0.0001
-\end{aligned}</script><script type="math/tex; mode=display">
+p(\text { john read a book })&amp;=p(\text { john } |&lt;s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(&lt;e> | \text {book}) \\
+&amp;= \frac{1+1}{3+11} * \frac{1+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
+&amp;\approx 0.0001
+\end{aligned}
+\]</p>
+<p>\[
 \begin{aligned}
-p(\text { cher read a book })&=p(\text { cher } |<s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(<e> | \text {book}) \\
-&= \frac{0+1}{3+11} * \frac{0+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
-&\approx 0.00003
-\end{aligned}</script><p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
-<h4 id="Additive-smoothing"><a href="#Additive-smoothing" class="headerlink" title="Additive smoothing"></a>Additive smoothing</h4><p>对加 1 平滑的改进就是把 1 改成 $\delta$，且 $0&lt;\delta$</p>
-<script type="math/tex; mode=display">
-P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\delta}{c\left(w_{i-1}\right)+\delta V}</script><p>可以把$\delta$看作是一个可以调节的超参数。</p>
-<h4 id="Good-Turing-smoothing"><a href="#Good-Turing-smoothing" class="headerlink" title="Good-Turing smoothing"></a>Good-Turing smoothing</h4><p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram.</p>
+p(\text { cher read a book })&amp;=p(\text { cher } |&lt;s>)  p(\text { read } | \text { cher })  p(\text { a } | \text { read })  p(\text { book } | a )  p(&lt;e> | \text {book}) \\
+&amp;= \frac{0+1}{3+11} * \frac{0+1}{1+11} * \frac{2+1}{3+11} * \frac{1+1}{2+11} * \frac{1+1}{2+11} \\
+&amp;\approx 0.00003
+\end{aligned}
+\]</p>
+<p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
+<h4 id="additive-smoothing">Additive smoothing</h4>
+<p>对加 1 平滑的改进就是把 1 改成 \(\delta\)，且 \(0&lt;\delta\)
+\[
+P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\delta}{c\left(w_{i-1}\right)+\delta V}
+\]
+可以把\(\delta\)看作是一个可以调节的超参数。</p>
+<h4 id="good-turing-smoothing">Good-Turing smoothing</h4>
+<p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram.</p>
 <p>举个例子：假设你在钓鱼，然后抓到了 18 条鱼，种类如下：10条鲤鱼, 3条黑鱼, 2条刀鱼, 1条鲨鱼, 1条草鱼, 1条鳗鱼，那么</p>
 <ol>
-<li><p>下一个钓到的鱼是鲨鱼的概率是多少？</p>
+<li>
+<p>下一个钓到的鱼是鲨鱼的概率是多少？</p>
 <p>1/18</p>
 </li>
-<li><p>下一条与是新鱼种（之前没有出现过）的概率是多少？</p>
+<li>
+<p>下一条与是新鱼种（之前没有出现过）的概率是多少？</p>
 <p>3/18(没有出现过的按出现过一次算)</p>
 </li>
-<li><p>下一条抓到的鱼是鲨鱼的概率是多少？</p>
-<p>首先肯定的是概率小于1/18  —&gt; good turing</p>
+<li>
+<p>下一条抓到的鱼是鲨鱼的概率是多少？</p>
+<p>首先肯定的是概率小于1/18  --&gt; good turing</p>
 </li>
 </ol>
 <p>在good turing 下,对参数的估计分两种情况：</p>
 <ol>
-<li>没有出现过的：$P_{GT}=\frac{N_1}{N}$</li>
-<li>出现过的：$P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}$</li>
+<li>没有出现过的：\(P_{GT}=\frac{N_1}{N}\)</li>
+<li>出现过的：\(P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}\)</li>
 </ol>
-<p>其中，$N_c$表示出现c次的单词个数,$N$代表样本总数。<br>比如：</p>
+<p>其中，\(N_c\)表示出现c次的单词个数,\(N\)代表样本总数。
+比如：</p>
 <blockquote>
-<p>sam i am i am sam i do not eat </p>
+<p>sam i am i am sam i do not eat</p>
 <p>sam：2次</p>
 <p>i：3次</p>
 <p>am：2次</p>
@@ -368,20 +393,25 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 <p>not：1次</p>
 <p>eat：1次</p>
 </blockquote>
-<p>有：$N_3=1,N_2=2,N_1=3$</p>
-<p>对于第3个问题：$P_{GT}=\frac{(1+1)<em>1}{3</em>18}=\frac{1}{27}$.</p>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>由公式：$P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}$在计算当前项$c$ 的时候，需要计算到$c+1$的$N_{c+1}$,若$N_{c+1}=0$，则会导致概率为0.</p>
-<p>解决方法：可以利用机器学习中回归算法对$N_1,N_2,\ldots,N_c,N_{c+1}$进行拟合，进而得出$N_{c+1}$的值。</p>
-<h4 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h4><p><strong>基本思想</strong>：在计算Trigram概率的同时，考虑Unigram，Bigram，Trigram出现的次数。</p>
+<p>有：\(N_3=1,N_2=2,N_1=3\)</p>
+<p>对于第3个问题：\(P_{GT}=\frac{(1+1)*1}{3*18}=\frac{1}{27}\).</p>
+<h5 id="que-dian">缺点</h5>
+<p>由公式：\(P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}\)在计算当前项\(c\) 的时候，需要计算到\(c+1\)的\(N_{c+1}\),若\(N_{c+1}=0\)，则会导致概率为0.</p>
+<p>解决方法：可以利用机器学习中回归算法对\(N_1,N_2,\ldots,N_c,N_{c+1}\)进行拟合，进而得出\(N_{c+1}\)的值。</p>
+<h4 id="interpolation">Interpolation</h4>
+<p><strong>基本思想</strong>：在计算Trigram概率的同时，考虑Unigram，Bigram，Trigram出现的次数。</p>
 <p>举个例子：有</p>
-<p><code>C(in the kitchen)=0</code>,<code>C(the kitchen)=3</code>,<code>C(kitchen)=4</code>,<code>C(arboretum)=0</code>.在计算<code>p(kitchen|in the)</code>和<code>p(arboretum|in the)</code>的时候，从语料计算得出：$p(kitchen|in,the)=p(arboretum|in,the)=0$,但是从经验上来讲$p(kitchen|in,the)&gt;p(arboretum|in,the)$，因为kitchen要比arboretum常见的多。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权</p>
-<script type="math/tex; mode=display">
+<p><code>C(in the kitchen)=0</code>,<code>C(the kitchen)=3</code>,<code>C(kitchen)=4</code>,<code>C(arboretum)=0</code>.在计算<code>p(kitchen|in the)</code>和<code>p(arboretum|in the)</code>的时候，从语料计算得出：\(p(kitchen|in,the)=p(arboretum|in,the)=0\),但是从经验上来讲\(p(kitchen|in,the)>p(arboretum|in,the)\)，因为kitchen要比arboretum常见的多。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权
+\[
 \begin{aligned}
-\mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right)=& \lambda_{1} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right) \\
-&+\lambda_{2} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}\right) \\
-&+\lambda_{3} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}}\right)\\
+\mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right)=&amp; \lambda_{1} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right) \\
+&amp;+\lambda_{2} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}\right) \\
+&amp;+\lambda_{3} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}}\right)\\
 \sum_i\lambda_i=1
-\end{aligned}</script><h5 id="怎样设置-lambdas？？？？"><a href="#怎样设置-lambdas？？？？" class="headerlink" title="怎样设置 lambdas？？？？"></a>怎样设置 lambdas？？？？</h5>
+\end{aligned}
+\]</p>
+<h5 id="zen-yang-she-zhi-lambdas">怎样设置 lambdas？？？？</h5>
+
     </div>
 
     
@@ -494,7 +524,7 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平滑方法"><span class="nav-number">2.</span> <span class="nav-text">平滑方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#add-one-smoothing"><span class="nav-number">2.1.</span> <span class="nav-text">add-one smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Additive-smoothing"><span class="nav-number">2.2.</span> <span class="nav-text">Additive smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Good-Turing-smoothing"><span class="nav-number">2.3.</span> <span class="nav-text">Good-Turing smoothing</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">2.3.1.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Interpolation"><span class="nav-number">2.4.</span> <span class="nav-text">Interpolation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#怎样设置-lambdas？？？？"><span class="nav-number">2.4.1.</span> <span class="nav-text">怎样设置 lambdas？？？？</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-hua-fang-fa"><span class="nav-number">2.</span> <span class="nav-text">平滑方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#add-one-smoothing"><span class="nav-number">2.1.</span> <span class="nav-text">add-one smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#additive-smoothing"><span class="nav-number">2.2.</span> <span class="nav-text">Additive smoothing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#good-turing-smoothing"><span class="nav-number">2.3.</span> <span class="nav-text">Good-Turing smoothing</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#que-dian"><span class="nav-number">2.3.1.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interpolation"><span class="nav-number">2.4.</span> <span class="nav-text">Interpolation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#zen-yang-she-zhi-lambdas"><span class="nav-number">2.4.1.</span> <span class="nav-text">怎样设置 lambdas？？？？</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -512,20 +542,20 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -571,7 +601,7 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">475k</span>
+    <span title="站点总字数">533k</span>
 </div>
 
         
@@ -691,7 +721,6 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -700,7 +729,7 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
@@ -789,34 +818,8 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 
   
 
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
-
-
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
 

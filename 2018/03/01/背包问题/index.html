@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
@@ -20,23 +20,21 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":15,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="题目有N件物品和一个容量为v的背包，放入第i件物品耗费空间c[i]得到价值为W[i],求哪些物品装入背包可使得总价值最大？ 动态规划求解：状态：问题所求最大价值，设状态即为背包中物品的价值 状态转移方程： dp[i][j]表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为  \mathrm{dp}[\mathrm{i}][\mathrm{v}]&#x3D;\max \left\{\begin{">
+  <meta name="description" content="题目 有N件物品和一个容量为v的背包，放入第i件物品耗费空间c[i]得到价值为W[i],求哪些物品装入背包可使得总价值最大？ 动态规划求解： 状态：问题所求最大价值，设状态即为背包中物品的价值 状态转移方程： dp[i][j]表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为 \[ \mathrm{dp}[\mathrm{i}][\mathrm{v}]&#x3D;\max \left\{\be">
 <meta property="og:type" content="article">
 <meta property="og:title" content="背包问题">
 <meta property="og:url" content="https://jeffery0628.github.io/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="火种2号">
-<meta property="og:description" content="题目有N件物品和一个容量为v的背包，放入第i件物品耗费空间c[i]得到价值为W[i],求哪些物品装入背包可使得总价值最大？ 动态规划求解：状态：问题所求最大价值，设状态即为背包中物品的价值 状态转移方程： dp[i][j]表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为  \mathrm{dp}[\mathrm{i}][\mathrm{v}]&#x3D;\max \left\{\begin{">
+<meta property="og:description" content="题目 有N件物品和一个容量为v的背包，放入第i件物品耗费空间c[i]得到价值为W[i],求哪些物品装入背包可使得总价值最大？ 动态规划求解： 状态：问题所求最大价值，设状态即为背包中物品的价值 状态转移方程： dp[i][j]表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为 \[ \mathrm{dp}[\mathrm{i}][\mathrm{v}]&#x3D;\max \left\{\be">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery0628.github.io/Users/lizhen/Library/Application%20Support/typora-user-images/image-20200321181733468.png">
 <meta property="article:published_time" content="2018-03-01T09:19:18.000Z">
 <meta property="article:modified_time" content="2020-03-21T12:17:44.542Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="背包问题">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery0628.github.io/Users/lizhen/Library/Application%20Support/typora-user-images/image-20200321181733468.png">
 
 <link rel="canonical" href="https://jeffery0628.github.io/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
 
@@ -274,7 +272,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.2k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -293,49 +291,67 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>有N件物品和一个容量为<code>v</code>的背包，放入第i件物品耗费空间<code>c[i]</code>得到价值为<code>W[i]</code>,求哪些物品装入背包可使得总价值最大？</p>
-<h4 id="动态规划求解："><a href="#动态规划求解：" class="headerlink" title="动态规划求解："></a>动态规划求解：</h4><p>状态：问题所求最大价值，设状态即为背包中物品的价值</p>
+        <h3 id="ti-mu">题目</h3>
+<p>有N件物品和一个容量为<code>v</code>的背包，放入第i件物品耗费空间<code>c[i]</code>得到价值为<code>W[i]</code>,求哪些物品装入背包可使得总价值最大？</p>
+<h4 id="dong-tai-gui-hua-qiu-jie">动态规划求解：</h4>
+<p>状态：问题所求最大价值，设状态即为背包中物品的价值</p>
 <p>状态转移方程：</p>
-<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为</p>
-<script type="math/tex; mode=display">
+<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为
+\[
 \mathrm{dp}[\mathrm{i}][\mathrm{v}]=\max \left\{\begin{array}{l}
 dp[i-1][v](\text {not select}) \\
 dp[i-1][v-C[i]]+W[i](\text {select})
-\end{array}\right.</script><p>其中<code>dp[i-1][v-C[i]]</code>表示前<code>i-1</code>件物品放入容量为<code>v-C[i]</code>的背包中。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># F[0, 0...V] = 0</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>):</span><br><span class="line">    dp[<span class="number">0</span>][v] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 容量装不下当前物品时，保留原值</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">0</span>, C[i]):</span><br><span class="line">        dp[i][v] = dp[i<span class="number">-1</span>][v]</span><br><span class="line">    <span class="comment"># 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
+\end{array}\right.
+\]
+其中<code>dp[i-1][v-C[i]]</code>表示前<code>i-1</code>件物品放入容量为<code>v-C[i]</code>的背包中。</p>
+<h4 id="dai-ma">代码</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># F[0, 0...V] = 0</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>):</span><br><span class="line">    dp[<span class="number">0</span>][v] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 容量装不下当前物品时，保留原值</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">0</span>, C[i]):</span><br><span class="line">        dp[i][v] = dp[i<span class="number">-1</span>][v]</span><br><span class="line">    <span class="comment"># 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><ol>
-<li><p>时间复杂度：<code>O(VN)</code></p>
+<h4 id="you-hua">优化</h4>
+<ol>
+<li>
+<p>时间复杂度：<code>O(VN)</code></p>
 </li>
-<li><p>空间复杂度：<code>O(VN)</code>可优化成<code>O(N)</code></p>
+<li>
+<p>空间复杂度：<code>O(VN)</code>可优化成<code>O(N)</code></p>
 <p><code>dp[i][v]</code>由<code>dp[i-1][v-C[i]]</code>和<code>dp[i-1][v]</code>两个子问题递推得到，所以第<code>i</code>次迭代时，<code>v</code>按照<code>V-&gt;0</code>的逆序计算<code>dp[v]</code>可以保证<code>dp[v]=max(dp[v],dp[v-C[i]]+W[i])</code>，这样在赋值之前，访问到的均为<code>i-1</code>次迭代保留的值。</p>
 <p>空间为<code>c[i]</code>的物品不会受到状态<code>dp[0...C[i]]</code>的影响，即不影响装不下该物品的背包能装入的最大价值，所以<code>v</code>中<code>V</code>递减到<code>C[i]</code>就可以了。</p>
 </li>
-<li><p>代码</p>
+<li>
+<p>代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(V, C[i]<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        dp[v] = max(dp[v], dp[v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
 <p>对处理0-1背包的物品进行抽象：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zero_one_pack</span><span class="params">(F, c, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(V, c<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        dp[v] = max(dp[v], dp[v-c] + w)</span><br><span class="line"></span><br><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    zero_one_pack(dp, C[i], W[i])</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="初始化细节"><a href="#初始化细节" class="headerlink" title="初始化细节"></a>初始化细节</h4><p>初始化dp的过程，实际上就是在没有任何物品可以装入背包时的合法状态（必要但不充分条件）</p>
+<h4 id="chu-shi-hua-xi-jie">初始化细节</h4>
+<p>初始化dp的过程，实际上就是在没有任何物品可以装入背包时的合法状态（必要但不充分条件）</p>
 <ol>
-<li><p>恰好装满背包时，求最优解：<code>dp[0]=0,dp[1...V]=</code>$-\infty$</p>
+<li>
+<p>恰好装满背包时，求最优解：<code>dp[0]=0,dp[1...V]=</code>\(-\infty\)</p>
 <ul>
-<li><p>容量为0时，什么也装不下，价值为0，所以<code>dp[0]=0</code></p>
+<li>
+<p>容量为0时，什么也装不下，价值为0，所以<code>dp[0]=0</code></p>
 </li>
-<li><p>容量不为0的时候，状态未定义，状态设为$-\infty$</p>
+<li>
+<p>容量不为0的时候，状态未定义，状态设为\(-\infty\)</p>
 </li>
 </ul>
 <p>按此进行初始化，迭代过程中，只有能够恰好装入的物品才会更新出合理值（正值），基于<code>dp[0]=0</code></p>
 </li>
-<li><p>没要求把背包装满：<code>dp[0...V]=0</code></p>
+<li>
+<p>没要求把背包装满：<code>dp[0...V]=0</code></p>
 <p>任何容量都有一个合法的“什么都不装”，所以设<code>dp[0...V]=0</code></p>
 </li>
 </ol>
-<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><p><img src="/Users/lizhen/Library/Application Support/typora-user-images/image-20200321181733468.png" alt="image-20200321181733468"></p>
-<h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><p>有N种物品和1个容量为V的背包，每种物品可以有任意多个，放入第i种物品的耗费空间<code>C[i]</code>，价值为<code>W[i]</code>,求背包能够装入的最大价值？</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>每种物品可以放入0件，1件，…，<code>int(V/C[i])</code>件，令<code>dp[i][v]</code>表示前i种物品放入容量v的背包获取的最大价值，则<code>dp[i][v]=max(dp[i-1][v-k*C[i]]+k*W[i]),0&lt;=k*C[i]&lt;=v</code></p>
-<h4 id="优化-1"><a href="#优化-1" class="headerlink" title="优化"></a>优化</h4><p>时间复杂度：<code>O(nv</code>$\sum \frac{V}{C[i]}$)</p>
+<h3 id="wan-quan-bei-bao">完全背包</h3>
+<p>![image-20200321181733468](/Users/lizhen/Library/Application Support/typora-user-images/image-20200321181733468.png)</p>
+<h4 id="ti-mu-1">题目</h4>
+<p>有N种物品和1个容量为V的背包，每种物品可以有任意多个，放入第i种物品的耗费空间<code>C[i]</code>，价值为<code>W[i]</code>,求背包能够装入的最大价值？</p>
+<h4 id="si-lu">思路</h4>
+<p>每种物品可以放入0件，1件，…，<code>int(V/C[i])</code>件，令<code>dp[i][v]</code>表示前i种物品放入容量v的背包获取的最大价值，则<code>dp[i][v]=max(dp[i-1][v-k*C[i]]+k*W[i]),0&lt;=k*C[i]&lt;=v</code></p>
+<h4 id="you-hua-1">优化</h4>
+<p>时间复杂度：<code>O(nv</code>\(\sum \frac{V}{C[i]}\))</p>
 <p>简单优化：一个简单有效的优化思路是：单位价值更便宜的应该直接跳过</p>
 <p>若两件物品<code>i,j</code>有<code>C[i]&lt;=C[j] and W[i]&gt;=W[j]</code>;则<code>j</code>可以直接跳过，不必考虑，对于随机数据，这会大大减少物品数量，加快速度。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sieve = &#123;C[i]: <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>)&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 跳过装不下的</span></span><br><span class="line">    <span class="keyword">if</span> C[i] &gt; V:</span><br><span class="line">        sieve[C[i]] = <span class="number">-1</span></span><br><span class="line">    <span class="comment"># 跳过 C[i] == C[j] and W[i] &gt; W[j]的j物品</span></span><br><span class="line">    <span class="keyword">elif</span> sieve[C[i]] &lt; W[i]:</span><br><span class="line">        sieve[C[i]] = W[i]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> sieve[C[i]] &lt; <span class="number">0</span> <span class="keyword">or</span> W[i] &lt; sieve[C[i]]:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        max_k = V // C[i]</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">1</span>, max_k+<span class="number">1</span>):</span><br><span class="line">            dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-k*C[i]] + k*W[i])</span><br></pre></td></tr></table></figure>
@@ -346,25 +362,35 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[v] = max(dp[v], dp[v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
 <p>对处理一种完全背包的物品过程进行抽象</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">complete_pack</span><span class="params">(F, c, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(c, V+<span class="number">1</span>):</span><br><span class="line">        F[v] = max(F[v], F[v-c] + w)</span><br><span class="line"></span><br><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    complete_pack(dp, C[i], W[i])</span><br></pre></td></tr></table></figure>
-<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><p>0-1 背包：倒序容量，当前新物品之多影响一次当前总价值</p>
+<h4 id="bi-jiao">比较</h4>
+<p>0-1 背包：倒序容量，当前新物品之多影响一次当前总价值</p>
 <p>完全背包：正序容量，随着容量增加，当前新物品可以多次影响当前总价值</p>
-<h3 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h3><p>有<code>N</code>种物品和1个容量为<code>V</code>的背包，第i种物品有<code>M[i]</code>件，每件耗费空间<code>C[i]</code>,价值<code>W[i]</code>,求能装入背包的最大价值。</p>
-<h4 id="思路1"><a href="#思路1" class="headerlink" title="思路1"></a>思路1</h4><p>和完全背包类似，对i种物品有<code>M[i]+1</code>种策略，取<code>0</code>件，取<code>1</code>件，…，取<code>M[i]</code>,令<code>dp[i][v]</code>表示前i中物品放入容量v中获得的最大价值，则<code>dp[i][v]=max(dp[i-1][v-k*C[i]]+k*W[i]),0&lt;=k&lt;=M[i]</code></p>
-<p>时间复杂度：`O(V<script type="math/tex">\sum M_i</script></p>
-<h4 id="思路2"><a href="#思路2" class="headerlink" title="思路2"></a>思路2</h4><p>转化为0-1背包问题，把第i种物品换成<code>M[i]</code>件<code>0-1</code>背包中的物品，得到物品数为$\sum M_i$的<code>0-1</code>背包问题，时间复杂度仍为$O(V\sum M_i)$。使用二进制的思想，可以把时间复杂度下降为$O(V\sum{log{M_i}})$,即按照如下的方式进行拆分：</p>
-<p>$2^0,2^1,2^2,…,2^{k-1},M_i-2^k+1$</p>
-<p>这样拼成的新物品总量等于原来物品的数量，第i件物品拆分成了$O(log{m_i})$</p>
-<h5 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiple_pack</span><span class="params">(F, c, w, m)</span>:</span></span><br><span class="line">    <span class="comment"># 如果物品足够多，就变成了完全背包</span></span><br><span class="line">    <span class="keyword">if</span> c * m &gt;= V:</span><br><span class="line">        complete_pack(F, c, w)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="comment"># 多重背包按照2次幂进行划分成0-1背包</span></span><br><span class="line">    k = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> k &lt; m:</span><br><span class="line">        zero_one_pack(F, k*c, k*w)</span><br><span class="line">        m = m - k</span><br><span class="line">        k = <span class="number">2</span> * k</span><br><span class="line">    <span class="comment"># 把剩余的物品当作1件物品</span></span><br><span class="line">    zero_one_pack(F, c * m, w * m)</span><br><span class="line"></span><br><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    multiple_pack(dp, C[i], W[i], M[i])</span><br></pre></td></tr></table></figure>
-<h3 id="二维费用背包"><a href="#二维费用背包" class="headerlink" title="二维费用背包"></a>二维费用背包</h3><p>对于每件物品有两种不同的cost，每种cost有一个最大容纳值（背包容量），怎样选择物品使得背包容纳最大价值？第i种物品两种费用分别为<code>C[i]</code>和<code>D[i]</code>，两种cost最大容纳值为V,U，物品的价值为<code>W[i]</code>(题目场景样例：打矩形中放小矩形，求最大容量)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>费用加1维，状态加1维；令<code>dp[i][v][u]</code>表示前i件物品付出两种费用分别为v，u时可获得的最大价值。则<code>dp[i][v][u]=max(dp[i-1][v][u],dp[i-1][v-C[i]][u-D[i]]+W[i])</code></p>
-<h4 id="优化-2"><a href="#优化-2" class="headerlink" title="优化"></a>优化</h4><p>类似于一维背包空间优化方法，二维背包与之类似：</p>
+<h3 id="duo-zhong-bei-bao">多重背包</h3>
+<p>有<code>N</code>种物品和1个容量为<code>V</code>的背包，第i种物品有<code>M[i]</code>件，每件耗费空间<code>C[i]</code>,价值<code>W[i]</code>,求能装入背包的最大价值。</p>
+<h4 id="si-lu-1">思路1</h4>
+<p>和完全背包类似，对i种物品有<code>M[i]+1</code>种策略，取<code>0</code>件，取<code>1</code>件，…，取<code>M[i]</code>,令<code>dp[i][v]</code>表示前i中物品放入容量v中获得的最大价值，则<code>dp[i][v]=max(dp[i-1][v-k*C[i]]+k*W[i]),0&lt;=k&lt;=M[i]</code></p>
+<p>时间复杂度：<code>O(V</code>\(\sum M_i\)`</p>
+<h4 id="si-lu-2">思路2</h4>
+<p>转化为0-1背包问题，把第i种物品换成<code>M[i]</code>件<code>0-1</code>背包中的物品，得到物品数为\(\sum M_i\)的<code>0-1</code>背包问题，时间复杂度仍为\(O(V\sum M_i)\)。使用二进制的思想，可以把时间复杂度下降为\(O(V\sum{log{M_i}})\),即按照如下的方式进行拆分：</p>
+<p>\(2^0,2^1,2^2,...,2^{k-1},M_i-2^k+1\)</p>
+<p>这样拼成的新物品总量等于原来物品的数量，第i件物品拆分成了\(O(log{m_i})\)</p>
+<h5 id="dai-ma-1">代码</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiple_pack</span><span class="params">(F, c, w, m)</span>:</span></span><br><span class="line">    <span class="comment"># 如果物品足够多，就变成了完全背包</span></span><br><span class="line">    <span class="keyword">if</span> c * m &gt;= V:</span><br><span class="line">        complete_pack(F, c, w)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="comment"># 多重背包按照2次幂进行划分成0-1背包</span></span><br><span class="line">    k = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> k &lt; m:</span><br><span class="line">        zero_one_pack(F, k*c, k*w)</span><br><span class="line">        m = m - k</span><br><span class="line">        k = <span class="number">2</span> * k</span><br><span class="line">    <span class="comment"># 把剩余的物品当作1件物品</span></span><br><span class="line">    zero_one_pack(F, c * m, w * m)</span><br><span class="line"></span><br><span class="line">dp = [<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    multiple_pack(dp, C[i], W[i], M[i])</span><br></pre></td></tr></table></figure>
+<h3 id="er-wei-fei-yong-bei-bao">二维费用背包</h3>
+<p>对于每件物品有两种不同的cost，每种cost有一个最大容纳值（背包容量），怎样选择物品使得背包容纳最大价值？第i种物品两种费用分别为<code>C[i]</code>和<code>D[i]</code>，两种cost最大容纳值为V,U，物品的价值为<code>W[i]</code>(题目场景样例：打矩形中放小矩形，求最大容量)</p>
+<h4 id="si-lu-3">思路</h4>
+<p>费用加1维，状态加1维；令<code>dp[i][v][u]</code>表示前i件物品付出两种费用分别为v，u时可获得的最大价值。则<code>dp[i][v][u]=max(dp[i-1][v][u],dp[i-1][v-C[i]][u-D[i]]+W[i])</code></p>
+<h4 id="you-hua-2">优化</h4>
+<p>类似于一维背包空间优化方法，二维背包与之类似：</p>
 <ol>
 <li>二维0-1背包：v和u采用逆序循环</li>
 <li>二维完全背包：v和u采用顺序循环</li>
 <li>二维多重背包：拆分物品</li>
 </ol>
-<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_zero_one_pack</span><span class="params">(F, c, d, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(V, c<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(U, d<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">            F[v][u] = max(F[v][u], F[v-c][u-d] + w)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_complete_pack</span><span class="params">(F, c, d, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(c, V+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(d, U+<span class="number">1</span>):</span><br><span class="line">            F[v][u] = max(F[v][u], F[v-c][u-d] + w)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_multiple_pack</span><span class="params">(F, c, d, w, m)</span>:</span></span><br><span class="line">    <span class="comment"># 两种cost数量都充足，可直接按照完全背包处理</span></span><br><span class="line">    <span class="keyword">if</span> c * m &gt;= V <span class="keyword">and</span> d * m &gt;= U:</span><br><span class="line">        two_dim_complete_pack(F, c, d, w)</span><br><span class="line">    <span class="comment"># 多重背包按照2次幂进行划分成0-1背包</span></span><br><span class="line">    k = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> k &lt; m:</span><br><span class="line">        two_dim_complete_pack(F, k * c, k * d, k * w)</span><br><span class="line">        m = m - k</span><br><span class="line">        k = <span class="number">2</span> * k</span><br><span class="line">    <span class="comment"># 把剩余的物品当作1件物品</span></span><br><span class="line">    two_dim_zero_one_pack(F, m * c, m * d, m * w)</span><br><span class="line"></span><br><span class="line">F = [[<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)] <span class="keyword">for</span> u <span class="keyword">in</span> range(U+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    two_dim_zero_one_pack(F, C[i], D[i], W[i])</span><br><span class="line">    <span class="comment"># two_dim_complete_pack(F, C[i], D[i], W[i])</span></span><br><span class="line">    <span class="comment"># two_dim_multiple_pack(F, C[i], D[i], W[i], M[i])</span></span><br></pre></td></tr></table></figure>
-<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>二维费用题目的一种隐含表述方式：最多取U件</p>
+<h4 id="dai-ma-2">代码</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_zero_one_pack</span><span class="params">(F, c, d, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(V, c<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(U, d<span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">            F[v][u] = max(F[v][u], F[v-c][u-d] + w)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_complete_pack</span><span class="params">(F, c, d, w)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(c, V+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(d, U+<span class="number">1</span>):</span><br><span class="line">            F[v][u] = max(F[v][u], F[v-c][u-d] + w)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_dim_multiple_pack</span><span class="params">(F, c, d, w, m)</span>:</span></span><br><span class="line">    <span class="comment"># 两种cost数量都充足，可直接按照完全背包处理</span></span><br><span class="line">    <span class="keyword">if</span> c * m &gt;= V <span class="keyword">and</span> d * m &gt;= U:</span><br><span class="line">        two_dim_complete_pack(F, c, d, w)</span><br><span class="line">    <span class="comment"># 多重背包按照2次幂进行划分成0-1背包</span></span><br><span class="line">    k = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> k &lt; m:</span><br><span class="line">        two_dim_complete_pack(F, k * c, k * d, k * w)</span><br><span class="line">        m = m - k</span><br><span class="line">        k = <span class="number">2</span> * k</span><br><span class="line">    <span class="comment"># 把剩余的物品当作1件物品</span></span><br><span class="line">    two_dim_zero_one_pack(F, m * c, m * d, m * w)</span><br><span class="line"></span><br><span class="line">F = [[<span class="number">0</span> <span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>)] <span class="keyword">for</span> u <span class="keyword">in</span> range(U+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    two_dim_zero_one_pack(F, C[i], D[i], W[i])</span><br><span class="line">    <span class="comment"># two_dim_complete_pack(F, C[i], D[i], W[i])</span></span><br><span class="line">    <span class="comment"># two_dim_multiple_pack(F, C[i], D[i], W[i], M[i])</span></span><br></pre></td></tr></table></figure>
+<h4 id="ying-yong">应用</h4>
+<p>二维费用题目的一种隐含表述方式：最多取U件</p>
 <p>对于有这种限制的题目，可以将’件数’看作一种费用，每件物品件数费用为1，可以达到的最大件数费用非U，<code>dp[v][u]</code>表示cost为v，最多选择u件物品时所达到的最大价值（再根据物品的特性（0-1,完全，多重）采用不同的方式进行循环，得出答案）</p>
 
     </div>
@@ -479,7 +505,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态规划求解："><span class="nav-number">1.1.</span> <span class="nav-text">动态规划求解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化"><span class="nav-number">1.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化细节"><span class="nav-number">1.4.</span> <span class="nav-text">初始化细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完全背包"><span class="nav-number">2.</span> <span class="nav-text">完全背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化-1"><span class="nav-number">2.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较"><span class="nav-number">2.4.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多重背包"><span class="nav-number">3.</span> <span class="nav-text">多重背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路1"><span class="nav-number">3.1.</span> <span class="nav-text">思路1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路2"><span class="nav-number">3.2.</span> <span class="nav-text">思路2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维费用背包"><span class="nav-number">4.</span> <span class="nav-text">二维费用背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化-2"><span class="nav-number">4.2.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">4.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">4.4.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ti-mu"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dong-tai-gui-hua-qiu-jie"><span class="nav-number">1.1.</span> <span class="nav-text">动态规划求解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dai-ma"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#you-hua"><span class="nav-number">1.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chu-shi-hua-xi-jie"><span class="nav-number">1.4.</span> <span class="nav-text">初始化细节</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wan-quan-bei-bao"><span class="nav-number">2.</span> <span class="nav-text">完全背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ti-mu-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#si-lu"><span class="nav-number">2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#you-hua-1"><span class="nav-number">2.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bi-jiao"><span class="nav-number">2.4.</span> <span class="nav-text">比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-zhong-bei-bao"><span class="nav-number">3.</span> <span class="nav-text">多重背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#si-lu-1"><span class="nav-number">3.1.</span> <span class="nav-text">思路1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#si-lu-2"><span class="nav-number">3.2.</span> <span class="nav-text">思路2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#dai-ma-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#er-wei-fei-yong-bei-bao"><span class="nav-number">4.</span> <span class="nav-text">二维费用背包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#si-lu-3"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#you-hua-2"><span class="nav-number">4.2.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dai-ma-2"><span class="nav-number">4.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ying-yong"><span class="nav-number">4.4.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -497,20 +523,20 @@ dp[i-1][v-C[i]]+W[i](\text {select})
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -556,7 +582,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">475k</span>
+    <span title="站点总字数">533k</span>
 </div>
 
         
@@ -676,7 +702,6 @@ dp[i-1][v-C[i]]+W[i](\text {select})
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -685,7 +710,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
@@ -774,34 +799,8 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 
   
 
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
-
-
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
 

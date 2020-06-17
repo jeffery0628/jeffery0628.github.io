@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":15,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="vim（Visual Interface）">
@@ -295,9 +295,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="vim（Visual-Interface）"><a href="#vim（Visual-Interface）" class="headerlink" title="vim（Visual Interface）"></a>vim（Visual Interface）</h2><p><img src="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/NSFileHandle.png" alt="avatar"></p>
+        <h2 id="vim-visual-interface">vim（Visual Interface）</h2>
+<p><img src="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/NSFileHandle.png" alt="avatar"></p>
 <a id="more"></a>
-<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><ol>
+<h3 id="ming-ling-mo-shi">命令模式</h3>
+<ol>
 <li>h：左移</li>
 <li>j：下移</li>
 <li>k：上移</li>
@@ -317,11 +319,13 @@
 <li>ctrl+f：向下翻一屏</li>
 <li>ctrl+b：向上翻一屏</li>
 </ol>
-<h4 id="可视模式"><a href="#可视模式" class="headerlink" title="可视模式"></a>可视模式</h4><ol>
+<h4 id="ke-shi-mo-shi">可视模式</h4>
+<ol>
 <li>v:按字符移动，结合h,j,k,l选中文本内容。</li>
 <li>V：按行移动，选中文本可视模式，可以配合d，y，&gt;&gt;,&lt;&lt;实现对文本块的删除，复制，左右移动。</li>
 </ol>
-<h4 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h4><ol>
+<h4 id="shan-chu-ming-ling">删除命令</h4>
+<ol>
 <li>x：删除光标后一个字符，n x 删除光标后的n个字符</li>
 <li>X：删除光标前一个字符，相当于Backspace</li>
 <li>dd：删除光标所在行，n dd删除指定的n行</li>
@@ -329,54 +333,64 @@
 <li>d0：删除光标前本行所有内容，不包含光标所在字符</li>
 <li>dw：删除光标开始位置的字，包含光标所在字符</li>
 </ol>
-<h4 id="撤销命令"><a href="#撤销命令" class="headerlink" title="撤销命令"></a>撤销命令</h4><ol>
+<h4 id="che-xiao-ming-ling">撤销命令</h4>
+<ol>
 <li>u：一步一步撤销</li>
 <li>ctrl+r：反撤销</li>
 </ol>
-<h4 id="重复命令"><a href="#重复命令" class="headerlink" title="重复命令"></a>重复命令</h4><ol>
+<h4 id="zhong-fu-ming-ling">重复命令</h4>
+<ol>
 <li>. ：重复上一次操作的命令</li>
 </ol>
-<h4 id="文本移动"><a href="#文本移动" class="headerlink" title="文本移动"></a>文本移动</h4><ol>
-<li>>&gt;:文本行右移</li>
-<li>\&lt;&lt;:文本行左移</li>
+<h4 id="wen-ben-yi-dong">文本移动</h4>
+<ol>
+<li>&gt;&gt;:文本行右移</li>
+<li>&lt;&lt;:文本行左移</li>
 </ol>
-<h4 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h4><ol>
+<h4 id="fu-zhi-nian-tie">复制粘贴</h4>
+<ol>
 <li>yy：复制当前行，n yy复制n行</li>
 <li>在末行模式，输入：a,by 复制从第a行开始，到第b行结束的内容</li>
 <li>p：在光标坐在位置向下新开辟一行，粘贴</li>
 <li>d：剪切选中内容</li>
 </ol>
-<h4 id="查找命令"><a href="#查找命令" class="headerlink" title="查找命令"></a>查找命令</h4><ol>
+<h4 id="cha-zhao-ming-ling">查找命令</h4>
+<ol>
 <li>/str : 查找str，从光标所在行往下查找</li>
 <li>？str：查找str，从光标所在行往上查找</li>
 <li>n：查找下一个</li>
-<li>N：查找上一个 </li>
+<li>N：查找上一个</li>
 </ol>
-<h4 id="替换操作"><a href="#替换操作" class="headerlink" title="替换操作"></a>替换操作</h4><ol>
+<h4 id="ti-huan-cao-zuo">替换操作</h4>
+<ol>
 <li>r：替换当前字符</li>
 <li>R替换当前行光标后的字符</li>
 </ol>
-<h4 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h4><ol>
+<h4 id="ti-huan-ming-ling">替换命令</h4>
+<ol>
 <li>末行模式下，将光标所在行的abc替换成123，：s/abc/123/g</li>
 <li>末行模式下，将第一行到第10行之间的abc替换成123，:1,10s/abc/123/g</li>
 <li>末行模式下，把文件中的abc全部替换成123，:%s/abc/123</li>
 </ol>
-<h3 id="输入模式"><a href="#输入模式" class="headerlink" title="输入模式"></a>输入模式</h3><ol>
+<h3 id="shu-ru-mo-shi">输入模式</h3>
+<ol>
 <li>i：插入光标前一个字符</li>
 <li>I：插入行首</li>
 <li>a：插入光标后一个字符</li>
 <li>A: 插入行末</li>
 <li>o：向下新开一行，插入行首</li>
-<li><p>O：向上新开一行，插入行首</p>
-<h3 id="末行模式"><a href="#末行模式" class="headerlink" title="末行模式"></a>末行模式</h3></li>
-<li><p>：set nu 显示行号</p>
-</li>
+<li>O：向上新开一行，插入行首</li>
+</ol>
+<h3 id="mo-xing-mo-shi">末行模式</h3>
+<ol>
+<li>：set nu 显示行号</li>
 <li>! shell命令</li>
 <li>wq：保存退出</li>
 <li>ZZ： 保存退出</li>
 <li>q！：不保存退出</li>
 </ol>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>修改用户目录下的vimrc（~/.vimrc）文件，修改vim配置</p>
+<h3 id="bu-chong">补充</h3>
+<p>修改用户目录下的vimrc（~/.vimrc）文件，修改vim配置</p>
 <ol>
 <li>set nu :设置每次vim 打开文件显示行号。</li>
 <li>set ts=4:设置tab键每次4个空格</li>
@@ -434,8 +448,8 @@
       <i class="fa fa-chevron-left"></i> latex公式速查
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/06/05/python%E9%AB%98%E7%BA%A7/" rel="next" title="python高级">
-      python高级 <i class="fa fa-chevron-right"></i>
+    <a href="/2018/06/25/linux_quickcheck/" rel="next" title="linux命令速查">
+      linux命令速查 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -496,7 +510,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim（Visual-Interface）"><span class="nav-number">1.</span> <span class="nav-text">vim（Visual Interface）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令模式"><span class="nav-number">1.1.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可视模式"><span class="nav-number">1.1.1.</span> <span class="nav-text">可视模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除命令"><span class="nav-number">1.1.2.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#撤销命令"><span class="nav-number">1.1.3.</span> <span class="nav-text">撤销命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重复命令"><span class="nav-number">1.1.4.</span> <span class="nav-text">重复命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本移动"><span class="nav-number">1.1.5.</span> <span class="nav-text">文本移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制粘贴"><span class="nav-number">1.1.6.</span> <span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找命令"><span class="nav-number">1.1.7.</span> <span class="nav-text">查找命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换操作"><span class="nav-number">1.1.8.</span> <span class="nav-text">替换操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换命令"><span class="nav-number">1.1.9.</span> <span class="nav-text">替换命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入模式"><span class="nav-number">1.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#末行模式"><span class="nav-number">1.3.</span> <span class="nav-text">末行模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">1.4.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-visual-interface"><span class="nav-number">1.</span> <span class="nav-text">vim（Visual Interface）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ming-ling-mo-shi"><span class="nav-number">1.1.</span> <span class="nav-text">命令模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ke-shi-mo-shi"><span class="nav-number">1.1.1.</span> <span class="nav-text">可视模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shan-chu-ming-ling"><span class="nav-number">1.1.2.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#che-xiao-ming-ling"><span class="nav-number">1.1.3.</span> <span class="nav-text">撤销命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zhong-fu-ming-ling"><span class="nav-number">1.1.4.</span> <span class="nav-text">重复命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wen-ben-yi-dong"><span class="nav-number">1.1.5.</span> <span class="nav-text">文本移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fu-zhi-nian-tie"><span class="nav-number">1.1.6.</span> <span class="nav-text">复制粘贴</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cha-zhao-ming-ling"><span class="nav-number">1.1.7.</span> <span class="nav-text">查找命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ti-huan-cao-zuo"><span class="nav-number">1.1.8.</span> <span class="nav-text">替换操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ti-huan-ming-ling"><span class="nav-number">1.1.9.</span> <span class="nav-text">替换命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-ru-mo-shi"><span class="nav-number">1.2.</span> <span class="nav-text">输入模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mo-xing-mo-shi"><span class="nav-number">1.3.</span> <span class="nav-text">末行模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-chong"><span class="nav-number">1.4.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -514,20 +528,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -573,7 +587,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">475k</span>
+    <span title="站点总字数">533k</span>
 </div>
 
         
@@ -693,7 +707,6 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -702,7 +715,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
@@ -738,34 +751,8 @@
 
   
 
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
-
-
-  <canvas id="evanyou"></canvas>
-  <style>
-    #evanyou {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-  </style>
-  <script src="/js/evan-you.js"></script>
 
 
 
