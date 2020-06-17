@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="SVM">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defgy1g4vn6ow8vtj30i40ddgpt.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defgy1g4vn9xl3pcj30iy0dswgr.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defgy1g4vnbaltf7j30mo0ar77n.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/1042406-20161124144326487-1331861308.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/v2-3c6aa9626ee8e4609b0d7c5712baf624_1440w.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/v2-0884e199d2198ec716f3b09536b10213_r.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/v2-a04fdb43f41bd9e4fd06306558ab61f2_1440w.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/1042406-20161125104106409-1177897648.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/1042406-20161125104737206-364720074.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/quesbase6415311358438441728.gif">
+<meta property="article:published_time" content="2020-06-03T01:01:36.000Z">
+<meta property="article:modified_time" content="2020-06-03T05:21:41.131Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="SVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SVM | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/06/03/machine_learning/SVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SVM
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-03 13:21:41" itemprop="dateModified" datetime="2020-06-03T13:21:41+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/03/machine_learning/SVM/" class="post-meta-item leancloud_visitors" data-flag-title="SVM" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/06/03/machine_learning/SVM/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/03/machine_learning/SVM/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
+<a id="more"></a>
+<h1 id="jiang-jiang-svm">讲讲SVM</h1>
+<h2 id="yi-ge-guan-yu-svm-de-tong-hua-gu-shi">一个关于SVM的童话故事</h2>
+<p>支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。</p>
+<p>传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根木棍将它们分开。这对天使来说，似乎太容易了。天使不假思索地一摆，便完成了任务。魔鬼又加入了更多的球。随着球的增多，似乎有的球不能再被原来的木棍正确分开，如下图所示。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vn6ow8vtj30i40ddgpt.jpg" alt></p>
+<p>SVM实际上是在为天使找到木棒的最佳放置位置，使得两边的球都离分隔它们的木棒足够远。依照SVM为天使选择的木棒位置，魔鬼即使按刚才的方式继续加入新球，木棒也能很好地将两类不同的球分开。</p>
+<p>看到天使已经很好地解决了用木棒线性分球的问题，魔鬼又给了天使一个新的挑战，如下图所示。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vn9xl3pcj30iy0dswgr.jpg" alt></p>
+<p>按照这种球的摆法，世界上貌似没有一根木棒可以将它们 完美分开。但天使毕竟有法力，他一拍桌子，便让这些球飞到了空中，然后凭借念力抓起一张纸片，插在了两类球的中间。从魔鬼的角度看这些 球，则像是被一条曲线完美的切开了。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vnbaltf7j30mo0ar77n.jpg" alt></p>
+<p>后来，“无聊”的科学家们把这些球称为“数据”，把木棍称为“分类面”，找到最大间隔的木棒位置的过程称为“优化”，拍桌子让球飞到空中的念力叫“核映射”，在空中分隔球的纸片称为“分类超平面”。这便是SVM的童话故事。</p>
+<h2 id="li-jie-svm-di-yi-ceng">理解SVM：第一层</h2>
+<p>支持向量机，因其英文名为support vector machine，故一般简称SVM，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是<strong>间隔最大化</strong>，最终可转化为一个凸二次规划问题的求解。</p>
+<p>**线性分类器：**给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者0，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面，这个超平面的方程可以表示为：
+\[
+w^Tx+b=0
+\]
+这个超平面可以用分类函数  \(f(x)=w^Tx+b\)表示，当\(f(x)\) 等于0的时候，\(x\)便是位于超平面上的点，而\(f(x)\)大于0的点对应 \(y=1\) 的数据点，\(f(x)\)小于0的点对应\(y=-1\)的点，如下图所示：</p>
+<p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
+<h3 id="han-shu-jian-ge-yu-ji-he-jian-ge">函数间隔与几何间隔</h3>
+<p>在分离超平面固定为\(𝑤^T𝑥+𝑏=0\)的时候，\(|wTx+b|\)表示点x到超平面的相对距离。通过观察\(w^Tx+b\)和\(y\)是否同号，我们判断分类是否正确。这里引入函数间隔的概念，定义函数间隔\(\gamma^{\prime}\) 为：
+\[
+\gamma^{\prime}=y(w^Tx+b)
+\]
+可以看到，就是感知机模型里面的误分类点到超平面距离的分子。对于训练集中\(m\)个样本点对应的\(m\)个函数间隔的最小值，就是整个训练集的函数间隔。</p>
+<p>函数间隔并不能正常反应点到超平面的距离，当分子成比例的增长时，分母也是成倍增长。为了统一度量，需要对法向量\(w\)加上约束条件，这样就得到了几何间隔\(\gamma\),定义为：
+\[
+\gamma=\frac{y\left(w^{T} x+b\right)}{\|w\|_{2}}=\frac{\gamma^{\prime}}{\|w\|_{2}}
+\]
+几何间隔才是点到超平面的真正距离，感知机模型里用到的距离就是几何距离。</p>
+<h3 id="zhi-chi-xiang-liang">支持向量</h3>
+<p>在感知机模型中，可以找到多个可以分类的超平面将数据分开，并且优化时希望所有的点都被准确分类。但是实际上离超平面很远的点已经被正确分类，它对超平面的位置没有影响。我们最关心是那些离超平面很近的点，这些点很容易被误分类。如果可以让离超平面比较近的点尽可能的远离超平面，最大化几何间隔，那么分类效果会更好一些。SVM的思想起源正起于此。</p>
+<p>如下图所示，分离超平面为\(w^Tx+b=0\)，如果所有的样本不光可以被超平面分开，还和超平面保持一定的函数距离（下图函数距离为1），那么这样的分类超平面是比感知机的分类超平面优的。可以证明，这样的超平面只有一个。和超平面平行的保持一定的函数距离的这两个超平面对应的向量，我们定义为支持向量，如下图虚线所示。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161124144326487-1331861308.jpg" alt></p>
+<p>支持向量到超平面的距离为\(\frac{1}{||w||_2}\),两个支持向量之间的距离为\(\frac{2}{||w||_2}\)。</p>
+<h3 id="mu-biao-han-shu-yu-you-hua">目标函数与优化</h3>
+<p>SVM的模型是让所有点到超平面的距离大于一定的距离，也就是所有的分类点要在各自类别的支持向量两边。用数学式子表示为：
+\[
+\begin{array}{ll}
+\max &amp; \gamma=\frac{y\left(w^{T} x+b\right)}{\|w\|_{2}} \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right)=\gamma^{\prime}_{i} \geq \gamma^{\prime}(i=1,2, \ldots m)
+\end{array}
+\]
+一般我们都取函数间隔\(\gamma\)为1，这样我们的优化函数定义为:
+\[
+\begin{array}{ll}
+\max &amp; \frac{1}{\|w\|_{2}}  \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)
+\end{array}
+\]
+也就是说，我们要在约束条件\(y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)\)下，最大化\(\frac{1}{||w||_2}\)。可以看出，这个感知机的优化方式不同，感知机是固定分母优化分子，而SVM是固定分子优化分母，同时加上了支持向量的限制。</p>
+<p>由于\(\frac{1}{||w||_2}\)最大化等价于\(\frac{||w||_2^2}{2}\)最小化。这样SVM的优化函数等价于：
+\[
+\begin{array}{ll}
+\min &amp;\frac{1}{2}\|w\|_{2}^{2} \\ \text { s.t } &amp;y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)
+\end{array}
+\]
+由于目标函数\(\frac{||w||_2^2}{2}\)是凸函数，同时约束条件不等式是仿射的，根据凸优化理论，可以通过拉格朗日函数将优化目标转化为无约束的优化函数
+\[
+\begin{array}{ll}
+L(w, b, \alpha)&amp;=\frac{1}{2}\|w\|_{2}^{2}-\sum_{i=1}^{m} \alpha_{i}\left[y_{i}\left(w^{T} x_{i}+b\right)-1\right] \\ \text { s.t } &amp; \alpha_{i} \geq 0
+\end{array}
+\]
+由于引入了朗格朗日乘子，我们的优化目标变成：
+\[
+\underbrace{\min }_{w, b} \underbrace{\max }_{\alpha_i \ge0} L(w, b, \alpha)
+\]
+可以通过拉格朗日对偶将我们的优化问题转化为等价的对偶问题来求解。也就是说，现在要求的是
+\[
+\underbrace{\max }_{\alpha_i \ge0} \underbrace{\min }_{w, b}  L(w, b, \alpha)
+\]
+从上式中，可以先求优化函数对于\(𝑤\)和\(𝑏\)的极小值(这个极值可以通过对\(w\)和\(b\)分别求偏导数得到)。接着再求拉格朗日乘子\(\alpha\)的极大值。
+\[
+\begin{aligned}
+\frac{\partial L}{\partial w}=0 &amp; \Rightarrow w=\sum_{i=1}^{m} \alpha_{i} y_{i} x_{i} \\
+\frac{\partial L}{\partial b}=0 &amp; \Rightarrow \sum_{i=1}^{m} \alpha_{i} y_{i}=0
+\end{aligned}
+\]
+从上两式子可以看出，已经求得了\(w\)和\(\alpha\)的关系，只要后面接着能够求出优化函数极大化对应的\(\alpha\)，就可以求出\(w\)了，至于，由于上两式已经没有\(b\)，所以最后的\(b\)可以有多个。既然已经求出\(w\)和\(\alpha\)的关系，就可以带入优化函数\(L(w,b,\alpha)\)消去\(w\)。定义:</p>
+<p>\[
+\psi(\alpha)=\underbrace{\min }_{w,b} L(w, b, \alpha)
+\]
+从上面可以看出，通过对\(w,b\)极小化以后，优化函数\(\psi(\alpha)\)仅仅只有\(\alpha\)向量做参数。只要能够(利用SMO算法)极大化\(\psi(\alpha)\)，就可以求出此时对应的\(\alpha\)，进而求出\(w,b\).</p>
+<h3 id="zui-da-jian-ge-sun-shi-han-shu-hinge-loss">最大间隔损失函数Hinge loss</h3>
+<p>SVM 求解使通过建立二次规划原始问题，引入拉格朗日乘子法，然后转换成对偶的形式去求解，这是一种理论非常充实的解法。这里换一种角度来思考，在机器学习领域，一般的做法是经验风险最小化 ，即构建假设函数为输入输出间的映射，然后采用损失函数来衡量模型的优劣。求得使损失最小化的模型即为最优的假设函数，采用不同的损失函数也会得到不同的机器学习算法。SVM采用的就是Hinge Loss，用于“最大间隔”分类。</p>
+<p>Hinge Loss中文名叫合页损失函数，因为它的图像是这样的：</p>
+<p><img src="/2020/06/03/machine_learning/SVM/v2-3c6aa9626ee8e4609b0d7c5712baf624_1440w.jpg" alt></p>
+<p>hinge-loss的公式是：
+\[
+\begin{array}{c}
+\sum_{i=1}^{N}\left[1-y_{i}\left(w \cdot x_{i}+b\right)\right]_{+}+\lambda\|w\|^{2} \\
+{[z]_{+}=\left\{\begin{array}{l}
+z, z>0 \\
+0 . z \leq 0
+\end{array}\right.}
+\end{array}
+\]
+第一项是损失，第二项是正则化项。这个公式就是说 \(y_i(w * x_i+b)\) 大于1时loss为0， 否则loss为 \(1-y_i(w*x_i+b)\) 。对比感知机的损失函数\([-y_i(w*x_i+b)]\)  来说，hinge loss不仅要分类正确，而且置信度足够高的时候，损失才为0，对学习有更高的要求。对比感知机损失和hinge loss的图像，明显Hinge loss更加严格。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/v2-0884e199d2198ec716f3b09536b10213_r.jpg" alt="preview"></p>
+<p>如下图中，点 \(x_4\)被分类正确了，但是它的损失不是0。其实这个道理和SVM中的Margin是一样的，不仅要分类正确，还要使得Margin最大化，所以说hinge loss的另外一种解释。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/v2-a04fdb43f41bd9e4fd06306558ab61f2_1440w.jpg" alt="img"></p>
+<h2 id="shen-ru-svm-di-er-ceng">深入SVM：第二层</h2>
+<h3 id="cong-xian-xing-ke-fen-dao-xian-xing-bu-ke-fen">从线性可分到线性不可分</h3>
+<p>有时候本来数据的确是可分的，也就是说可以用 线性分类SVM的学习方法来求解，但是却因为混入了异常点，导致不能线性可分，比如下图，本来数据是可以按下面的实线来做超平面分离的，可由于一个橙色和一个蓝色的异常点导致我们没法用上述方法来分类。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104106409-1177897648.png" alt="img"></p>
+<p>另外一种情况没有这么糟糕到不可分，但是会严重影响我们模型的泛化预测效果，比如下图，本来如果我们不考虑异常点，SVM的超平面应该是下图中的红色线所示，但是由于有一个蓝色的异常点，导致我们学习到的超平面是下图中的粗虚线所示，这样会严重影响我们的分类模型预测效果。</p>
+<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104737206-364720074.png" alt="img"></p>
+<p>如何解决这些问题呢？SVM引入了软间隔最大化的方法来解决。回顾硬间隔最大化的条件：</p>
+<p>\[
+\begin{array}{ll}
+\min &amp; \frac{1}{2}\|w\|_{2}^{2} \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)
+\end{array}
+\]
+接着如何软间隔最大化呢？</p>
+<p>SVM对训练集里面的每个样本\((x_i,y_i)\)引入了一个松弛变量\(\xi_i \ge 0\)使函数间隔加上松弛变量大于等于1，也就是说：
+\[
+y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
+\]
+对比硬间隔最大化，可以看到对样本到超平面的函数距离的要求放松了，之前是一定要大于等于1，现在只需要加上一个大于等于0的松弛变量能大于等于1就可以了。当然，对于加入的松弛变量是有成本的，每一个松弛变量\(\xi_i\), 对应了一个代价\(\xi_i\)，这个就得到了的软间隔最大化的SVM学习条件如下：</p>
+<p>\[
+\begin{aligned}
+&amp;\min \frac{1}{2}\|w\|_{2}^{2}+C \sum_{i=1}^{m} \xi_{i}\\
+\text {s.t. } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1-\xi_{i}(i=1,2, \ldots m)\\
+&amp;\xi_{i} \geq 0 \quad(i=1,2, \ldots m)
+\end{aligned}
+\]
+这里,\(C > 0\)为惩罚参数，可以理解为我们一般回归和分类问题正则化时候的参数。\(C\)越大，对误分类的惩罚越大，\(C\)越小，对误分类的惩罚越小。也就是说，我们希望\(\frac{||w||_2^2}{2}\)尽量小，误分类的点尽可能的少。\(C\)是协调两者关系的正则化惩罚系数。在实际应用中，需要调参来选择。</p>
+<p><strong>如果数据中出现了离群点outliers，那么就可以使用松弛变量来解决。</strong></p>
+<h3 id="he-han-shu-kernel">核函数Kernel</h3>
+<p>事实上，大部分时候数据并不是线性可分的，这个时候满足这样条件的超平面就根本不存在。对于非线性的情况，SVM 的处理方法是选择一个核函数 κ(⋅,⋅) ，通过将数据映射到高维空间，来解决在原始空间中线性不可分的问题。</p>
+<p>具体来说，**在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。**如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
+<p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg" alt></p>
+<p><img src="/2020/06/03/machine_learning/SVM/quesbase6415311358438441728.gif" alt></p>
+<p>通常人们会从一些常用的核函数中选择（根据问题和数据的不同，选择不同的参数，实际上就是得到了不同的核函数），例如：<strong>多项式核、高斯核、线性核。</strong></p>
+<p>核函数简要概括，即以下三点：</p>
+<ol>
+<li>实际中，我们会经常遇到线性不可分的样例，此时，我们的常用做法是把样例特征映射到高维空间中去(映射到高维空间后，<strong>相关特征便被分开了</strong>，也就达到了分类的目的)；</li>
+<li>但进一步，如果凡是遇到线性不可分的样例，一律映射到高维空间，那么这个维度大小是会高到可怕的。那咋办呢？</li>
+<li>此时，核函数就隆重登场了，核函数的价值在于它虽然也是将特征进行从低维到高维的转换，但核函数能够<strong>事先在低维上进行计算</strong>，而将实质上的分类效果表现在了高维上，避免了直接在高维空间中的复杂计算。</li>
+</ol>
+<h3 id="zong-jie">总结</h3>
+<p>SVM它本质上即是一个分类方法，用 \(w^T+b\) 定义分类函数，于是求\(w,b\)，为寻最大间隔，引出\(\frac{||w||^2_2}{2}\),继而引入拉格朗日因子，化为对拉格朗日乘子a的求解（求解过程中会涉及到一系列最优化或凸二次规划等问题），如此，求\(w,b\)与求\(a\)等价，而\(a\)的求解可以用一种快速学习算法SMO，至于核函数，是为处理非线性情况，若直接映射到高维计算恐维度爆炸，故在低维计算，等效高维表现。</p>
+<h2 id="svm-de-ying-yong">SVM的应用</h2>
+<p>SVM在很多诸如<strong>文本分类，图像分类，生物序列分析和生物数据挖掘，手写字符识别等领域有很多的应用</strong>。</p>
+<h1 id="zhi-chi-xiang-liang-ji-yuan-shi-zui-you-hua-wen-ti-he-he-ye-sun-shi">支持向量机原始最优化问题和合页损失</h1>
+<p>线性支持向量机原始最优化问题
+\[
+\begin{array}{ll}
+\min _{w, b, \xi} &amp; \frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}   \\
+\text { s.t. } &amp; y_{i}\left(w \cdot x_{i}+b\right) \geqslant 1-\xi_{i}, \quad i=1,2, \cdots, N \\
+&amp; \xi_{i} \geqslant 0, \quad i=1,2, \cdots, N
+\end{array}
+\]
+等价于(合页损失)最优化问题：
+\[
+\min _{w, b} \sum_{i=1}^{N}\left[1-y_{i}\left(w \cdot x_{i}+b\right)\right]_{+}+\lambda\|w\|^{2}
+\]
+证明，令合页损失中：
+\[
+1-y_{i}\left(w \cdot x_{i}+b\right)=\xi_{i}, \quad \xi_{i} \geqslant 0
+\]
+则：\(y_i(w*x_i+b) \ge 1\).于是\(w,b,\xi\)满足支持向量机原始优化问题的约束条件。由\([1-y_i(w*x_i+b)]_+=[\xi_i]_+=\xi_i\)，所以合页损失可以写成:
+\[
+\min _{w, b} \sum_{i=1}^{N} \xi_{i}+\lambda\|w\|^{2}
+\]
+取：\(\lambda=\frac{1}{2C}\)，则：
+\[
+\min _{w, b} \frac{1}{C}\left(\frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}\right)
+\]
+与原始问题等价。</p>
+<h2 id="svm-de-yi-xie-wen-ti">SVM的一些问题</h2>
+<ol>
+<li>
+<p>是否存在一组参数使SVM训练误差为0？</p>
+<p>答：存在</p>
+</li>
+<li>
+<p>训练误差为0的SVM分类器一定存在吗？</p>
+<p>答：一定存在</p>
+</li>
+<li>
+<p>加入松弛变量的SVM的训练误差可以为0吗？</p>
+<p>答：使用SMO算法训练的线性分类器并不一定能得到训练误差为0的模型。这是由于优化目标改变了，并不再是使训练误差最小。</p>
+</li>
+<li>
+<p><strong>带核的SVM为什么能分类非线性问题?</strong></p>
+<p>答：核函数的本质是两个函数的內积，通过核函数将其隐射到高维空间，在高维空间非线性问题转化为线性问题, SVM得到超平面是高维空间的线性分类平面。其分类结果也视为低维空间的非线性分类结果, 因而带核的SVM就能分类非线性问题。</p>
+</li>
+<li>
+<p><strong>如何选择核函数？</strong></p>
+<ul>
+<li>如果特征的数量大到和样本数量差不多，则选用LR或者线性核的SVM；</li>
+<li>如果特征的数量小，样本的数量正常，则选用SVM+高斯核函数；</li>
+<li>如果特征的数量小，而样本的数量很大，则需要手工添加一些特征从而变成第一种情况。</li>
+</ul>
+</li>
+</ol>
+<h1 id="lr-he-svm-de-lian-xi-yu-qu-bie">LR和SVM的联系与区别</h1>
+<h2 id="xiang-tong-dian">相同点</h2>
+<ul>
+<li>都是线性分类器。本质上都是求一个最佳分类超平面。</li>
+<li>都是监督学习算法。</li>
+<li>都是判别模型。判别模型不关心数据是怎么生成的，它只关心信号之间的差别，然后用差别来简单对给定的一个信号进行分类。常见的判别模型有：KNN、SVM、LR，常见的生成模型有：朴素贝叶斯，隐马尔可夫模型。</li>
+</ul>
+<h2 id="bu-tong-dian">不同点</h2>
+<ul>
+<li>LR是参数模型，svm是<strong>非参数模型</strong>，linear和rbf则是针对数据线性可分和不可分的区别；</li>
+<li>从目标函数来看，区别在于逻辑回归采用的是logistical loss，SVM采用的是hinge loss，这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。</li>
+<li>SVM的处理方法是只考虑support vectors，也就是和分类最相关的少数点，去学习分类器。而逻辑回归通过非线性映射，大大减小了离分类平面较远的点的权重，相对提升了与分类最相关的数据点的权重。</li>
+<li>逻辑回归相对来说模型更简单，好理解，特别是大规模线性分类时比较方便。而SVM的理解和优化相对来说复杂一些，SVM转化为对偶问题后,分类只需要计算与少数几个支持向量的距离,这个在进行复杂核函数计算时优势很明显,能够大大简化模型和计算。</li>
+<li>logic 能做的 svm能做，但可能在准确率上有问题，svm能做的logic有的做不了。</li>
+</ul>
+<h1 id="xian-xing-fen-lei-qi-yu-fei-xian-xing-fen-lei-qi-de-qu-bie-yi-ji-you-lie">线性分类器与非线性分类器的区别以及优劣</h1>
+<p>线性和非线性是针对模型参数和输入特征来讲的。比如输入\(x\)，模型\(y=ax+ax^2\) 那么就是非线性模型，如果输入是\(x\)和\(x^2\)则模型是线性的。</p>
+<ul>
+<li>
+<p>线性分类器可解释性好，计算复杂度较低，不足之处是模型的拟合效果相对弱些。</p>
+<p>LR,贝叶斯分类，单层感知机、线性回归</p>
+</li>
+<li>
+<p>非线性分类器效果拟合能力较强，不足之处是数据量不足容易过拟合、计算复杂度高、可解释性不好。</p>
+<p>决策树、RF、GBDT、多层感知机</p>
+</li>
+</ul>
+<p><strong>SVM两种都有（看线性核还是高斯核）</strong></p>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/SVM/" rel="tag"><i class="fa fa-tag"></i> SVM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/03/machine_learning/LightGBM/" rel="prev" title="LightGBM">
+      <i class="fa fa-chevron-left"></i> LightGBM
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/06/latex/" rel="next" title="latex">
+      latex <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jiang-jiang-svm"><span class="nav-number">1.</span> <span class="nav-text">讲讲SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yi-ge-guan-yu-svm-de-tong-hua-gu-shi"><span class="nav-number">1.1.</span> <span class="nav-text">一个关于SVM的童话故事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#li-jie-svm-di-yi-ceng"><span class="nav-number">1.2.</span> <span class="nav-text">理解SVM：第一层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#han-shu-jian-ge-yu-ji-he-jian-ge"><span class="nav-number">1.2.1.</span> <span class="nav-text">函数间隔与几何间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-chi-xiang-liang"><span class="nav-number">1.2.2.</span> <span class="nav-text">支持向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mu-biao-han-shu-yu-you-hua"><span class="nav-number">1.2.3.</span> <span class="nav-text">目标函数与优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zui-da-jian-ge-sun-shi-han-shu-hinge-loss"><span class="nav-number">1.2.4.</span> <span class="nav-text">最大间隔损失函数Hinge loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shen-ru-svm-di-er-ceng"><span class="nav-number">1.3.</span> <span class="nav-text">深入SVM：第二层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cong-xian-xing-ke-fen-dao-xian-xing-bu-ke-fen"><span class="nav-number">1.3.1.</span> <span class="nav-text">从线性可分到线性不可分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#he-han-shu-kernel"><span class="nav-number">1.3.2.</span> <span class="nav-text">核函数Kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zong-jie"><span class="nav-number">1.3.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#svm-de-ying-yong"><span class="nav-number">1.4.</span> <span class="nav-text">SVM的应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhi-chi-xiang-liang-ji-yuan-shi-zui-you-hua-wen-ti-he-he-ye-sun-shi"><span class="nav-number">2.</span> <span class="nav-text">支持向量机原始最优化问题和合页损失</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#svm-de-yi-xie-wen-ti"><span class="nav-number">2.1.</span> <span class="nav-text">SVM的一些问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lr-he-svm-de-lian-xi-yu-qu-bie"><span class="nav-number">3.</span> <span class="nav-text">LR和SVM的联系与区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-tong-dian"><span class="nav-number">3.1.</span> <span class="nav-text">相同点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bu-tong-dian"><span class="nav-number">3.2.</span> <span class="nav-text">不同点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xing-fen-lei-qi-yu-fei-xian-xing-fen-lei-qi-de-qu-bie-yi-ji-you-lie"><span class="nav-number">4.</span> <span class="nav-text">线性分类器与非线性分类器的区别以及优劣</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">533k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="数据预处理">
+<meta property="og:url" content="https://jeffery0628.github.io/2020/03/28/data_clean/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528110918927.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/output_4_1.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/output_6_2.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/21B8CEEC-A71F-4D53-9A70-A539685A1B39.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/722E5EFF-CD89-4994-90A4-7AA1ADE60CA5.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/924F9994-B7CF-478E-B4BA-68CE136FE990.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/65762A44-008B-4239-9024-97A9CE86EFD3.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/9F67A55F-2E88-4704-87FF-89DB72CE37FB.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528145223629.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528145327127.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528150318273.png">
+<meta property="og:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528150416408.png">
+<meta property="article:published_time" content="2020-03-28T02:27:03.000Z">
+<meta property="article:modified_time" content="2020-05-28T07:21:42.901Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery0628.github.io/2020/03/28/data_clean/image-20200528110918927.png">
+
+<link rel="canonical" href="https://jeffery0628.github.io/2020/03/28/data_clean/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据预处理 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2020/03/28/data_clean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据预处理
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-28 15:21:42" itemprop="dateModified" datetime="2020-05-28T15:21:42+08:00">2020-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/03/28/data_clean/" class="post-meta-item leancloud_visitors" data-flag-title="数据预处理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/28/data_clean/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/28/data_clean/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/03/28/data_clean/image-20200528110918927.png" alt></p>
+<a id="more"></a>
+<h1 id="shu-ju-qing-xi">数据清洗</h1>
+<h2 id="jian-jie">简介</h2>
+<p>要获得优秀的模型，首先需要清洗数据。在拟合机器学习或统计模型之前，我们通常需要清洗数据。用杂乱数据训练出的模型无法输出有意义的结果。</p>
+<p>数据清洗：从记录集、表或数据库中检测和修正（或删除）受损或不准确记录的过程。它识别出数据中不完善、不准确或不相关的部分，并替换、修改或删除这些脏乱的数据。</p>
+<p>整个清洗流程以kaggle的<a href="https://www.kaggle.com/c/sberbank-russian-housing-market/data" target="_blank" rel="noopener">Sberbank 俄罗斯房地产价值预测竞赛数据</a>为例。</p>
+<h2 id="cha-kan-shu-ju">查看数据</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import packages</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="comment"># 使用自带的样式进行美化</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> figure</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># 设置默认参数</span></span><br><span class="line">matplotlib.rcParams[<span class="string">'figure.figsize'</span>] = (<span class="number">12</span>,<span class="number">8</span>)</span><br><span class="line"><span class="comment"># 关闭copywarning  据说速度会更快</span></span><br><span class="line">pd.options.mode.chained_assignment = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># read the data</span></span><br><span class="line">df = pd.read_csv(<span class="string">'sberbank.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># shape and data types of the data</span></span><br><span class="line">print(df.shape)</span><br><span class="line">print(df.dtypes)</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">(<span class="number">30471</span>, <span class="number">292</span>)</span><br><span class="line">id                      int64</span><br><span class="line">timestamp              object</span><br><span class="line">full_sq                 int64</span><br><span class="line">life_sq               float64</span><br><span class="line">floor                 float64</span><br><span class="line">                       ...   </span><br><span class="line">mosque_count_5000       int64</span><br><span class="line">leisure_count_5000      int64</span><br><span class="line">sport_count_5000        int64</span><br><span class="line">market_count_5000       int64</span><br><span class="line">price_doc               int64</span><br><span class="line">Length: <span class="number">292</span>, dtype: object</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># select numeric columns</span></span><br><span class="line">df_numeric = df.select_dtypes(include=[np.number])</span><br><span class="line">numeric_cols = df_numeric.columns.values</span><br><span class="line">print(numeric_cols)</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[<span class="string">'id'</span> <span class="string">'full_sq'</span> <span class="string">'life_sq'</span> <span class="string">'floor'</span> <span class="string">'max_floor'</span> <span class="string">'material'</span> <span class="string">'build_year'</span></span><br><span class="line"> <span class="string">'num_room'</span> <span class="string">'kitch_sq'</span> <span class="string">'state'</span> <span class="string">'area_m'</span> <span class="string">'raion_popul'</span> <span class="string">'green_zone_part'</span></span><br><span class="line"> <span class="string">'indust_part'</span> <span class="string">'children_preschool'</span> <span class="string">'preschool_quota'</span></span><br><span class="line"> <span class="string">'preschool_education_centers_raion'</span> <span class="string">'children_school'</span> <span class="string">'school_quota'</span></span><br><span class="line"> <span class="string">'school_education_centers_raion'</span> <span class="string">'school_education_centers_top_20_raion'</span></span><br><span class="line"> <span class="string">'hospital_beds_raion'</span> <span class="string">'healthcare_centers_raion'</span>...]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># select non numeric columns</span></span><br><span class="line">df_non_numeric = df.select_dtypes(exclude=[np.number])</span><br><span class="line">non_numeric_cols = df_non_numeric.columns.values</span><br><span class="line">print(non_numeric_cols)</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[<span class="string">'timestamp'</span> <span class="string">'product_type'</span> <span class="string">'sub_area'</span> <span class="string">'culture_objects_top_25'</span></span><br><span class="line"> <span class="string">'thermal_power_plant_raion'</span> <span class="string">'incineration_raion'</span> <span class="string">'oil_chemistry_raion'</span></span><br><span class="line"> <span class="string">'radiation_raion'</span> <span class="string">'railroad_terminal_raion'</span> <span class="string">'big_market_raion'</span></span><br><span class="line"> <span class="string">'nuclear_reactor_raion'</span> <span class="string">'detention_facility_raion'</span> <span class="string">'water_1line'</span></span><br><span class="line"> <span class="string">'big_road1_1line'</span> <span class="string">'railroad_1line'</span> <span class="string">'ecology'</span>]</span><br></pre></td></tr></table></figure>
+<p>从以上结果中，我们可以看到该数据集共有 30,471 行、292 列，还可以辨别特征属于数值变量还是分类变量。这些都是有用的信息。</p>
+<h2 id="que-shi-shu-ju">缺失数据</h2>
+<h3 id="re-tu">热图</h3>
+<p>当特征数量较少时，可以通过热图对缺失数据进行可视化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cols = df.columns[:<span class="number">30</span>] <span class="comment"># first 30 columns</span></span><br><span class="line">colours = [<span class="string">'#000099'</span>, <span class="string">'#ffff00'</span>] <span class="comment"># specify the colours - yellow is missing. blue is not missing.</span></span><br><span class="line">sns.heatmap(df[cols].isnull(), cmap=sns.color_palette(colours))</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/output_4_1.png" alt></p>
+<p>上图展示了前 30 个特征的缺失数据模式。横轴表示特征名，纵轴表示观察值/行数，黄色表示缺失数据，蓝色表示非缺失数据。例如，图中特征 life_sq 在多个行中存在缺失值。而特征 floor 只在第 7000 行左右出现零星缺失值。</p>
+<h3 id="bai-fen-bi-lie-biao">百分比列表</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if it's a larger dataset and the visualization takes too long can do this.</span></span><br><span class="line"><span class="comment"># % of missing.</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    pct_missing = np.mean(df[col].isnull())</span><br><span class="line">    print(<span class="string">'&#123;&#125; - &#123;&#125;%'</span>.format(col, round(pct_missing*<span class="number">100</span>)))</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">id - <span class="number">0.0</span>%</span><br><span class="line">timestamp - <span class="number">0.0</span>%</span><br><span class="line">full_sq - <span class="number">0.0</span>%</span><br><span class="line">life_sq - <span class="number">21.0</span>%</span><br><span class="line">floor - <span class="number">1.0</span>%</span><br><span class="line">big_market_raion - <span class="number">0.0</span>%</span><br><span class="line">nuclear_reactor_raion - <span class="number">0.0</span>%</span><br><span class="line">detention_facility_raion - <span class="number">0.0</span>%</span><br><span class="line">full_all - <span class="number">0.0</span>%</span><br><span class="line">male_f - <span class="number">0.0</span>%</span><br><span class="line">hospital_beds_raion - <span class="number">47.0</span>%</span><br><span class="line">raion_build_count_with_material_info - <span class="number">16.0</span>%</span><br><span class="line">build_count_block - <span class="number">16.0</span>%</span><br><span class="line">build_count_wood - <span class="number">16.0</span>%</span><br><span class="line">build_count_frame - <span class="number">16.0</span>%</span><br><span class="line">build_count_brick - <span class="number">16.0</span>%</span><br><span class="line">build_count_monolith - <span class="number">16.0</span>%</span><br><span class="line">build_count_panel - <span class="number">16.0</span>%</span><br><span class="line">build_count_foam - <span class="number">16.0</span>%</span><br><span class="line">build_count_slag - <span class="number">16.0</span>%</span><br><span class="line">build_count_mix - <span class="number">16.0</span>%</span><br><span class="line">raion_build_count_with_builddate_info - <span class="number">16.0</span>%</span><br><span class="line">build_count_before_1920 - <span class="number">16.0</span>%</span><br><span class="line">build_count_1921<span class="number">-1945</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_1946<span class="number">-1970</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_1971<span class="number">-1995</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_after_1995 - <span class="number">16.0</span>%</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>输出展示了每个特征的缺失值百分比。具体而言，可以从输出中看到特征 life_sq 有 21% 的缺失数据，而特征 floor 仅有 1% 的缺失数据。该列表有效地总结了每个特征的缺失数据百分比情况，是对热图可视化的补充。</p>
+<h3 id="zhi-fang-tu">直方图</h3>
+<p>在存在很多特征时，缺失数据直方图也不失为一种有效方法。要想更深入地了解观察值中的缺失值模式，我们可以用直方图的形式进行可视化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># first create missing indicator for features with missing data</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    missing = df[col].isnull()</span><br><span class="line">    num_missing = np.sum(missing)</span><br><span class="line">  <span class="comment"># 如果该列存在缺失值，对该列中每一行是否缺失进行标记</span></span><br><span class="line">    <span class="keyword">if</span> num_missing &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'created missing indicator for: &#123;&#125;'</span>.format(col))</span><br><span class="line">        df[<span class="string">'&#123;&#125;_ismissing'</span>.format(col)] = missing</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># then based on the indicator, plot the histogram of missing values</span></span><br><span class="line">ismissing_cols = [col <span class="keyword">for</span> col <span class="keyword">in</span> df.columns <span class="keyword">if</span><span class="string">'ismissing'</span><span class="keyword">in</span> col]</span><br><span class="line"><span class="comment"># 统计一行中，有多少缺失值</span></span><br><span class="line">df[<span class="string">'num_missing'</span>] = df[ismissing_cols].sum(axis=<span class="number">1</span>)</span><br><span class="line">df[<span class="string">'num_missing'</span>].value_counts().reset_index().sort_values(by=<span class="string">'index'</span>).plot.bar(x=<span class="string">'index'</span>, y=<span class="string">'num_missing'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/output_6_2.png" alt></p>
+<p>直方图可以帮助在 30,471 个观察值中识别缺失值状况。例如，从上图中可以看到，超过 6000 个观察值不存在缺失值，接近 4000 个观察值具备一个缺失值。</p>
+<h3 id="ru-he-chu-li-que-shi-shu-ju">如何处理缺失数据</h3>
+<h4 id="shan-chu-guan-cha-zhi">删除观察值</h4>
+<p>在统计学中，该方法叫做成列删除(listwise deletion)，需要丢弃包含缺失值的整列观察值。只有在确定缺失数据无法提供信息时，才可以执行该操作。否则，我们应当考虑其他解决方案。</p>
+<p>例如，从缺失数据直方图中，我们可以看到只有少量观察值的缺失值数量超过 35。因此，可以创建一个新的数据集 df_less_missing_rows，该数据集删除了缺失值数量超过 35 的观察值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># drop rows with a lot of missing values.</span></span><br><span class="line">ind_missing = df[df[<span class="string">'num_missing'</span>] &gt; <span class="number">35</span>].index</span><br><span class="line">df_less_missing_rows = df.drop(ind_missing, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="diu-qi-te-zheng">丢弃特征</h4>
+<p>只在确定某个特征无法提供有用信息时才丢弃它。</p>
+<p>例如，从缺失数据百分比列表中，我们可以看到 hospital_beds_raion 具备较高的缺失值百分比——47%，因此我们丢弃这一整个特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hospital_beds_raion has a lot of missing. If we want to drop.</span></span><br><span class="line">cols_to_drop = [<span class="string">'hospital_beds_raion'</span>]</span><br><span class="line">df_less_hos_beds_raion = df.drop(cols_to_drop, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="tian-chong-que-shi-shu-ju">填充缺失数据</h4>
+<p>当特征是数值变量时，执行缺失数据填充。对同一特征的其他非缺失数据取平均值或中位数，用这个值来替换缺失值。当特征是分类变量时，用众数（最频值）来填充缺失值。以特征 life_sq 为例，可以用特征中位数来替换缺失值。（或者用回归的方式填补缺失值）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># replace missing values with the median.</span></span><br><span class="line">med = df[<span class="string">'life_sq'</span>].median()</span><br><span class="line">print(med)</span><br><span class="line">df[<span class="string">'life_sq'</span>] = df[<span class="string">'life_sq'</span>].fillna(med)</span><br></pre></td></tr></table></figure>
+<p>其他方式填补缺失数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调包</span></span><br><span class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认用均值添补</span></span><br><span class="line">imp_mean = SimpleImputer()</span><br><span class="line">imp_mean = imp_mean.fit_transform(Age) </span><br><span class="line"></span><br><span class="line"><span class="comment">#用中位数填补</span></span><br><span class="line">imp_median = SimpleImputer(strategy=<span class="string">"median"</span>)  </span><br><span class="line">imp_median = imp_median.fit_transform(Age) </span><br><span class="line"></span><br><span class="line"><span class="comment">#用0填补</span></span><br><span class="line">imp_0 = SimpleImputer(strategy=<span class="string">"constant"</span>,fill_value=<span class="number">0</span>) </span><br><span class="line">imp_0 = imp_0.fit_transform(Age)</span><br><span class="line"></span><br><span class="line"><span class="comment">#在这里我们使用中位数填补Age </span></span><br><span class="line">data.loc[:,<span class="string">"Age"</span>] = imp_median</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用Pandas和Numpy进行填补其实更加简单</span></span><br><span class="line">data.loc[:,<span class="string">"Age"</span>] = data.loc[:,<span class="string">"Age"</span>].fillna(data.loc[:,<span class="string">"Age"</span>].median())</span><br></pre></td></tr></table></figure>
+<p>可以对所有数值特征一次性应用同样的填充策略。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># impute the missing values and create the missing value indicator variables for each numeric column.</span></span><br><span class="line">df_numeric = df.select_dtypes(include=[np.number])</span><br><span class="line">numeric_cols = df_numeric.columns.values</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> numeric_cols:</span><br><span class="line">    missing = df[col].isnull()</span><br><span class="line">    num_missing = np.sum(missing)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># only do the imputation for the columns that have missing values.</span></span><br><span class="line">    <span class="keyword">if</span> num_missing &gt; <span class="number">0</span>:  </span><br><span class="line">        print(<span class="string">'imputing missing values for: &#123;&#125;'</span>.format(col))</span><br><span class="line">        df[<span class="string">'&#123;&#125;_ismissing'</span>.format(col)] = missing</span><br><span class="line">        med = df[col].median()</span><br><span class="line">        df[col] = df[col].fillna(med)</span><br></pre></td></tr></table></figure>
+<p>对所有分类特征一次性应用众数填充策略。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># impute the missing values and create the missing value indicator variables for each non-numeric column.</span></span><br><span class="line">df_non_numeric = df.select_dtypes(exclude=[np.number])</span><br><span class="line">non_numeric_cols = df_non_numeric.columns.values</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> non_numeric_cols:</span><br><span class="line">    missing = df[col].isnull()</span><br><span class="line">    num_missing = np.sum(missing)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># only do the imputation for the columns that have missing values.</span></span><br><span class="line">    <span class="keyword">if</span> num_missing &gt; <span class="number">0</span>:  </span><br><span class="line">        print(<span class="string">'imputing missing values for: &#123;&#125;'</span>.format(col))</span><br><span class="line">        df[<span class="string">'&#123;&#125;_ismissing'</span>.format(col)] = missing</span><br><span class="line">        </span><br><span class="line">        top = df[col].describe()[<span class="string">'top'</span>] <span class="comment"># impute with the most frequent value.</span></span><br><span class="line">        df[col] = df[col].fillna(top)</span><br></pre></td></tr></table></figure>
+<h4 id="ti-huan-que-shi-zhi">替换缺失值</h4>
+<p>对于分类特征，可以添加新的带值类别，如 _MISSING_。对于数值特征，可以用特定值（如-999）来替换缺失值。这样，我们就可以保留缺失值，使之提供有价值的信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># categorical</span></span><br><span class="line">df[<span class="string">'sub_area'</span>] = df[<span class="string">'sub_area'</span>].fillna(<span class="string">'_MISSING_'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># numeric</span></span><br><span class="line">df[<span class="string">'life_sq'</span>] = df[<span class="string">'life_sq'</span>].fillna(<span class="number">-999</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="bu-gui-ze-shu-ju-yi-chang-zhi">不规则数据（异常值）</h2>
+<p>异常值指与其他观察值具备显著差异的数据，它们可能是真的异常值也可能是错误。</p>
+<h3 id="zhi-fang-tu-xiang-xing-tu">直方图+箱形图</h3>
+<h4 id="zhi-fang-tu-1">直方图</h4>
+<p>当特征是数值变量时，使用直方图和箱形图来检测异常值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># histogram of life_sq.</span></span><br><span class="line">df[<span class="string">'life_sq'</span>].hist(bins=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/21B8CEEC-A71F-4D53-9A70-A539685A1B39.png" alt></p>
+<p>由于数据中可能存在异常值，因此图中数据高度偏斜。</p>
+<p>比较正常的情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">'floor'</span>].hist(bins=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/722E5EFF-CD89-4994-90A4-7AA1ADE60CA5.png" alt></p>
+<h4 id="xiang-xing-tu">箱形图</h4>
+<p>为了进一步研究特征，看一下箱形图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># box plot.</span></span><br><span class="line">df.boxplot(column=[<span class="string">'life_sq'</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/924F9994-B7CF-478E-B4BA-68CE136FE990.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># box plot.</span></span><br><span class="line">df.boxplot(column=[<span class="string">'floor'</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/65762A44-008B-4239-9024-97A9CE86EFD3.png" alt></p>
+<h3 id="miao-shu-xing-tong-ji">描述性统计</h3>
+<p>对于数值特征，当异常值过于独特时，箱形图无法显示该值。因此，可以查看其描述统计学。
+例如，对于特征 life_sq，可以看到其最大值是 7478，而上四分位数（数据的第 75 个百分位数据）是 43。因此值 7478 是异常值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">'life_sq'</span>].describe()</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">count    <span class="number">24088.000000</span></span><br><span class="line">mean        <span class="number">34.403271</span></span><br><span class="line">std         <span class="number">52.285733</span></span><br><span class="line">min          <span class="number">0.000000</span></span><br><span class="line"><span class="number">25</span>%         <span class="number">20.000000</span></span><br><span class="line"><span class="number">50</span>%         <span class="number">30.000000</span></span><br><span class="line"><span class="number">75</span>%         <span class="number">43.000000</span></span><br><span class="line">max       <span class="number">7478.000000</span></span><br><span class="line">Name: life_sq, dtype: float64</span><br></pre></td></tr></table></figure>
+<h3 id="tiao-xing-tu">条形图</h3>
+<p>当特征是<strong>分类变量</strong>时，可以使用条形图来了解其类别和分布。</p>
+<p>例如，特征 ecology 具备合理的分布。但如果某个类别「other」仅有一个值，则它就是异常值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># barchart -  distributionofacategoricalvariabledf['ecology'].value_counts().plot.bar()</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/9F67A55F-2E88-4704-87FF-89DB72CE37FB.png" alt></p>
+<p>其他方法：还有很多方法可以找出异常值，如散点图、z 分数和聚类。</p>
+<h3 id="ru-he-chu-li-yi-chang-zhi">如何处理异常值</h3>
+<p>处理异常值的方法与处理缺失值有些类似：要么丢弃，要么修改，要么保留。</p>
+<h2 id="bu-bi-yao-shu-ju">不必要数据</h2>
+<p>处理异常值的方法与处理缺失值有些类似：要么丢弃，要么修改，要么保留。</p>
+<h3 id="bu-bi-yao-shu-ju-lei-xing-1-xin-xi-bu-zu-zhong-fu">不必要数据类型1：信息不足/重复</h3>
+<p>有时一个特征不提供信息，是因为它拥有太多具备相同值的行。需要了解重复特征背后的原因。当它们的确无法提供有用信息时，我们就可以丢弃它。</p>
+<p>可以为具备高比例相同值的特征创建一个列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">num_rows = len(df.index)</span><br><span class="line">low_information_cols = [] <span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    cnts = df[col].value_counts(dropna=<span class="literal">False</span>)</span><br><span class="line">    top_pct = (cnts/num_rows).iloc[<span class="number">0</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> top_pct &gt; <span class="number">0.95</span>:</span><br><span class="line">        low_information_cols.append(col)</span><br><span class="line">        print(<span class="string">'&#123;0&#125;: &#123;1:.5f&#125;%'</span>.format(col, top_pct*<span class="number">100</span>))</span><br><span class="line">        print(cnts)</span><br><span class="line">        print()</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">oil_chemistry_raion: <span class="number">99.02858</span>%</span><br><span class="line">no     <span class="number">30175</span></span><br><span class="line">yes      <span class="number">296</span></span><br><span class="line">Name: oil_chemistry_raion, dtype: int64</span><br><span class="line"></span><br><span class="line">railroad_terminal_raion: <span class="number">96.27187</span>%</span><br><span class="line">no     <span class="number">29335</span></span><br><span class="line">yes     <span class="number">1136</span></span><br><span class="line">Name: railroad_terminal_raion, dtype: int64</span><br><span class="line"></span><br><span class="line">nuclear_reactor_raion: <span class="number">97.16780</span>%</span><br><span class="line">no     <span class="number">29608</span></span><br><span class="line">yes      <span class="number">863</span></span><br><span class="line">Name: nuclear_reactor_raion, dtype: int64</span><br><span class="line"></span><br><span class="line">big_road1_1line: <span class="number">97.43691</span>%</span><br><span class="line">no     <span class="number">29690</span></span><br><span class="line">yes      <span class="number">781</span></span><br><span class="line">Name: big_road1_1line, dtype: int64</span><br></pre></td></tr></table></figure>
+<h3 id="bu-bi-yao-shu-ju-lei-xing-2-bu-xiang-guan">不必要数据类型2：不想关</h3>
+<p>数据需要为项目提供有价值的信息。如果特征与项目试图解决的问题无关，则这些特征是不相关数据。当这些特征无法服务于项目目标时，删除之。</p>
+<h3 id="bu-bi-yao-shu-ju-lei-xing-3-fu-zhi">不必要数据类型3：复制</h3>
+<p>复制数据即，观察值存在副本。复制数据有两个主要类型。</p>
+<p>复制数据类型 1：基于所有特征，这种复制发生在观察值内所有特征的值均相同的情况下，很容易找出。</p>
+<p>需要先删除数据集中的唯一标识符 id，然后删除复制数据得到数据集 df_dedupped。对比 df 和 df_dedupped 这两个数据集的形态，找出复制行的数量，删除这些复制数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># we know that column 'id' is unique, but what if we drop it?</span></span><br><span class="line">df_dedupped = df.drop(<span class="string">'id'</span>, axis=<span class="number">1</span>).drop_duplicates()</span><br><span class="line"></span><br><span class="line"><span class="comment"># there were duplicate rows</span></span><br><span class="line">print(df.shape)</span><br><span class="line">print(df_dedupped.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">(<span class="number">30471</span>, <span class="number">344</span>)</span><br><span class="line">(<span class="number">30461</span>, <span class="number">343</span>)</span><br><span class="line"><span class="comment"># 可以发现，有 10 行是完全复制的观察值。</span></span><br></pre></td></tr></table></figure>
+<p>复制数据类型 2：基于关键特征</p>
+<p>例如，相同使用面积、相同价格、相同建造年限的两次房产交易同时发生的概率接近零。</p>
+<p>我们可以设置一组关键特征作为唯一标识符，比如 timestamp、full_sq、life_sq、floor、build_year、num_room、price_doc。然后基于这些特征检查是否存在复制数据，删除这些复制数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">key = [<span class="string">'timestamp'</span>, <span class="string">'full_sq'</span>, <span class="string">'life_sq'</span>, <span class="string">'floor'</span>, <span class="string">'build_year'</span>, <span class="string">'num_room'</span>, <span class="string">'price_doc'</span>]</span><br><span class="line">df.fillna(<span class="number">-999</span>).groupby(key)[<span class="string">'id'</span>].count().sort_values(ascending=<span class="literal">False</span>).head(<span class="number">20</span>)</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">timestamp   full_sq  life_sq  floor  build_year  num_room  price_doc</span><br><span class="line"><span class="number">2014</span><span class="number">-12</span><span class="number">-09</span>  <span class="number">40</span>       <span class="number">-999.0</span>   <span class="number">17.0</span>   <span class="number">-999.0</span>       <span class="number">1.0</span>      <span class="number">4607265</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2014</span><span class="number">-04</span><span class="number">-15</span>  <span class="number">134</span>       <span class="number">134.0</span>   <span class="number">1.0</span>     <span class="number">0.0</span>         <span class="number">3.0</span>      <span class="number">5798496</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-08</span><span class="number">-30</span>  <span class="number">40</span>       <span class="number">-999.0</span>   <span class="number">12.0</span>   <span class="number">-999.0</span>       <span class="number">1.0</span>      <span class="number">4462000</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2012</span><span class="number">-09</span><span class="number">-05</span>  <span class="number">43</span>       <span class="number">-999.0</span>   <span class="number">21.0</span>   <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">6229540</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-12</span><span class="number">-05</span>  <span class="number">40</span>       <span class="number">-999.0</span>   <span class="number">5.0</span>    <span class="number">-999.0</span>       <span class="number">1.0</span>      <span class="number">4414080</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2014</span><span class="number">-12</span><span class="number">-17</span>  <span class="number">62</span>       <span class="number">-999.0</span>   <span class="number">9.0</span>    <span class="number">-999.0</span>       <span class="number">2.0</span>      <span class="number">6552000</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-05</span><span class="number">-22</span>  <span class="number">68</span>       <span class="number">-999.0</span>   <span class="number">2.0</span>    <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">5406690</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2012</span><span class="number">-08</span><span class="number">-27</span>  <span class="number">59</span>       <span class="number">-999.0</span>   <span class="number">6.0</span>    <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">4506800</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-04</span><span class="number">-03</span>  <span class="number">42</span>       <span class="number">-999.0</span>   <span class="number">2.0</span>    <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">3444000</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2015</span><span class="number">-03</span><span class="number">-14</span>  <span class="number">62</span>       <span class="number">-999.0</span>   <span class="number">2.0</span>    <span class="number">-999.0</span>       <span class="number">2.0</span>      <span class="number">6520500</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2014</span><span class="number">-01</span><span class="number">-22</span>  <span class="number">46</span>        <span class="number">28.0</span>    <span class="number">1.0</span>     <span class="number">1968.0</span>      <span class="number">2.0</span>      <span class="number">3000000</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2012</span><span class="number">-10</span><span class="number">-22</span>  <span class="number">61</span>       <span class="number">-999.0</span>   <span class="number">18.0</span>   <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">8248500</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-09</span><span class="number">-23</span>  <span class="number">85</span>       <span class="number">-999.0</span>   <span class="number">14.0</span>   <span class="number">-999.0</span>       <span class="number">3.0</span>      <span class="number">7725974</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-06</span><span class="number">-24</span>  <span class="number">40</span>       <span class="number">-999.0</span>   <span class="number">12.0</span>   <span class="number">-999.0</span>      <span class="number">-999.0</span>    <span class="number">4112800</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2015</span><span class="number">-03</span><span class="number">-30</span>  <span class="number">41</span>        <span class="number">41.0</span>    <span class="number">11.0</span>    <span class="number">2016.0</span>      <span class="number">1.0</span>      <span class="number">4114580</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-12</span><span class="number">-18</span>  <span class="number">39</span>       <span class="number">-999.0</span>   <span class="number">6.0</span>    <span class="number">-999.0</span>       <span class="number">1.0</span>      <span class="number">3700946</span>      <span class="number">2</span></span><br><span class="line"><span class="number">2013</span><span class="number">-08</span><span class="number">-29</span>  <span class="number">58</span>        <span class="number">58.0</span>    <span class="number">13.0</span>    <span class="number">2013.0</span>      <span class="number">2.0</span>      <span class="number">5764128</span>      <span class="number">1</span></span><br><span class="line">            <span class="number">50</span>        <span class="number">33.0</span>    <span class="number">2.0</span>     <span class="number">1972.0</span>      <span class="number">2.0</span>      <span class="number">8150000</span>      <span class="number">1</span></span><br><span class="line">            <span class="number">52</span>        <span class="number">30.0</span>    <span class="number">9.0</span>     <span class="number">2006.0</span>      <span class="number">2.0</span>      <span class="number">10000000</span>     <span class="number">1</span></span><br><span class="line"><span class="number">2013</span><span class="number">-08</span><span class="number">-30</span>  <span class="number">38</span>        <span class="number">17.0</span>    <span class="number">15.0</span>    <span class="number">2004.0</span>      <span class="number">1.0</span>      <span class="number">6400000</span>      <span class="number">1</span></span><br><span class="line">Name: id, dtype: int64</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 找到了 16 条复制数据。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># drop duplicates based on an subset of variables.</span></span><br><span class="line">key = [<span class="string">'timestamp'</span>, <span class="string">'full_sq'</span>, <span class="string">'life_sq'</span>, <span class="string">'floor'</span>, <span class="string">'build_year'</span>, <span class="string">'num_room'</span>, <span class="string">'price_doc'</span>]</span><br><span class="line">df_dedupped2 = df.drop_duplicates(subset=key)</span><br><span class="line"></span><br><span class="line">print(df.shape)</span><br><span class="line">print(df_dedupped2.shape)</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">(<span class="number">30471</span>, <span class="number">344</span>)</span><br><span class="line">(<span class="number">30455</span>, <span class="number">344</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="bu-yi-zhi-shu-ju">不一致数据</h2>
+<p>在拟合模型时，数据集遵循特定标准也是很重要的一点。我们需要使用不同方式来探索数据，找出不一致数据。大部分情况下，这取决于观察和经验。不存在运行和修复不一致数据的既定代码。</p>
+<h3 id="strong-bu-yi-zhi-shu-ju-lei-xing-1-da-xie-strong"><strong>不一致数据类型 1：大写</strong></h3>
+<p>在类别值中混用大小写是一种常见的错误。这可能带来一些问题，因为 Python 分析对大小写很敏感。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">'sub_area'</span>].value_counts(dropna=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">Poselenie Sosenskoe               <span class="number">1776</span></span><br><span class="line">Nekrasovka                        <span class="number">1611</span></span><br><span class="line">Poselenie Vnukovskoe              <span class="number">1372</span></span><br><span class="line">Poselenie Moskovskij               <span class="number">925</span></span><br><span class="line">Poselenie Voskresenskoe            <span class="number">713</span></span><br><span class="line">                                  ... </span><br><span class="line">Molzhaninovskoe                      <span class="number">3</span></span><br><span class="line">Poselenie Shhapovskoe                <span class="number">2</span></span><br><span class="line">Poselenie Kievskij                   <span class="number">2</span></span><br><span class="line">Poselenie Mihajlovo-Jarcevskoe       <span class="number">1</span></span><br><span class="line">Poselenie Klenovskoe                 <span class="number">1</span></span><br><span class="line">Name: sub_area, Length: <span class="number">146</span>, dtype: int64</span><br><span class="line"><span class="comment"># 存储了不同地区的名称，看起来非常标准化。但是，有时候相同特征内存在不一致的大小写使用情况。「Poselenie Sosenskoe」和「pOseleNie sosenskeo」指的是相同的地区。</span></span><br><span class="line"><span class="comment"># 为了避免这个问题，可以将所有字母设置为小写（或大写）。</span></span><br><span class="line"><span class="comment"># make everything lower case.</span></span><br><span class="line">df[<span class="string">'sub_area_lower'</span>] = df[<span class="string">'sub_area'</span>].str.lower()</span><br><span class="line">df[<span class="string">'sub_area_lower'</span>].value_counts(dropna=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="strong-bu-yi-zhi-shu-ju-lei-xing-2-ge-shi-strong"><strong>不一致数据类型 2：格式</strong></h3>
+<p>需要执行的另一个标准化是数据格式。比如将特征从字符串格式转换为 DateTime 格式。特征 timestamp 在表示日期时是字符串格式。</p>
+<p>处理格式不一致的数据，可以使用以下代码进行格式转换，并提取日期或时间值。然后，就可以很容易地用年或月的方式分析交易量数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">'timestamp_dt'</span>] = pd.to_datetime(df[<span class="string">'timestamp'</span>], format=<span class="string">'%Y-%m-%d'</span>)</span><br><span class="line">df[<span class="string">'year'</span>] = df[<span class="string">'timestamp_dt'</span>].dt.year</span><br><span class="line">df[<span class="string">'month'</span>] = df[<span class="string">'timestamp_dt'</span>].dt.month</span><br><span class="line">df[<span class="string">'weekday'</span>] = df[<span class="string">'timestamp_dt'</span>].dt.weekday</span><br><span class="line"></span><br><span class="line">print(df[<span class="string">'year'</span>].value_counts(dropna=<span class="literal">False</span>))</span><br><span class="line">print()</span><br><span class="line">print(df[<span class="string">'month'</span>].value_counts(dropna=<span class="literal">False</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">2014</span>    <span class="number">13662</span></span><br><span class="line"><span class="number">2013</span>     <span class="number">7978</span></span><br><span class="line"><span class="number">2012</span>     <span class="number">4839</span></span><br><span class="line"><span class="number">2015</span>     <span class="number">3239</span></span><br><span class="line"><span class="number">2011</span>      <span class="number">753</span></span><br><span class="line">Name: year, dtype: int64</span><br><span class="line"></span><br><span class="line"><span class="number">12</span>    <span class="number">3400</span></span><br><span class="line"><span class="number">4</span>     <span class="number">3191</span></span><br><span class="line"><span class="number">3</span>     <span class="number">2972</span></span><br><span class="line"><span class="number">11</span>    <span class="number">2970</span></span><br><span class="line"><span class="number">10</span>    <span class="number">2736</span></span><br><span class="line"><span class="number">6</span>     <span class="number">2570</span></span><br><span class="line"><span class="number">5</span>     <span class="number">2496</span></span><br><span class="line"><span class="number">9</span>     <span class="number">2346</span></span><br><span class="line"><span class="number">2</span>     <span class="number">2275</span></span><br><span class="line"><span class="number">7</span>     <span class="number">1875</span></span><br><span class="line"><span class="number">8</span>     <span class="number">1831</span></span><br><span class="line"><span class="number">1</span>     <span class="number">1809</span></span><br><span class="line">Name: month, dtype: int64</span><br></pre></td></tr></table></figure>
+<h3 id="strong-bu-yi-zhi-shu-ju-lei-xing-3-lei-bie-zhi-strong"><strong>不一致数据类型 3：类别值</strong></h3>
+<p>分类特征的值数量有限。有时由于拼写错误等原因可能出现其他值。需要观察特征来找出类别值不一致的情况。</p>
+<p>举例来说：city 的值被错误输入为「torontoo」和「tronto」，其实二者均表示「toronto」（正确值）。</p>
+<p>识别它们的一种简单方式是模糊逻辑（或编辑距离）。该方法可以衡量使一个值匹配另一个值需要更改的字母数量（距离）。</p>
+<p>已知这些类别应仅有四个值：「toronto」、「vancouver」、「montreal」和「calgary」。计算所有值与单词「toronto」（和「vancouver」）之间的距离，我们可以看到疑似拼写错误的值与正确值之间的距离较小，因为它们只有几个字母不同。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from nltk.metrics import edit_distance</span><br><span class="line"></span><br><span class="line">df_city_ex = pd.<span class="symbol">DataFrame</span>(data=&#123;<span class="string">'city'</span>: [<span class="string">'torontoo'</span>, <span class="string">'toronto'</span>, <span class="string">'tronto'</span>, <span class="string">'vancouver'</span>, <span class="string">'vancover'</span>, <span class="string">'vancouvr'</span>, <span class="string">'montreal'</span>, <span class="string">'calgary'</span>]&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df_city_ex[<span class="string">'city_distance_toronto'</span>] = df_city_ex[<span class="string">'city'</span>].map(lambda x: edit_distance(x, <span class="string">'toronto'</span>))</span><br><span class="line">df_city_ex[<span class="string">'city_distance_vancouver'</span>] = df_city_ex[<span class="string">'city'</span>].map(lambda x: edit_distance(x, <span class="string">'vancouver'</span>))</span><br><span class="line">df_city_ex</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/image-20200528145223629.png" alt></p>
+<p>处理类别值不一致的数据，可以设置标准将这些拼写错误转换为正确值。</p>
+<p>例如，下列代码规定所有值与「toronto」的距离在 2 个字母以内。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msk = df_city_ex[<span class="string">'city_distance_toronto'</span>] &lt;= <span class="number">2</span></span><br><span class="line">df_city_ex.loc[msk, <span class="string">'city'</span>] = <span class="string">'toronto'</span></span><br><span class="line"></span><br><span class="line">msk = df_city_ex[<span class="string">'city_distance_vancouver'</span>] &lt;= <span class="number">2</span></span><br><span class="line">df_city_ex.loc[msk, <span class="string">'city'</span>] = <span class="string">'vancouver'</span></span><br><span class="line"></span><br><span class="line">df_city_ex</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/image-20200528145327127.png" alt></p>
+<h3 id="strong-bu-yi-zhi-shu-ju-lei-xing-4-di-zhi-strong"><strong>不一致数据类型 4：地址</strong></h3>
+<p>由于人们往数据库中输入数据时通常不会遵循标准格式，所以地址处理是一个比较难的问题。</p>
+<p>处理地址不一致的数据，可以用浏览的方式可以找出混乱的地址数据。即便有时我们看不出什么问题，也可以运行代码执行标准化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># no address column in the housing dataset. So create one to show the code.</span></span><br><span class="line">df_add_ex = pd.DataFrame([<span class="string">'123 MAIN St Apartment 15'</span>, <span class="string">'123 Main Street Apt 12   '</span>, <span class="string">'543 FirSt Av'</span>, <span class="string">'  876 FIRst Ave.'</span>], columns=[<span class="string">'address'</span>])</span><br><span class="line">df_add_ex</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/image-20200528150318273.png" alt></p>
+<p>处理地址不一致的数据，运行以下代码将所有字母转为小写，删除空格，删除句号，并将措辞标准化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address'</span>].str.lower()</span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.strip() <span class="comment"># remove leading and trailing whitespace.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\.'</span>, <span class="string">''</span>) <span class="comment"># remove period.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bstreet\\b'</span>, <span class="string">'st'</span>) <span class="comment"># replace street with st.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bapartment\\b'</span>, <span class="string">'apt'</span>) <span class="comment"># replace apartment with apt.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bav\\b'</span>, <span class="string">'ave'</span>) <span class="comment"># replace apartment with apt.</span></span><br><span class="line"></span><br><span class="line">df_add_ex</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/03/28/data_clean/image-20200528150416408.png" alt></p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/TpiLd94iet902WK6SEjHrQ" target="_blank" rel="noopener">数据缺失、混乱、重复怎么办？最全数据清洗指南让你所向披靡</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/20/life/past_present_future/" rel="prev" title="过去、现在、未来">
+      <i class="fa fa-chevron-left"></i> 过去、现在、未来
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/28/BatchNormalization/" rel="next" title="BatchNormalization">
+      BatchNormalization <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-ju-qing-xi"><span class="nav-number">1.</span> <span class="nav-text">数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-shu-ju"><span class="nav-number">1.2.</span> <span class="nav-text">查看数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#que-shi-shu-ju"><span class="nav-number">1.3.</span> <span class="nav-text">缺失数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#re-tu"><span class="nav-number">1.3.1.</span> <span class="nav-text">热图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bai-fen-bi-lie-biao"><span class="nav-number">1.3.2.</span> <span class="nav-text">百分比列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-fang-tu"><span class="nav-number">1.3.3.</span> <span class="nav-text">直方图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ru-he-chu-li-que-shi-shu-ju"><span class="nav-number">1.3.4.</span> <span class="nav-text">如何处理缺失数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#shan-chu-guan-cha-zhi"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">删除观察值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#diu-qi-te-zheng"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">丢弃特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tian-chong-que-shi-shu-ju"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">填充缺失数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ti-huan-que-shi-zhi"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">替换缺失值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bu-gui-ze-shu-ju-yi-chang-zhi"><span class="nav-number">1.4.</span> <span class="nav-text">不规则数据（异常值）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-fang-tu-xiang-xing-tu"><span class="nav-number">1.4.1.</span> <span class="nav-text">直方图+箱形图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zhi-fang-tu-1"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">直方图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xiang-xing-tu"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">箱形图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#miao-shu-xing-tong-ji"><span class="nav-number">1.4.2.</span> <span class="nav-text">描述性统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tiao-xing-tu"><span class="nav-number">1.4.3.</span> <span class="nav-text">条形图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ru-he-chu-li-yi-chang-zhi"><span class="nav-number">1.4.4.</span> <span class="nav-text">如何处理异常值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bu-bi-yao-shu-ju"><span class="nav-number">1.5.</span> <span class="nav-text">不必要数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-bi-yao-shu-ju-lei-xing-1-xin-xi-bu-zu-zhong-fu"><span class="nav-number">1.5.1.</span> <span class="nav-text">不必要数据类型1：信息不足&#x2F;重复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-bi-yao-shu-ju-lei-xing-2-bu-xiang-guan"><span class="nav-number">1.5.2.</span> <span class="nav-text">不必要数据类型2：不想关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-bi-yao-shu-ju-lei-xing-3-fu-zhi"><span class="nav-number">1.5.3.</span> <span class="nav-text">不必要数据类型3：复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bu-yi-zhi-shu-ju"><span class="nav-number">1.6.</span> <span class="nav-text">不一致数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-bu-yi-zhi-shu-ju-lei-xing-1-da-xie-strong"><span class="nav-number">1.6.1.</span> <span class="nav-text">不一致数据类型 1：大写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-bu-yi-zhi-shu-ju-lei-xing-2-ge-shi-strong"><span class="nav-number">1.6.2.</span> <span class="nav-text">不一致数据类型 2：格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-bu-yi-zhi-shu-ju-lei-xing-3-lei-bie-zhi-strong"><span class="nav-number">1.6.3.</span> <span class="nav-text">不一致数据类型 3：类别值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-bu-yi-zhi-shu-ju-lei-xing-4-di-zhi-strong"><span class="nav-number">1.6.4.</span> <span class="nav-text">不一致数据类型 4：地址</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">533k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
