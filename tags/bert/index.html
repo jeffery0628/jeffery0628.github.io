@@ -26,14 +26,14 @@
   <meta name="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="火种2号">
-<meta property="og:url" content="https://jeffery0628.github.io/tags/BERT/index.html">
+<meta property="og:url" content="https://jeffery0628.github.io/tags/bert/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://jeffery0628.github.io/tags/BERT/">
+<link rel="canonical" href="https://jeffery0628.github.io/tags/bert/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>标签: BERT | 火种2号</title>
+  <title>标签: bert | 火种2号</title>
   
 
 
@@ -209,7 +209,7 @@
   <div class="post-block">
     <div class="posts-collapse">
       <div class="collection-title">
-        <h2 class="collection-header">BERT
+        <h2 class="collection-header">bert
           <small>标签</small>
         </h2>
       </div>
@@ -224,15 +224,15 @@
 
       <div class="post-meta">
         <time itemprop="dateCreated"
-              datetime="2020-04-13T20:16:42+08:00"
-              content="2020-04-13">
-          04-13
+              datetime="2020-05-13T20:26:31+08:00"
+              content="2020-05-13">
+          05-13
         </time>
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2020/04/13/bert%E7%B3%BB%E5%88%97/" itemprop="url">
-            <span itemprop="name">bert系列</span>
+          <a class="post-title-link" href="/2020/05/13/bert_code/" itemprop="url">
+            <span itemprop="name">bert源码</span>
           </a>
       </div>
 
@@ -392,97 +392,6 @@
 
 
 
-<script>
-  (function() {
-    function leancloudSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById(url).querySelector('.leancloud-visitors-count');
-    }
-
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            leancloudSelector(url).innerText = counter.time + 1;
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save visitor count', error);
-              });
-          } else {
-              Counter('post', '/classes/Counter', { title, url, time: 1 })
-                .then(response => response.json())
-                .then(() => {
-                  leancloudSelector(url).innerText = 1;
-                })
-                .catch(error => {
-                  console.error('Failed to create', error);
-                });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return decodeURI(element.id);
-      });
-
-      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          for (let url of entries) {
-            let target = results.find(item => item.url === url);
-            leancloudSelector(url).innerText = target ? target.time : 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Counter Error', error);
-        });
-    }
-
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"bu0jcrISneKfTwssc7P792xE-gzGzoHsz","app_key":"3y7nYJuTGp6zIHSfRBQlMQnB","server_url":null,"security":false};
-    function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${api_server}/1.1${url}`, {
-          method,
-          headers: {
-            'X-LC-Id'     : app_id,
-            'X-LC-Key'    : app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        if (CONFIG.hostname !== location.hostname) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    }
-
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(response => response.json())
-        .then(({ api_server }) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
 
 
       </div>
@@ -595,7 +504,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       avatar     : 'mm',
       meta       : guest,
       pageSize   : '8' || 10,
-      visitor    : false,
+      visitor    : true,
       lang       : 'zh-cn' || 'zh-cn',
       path       : location.pathname,
       recordIP   : false,
@@ -606,4 +515,6 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
 </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
+</html>
+ody>
 </html>
