@@ -20,27 +20,27 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery0628.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="梯度下降算法 梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。 假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解 \[    min_{x \in R^n}f(x) \] 无约束最优化问题。 \(f^\ast\)表示目标函数\(f(x)\)的极小点。 梯度下降法是一种迭代算法，选取">
 <meta property="og:type" content="article">
 <meta property="og:title" content="优化算法">
-<meta property="og:url" content="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:url" content="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:description" content="梯度下降算法 梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。 假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解 \[    min_{x \in R^n}f(x) \] 无约束最优化问题。 \(f^\ast\)表示目标函数\(f(x)\)的极小点。 梯度下降法是一种迭代算法，选取">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/C80A2811-1678-4371-BCCD-8AA51A777820.jpg">
-<meta property="og:image" content="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/B03C2A8B-AF9F-4871-94F6-0E7F6D6EC890.png">
-<meta property="og:image" content="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/84835FEB-0EA4-41E5-B07D-41BBEB49AE9B.jpg">
+<meta property="og:image" content="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/C80A2811-1678-4371-BCCD-8AA51A777820.jpg">
+<meta property="og:image" content="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/B03C2A8B-AF9F-4871-94F6-0E7F6D6EC890.png">
+<meta property="og:image" content="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/84835FEB-0EA4-41E5-B07D-41BBEB49AE9B.jpg">
 <meta property="article:published_time" content="2018-07-11T06:08:24.000Z">
 <meta property="article:modified_time" content="2020-03-31T03:26:57.508Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="优化算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/C80A2811-1678-4371-BCCD-8AA51A777820.jpg">
+<meta name="twitter:image" content="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/C80A2811-1678-4371-BCCD-8AA51A777820.jpg">
 
-<link rel="canonical" href="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -214,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery0628.github.io/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
