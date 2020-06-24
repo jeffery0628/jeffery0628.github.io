@@ -381,7 +381,7 @@
 <ol>
 <li>无约束优化问题:通常使用求导,使导数为零,求解候选最优值</li>
 <li>有等式约束的优化问题:通常使用拉格朗日乘子法,即把等式约束用拉格朗日乘子和优化问题合并为一个式子,通过对各个变量求导使其为零,求解候选最优值.拉格朗日乘数法其实是KKT条件在等式约束优化问题的简化版.</li>
-<li>有不等式约束的优化问题:通常使用KKT条件.即把不等式约束,等式约束和优化问题合并为一个式子.假设有多个等式约束\(h(x)\)和不等式约束\(g(x)\),\(L(\boldsymbol{x}, \boldsymbol{\lambda}, \boldsymbol{\mu})=f(\boldsymbol{x})+\sum_{i=1}^{m} \lambda_{i} h_{i}(\boldsymbol{x})+\sum_{i=1}^{n} \mu_{j} g_{j}(\boldsymbol{x})\),则不等式约束引入的KKT条件如下:
+<li>有不等式约束的优化问题:通常使用KKT条件.即把不等式约束,等式约束和优化问题合并为一个式子.假设有多个等式约束\(h(x)\)和不等式约束\(g(x)\),\(L(\boldsymbol{x}, \boldsymbol{\lambda}, \boldsymbol{\mu})=f(\boldsymbol{x})+\sum_{i=1}^{m} \lambda_{i} h_{i}(\boldsymbol{x})+\sum_{i=1}^{n} \mu_{j} g_{j}(\boldsymbol{x})\),则不等式约束引入的KKT条件如下:<br>
 \(\left\{\begin{array}{l}g_{j}(\boldsymbol{x}) \leqslant 0 \\ mu_{j} \geqslant 0  \\mu_{j} g_{j}(\boldsymbol{x})=0\end{array}\right.\) ,实质是最优解在\(g(x)&lt;0\)区域内时,约束条件不起作用,等价于对\(μ\)置零然后对原函数的偏导数置零;当\(g(x)=0\)时与情况2相近.结合两种情况,那么只需要使\(L\)对\(x\)求导为零,使\(h(x)\)为零,使\(μg(x)\)为零三式即可求解候选最优值.</li>
 </ol>
 <h4 id="strong-jiang-wei-fang-fa-strong"><strong>降维方法</strong></h4>
@@ -623,15 +623,15 @@
 <p>对于给定的二分类训练数据集,对数似然函数为</p>
 <p>\[
 \begin{aligned} L(w) &amp;=\sum_{i=1}^{N}\left[y_{i} \log \pi\left(x_{i}\right)+\left(1-y_{i}\right)\log\left(1-\pi\left(x_{i}\right)\right)\right]\\ &amp;=\sum_{i=1}^{N}\left[y_{i} \log \frac{\pi\left(x_{i}\right)}{1-\pi\left(x_{i}\right)}+\log \left(1-\pi\left(x_{i}\right)\right)\right]\\&amp;=\sum_{i=1}^{N}\left[y_{i}\left(w \cdot x_{i}\right)-\log \left(1+\exp \left(w \cdot x_{i}\right)\right]\right.\end{aligned}
-\]
+\]<br>
 也就是<strong>损失函数</strong>.其中\(P(Y=1|x)=π(x)\),对\(L(w)\)求极大值,就可以得到\(w\)的估计值.问题变成了以对数似然函数为目标函数的最优化问题.</p>
 <h4 id="strong-duo-xiang-luo-ji-si-di-hui-gui-strong"><strong>多项逻辑斯谛回归</strong></h4>
 <p>当问题是多分类问题时,可以作如下推广:设Y有K类可能取值,\(P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1 \quad P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}\),实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
-<p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：
+<p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：<br>
 \[
 P(\boldsymbol{W})=\prod_{n=1}^{N}\left(\frac{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}\right)
-\]
-对函数取对数再乘以-1，推导得到：
+\]<br>
+对函数取对数再乘以-1，推导得到：<br>
 \[
 \begin{aligned}
 F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}\right) \\
@@ -644,15 +644,15 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 <h4 id="strong-zui-da-shang-mo-xing-strong"><strong>最大熵模型</strong></h4>
 <p>给定训练数据集,可以确定联合分布P(X,Y)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布P(X)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中v表示频数,N表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布P(Y|X)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
 <h4 id="strong-zui-da-shang-mo-xing-de-xue-xi-strong"><strong>最大熵模型的学习</strong></h4>
-<p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong>
+<p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
 \[
 \begin{aligned}
 &amp;\max _{P_{e c}} H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
 &amp;\text { s.t. } \quad E_{p}\left(f_{i}\right)=E_{p}\left(f_{i}\right), \quad i=1,2, \cdots, n\\
      &amp;\sum_{y} P(y | x)=1
 \end{aligned}
-\]
-,将求最大值问题改为等价的求最小值问题
+\]<br>
+,将求最大值问题改为等价的求最小值问题<br>
 \[
 \begin{aligned}
 &amp;\min _{R \in C}-H(P)=\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
@@ -660,21 +660,21 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 &amp;\sum_{y} P(y | x)=1
 \end{aligned}
 \]</p>
-<p>引入<strong>拉格朗日乘子</strong>
+<p>引入<strong>拉格朗日乘子</strong><br>
 \[
 \begin{aligned}
 L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w_{i}\left(E_{p}\left(f_{i}\right)-E_{P}\left(f_{i}\right)\right) \\
 &amp;=\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)+w_{0}\left(1-\sum_{y} P(y | x)\right) \\
 &amp;+\sum_{i=1}^{n} w_{i}\left(\sum_{x, y} \tilde{P}(x, y) f_{i}(x, y)-\sum_{x, y} \tilde{P}(x) P(y | x) f_{i}(x, y)\right)
 \end{aligned}
-\]
-将原始问题\(\min _{p \in C} \max _{w} L(P, w)\)转换为无约束最优化的<strong>对偶问题</strong>\(\max _{w} \min _{P \in \mathbf{C}} L(P, w)\).首先求解内部的<strong>极小化问题</strong>,即求\(L(P,W)\)对\(P(y|x)\)的偏导数.
+\]<br>
+将原始问题\(\min _{p \in C} \max _{w} L(P, w)\)转换为无约束最优化的<strong>对偶问题</strong>\(\max _{w} \min _{P \in \mathbf{C}} L(P, w)\).首先求解内部的<strong>极小化问题</strong>,即求\(L(P,W)\)对\(P(y|x)\)的偏导数.<br>
 \[
 \begin{aligned}
 \frac{\partial L(P, w)}{\partial P(y | x)} &amp;=\sum_{x, y} \tilde{P}(x)(\log P(y | x)+1)-\sum_{y} w_{0}-\sum_{x, y}\left(\tilde{P}(x) \sum_{i=1}^{n} w_{i} f_{i}(x, y)\right) \\
 &amp;=\sum_{x, y} \tilde{P}(x)\left(\log P(y | x)+1-w_{0}-\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)
 \end{aligned}
-\]
+\]<br>
 ,并令偏导数等于0,解得\(Z_{w}(x)=\sum_{y} \exp \left(\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)\).可以证明对偶函数等价于对数似然函数,那么对偶函数极大化等价于最大熵模型的<strong>极大似然估计</strong>\(L(w)=\sum_{x, y} \tilde{P}(x, y) \sum_{i=1}^{n} w_{i} f_{i}(x, y)-\sum_{x} \tilde{P}(x) \log Z_{w}(x)\).之后可以用最优化算法求解得到w.</p>
 <h4 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h4>
 <p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>
@@ -704,21 +704,21 @@ L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w
 <h5 id="strong-ji-he-jian-ge-strong"><strong>几何间隔</strong></h5>
 <p>一般地,当样本点被超平面正确分类时,点x与超平面的距离是\(\gamma_{i}=y_{i}\left(\frac{w}{\|w\|} \cdot x_{i}+\frac{b}{\|w\|}\right)\)其中\(||w||\)是\(w\)的\(l2\)范数.这就是<strong>几何间隔</strong>的定义.定义超平面关于训练数据集T的几何间隔为超平面关于T中所有样本点的几何间隔之<strong>最小值</strong>\(\gamma=\min _{i,…,N} \gamma_{1}\).可知\(\gamma=\frac{\hat{\gamma}}{\|\boldsymbol{w}\|}\)当\(||w||=1\)时几何间隔和函数间隔<strong>相等</strong>.</p>
 <h5 id="strong-ying-jian-ge-zui-da-hua-strong"><strong>硬间隔最大化</strong></h5>
-<p>对线性可分的训练集而言,这里的间隔最大化又称为<strong>硬间隔最大化</strong>.直观解释是对训练集找到几何间隔最大的超平面意味着以<strong>充分大的确信度</strong>对训练数据进行分类.求最大间隔分离超平面即约束最优化问题:
+<p>对线性可分的训练集而言,这里的间隔最大化又称为<strong>硬间隔最大化</strong>.直观解释是对训练集找到几何间隔最大的超平面意味着以<strong>充分大的确信度</strong>对训练数据进行分类.求最大间隔分离超平面即约束最优化问题:<br>
 \[
 \begin{aligned}
 &amp;\max _{w, b} \quad \gamma\\
 &amp;\text { s.t. } \quad y_{i}\left(\frac{w}{\|w\|} \cdot x_{i}+\frac{b}{\|w\|}\right) \geqslant \gamma, \quad i=1,2, \cdots, N
 \end{aligned}
-\]
-,将几何间隔用函数间隔表示:
+\]<br>
+,将几何间隔用函数间隔表示:<br>
 \[
 \begin{aligned}
 &amp;\max _{w, b} \frac{\hat{\gamma}}{\|w\|}\\
 &amp;\text { s.t. } \quad y_{i}\left(w \cdot x_{i}+b\right) \geqslant \hat{p}, \quad i=1,2, \cdots, N
 \end{aligned}
-\]
-,并且注意到函数间隔的取值并不影响最优化问题的解,不妨令函数间隔=1,并让最大化\(\frac{1}{||w||}\)等价为最小化\(\frac{||w||^2}{2}\),问题变为<strong>凸二次规划问题</strong>
+\]<br>
+,并且注意到函数间隔的取值并不影响最优化问题的解,不妨令函数间隔=1,并让最大化\(\frac{1}{||w||}\)等价为最小化\(\frac{||w||^2}{2}\),问题变为<strong>凸二次规划问题</strong><br>
 \[
 \min _{w, b} \frac{1}{2}\|w\|^{2} \\
 s.t. \quad y_{i}\left(w \cdot x_{i}+b\right)-1 \geqslant 0, \quad i=1,2, \cdots, N
@@ -727,43 +727,43 @@ s.t. \quad y_{i}\left(w \cdot x_{i}+b\right)-1 \geqslant 0, \quad i=1,2, \cdots,
 <p>与分离超平面距离<strong>最近的样本点</strong>的实例称为<strong>支持向量</strong>.支持向量是使最优化问题中的约束条件等号成立的点.因此对\(y=+1\)的正例点和\(y=-1\)的负例点,支持向量分别在超平面H1:\(wx+b=+1\)和H2:\(wx+b=-1\).H1和H2平行,两者之间形成一条长带,长带的宽度!称\(\frac{2}{||w||}\)为<strong>间隔</strong>,H1和H2称为<strong>间隔边界</strong>.在决定分离超平面时只有支持向量起作用,所以支持向量机是由很少的&quot;重要的&quot;训练样本确定的.由对偶问题同样可以得到支持向量一定在间隔边界上.</p>
 <p><img src="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/support_vector.png" alt="avatar"></p>
 <h5 id="strong-dui-ou-suan-fa-strong"><strong>对偶算法</strong></h5>
-<p>引进拉格朗日乘子,定义拉格朗日函数\(L(w, b, \alpha)=\frac{1}{2}\|w\|^{2}-\sum_{i=1}^{N} \alpha_{i} y_{i}\left(w \cdot x_{i}+b\right)+\sum_{i=1}^{N} \alpha_{i}\),根据拉格朗日对偶性,原始问题的对偶问题是极大极小问题:\(\max _{\alpha} \min _{w, b} L(w, b, \alpha)\).先求对w,b的<strong>极小值</strong>.将\(L(w,b,a)\)分别对w,b求偏导数并令其等于0,得
+<p>引进拉格朗日乘子,定义拉格朗日函数\(L(w, b, \alpha)=\frac{1}{2}\|w\|^{2}-\sum_{i=1}^{N} \alpha_{i} y_{i}\left(w \cdot x_{i}+b\right)+\sum_{i=1}^{N} \alpha_{i}\),根据拉格朗日对偶性,原始问题的对偶问题是极大极小问题:\(\max _{\alpha} \min _{w, b} L(w, b, \alpha)\).先求对w,b的<strong>极小值</strong>.将\(L(w,b,a)\)分别对w,b求偏导数并令其等于0,得<br>
 \[
 \begin{array}{l}
 w=\sum_{i=1}^{N} \alpha_{i} y_{i} x_{i} \\
 \sum_{i=1}^{N} \alpha_{i} y_{i}=0
 \end{array}
-\]
-,代入拉格朗日函数得
+\]<br>
+,代入拉格朗日函数得<br>
 \[
 \begin{aligned}
 L(w, b, \alpha) &amp;=\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)-\sum_{i=1}^{N} \alpha_{i} y_{i}\left(\left(\sum_{j=1}^{N} \alpha_{j} y_{j} x_{j}\right) \cdot x_{i}+b\right)+\sum_{i=1}^{N} \alpha_{i} \\
 &amp;=-\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)+\sum_{i=1}^{N} \alpha_{i}
 \end{aligned}
-\]
-这就是极小值.接下来对极小值求对a的极大,即是<strong>对偶问题</strong>
+\]<br>
+这就是极小值.接下来对极小值求对a的极大,即是<strong>对偶问题</strong><br>
 \[
 \begin{array}{l}
 \max _{a}-\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)+\sum_{i=1}^{N} \alpha_{i} \\
 \text { s.t. } \sum_{i=1}^{N} \alpha_{i} y_{i}=0 \\
 \quad \alpha_{i} \geqslant 0, \quad i=1,2, \cdots, N
 \end{array}
-\]
-.将求极大转换为求极小
+\]<br>
+.将求极大转换为求极小<br>
 \[
 \begin{array}{cl}
 \min _{\alpha} &amp; \frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)-\sum_{i=1}^{N} \alpha_{i} \\
 \text { s.t. } &amp; \sum_{i=1}^{N} \alpha_{i} y_{i}=0 \\
 &amp; \alpha_{i} \geqslant 0, \quad i=1,2, \cdots, N
 \end{array}
-\]
-.由<strong>KKT条件</strong>成立得到
+\]<br>
+.由<strong>KKT条件</strong>成立得到<br>
 \[
 \begin{aligned}
 &amp;w^{*}=\sum_{i=1}^{N} \alpha_{i}^{*} y_{i} x_{i}\\
 &amp;b^{*}=y_{j}-\sum_{i=1}^{N} \alpha_{i}^{*} y_{i}\left(x_{i} \cdot x_{j}\right)
 \end{aligned}
-\]
+\]<br>
 ,其中\(j\)为使\(a_j^*>0\)的下标之一.所以问题就变为求对偶问题的解\(a^*\),再求得原始问题的解\(w^*,b^*\),从而得分离超平面及分类决策函数可以看出\(w^*\)和\(b^*\)都只依赖训练数据中\(a_i^*>0\)的样本点Z\((x_i,y_i)\),这些实例点\(x_i\)被称为<strong>支持向量</strong>.</p>
 <h4 id="strong-xian-xing-zhi-chi-xiang-liang-ji-strong"><strong>线性支持向量机</strong></h4>
 <p>如果训练数据是<strong>线性不可分</strong>的(近似线性可分),那么上述方法中的不等式约束并不能都成立,需要修改硬间隔最大化,使其成为<strong>软间隔最大化</strong>.</p>
@@ -778,15 +778,15 @@ s.t. \quad y_{i}\left(w \cdot x_{i}+b\right) \geqslant 1-\xi_{i}, \quad i=1,2, \
 \]</p>
 <p>,可以证明w的解是唯一的,但b的解存在一个<strong>区间</strong>.线性支持向量机包含线性可分支持向量机,因此<strong>适用性更广</strong>.</p>
 <h5 id="dui-ou-suan-fa">对偶算法</h5>
-<p>原始问题的对偶问题是,构造<strong>拉格朗日函数</strong> \(L(w, b, \xi, \alpha, \mu) \equiv \frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}-\sum_{i=1}^{N} \alpha_{i}\left(y_{i}\left(w \cdot x_{i}+b\right)-1+\xi_{i}\right)-\sum_{i=1}^{N} \mu_{i} \xi_{i}\) ，先求对w,b,ξ的<strong>极小值</strong>,分别求偏导并令导数为0,得
+<p>原始问题的对偶问题是,构造<strong>拉格朗日函数</strong> \(L(w, b, \xi, \alpha, \mu) \equiv \frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}-\sum_{i=1}^{N} \alpha_{i}\left(y_{i}\left(w \cdot x_{i}+b\right)-1+\xi_{i}\right)-\sum_{i=1}^{N} \mu_{i} \xi_{i}\) ，先求对w,b,ξ的<strong>极小值</strong>,分别求偏导并令导数为0,得<br>
 \[
 \begin{aligned}
 &amp;w=\sum_{i=1} \alpha_{i} y_{i} x_{i}\\
 &amp;\sum_{i=1}^{N} \alpha_{i} y_{i}=0\\
 &amp;C-\alpha_{i}-\mu_{i}=0
 \end{aligned}
-\]
-,代入原函数,再对极小值求a的<strong>极大值</strong>,得到
+\]<br>
+,代入原函数,再对极小值求a的<strong>极大值</strong>,得到<br>
 \[
 \begin{aligned}
 &amp;\max _{a}-\frac{1}{2} \sum_{i=1}^{N} \sum_{i=1}^{N} \alpha_{i} \alpha, y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)+\sum_{i=1}^{N} \alpha_{i}\\
@@ -797,22 +797,22 @@ C-\alpha_{i}-\mu_{i}=0 \\
 \mu_{i} \geqslant 0, \quad i=1,2, \cdots, N
 \end{array}
 \end{aligned}
-\]
-,利用后三条约束<strong>消去μ</strong>,再将求极大转换为<strong>求极小</strong>,得到<strong>对偶问题</strong>
+\]<br>
+,利用后三条约束<strong>消去μ</strong>,再将求极大转换为<strong>求极小</strong>,得到<strong>对偶问题</strong><br>
 \[
 \begin{aligned}
 &amp;\min _{\alpha} \frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j}\left(x_{i} \cdot x_{j}\right)-\sum_{i=1}^{N} \alpha_{i}\\
 &amp;\text { s.t. } \quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0\\
 &amp;0 \leqslant \alpha_{i} \leqslant C, \quad i=1,2, \cdots, N
 \end{aligned}
-\]
-由<strong>KKT条件</strong>成立可以得到
+\]<br>
+由<strong>KKT条件</strong>成立可以得到<br>
 \[
 \begin{array}{c}
 w^{*}=\sum_{i=1}^{N} \alpha_{i}^{*} y_{i} x_{i} \\
 b^{*}=y_{j}-\sum_{i=1}^{N} y_{i} \alpha_{i}^{*}\left(x_{i} \cdot x_{j}\right)
 \end{array}
-\]
+\]<br>
 \(j\)是满足\(0&lt;\alpha_j^*&lt;C\)的下标之一.问题就变为选择惩罚参数\(C>0\),求得对偶问题(<strong>凸二次规划问题</strong>)的<strong>最优解\(\alpha^*\)</strong>,代入计算\(w^*\)和\(b^*\),求得分离超平面和分类决策函数.因为\(b\)的解并不唯一,所以实际计算\(b^*\)时可以取所有样本点上的<strong>平均值</strong>.</p>
 <h5 id="zhi-chi-xiang-liang">支持向量</h5>
 <p>在<strong>线性不可分</strong>的情况下,将对应与\(\alpha_i^*>0\)的样本点\((x_i,y_i)\)的实例点\(x_i\)称为<strong>支持向量</strong>.软间隔的支持向量或者在间隔边界上,或者在间隔边界与分类超平面之间,或者再分离超平面误分一侧.</p>
@@ -836,7 +836,7 @@ b^{*}=y_{j}-\sum_{i=1}^{N} y_{i} \alpha_{i}^{*}\left(x_{i} \cdot x_{j}\right)
 \min _{a} \frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j} K\left(x_{i}, x_{j}\right)-\sum_{i=1}^{N} \alpha_{i} \\
 s.t. \quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0 \\
 0 \leqslant \alpha_{i} \leqslant C, \quad i=1,2, \cdots, N
-\]
+\]<br>
 ,选择最优解\(a^*\)的一个正分量\(0&lt;a_j^*&lt;C\)计算\(b^{*}=y_{j}-\sum_{i=1}^{N} \alpha_{i}^{*} y_{i} K\left(x_{i} \cdot x_{j}\right)\),构造决策函数\(f(x)=\operatorname{sign}\left(\sum_{i=1}^{N} \alpha_{i}^{*} y_{i} K\left(x \cdot x_{i}\right)+b^{*}\right)\)</p>
 <h5 id="strong-chang-yong-he-han-shu-strong"><strong>常用核函数</strong></h5>
 <ol>
@@ -845,17 +845,17 @@ s.t. \quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0 \\
 <li><strong>字符串核函数(string kernel function)</strong>: 核函数不仅可以定义在欧氏空间上,还可以定义在<strong>离散数据的集合</strong>上.字符串核函数给出了字符串中长度等于n的所有子串组成的特征向量的余弦相似度.</li>
 </ol>
 <h5 id="strong-xu-lie-zui-xiao-zui-you-hua-smo-suan-fa-strong"><strong>序列最小最优化(SMO)算法</strong></h5>
-<p>SMO是一种<em>快速求解凸二次规划问题</em>
+<p>SMO是一种<em>快速求解凸二次规划问题</em><br>
 \[
 \begin{aligned}
 &amp;\min _{\alpha} \frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_{i} \alpha_{j} y_{i} y_{j} K\left(x_{i}, x_{j}\right)-\sum_{i=1}^{N} \alpha_{i}\\
 &amp;\text { s.t. } \quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0\\
 &amp;0 \leqslant \alpha_{i} \leqslant C, \quad i=1,2, \cdots, N
 \end{aligned}
-\]
+\]<br>
 的算法.基本思路是:如果所有变量都满足此优化问题的KKT条件,那么解就得到了.否则,选择<strong>两个变量</strong>,固定其他变量,针对这两个变量构建一个二次规划问题.不断地将原问题分解为<strong>子问题</strong>并对子问题求解,就可以求解原问题.注意子问题两个变量中只有一个是<strong>自由变量</strong>,另一个由<strong>等式约束</strong>确定.</p>
 <h5 id="strong-liang-ge-bian-liang-er-ci-gui-hua-de-qiu-jie-fang-fa-strong"><strong>两个变量二次规划的求解方法</strong></h5>
-<p>假设选择的两个变量是a1,a2,其他变量是固定的,于是得到子问题
+<p>假设选择的两个变量是a1,a2,其他变量是固定的,于是得到子问题<br>
 \[
 \begin{aligned}
 &amp;\begin{aligned}
@@ -865,13 +865,13 @@ s.t. \quad \sum_{i=1}^{N} \alpha_{i} y_{i}=0 \\
 &amp;\text { s.t. } \quad \alpha_{1} y_{1}+\alpha_{2} y_{2}=-\sum_{i=3}^{N} y_{i} \alpha_{i}=\zeta\\
 &amp;0 \leqslant \alpha_{i} \leqslant C, \quad i=1,2
 \end{aligned}
-\]
+\]<br>
 ,\(\epsilon\)是常数,目标函数式省略了不含\(a_1,a_2\)的常数项.考虑不等式约束和等式约束,要求的是目标函数在一条平行于对角线的线段上的最优值</p>
 <p><img src="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/1.png" alt="avatar"></p>
-<p>问题变为<strong>单变量</strong>的最优化问题.假设初始可行解为aold,最优解为anew,考虑沿着约束方向未经剪辑的最优解anew,unc(即未考虑不等式约束).对该问题求偏导数,并令导数为0,代入原式,令\(E_{i}=g\left(x_{i}\right)-y_{i}=\left(\sum_{j=1}^{N} \alpha, y_{j} K\left(x_{j}, x_{i}\right)+b\right)-y_{i}, \quad i=1,2\),得到\(\alpha_{2}^{\text {new, } \text { unc }}=\alpha_{2}^{\text {old }}+\frac{y_{2}\left(E_{1}-E_{2}\right)}{\eta}\),经剪辑后a2的解是
+<p>问题变为<strong>单变量</strong>的最优化问题.假设初始可行解为aold,最优解为anew,考虑沿着约束方向未经剪辑的最优解anew,unc(即未考虑不等式约束).对该问题求偏导数,并令导数为0,代入原式,令\(E_{i}=g\left(x_{i}\right)-y_{i}=\left(\sum_{j=1}^{N} \alpha, y_{j} K\left(x_{j}, x_{i}\right)+b\right)-y_{i}, \quad i=1,2\),得到\(\alpha_{2}^{\text {new, } \text { unc }}=\alpha_{2}^{\text {old }}+\frac{y_{2}\left(E_{1}-E_{2}\right)}{\eta}\),经剪辑后a2的解是<br>
 \[
 \alpha_{2}^{\text {new }}=\left\{\begin{array}{ll}H, &amp; \alpha_{2}^{\text {new }, \text { unc }}>H \\ \alpha_{2}^{\text {new }, \text { unc }}, &amp; L \leqslant \alpha_{2}^{\text {new}, \text { unc}} \leqslant H \\ L, &amp; \alpha_{2}^{\text {new }, \text { unc }}&lt;L\end{array}\right.
-\]
+\]<br>
 L与H是\(a_2^{new}\)所在的对角线段端点的界.并解得\(\alpha_{1}^{\mathrm{new}}=\alpha_{1}^{\mathrm{old}}+y_{1} y_{2}\left(\alpha_{2}^{\mathrm{old}}-\alpha_{2}^{\mathrm{new}}\right)\)</p>
 <h5 id="strong-bian-liang-de-xuan-ze-fang-fa-strong"><strong>变量的选择方法</strong></h5>
 <p>在每个子问题中选择两个变量优化,其中至少一个变量是违反KKT条件的.第一个变量的选取标准是<strong>违反KKT条件最严重</strong>的样本点,第二个变量的选取标准是希望能使该变量有<strong>足够大的变化</strong>,一般可以选取使对应的\(|E1-E2|\)最大的点.在每次选取完点后,<strong>更新</strong>阈值\(b\)和差值\(Ei\).</p>
@@ -879,30 +879,30 @@ L与H是\(a_2^{new}\)所在的对角线段端点的界.并解得\(\alpha_{1}^{\m
 <h4 id="ti-sheng-fang-fa-1">提升方法</h4>
 <p>boosting是<strong>一种常用的统计学习方法,是集成学习的一种.它通过改变训练样本的权重(概率分布),学习</strong>多个<strong>弱分类器(基本分类器),并将这些分类器</strong>线性组合**来构成一个强分类器提高分类的性能.</p>
 <h4 id="jia-fa-mo-xing-he-qian-xiang-fen-bu-suan-fa">加法模型和前向分步算法</h4>
-<p>加法模型\(f(x)= \sum_{m=1}^M{\beta_mb(x;\gamma_m)}\),其中，\(b(x;\gamma_m)\)为基函数，\(\gamma_m\)为基函数参数，\(\beta_m\)为基函数的系数。在给定训练数据及损失函数\(L(y,f(x))\)的条件下，学习加法模型\(f(x)\)成为经验风险极小化即损失函数极小化问题：
+<p>加法模型\(f(x)= \sum_{m=1}^M{\beta_mb(x;\gamma_m)}\),其中，\(b(x;\gamma_m)\)为基函数，\(\gamma_m\)为基函数参数，\(\beta_m\)为基函数的系数。在给定训练数据及损失函数\(L(y,f(x))\)的条件下，学习加法模型\(f(x)\)成为经验风险极小化即损失函数极小化问题：<br>
 \[
 min_{\beta_m,\gamma_m}\sum_{m=1}^{M}{\beta_m b(x_i;\gamma_m)}
-\]
+\]<br>
 通常这是一个复杂的优化问题。</p>
 <p>前向分步算法求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数：\(\left(\beta_{m}, \gamma_{m}\right)=\arg \min _{\beta, y} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+\beta b\left(x_{i} ; \gamma\right)\right)\)，得到参数βm和γm,更新\(f_{m}(x)=f_{m-1}(x)+\beta_{m} b\left(x ; \gamma_{m}\right)\),逐步逼近优化目标函数式，那么就可以简化优化的复杂度，最终得到加法模型。</p>
 <h4 id="strong-ada-boost-strong"><strong>AdaBoost</strong></h4>
 <h5 id="si-xiang">思想：</h5>
 <p>AdaBoost提高那些被前一轮弱分类器错误分类样本的权值,而降低那些被正确分类样本的权值.然后采取<strong>加权多数表决</strong>的方法组合弱分类器.</p>
 <h5 id="strong-suan-fa-strong-2"><strong>算法</strong></h5>
-<p>首先假设训练数据集具有均匀的权值分布D1,使用具有<strong>权值分布</strong>Dm的训练数据集学习得到<strong>基本分类器</strong>Gm(x),计算<strong>分类误差率</strong>\(e_{m}=P\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)=\sum_{i=1}^{N} w_{m i} I\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)\)和Gm(x)的<strong>系数</strong>\(\alpha_{m}=\frac{1}{2} \log \frac{1-e_{m}}{e_{m}}\),更新训练数据集的权值分布\(D_{m+1}=\left(w_{m+1,1}, \cdots, w_{m+1, i}, \cdots, w_{m+1, N}\right)\)，其中
+<p>首先假设训练数据集具有均匀的权值分布D1,使用具有<strong>权值分布</strong>Dm的训练数据集学习得到<strong>基本分类器</strong>Gm(x),计算<strong>分类误差率</strong>\(e_{m}=P\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)=\sum_{i=1}^{N} w_{m i} I\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)\)和Gm(x)的<strong>系数</strong>\(\alpha_{m}=\frac{1}{2} \log \frac{1-e_{m}}{e_{m}}\),更新训练数据集的权值分布\(D_{m+1}=\left(w_{m+1,1}, \cdots, w_{m+1, i}, \cdots, w_{m+1, N}\right)\)，其中<br>
 \[
 w_{m+1, i}=\left\{\begin{array}{ll}
 \frac{w_{mi}}{Z_{m}} \mathrm{e}^{-\alpha_{m}}, &amp; G_{m}\left(x_{i}\right)=y_{i} \\
 \frac{w_{m i}}{Z_{m}} \mathrm{e}^{\alpha_{m}}, &amp; G_{m}\left(x_{i}\right) \neq y_{i}
 \end{array}\right.
-\]
+\]<br>
 \(Z_m\)是使Dm+1成为概率分布的<strong>规范化因子</strong>\(Z_{m}=\sum_{i=1}^{N} w_{m i} \exp \left(-\alpha_{m} y_{i} G_{m}\left(x_{i}\right)\right)\).重复上述操作M次后得到M个弱分类器,构建线性组合得到<strong>最终分类器</strong>\(G(x)=\operatorname{sign}(f(x))=\operatorname{sign}\left(\sum_{m=1}^{M} \alpha_{m} G_{m}(x)\right)\)</p>
 <h4 id="strong-ti-sheng-shu-strong"><strong>提升树</strong></h4>
 <p>提升树是模型为加法模型,算法为前向分布算法,基函数为<strong>决策树</strong>的提升方法.第m步的模型是\(f_{m}(x)=f_{m-1}(x)+T\left(x ; \Theta_{m}\right)\),通过经验风险极小化确定下一棵决策树的参数\(\hat{\Theta}_{m}=\arg \min _{\theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right)\).不同问题的提升树学习算法主要区别在于使用的<strong>损失函数</strong>不同.</p>
 <h5 id="strong-er-lei-fen-lei-wen-ti-strong"><strong>二类分类问题</strong></h5>
 <p>只需将AdaBoost算法中的基本分类器限制为二类分类数即可.</p>
 <h5 id="strong-hui-gui-wen-ti-strong"><strong>回归问题</strong></h5>
-<p>如果将输入空间划分为J个互不相交的区域,并且在每个区域上确定输出的常量\(C_j\),那么树可表示为\(T(x ; \Theta)=\sum_{j=1}^{J} c_{j} I\left(x \in R_{j}\right)\),其中\(\Theta=\left\{\left(R_{1}, c_{1}\right),\left(R_{2}, c_{2}\right), \cdots,\left(R_{J}, c_{J}\right)\right\}\)提升树采用<strong>前向分步算法</strong>:
+<p>如果将输入空间划分为J个互不相交的区域,并且在每个区域上确定输出的常量\(C_j\),那么树可表示为\(T(x ; \Theta)=\sum_{j=1}^{J} c_{j} I\left(x \in R_{j}\right)\),其中\(\Theta=\left\{\left(R_{1}, c_{1}\right),\left(R_{2}, c_{2}\right), \cdots,\left(R_{J}, c_{J}\right)\right\}\)提升树采用<strong>前向分步算法</strong>:<br>
 \[
 \begin{aligned}
 &amp;f_{0}(x)=0\\
@@ -911,15 +911,15 @@ f_{m}(x)=f_{m-1}(x)+T\left(x ; \Theta_{m}\right), m=1,2, \cdots, M \\
 f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \Theta_{m}\right)
 \end{array}
 \end{aligned}
-\]
-.当采用平方误差损失函数时,损失变为
+\]<br>
+.当采用平方误差损失函数时,损失变为<br>
 \[
 \begin{array}{l}
 L\left(y, f_{m-1}(x)+T\left(x ; \Theta_{m}\right)\right) \\
 \quad=\left[y-f_{m-1}(x)-T\left(x ; \Theta_{m}\right)\right]^{2} \\
 \quad=\left[r-T\left(x ; \Theta_{m}\right)\right]^{2}
 \end{array}
-\]
+\]<br>
 ,其中r是当前模型拟合数据的<strong>残差</strong>.每一步都只需<strong>拟合残差</strong>学习一个回归树即可.</p>
 <h5 id="cun-zai-de-que-dian">存在的缺点</h5>
 <p>当损失函数式平方误差损失函数或者交叉熵损失函数的时候，残差即为对应的梯度，这个时候损失函数沿着梯度的方向下降最快。当损失函数式其他损失函数的时候，残差和损失函数的导数并不相等，函数收敛的速度就会没有沿着梯度的方向收敛的快。</p>
@@ -977,14 +977,14 @@ L\left(y, f_{m-1}(x)+T\left(x ; \Theta_{m}\right)\right) \\
 <p>监督学习：估计转移概率\(\hat{a}_{i j}=\frac{A_{i j}}{\sum_{j=1}^{N} A_{i j}}, \quad i=1,2, \cdots, N ; \quad j=1,2, \cdots, N\) 和观测概率\(\hat{b}_{j}(k)=\frac{B_{j k}}{\sum_{k=1}^{M} B_{j k}}, \quad j=1,2, \cdots, N, k=1,2, \cdots, M\).初始状态概率\(\pi_i\)的估计为S个样本中初始状态为\(q_i\)的频率.</p>
 </li>
 <li>
-<p><strong>非监督学习(Baum-Welch算法)</strong>:将观测序列数据看作观测数据O,状态序列数据看作不可观测的<strong>隐数据</strong>I.首先确定完全数据的对数似然函数\(log p(O,I|\lambda)\),求Q函数
+<p><strong>非监督学习(Baum-Welch算法)</strong>:将观测序列数据看作观测数据O,状态序列数据看作不可观测的<strong>隐数据</strong>I.首先确定完全数据的对数似然函数\(log p(O,I|\lambda)\),求Q函数<br>
 \[
 \begin{aligned}
 Q(\lambda, \bar{\lambda})=&amp; \sum_{t} \log \pi_{i_1} P(O, I | \bar{\lambda}) \\
 &amp;+\sum_{I}\left(\sum_{i=1}^{I-1} \log a_{i_t,i_{t+1}}\right) P(O, I | \bar{\lambda}) \\
 &amp;+\sum_{I}\left(\sum_{i=1}^{T} \log b_{i_t}\left(o_{t}\right)\right) P(O, I | \bar{\lambda})
 \end{aligned}
-\]
+\]<br>
 ,用拉格朗日乘子法极大化Q函数求模型参数\(\pi_{i}=\frac{P\left(O, i_{1}=i | \bar{\lambda}\right)}{P(O | \bar{\lambda})}\),\(a_{i j}=\frac{\sum_{i=1}^{T-1} P\left(O, i_{t}=i, i_{t+1}=j | \bar{\lambda}\right)}{\sum_{t=1}^{T-1} P\left(O, i_{t}=i | \bar{\lambda}\right)}\),\(b_{j}(k)=\frac{\sum_{i=1}^{T} P\left(O, i_{t}=j | \bar{\lambda}\right) I\left(o_{i}=v_{k}\right)}{\sum_{i=1}^{T} P\left(O, i_{t}=j | \bar{\lambda}\right)}\),</p>
 </li>
 </ol>
@@ -1008,11 +1008,11 @@ Q(\lambda, \bar{\lambda})=&amp; \sum_{t} \log \pi_{i_1} P(O, I | \bar{\lambda}) 
 <p>状态转换(1→2),(2→3),(4→5),(5→3)的概率值都是1，而无论观测值是什么，换言之有\(P(2|1,i)=P(2|1,o)=1\)</p>
 <p>你可能会很惊讶\(P(2∣1,i)=1,P(2∣1,o)=1\)怎么可能会成立呢？你可以套用上面的公式试一试，由于状态&quot;1&quot;的只能转换为&quot;2&quot;，所以计算归一化项时， 其实只有一个枚举值，就是状态&quot;2&quot;，所以无论你分子为多少，分母都和它一样，所以概率值就是1。在这种情况下，其实观测值并没有任何作用，这就是标签偏置。</p>
 <h5 id="strong-hou-guo-strong"><strong>后果：</strong></h5>
-<p>它会造成什么后果呢？
-他会导致模型进行预测时只依赖数据统计出来的概率值，没有利用到样本的特征。
+<p>它会造成什么后果呢？<br>
+他会导致模型进行预测时只依赖数据统计出来的概率值，没有利用到样本的特征。<br>
 假设训练集现在有3个rib和1个rob，当我们在测试阶段，遇到词rob，它会被解码成什么状态序列呢？答案是(0→1→2→3)！你可以套公式试一试，因为\(P(1∣0,r)>P(4∣0,r)\),\(P(2∣1,o)=P(5∣4,0)=1,P(3∣2,b)>P(3∣5,b)\)。</p>
 <h5 id="strong-yuan-yin-strong"><strong>原因</strong></h5>
-<p>那么问题出在哪里呢？因为MEMM中在每一时刻t，都在前一时刻某状态y′下做了局部的归一化操作，如何解决这种标签偏置问题呢？
+<p>那么问题出在哪里呢？因为MEMM中在每一时刻t，都在前一时刻某状态y′下做了局部的归一化操作，如何解决这种标签偏置问题呢？<br>
 在CRF中并不是对每个时刻都进行一次分类，而是直接对整个序列进行分类，做一个全局的归一化操作。</p>
 <h3 id="tiao-jian-sui-ji-chang-crf">条件随机场CRF</h3>
 <h4 id="gai-lu-tu-mo-xing">概率图模型</h4>
@@ -1027,8 +1027,8 @@ Q(\lambda, \bar{\lambda})=&amp; \sum_{t} \log \pi_{i_1} P(O, I | \bar{\lambda}) 
 <h6 id="tuan-yu-zui-da-tuan">团与最大团</h6>
 <p>无向图G中任何两个结点均有边连接的结点子集称为<strong>团</strong>。若C是无向图G的一个团，并且不能再加进任何一个G的结点使其成为一个更大的团，称此C为<strong>最大团</strong>。</p>
 <p>给定概率无向图模型，设其无向图为G，C为G上的最大团，\(Y_C\)表示C对应的随机变量。那么概率无向图模型的联合概率分布\(P(Y)\)可写作图中所有最大团C上的函数\(\phi_C(Y_C)\)的乘积的形式。</p>
-<p><strong>Hammersley-Clifford定理</strong>
-概率无向图模型的联合概率分布\(P(Y)\)可以表示为如下形式：
+<p><strong>Hammersley-Clifford定理</strong><br>
+概率无向图模型的联合概率分布\(P(Y)\)可以表示为如下形式：<br>
 \[
 P(Y)=\frac{1}{Z}\prod_C{\phi_C(Y_C)}\\
 Z=\sum_Y\prod_C{\phi_C(Y_C)}

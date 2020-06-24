@@ -302,11 +302,11 @@
 <p>sigmoid函数也叫Logistic函数，用于隐层神经元输出，取值范围为(0,1)，它可以将一个实数映射到(0,1)的区间，可以用来做二分类。</p>
 <p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/sigmoid.png" alt="avatat"></p>
 <a id="more"></a>
-<p>Sigmoid函数公式：
+<p>Sigmoid函数公式：<br>
 \[
 S(x)=\frac{1}{1+e^{-x}}
-\]
-其对x的导数可以用自身表示:
+\]<br>
+其对x的导数可以用自身表示:<br>
 \[
 S^{\prime}(x)=\frac{e^{-x}}{\left(1+e^{-x}\right)^{2}}=S(x)(1-S(x))
 \]</p>
@@ -316,18 +316,18 @@ S^{\prime}(x)=\frac{e^{-x}}{\left(1+e^{-x}\right)^{2}}=S(x)(1-S(x))
 <li>在上图中容易看出，当\(\sigma(x)\)中\(x\)较大或较小时，导数接近0，而后向传递的数学依据是微积分求导的链式法则，当前层的导数需要之前各层导数的乘积，几个小数的相乘，结果会很接近0 .</li>
 <li>Sigmoid导数的最大值是0.25，这意味着导数在每一层至少会被压缩为原来的1/4，通过两层后被变为1/16，…，通过10层后为\(\frac{1}{4^10}\)。请注意这里是“至少”，导数达到最大值这种情况还是很少见的。</li>
 </ol>
-<p>优点：平滑、易于求导。
+<p>优点：平滑、易于求导。<br>
 缺点：激活函数计算量大，反向传播求误差梯度时，求导涉及除法；反向传播时，很容易就会出现梯度消失的情况，从而无法完成深层网络的训练。<strong>幂运算相对耗时</strong></p>
 <h4 id="dai-ma">代码</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1</span>+np.exp(-x))</span><br></pre></td></tr></table></figure>
 <h3 id="tanh">tanh</h3>
 <p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/tanh.png" alt="avatar"></p>
-<p>tanh公式
+<p>tanh公式<br>
 \[
 \tanh x=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
 \]</p>
 <h3 id="re-lu">ReLU</h3>
-<p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/relu.png" alt="avatar">
+<p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/relu.png" alt="avatar"><br>
 \[
 ReLU = max(0,x)
 \]</p>
@@ -351,16 +351,16 @@ ReLU = max(0,x)
 <p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/leakrelu.png" alt="avatar"></p>
 <p>\[
 f(x)=max(\alpha x,x)
-\]
+\]<br>
 人们为了解决Dead ReLU Problem，提出了将ReLU的前半段设为\(0.01x\)而非0。另外一种直观的想法是基于参数的方法，即Parametric ReLU:\(f(x)=max(\alpha x,x)\)，其中\(\alpha\)可由back propagation学出来。理论上来讲，Leaky ReLU有ReLU的所有优点，外加不会有Dead ReLU问题，但是在实际操作当中，并没有完全证明Leaky ReLU总是好于ReLU。</p>
 <h3 id="strong-elu-exponential-linear-units-strong"><strong>ELU (Exponential Linear Units)</strong></h3>
-<p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/ELU.png" alt="avata">
+<p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/ELU.png" alt="avata"><br>
 \[
 f(x)=\left\{\begin{array}{ll}
 x, &amp; \text { if } x>0 \\
 \alpha\left(e^{x}-1\right), &amp; \text { otherwise }
 \end{array}\right.
-\]
+\]<br>
 ELU也是为解决ReLU存在的问题而提出，显然，ELU有ReLU的基本所有优点，以及：</p>
 <ul>
 <li>不会有Dead ReLU问题</li>

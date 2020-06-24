@@ -398,7 +398,7 @@
 <h4 id="fast-text-mo-xing-jia-gou">fastText模型架构</h4>
 <p>fastText模型架构和word2vec中的CBOW很相似， 不同之处是fastText预测标签而CBOW预测的是中间词，即模型架构类似但是模型的任务不同：</p>
 <p><img src="/2020/03/29/text_classification/image-20200520093324964.png" alt></p>
-<p>word2vec将上下文关系转化为多分类任务，进而训练逻辑回归模型。通常的文本数据中，词库少则数万，多则百万，在训练中直接训练多分类逻辑回归并不现实。word2vec中提供了两种针对大规模多分类问题的优化手段， negative sampling 和hierarchical softmax。在优化中，negative sampling 只更新少量负面类，从而减轻了计算量。hierarchical softmax 将词库表示成前缀树，从树根到叶子的路径可以表示为一系列二分类器，一次多分类计算的复杂度从|V|降低到了树的高度。
+<p>word2vec将上下文关系转化为多分类任务，进而训练逻辑回归模型。通常的文本数据中，词库少则数万，多则百万，在训练中直接训练多分类逻辑回归并不现实。word2vec中提供了两种针对大规模多分类问题的优化手段， negative sampling 和hierarchical softmax。在优化中，negative sampling 只更新少量负面类，从而减轻了计算量。hierarchical softmax 将词库表示成前缀树，从树根到叶子的路径可以表示为一系列二分类器，一次多分类计算的复杂度从|V|降低到了树的高度。<br>
 fastText模型架构:其中\(x_1,x_2,\ldots,x_{N−1},x_N\)表示一个文本中的n-gram向量，每个特征是词向量的平均值。</p>
 <p><img src="/2020/03/29/text_classification/image-20200520093359191.png" alt></p>
 <h4 id="que-dian">缺点：</h4>
@@ -436,7 +436,7 @@ fastText模型架构:其中\(x_1,x_2,\ldots,x_{N−1},x_N\)表示一个文本中
 <h4 id="wang-luo-jie-gou-1">网络结构</h4>
 <p><img src="/2020/03/29/text_classification/DPCNN.jpg" alt></p>
 <h5 id="region-embedding">Region embedding</h5>
-<p>作者将TextCNN的包含多尺寸卷积滤波器的卷积层的卷积结果称之为<code>Region embedding</code>，意思就是对一个文本区域/片段（比如<code>3-gram</code>）进行一组卷积操作后生成的embedding。
+<p>作者将TextCNN的包含多尺寸卷积滤波器的卷积层的卷积结果称之为<code>Region embedding</code>，意思就是对一个文本区域/片段（比如<code>3-gram</code>）进行一组卷积操作后生成的embedding。<br>
 卷积操作有两种选择：</p>
 <ol>
 <li>保留词序：也就是设置一组<code>size=3*D</code>的二维卷积核对<code>3-gram</code>进行卷积（其中D是word embedding维度）</li>
@@ -444,7 +444,7 @@ fastText模型架构:其中\(x_1,x_2,\ldots,x_{N−1},x_N\)表示一个文本中
 </ol>
 <p>TextCNN里使用的是保留词序的做法，而DPCNN使用的是词袋模型的做法，DPCNN作者认为前者做法更容易造成过拟合，后者的性能却跟前者差不多。</p>
 <h4 id="juan-ji-he-quan-lian-jie-de-quan-heng">卷积和全连接的权衡</h4>
-<p>产生<code>region embedding</code>后，按照经典的TextCNN的做法的话，就是从每个特征图中挑选出最有代表性的特征，也就是直接应用全局最大池化层，这样就生成了这段文本的特征向量,假如卷积滤波器的size有3，4，5这三种，每种size包含100个卷积核，那么当然就会产生3<em>100幅特征图，然后将max-over-time-pooling操作应用到每个特征图上，于是文本的特征向量即3</em>100=300维。
+<p>产生<code>region embedding</code>后，按照经典的TextCNN的做法的话，就是从每个特征图中挑选出最有代表性的特征，也就是直接应用全局最大池化层，这样就生成了这段文本的特征向量,假如卷积滤波器的size有3，4，5这三种，每种size包含100个卷积核，那么当然就会产生3<em>100幅特征图，然后将max-over-time-pooling操作应用到每个特征图上，于是文本的特征向量即3</em>100=300维。<br>
 TextCNN这样做的意义本质上与<code>词袋模型(n-gram)+weighting+NB/MaxEnt/SVM</code>的经典文本分类模型没本质区别，只不过one-hot表示到word embedding表示的转变避免了词袋模型遭遇的数据稀疏问题。TextCNN本质上收益于词向量的引入带来的近义词有相近向量表示的bonus，同时TextCNN可以较好的利用词向量中近义关系。<strong>经典模型里难以学习的远距离信息在TextCNN中依然难以学习</strong>。</p>
 <h5 id="deng-chang-juan-ji">等长卷积</h5>
 <p>假设输入的序列长度为\(n\)，卷积核大小为\(m\)，步长为\(s\),输入序列两端各填补\(p\)个零,那么该卷积层的输出序列为\(\frac{(n-m+2p)}{s}+1\)。</p>
@@ -454,18 +454,18 @@ TextCNN这样做的意义本质上与<code>词袋模型(n-gram)+weighting+NB/Max
 <li>等长卷积: 步长\(s=1\),两端补零\(p=(m-1)/2\)，卷积后输出长度为\(n\)。</li>
 </ol>
 <p>将输入输出序列的第n个embedding称为第n个词位，那么这时size为n的卷积核产生的等长卷积的意义就是将输入序列的每个词位及其左右\(\frac{n-1}{2}\)个词的上下文信息压缩为该词位的embedding，产生了每个词位的被上下文信息修饰过的更高level更加准确的语义。想要克服TextCNN的缺点，捕获长距离模式，显然就要用到深层CNN。</p>
-<p>直接等长卷积堆等长卷积会让每个词位包含进去越来越多，越来越长的上下文信息，这种方式会让网络层数变得非常非常非常深，但是这种方式太笨重。不过，既然等长卷积堆等长卷积会让每个词位的embedding描述语义描述的更加丰富准确，可以适当的堆两层来提高词位embedding的表示的丰富性。
+<p>直接等长卷积堆等长卷积会让每个词位包含进去越来越多，越来越长的上下文信息，这种方式会让网络层数变得非常非常非常深，但是这种方式太笨重。不过，既然等长卷积堆等长卷积会让每个词位的embedding描述语义描述的更加丰富准确，可以适当的堆两层来提高词位embedding的表示的丰富性。<br>
 <img src="/2020/03/29/text_classification/equal_cnn.png" alt></p>
 <h5 id="gu-ding-feature-map-de-shu-liang">固定feature map的数量</h5>
-<p>在表示好每个词位的语义后，很多邻接词或者邻接<code>ngram</code>的词义是可以合并，例如“小明 人 不要 太好”中的“不要”和“太好”虽然语义本来离得很远，但是作为邻接词“不要太好”出现时其语义基本等价为“很好”，完全可以把“不要”和“太好”的语义进行合并。同时，合并的过程完全可以在原始的embedding space中进行的，原文中直接把“不要太好”合并为“很好”是很可以的，完全没有必要动整个语义空间。
+<p>在表示好每个词位的语义后，很多邻接词或者邻接<code>ngram</code>的词义是可以合并，例如“小明 人 不要 太好”中的“不要”和“太好”虽然语义本来离得很远，但是作为邻接词“不要太好”出现时其语义基本等价为“很好”，完全可以把“不要”和“太好”的语义进行合并。同时，合并的过程完全可以在原始的embedding space中进行的，原文中直接把“不要太好”合并为“很好”是很可以的，完全没有必要动整个语义空间。<br>
 实际上，相比图像中这种从“点、线、弧”这种low-level特征到“眼睛、鼻子、嘴”这种high-level特征的明显层次性的特征区分，文本中的特征进阶明显要扁平的多，即从单词（1gram）到短语再到3gram、4gram的升级，其实很大程度上均满足“语义取代”的特性。而图像中就很难发生这种“语义取代”现象。因此，DPCNN与ResNet很大一个不同就是，<strong>在DPCNN中固定死了feature map的数量</strong>，也就是固定住了embedding space的维度（为了方便理解，以下简称语义空间），使得网络有可能让整个邻接词（邻接ngram）的合并操作在原始空间或者与原始空间相似的空间中进行（当然，网络在实际中会不会这样做是不一定的，只是提供了这么一种条件）。也就是说，整个网络虽然形状上来看是深层的，但是从语义空间上来看完全可以是扁平的。而ResNet则是不断的改变语义空间，使得图像的语义随着网络层的加深也不断的跳向更高level的语义空间。</p>
 <h5 id="strong-chi-hua-strong"><strong>池化</strong></h5>
-<p>每经过一个\(size=3,stride=2\)的池化层(简称\(1/2\)池化层)，序列的长度就被压缩成了原来的一半。这样同样是\(size=3\)的卷积核，每经过一个\(1/2\)池化层后，其能感知到的文本片段就比之前长了一倍。例如之前是只能感知3个词位长度的信息，经过1/2池化层后就能感知6个词位长度的信息，这时把1/2池化层和size=3的卷积层组合起来如图：
+<p>每经过一个\(size=3,stride=2\)的池化层(简称\(1/2\)池化层)，序列的长度就被压缩成了原来的一半。这样同样是\(size=3\)的卷积核，每经过一个\(1/2\)池化层后，其能感知到的文本片段就比之前长了一倍。例如之前是只能感知3个词位长度的信息，经过1/2池化层后就能感知6个词位长度的信息，这时把1/2池化层和size=3的卷积层组合起来如图：<br>
 <img src="/2020/03/29/text_classification/dpcnn_pooling.png" alt></p>
 <h5 id="can-chai-lian-jie">残差连接</h5>
-<p>在初始化深度CNN时，往往各层权重都是初始化为一个很小的值，这就导致最开始的网络中，后续几乎每层的输入都是接近0，这时网络的输出自然是没意义的，而这些小权重同时也阻碍了梯度的传播，使得网络的初始训练阶段往往要迭代好久才能启动。同时，就算网络启动完成，由于深度网络中仿射矩阵近似连乘，训练过程中网络也非常容易发生梯度爆炸或弥散问题（虽然由于非共享权重，深度CNN网络比RNN网络要好点）。
-针对深度CNN网络的梯度弥散问题ResNet中提出的<code>shortcut-connection/skip-connection/residual-connection</code>（残差连接）就是一种非常简单、合理、有效的解决方案。
-<img src="/2020/03/29/text_classification/dpcnn_resnet.png" alt>
+<p>在初始化深度CNN时，往往各层权重都是初始化为一个很小的值，这就导致最开始的网络中，后续几乎每层的输入都是接近0，这时网络的输出自然是没意义的，而这些小权重同时也阻碍了梯度的传播，使得网络的初始训练阶段往往要迭代好久才能启动。同时，就算网络启动完成，由于深度网络中仿射矩阵近似连乘，训练过程中网络也非常容易发生梯度爆炸或弥散问题（虽然由于非共享权重，深度CNN网络比RNN网络要好点）。<br>
+针对深度CNN网络的梯度弥散问题ResNet中提出的<code>shortcut-connection/skip-connection/residual-connection</code>（残差连接）就是一种非常简单、合理、有效的解决方案。<br>
+<img src="/2020/03/29/text_classification/dpcnn_resnet.png" alt><br>
 既然每个block的输入在初始阶段容易是0而无法激活，那么直接用一条线把region embedding层连接到每个block的输入乃至最终的池化层/输出层。有了shortcut后，梯度就可以忽略卷积层权重的削弱，从shortcut一路无损的传递到各个block，直至网络前端，从而极大的缓解了梯度消失问题。</p>
 <h4 id="dai-ma-1">代码</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DPCNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,num_filters, num_classes,word_embedding, freeze)</span>:</span></span><br><span class="line">        super(DPCNN, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.embedding_size = word_embedding.vectors.shape[<span class="number">1</span>]</span><br><span class="line">        self.embedding = nn.Embedding.from_pretrained(torch.from_numpy(word_embedding.vectors), freeze=freeze)</span><br><span class="line"></span><br><span class="line">        self.conv_region = nn.Conv2d(<span class="number">1</span>, num_filters, (<span class="number">3</span>, self.embedding_size), stride=<span class="number">1</span>)</span><br><span class="line">        self.conv = nn.Conv2d(num_filters, num_filters, (<span class="number">3</span>, <span class="number">1</span>), stride=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        self.max_pool = nn.MaxPool2d(kernel_size=(<span class="number">3</span>, <span class="number">1</span>), stride=<span class="number">2</span>)</span><br><span class="line">        self.padding1 = nn.ZeroPad2d((<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>))  <span class="comment"># top bottom</span></span><br><span class="line">        self.padding2 = nn.ZeroPad2d((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>))  <span class="comment"># bottom</span></span><br><span class="line"></span><br><span class="line">        self.relu = nn.ReLU()</span><br><span class="line">        self.fc = nn.Linear(num_filters, num_classes)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, text,_, text_lengths)</span>:</span></span><br><span class="line">        <span class="comment"># text [batch_size,seq_len]</span></span><br><span class="line">        x = self.embedding(text)  <span class="comment"># x=[batch_size,seq_len,embedding_dim]</span></span><br><span class="line">        x = x.unsqueeze(<span class="number">1</span>)  <span class="comment"># [batch_size, 1, seq_len, embedding_dim]</span></span><br><span class="line">        x = self.conv_region(x)  <span class="comment"># x = [batch_size, num_filters, seq_len-3+1, 1]</span></span><br><span class="line"></span><br><span class="line">        x = self.padding1(x)  <span class="comment"># [batch_size, num_filters, seq_len, 1]</span></span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv(x)  <span class="comment"># [batch_size, num_filters, seq_len-3+1, 1]</span></span><br><span class="line">        x = self.padding1(x)  <span class="comment"># [batch_size, num_filters, seq_len, 1]</span></span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.conv(x)  <span class="comment"># [batch_size, num_filters, seq_len-3+1, 1]</span></span><br><span class="line">        <span class="keyword">while</span> x.size()[<span class="number">2</span>] &gt;= <span class="number">2</span>:</span><br><span class="line">            x = self._block(x)  <span class="comment"># [batch_size, num_filters,1,1]</span></span><br><span class="line">        x = x.squeeze()  <span class="comment"># [batch_size, num_filters]</span></span><br><span class="line">        x = self.fc(x)  <span class="comment"># [batch_size, 1]</span></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_block</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.padding2(x)</span><br><span class="line">        px = self.max_pool(x)</span><br><span class="line"></span><br><span class="line">        x = self.padding1(px)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = self.conv(x)</span><br><span class="line"></span><br><span class="line">        x = self.padding1(x)</span><br><span class="line">        x = F.relu(x)</span><br><span class="line">        x = self.conv(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Short Cut</span></span><br><span class="line">        x = x + px</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
@@ -524,27 +524,27 @@ TextCNN这样做的意义本质上与<code>词袋模型(n-gram)+weighting+NB/Max
 <h4 id="mo-xing-jie-gou">模型结构</h4>
 <p><img src="/2020/03/29/text_classification/rcnn.png" alt></p>
 <h4 id="word-representation-learning">Word Representation Learning</h4>
-<p>作者提出将单词的左上下文、右上下文、单词本身结合起来作为单词表示。作者使用了双向RNN来分别提取句子的上下文信息。公式如下:
+<p>作者提出将单词的左上下文、右上下文、单词本身结合起来作为单词表示。作者使用了双向RNN来分别提取句子的上下文信息。公式如下:<br>
 \[
 \begin{array}{l}
 c_{l}\left(w_{i}\right)=f\left(W^{(l)} c_{l}\left(w_{i-1}\right)+W^{(s l)} e\left(w_{i-1}\right)\right)  \\
 c_{r}\left(w_{i}\right)=f\left(W^{(r)} c_{r}\left(w_{i+1}\right)+W^{(s r)} e\left(w_{i+1}\right)\right)
 \end{array}
-\]
-其中，\(c_l(w_i)\)代表单词\(w_i\)的左上下文，\(c_l(w_i)\)由上一个单词的左上下文\(c_l\)和\(c_l(w_{i-1})\)上一个单词的词嵌入向量 \(e(w_{i-1})\)计算得到，如公式（1）所示，所有句子第一个单词的左侧上下文使用相同的共享参数\(c_l(w_1)\)。 \(W^{(l)},W^{(sl)}\)用于将上一个单词的左上下文语义和上一个单词的语义结合到单词 \(w_i\)的左上下文表示中。右上下文的处理与左上下文完全相同，同样所有句子最后一个单词的右侧上下文使用相同的共享参数\(c_r(w_n)\)。 得到句子中每个单词的左上下文表示和右上下文表示后，就可以定义单词  \(w_i\)的表示如下
+\]<br>
+其中，\(c_l(w_i)\)代表单词\(w_i\)的左上下文，\(c_l(w_i)\)由上一个单词的左上下文\(c_l\)和\(c_l(w_{i-1})\)上一个单词的词嵌入向量 \(e(w_{i-1})\)计算得到，如公式（1）所示，所有句子第一个单词的左侧上下文使用相同的共享参数\(c_l(w_1)\)。 \(W^{(l)},W^{(sl)}\)用于将上一个单词的左上下文语义和上一个单词的语义结合到单词 \(w_i\)的左上下文表示中。右上下文的处理与左上下文完全相同，同样所有句子最后一个单词的右侧上下文使用相同的共享参数\(c_r(w_n)\)。 得到句子中每个单词的左上下文表示和右上下文表示后，就可以定义单词  \(w_i\)的表示如下<br>
 \[
 \boldsymbol{x}_{i}=\left[\boldsymbol{c}_{l}\left(w_{i}\right) ; \boldsymbol{e}\left(w_{i}\right) ; \boldsymbol{c}_{r}\left(w_{i}\right)\right]
 \]</p>
-<p>实际就是单词\(w_i\)，单词的词嵌入表示向量 \(e(w_i)\)以及单词的右上下文向量\(c_e(w_i)\) 的拼接后的结果。得到\(w_i\)的表示\(x_i\)后，就可以输入激活函数得到\(w_i\)的潜在语义向量 \(y_i^{(2)}\) 。
+<p>实际就是单词\(w_i\)，单词的词嵌入表示向量 \(e(w_i)\)以及单词的右上下文向量\(c_e(w_i)\) 的拼接后的结果。得到\(w_i\)的表示\(x_i\)后，就可以输入激活函数得到\(w_i\)的潜在语义向量 \(y_i^{(2)}\) 。<br>
 \[
 \boldsymbol{y}_{i}^{(2)}=\tanh \left(W^{(2)} \boldsymbol{x}_{i}+\boldsymbol{b}^{(2)}\right)
 \]</p>
 <h4 id="text-representation-learning">Text Representation Learning</h4>
-<p>经过卷积层后，获得了所有词的表示，首先对其进行最大池化操作，最大池化可以帮助找到句子中最重要的潜在语义信息。
+<p>经过卷积层后，获得了所有词的表示，首先对其进行最大池化操作，最大池化可以帮助找到句子中最重要的潜在语义信息。<br>
 \[
 \boldsymbol{y}^{(3)}=\max _{i=1}^{n} \boldsymbol{y}_{i}^{(2)}
-\]
-然后经过全连接层得到文本的表示，最后通过softmax层进行分类。
+\]<br>
+然后经过全连接层得到文本的表示，最后通过softmax层进行分类。<br>
 \[
 \begin{aligned}
 &amp;\boldsymbol{y}^{(4)}=W^{(4)} \boldsymbol{y}^{(3)}+\boldsymbol{b}^{(4)}\\
@@ -566,11 +566,11 @@ c_{r}\left(w_{i}\right)=f\left(W^{(r)} c_{r}\left(w_{i+1}\right)+W^{(s r)} e\lef
 </ol>
 <p>整个网络结构由双向GRU网络和注意力机制组合而成。</p>
 <h4 id="ci-xu-lie-bian-ma-qi">词序列编码器</h4>
-<p>给定一个句子中的单词\(w_{it}\)，其中 \(i\) 表示第\(i\) 个句子，\(t\) 表示第 \(t\) 个词。通过一个词嵌入矩阵 \(W_e\) 将单词转换成向量表示，具体如下所示：
+<p>给定一个句子中的单词\(w_{it}\)，其中 \(i\) 表示第\(i\) 个句子，\(t\) 表示第 \(t\) 个词。通过一个词嵌入矩阵 \(W_e\) 将单词转换成向量表示，具体如下所示：<br>
 \[
 x_{it}=W_e w_{it}
 \]</p>
-<p>利用双向GRU实现的整个编码流程：
+<p>利用双向GRU实现的整个编码流程：<br>
 \[
 \begin{aligned}
 x_{i t} &amp;=W_{e} w_{i t}, t \in[1, T] \\
@@ -580,40 +580,40 @@ x_{i t} &amp;=W_{e} w_{i t}, t \in[1, T] \\
 \end{aligned}
 \]</p>
 <h4 id="ci-ji-de-zhu-yi-li-ceng">词级的注意力层</h4>
-<p>但是对于一句话中的单词，并不是每一个单词对分类任务都是有用的，比如在做文本的情绪分类时，可能我们就会比较关注“很好”、“伤感”这些词。为了能使循环神经网络也能自动将“注意力”放在这些词汇上，作者设计了基于单词的注意力层的具体流程如下：
+<p>但是对于一句话中的单词，并不是每一个单词对分类任务都是有用的，比如在做文本的情绪分类时，可能我们就会比较关注“很好”、“伤感”这些词。为了能使循环神经网络也能自动将“注意力”放在这些词汇上，作者设计了基于单词的注意力层的具体流程如下：<br>
 \[
 \begin{aligned}
 u_{i t} &amp;=\tanh \left(W_{w} h_{i t}+b_{w}\right) \\
 \alpha_{i t} &amp;=\frac{\exp \left(u_{i t}^{\top} u_{w}\right)}{\sum_{t} \exp \left(u_{i t}^{\top} u_{w}\right)} \\
 s_{i} &amp;=\sum_{t} \alpha_{i t} h_{i t}
 \end{aligned}
-\]
+\]<br>
 上面式子中，\(u_{it}\) 是 \(h_{it}\) 的隐层表示，\(a_{it}\) 是经 softmax 函数处理后的归一化权重系数，\(u_w\)是一个随机初始化的向量，之后会作为模型的参数一起被训练，\(s_i\) 就是我们得到的第 i 个句子的向量表示。</p>
 <h4 id="ju-zi-bian-ma-qi">句子编码器</h4>
-<p>句子编码器也是基于双向GRU实现编码的，
+<p>句子编码器也是基于双向GRU实现编码的，<br>
 \[
 \begin{aligned}
 &amp;\overrightarrow{h}_{i}=\overrightarrow{\operatorname{GRU}}\left(s_{i}\right), i \in[1, L]\\
 &amp;\overleftarrow{h}_{i}=\overleftarrow{\operatorname{GRU}}\left(s_{i}\right), t \in[L, 1]
 \end{aligned}
-\]
+\]<br>
 公式和词编码类似，最后的 \(h_i\) 也是通过拼接得到的.</p>
 <h4 id="ju-zi-ji-zhu-yi-li-ceng">句子级注意力层</h4>
-<p>注意力层的流程如下，和词级的一致:
+<p>注意力层的流程如下，和词级的一致:<br>
 \[
 \begin{aligned}
 u_{i} &amp;=\tanh \left(W_{s} h_{i}+b_{s}\right) \\
 \alpha_{i} &amp;=\frac{\exp \left(u_{i}^{\top} u_{s}\right)}{\sum_{i} \exp \left(u_{i}^{\top} u_{s}\right)} \\
 v &amp;=\sum_{i} \alpha_{i} h_{i}
 \end{aligned}
-\]
+\]<br>
 最后得到的向量\(v\) 就是文档的向量表示，这是文档的高层表示。接下来就可以用可以用这个向量表示作为文档的特征。</p>
 <h4 id="fen-lei">分类</h4>
-<p>使用最常用的softmax分类器对整个文本进行分类了
+<p>使用最常用的softmax分类器对整个文本进行分类了<br>
 \[
 p=\operatorname{softmax}\left(W_{c} v+b_{c}\right)
-\]
-损失函数
+\]<br>
+损失函数<br>
 \[
 L=-\sum_{d} \log p_{d j}
 \]</p>
@@ -785,9 +785,9 @@ L=-\sum_{d} \log p_{d j}
 </ol>
 <h2 id="cnews-xin-wen-shi-fen-lei-jie-guo-bi-jiao">Cnews新闻十分类结果比较</h2>
 <h3 id="shu-ju-1">数据</h3>
-<p>类别：‘体育’ ‘娱乐’ ‘家居’ ‘房产’ ‘教育’ ‘时尚’ ‘时政’ ‘游戏’ ‘科技’ ‘财经’
-训练集：50000 条数据，最大长度：27467，最小长度：8，类别个数：10,平均长度：913.31
-验证集：5000 条数据，最大长度：10919，最小长度：15，类别个数：10
+<p>类别：‘体育’ ‘娱乐’ ‘家居’ ‘房产’ ‘教育’ ‘时尚’ ‘时政’ ‘游戏’ ‘科技’ ‘财经’<br>
+训练集：50000 条数据，最大长度：27467，最小长度：8，类别个数：10,平均长度：913.31<br>
+验证集：5000 条数据，最大长度：10919，最小长度：15，类别个数：10<br>
 测试集：10000 条数据，最大长度：14720，最小长度：13，类别个数：10</p>
 <p>使用数据集<a href="https://pan.baidu.com/s/1OOTK374IZ1DHnz5COUcfbw" target="_blank" rel="noopener">cnews</a>  密码:hf6o</p>
 <p>训练集部分样例及每个类别的统计：</p>
@@ -881,8 +881,8 @@ L=-\sum_{d} \log p_{d j}
 <h2 id="yi-zhi-yu-xun-lian-ci-xiang-liang-de-fen-ci-qi">已知预训练词向量的分词器</h2>
 <p>像word2vec、glove、fasttext这些官方release的预训练词向量都会公布相应训练语料的信息，包括预处理策略如分词，这种情况下直接使用官方的训练该词向量所使用的分词器，此分词器在下游任务的表现十之八九会比其他花里胡哨的分词器好用。</p>
 <h2 id="bu-zhi-dao-yu-xun-lian-ci-xiang-liang-de-fen-ci-qi">不知道预训练词向量的分词器</h2>
-<p>这时就需要去“猜”一下分词器。怎么猜呢？
-首先，拿到预训练词向量表后，去里面search一些特定词汇比如一些网站、邮箱、成语、人名等，英文里还有n’t等，看看训练词向量使用的分词器是把它们分成什么粒度。
+<p>这时就需要去“猜”一下分词器。怎么猜呢？<br>
+首先，拿到预训练词向量表后，去里面search一些特定词汇比如一些网站、邮箱、成语、人名等，英文里还有n’t等，看看训练词向量使用的分词器是把它们分成什么粒度。<br>
 然后跑几个分词器，看看哪个分词器的粒度跟他最接近就用哪个，如果不放心，就放到下游任务里跑跑看。</p>
 <p>最理想的情况是：先确定最适合当前任务数据集的分词器，再使用同分词器产出的预训练词向量。如果无法满足理想情况，则需要自己在下游任务训练集或者大量同分布无监督语料上训练的词向量更有利于进一步压榨模型的性能。</p>
 <h2 id="guan-yu-zhong-wen-zi-xiang-liang">关于中文字向量</h2>
@@ -891,14 +891,14 @@ L=-\sum_{d} \log p_{d j}
 <p>里噪声严重有两种情况。对于数据集D(X, Y)，一种是X内部噪声很大（比如文本为口语化表述或由互联网用户生成），一种是Y的噪声很大（一些样本被明显的错误标注，一些样本人也很难定义是属于哪一类，甚至具备类别二义性）。</p>
 <h2 id="x-nei-bu-zao-sheng-hen-da">X内部噪声很大</h2>
 <p>法一：直接将模型的输入变成char-level（中文中就是字的粒度），然后train from scratch（不使用预训练词向量）去跟word-level的对比一下，如果char-level的明显的效果好，那么短时间之内就直接基于char-level去做模型。</p>
-<p>法二：使用特殊超参的FastText去训练一份词向量：
+<p>法二：使用特殊超参的FastText去训练一份词向量：<br>
 一般来说fasttext在英文中的char ngram的窗口大小一般取值3～6，但是在处理中文时，如果我们的目的是为了去除输入中的噪声，那么我们可以把这个窗口限制为1～2，这种小窗口有利于模型去捕获错别字（比如，我们打一个错误词的时候，一般都是将其中的一个字达成同音异形的另一个字），比如word2vec学出来的“似乎”的最近词可能是“好像”，然而小ngram窗口fasttext学出来的“似乎”最近词则很有可能是“是乎”等内部包含错别字的词，这样就一下子让不太过分的错别字构成的词们又重新回到了一起，甚至可以一定程度上对抗分词器产生的噪声（把一个词切分成多个字）。</p>
 <h2 id="y-de-zao-sheng-hen-da">Y的噪声很大</h2>
-<p>首先忽略这个噪声，强行的把模型尽可能好的训出来。然后让训练好的模型去跑训练集和开发集，取出训练集中的错误样本和开发集中那些以很高的置信度做出错误决策的样本（比如以99%的把握把一个标签为0的样本预测为1），然后去做这些bad cases的分析，如果发现错误标注有很强的规律性，则直接撸一个脚本批量纠正一下（只要确保纠正后的标注正确率比纠正前明显高就行）。
+<p>首先忽略这个噪声，强行的把模型尽可能好的训出来。然后让训练好的模型去跑训练集和开发集，取出训练集中的错误样本和开发集中那些以很高的置信度做出错误决策的样本（比如以99%的把握把一个标签为0的样本预测为1），然后去做这些bad cases的分析，如果发现错误标注有很强的规律性，则直接撸一个脚本批量纠正一下（只要确保纠正后的标注正确率比纠正前明显高就行）。<br>
 如果没有什么规律，但是发现模型高置信度做错的这些样本大部分都是标注错误的话，就直接把这些样本都删掉，常常也可以换来性能的小幅提升，毕竟测试集都是人工标注的，困难样本和错标样本不会太多。</p>
 <h2 id="baseline-xuan-yong-cnn-huan-shi-rnn">baseline选用CNN还是RNN？</h2>
-<p>看数据集，如果感觉数据集里很多很强的ngram可以直接帮助生成正确决策，那就CNN。
-如果感觉很多case都是那种需要把一个句子看完甚至看两三遍才容易得出正确tag，那就RNN。
+<p>看数据集，如果感觉数据集里很多很强的ngram可以直接帮助生成正确决策，那就CNN。<br>
+如果感觉很多case都是那种需要把一个句子看完甚至看两三遍才容易得出正确tag，那就RNN。<br>
 还可以CNN、RNN的模型都跑出来简单集成一下。</p>
 <h2 id="dropout-jia-zai-na-li">Dropout加在哪里</h2>
 <p>word embedding层后、pooling层后、FC层（全联接层）后。</p>

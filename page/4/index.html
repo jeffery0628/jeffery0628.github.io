@@ -475,13 +475,13 @@
 <li>爬虫的基本流程</li>
 </ol>
 <ul>
-<li><strong>发起请求</strong>
+<li><strong>发起请求</strong><br>
 通过HTTP库向目标站点发起请求，也就是发送一个Request，请求可以包含额外的header等信息，等待服务器响应</li>
-<li><strong>获取响应内容</strong>
+<li><strong>获取响应内容</strong><br>
 如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能是HTML,Json字符串，二进制数据（图片或者视频）等类型</li>
-<li><strong>解析内容</strong>
+<li><strong>解析内容</strong><br>
 得到的内容可能是HTML,可以用正则表达式，页面解析库进行解析，可能是Json,可以直接转换为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理</li>
-<li><strong>保存数据</strong>
+<li><strong>保存数据</strong><br>
 保存形式多样，可以存为文本，也可以保存到数据库，或者保存特定格式的文件</li>
 </ul>
           <!--noindex-->
@@ -681,18 +681,18 @@
 
       
           <h2 id="ti-du-xia-jiang-suan-fa">梯度下降算法</h2>
-<p>梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。
-假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解
+<p>梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。<br>
+假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解<br>
 \[
    min_{x \in R^n}f(x)
-\]
-无约束最优化问题。 \(f^\ast\)表示目标函数\(f(x)\)的极小点。
-梯度下降法是一种迭代算法，选取适当的初值\(x^0\),不断迭代，更新x的值，进行目标函数的极小化，直到收敛。由于负梯度的方向是使函数下降最快的方向，在迭代的每一步，以负梯度方向更新x的值，从而达到减少函数值的目的。
-第k+1次迭代值：
+\]<br>
+无约束最优化问题。 \(f^\ast\)表示目标函数\(f(x)\)的极小点。<br>
+梯度下降法是一种迭代算法，选取适当的初值\(x^0\),不断迭代，更新x的值，进行目标函数的极小化，直到收敛。由于负梯度的方向是使函数下降最快的方向，在迭代的每一步，以负梯度方向更新x的值，从而达到减少函数值的目的。<br>
+第k+1次迭代值：<br>
 \[
 x^{(k+1)} \leftarrow x^{(k)}+\lambda_{k} p_{k}
-\]
-其中，\(p_k\)是搜索方向，取负梯度方向\(p_k = - \nabla f(x^k)\),\(\lambda_k\)使得
+\]<br>
+其中，\(p_k\)是搜索方向，取负梯度方向\(p_k = - \nabla f(x^k)\),\(\lambda_k\)使得<br>
 \[
 f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\lambda p_{k}\right)
 \]</p>

@@ -454,9 +454,9 @@
 <p><code>p[j] ==&quot; * &quot;</code>:     # 比较难想</p>
 <ol>
 <li><code>p[j-1] != s[i]: dp[i][j] = dp[i][j-2] </code> # <code>*</code> 前的字符和原字符串不匹配,相当于该字符匹配0次。</li>
-<li><code>p[j-1] == s[i] or p[j-1] == &quot;.&quot;：</code> # 匹配
-3.  <code>dp[i][j] = dp[i-1][j]</code> # * 匹配多次
-2.  <code>dp[i][j] = dp[i][j-1]</code> # * 匹配一次
+<li><code>p[j-1] == s[i] or p[j-1] == &quot;.&quot;：</code> # 匹配<br>
+3.  <code>dp[i][j] = dp[i-1][j]</code> # * 匹配多次<br>
+2.  <code>dp[i][j] = dp[i][j-1]</code> # * 匹配一次<br>
 3.  <code>dp[i][j] = dp[i][j-2]</code> # * 匹配0次</li>
 </ol>
 </li>

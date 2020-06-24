@@ -294,23 +294,23 @@
         <p><img src="https://protao.github.io/img/2gramsmooth.png" alt></p>
 <a id="more"></a>
 <h3 id="jian-jie">简介</h3>
-<p>在一个概率模型中，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)：
+<p>在一个概率模型中，也就是 p(e)在 event space E 下的概率分布，模型很可能会用最大似然估计(MLE)：<br>
 \[
 P_{M L E}=\frac{c(x)}{\sum_{e} c(e)}
-\]
+\]<br>
 然而，由于并没有足够的数据，很多事件 \(x\) 并没有在训练数据中出现，也就是 \(c(x)=0\)，\(P_{MLE}=0\)这是有问题的，没有在训练数据中出现的数据，并不代表不会在测试数据中出现，如果没有考虑到数据稀疏性，模型就显得太简单了。</p>
 <p>Data sparsity 是 smoothing 的最大原因。Chen &amp; Goodman 在1998 年提到过，几乎所有数据稀疏的场景下，smoothing 都可以帮助提高 performance，而数据稀疏性几乎是所有统计模型都会遇到的问题。而如果你有足够多的训练数据，所有的 parameters 都可以在没有 smoothing 的情况下被准确的估计，那么你总是可以扩展模型，如原来是 bigram，没有数据稀疏，完全可以扩展到 trigram 来提高 performance，如果还没有出现稀疏，就再往高层推，当 parameters 越来越多的时候，数据稀疏再次成为了问题，这时候，用合适的平滑方法可以得到更准确的模型。实际上，无论有多少的数据，平滑几乎总是可以以很小的代价来提高 performance。</p>
 <h3 id="ping-hua-fang-fa">平滑方法</h3>
 <h4 id="add-one-smoothing">add-one smoothing</h4>
 <p>(也叫laplace smoothing),以bigram为例：</p>
-<p>MLE estimate：
+<p>MLE estimate：<br>
 \[
 P_{M L E}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)}{c\left(w_{i-1}\right)}
-\]
-Add-one estimate:
+\]<br>
+Add-one estimate:<br>
 \[
 P_{A d d-1}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+1}{c\left(w_{i-1}\right)+V}
-\]
+\]<br>
 其中，\(V\)表示词典大小。</p>
 <p>假设语料库为：</p>
 <blockquote>
@@ -337,8 +337,8 @@ p(\text { cher read a book })&amp;=p(\text { cher } |&lt;s>)  p(\text { read } |
 &amp;= \frac{0}{3} * \frac{0}{1} * \frac{2}{3} * \frac{1}{2} * \frac{1}{2} \\
 &amp;\approx 0
 \end{aligned}
-\]
-如果使用add-one smoothing：
+\]<br>
+如果使用add-one smoothing：<br>
 \[
 \begin{aligned}
 p(\text { john read a book })&amp;=p(\text { john } |&lt;s>)  p(\text { read } | \text { john })  p(\text { a } | \text { read })  p(\text { book } | a )  p(&lt;e> | \text {book}) \\
@@ -355,10 +355,10 @@ p(\text { cher read a book })&amp;=p(\text { cher } |&lt;s>)  p(\text { read } |
 \]</p>
 <p>加 1 平滑通常情况下是一种很糟糕的算法，与其他平滑方法相比显得非常差，可以把加 1 平滑用在其他任务中，如文本分类，或者非零计数没那么多的情况下。</p>
 <h4 id="additive-smoothing">Additive smoothing</h4>
-<p>对加 1 平滑的改进就是把 1 改成 \(\delta\)，且 \(0&lt;\delta\)
+<p>对加 1 平滑的改进就是把 1 改成 \(\delta\)，且 \(0&lt;\delta\)<br>
 \[
 P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\delta}{c\left(w_{i-1}\right)+\delta V}
-\]
+\]<br>
 可以把\(\delta\)看作是一个可以调节的超参数。</p>
 <h4 id="good-turing-smoothing">Good-Turing smoothing</h4>
 <p><strong>基本思想:</strong> 用观察计数较高的 N-gram 数量来重新估计概率量大小，并把它指派给那些具有零计数或较低计数的 N-gram.</p>
@@ -382,7 +382,7 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 <li>没有出现过的：\(P_{GT}=\frac{N_1}{N}\)</li>
 <li>出现过的：\(P_{GT}=\frac{(c+1)N_{c+1}}{N_c*N}\)</li>
 </ol>
-<p>其中，\(N_c\)表示出现c次的单词个数,\(N\)代表样本总数。
+<p>其中，\(N_c\)表示出现c次的单词个数,\(N\)代表样本总数。<br>
 比如：</p>
 <blockquote>
 <p>sam i am i am sam i do not eat</p>
@@ -401,7 +401,7 @@ P_{A d d-\delta}\left(w_{i} | w_{i-1}\right)=\frac{c\left(w_{i-1} w_{i}\right)+\
 <h4 id="interpolation">Interpolation</h4>
 <p><strong>基本思想</strong>：在计算Trigram概率的同时，考虑Unigram，Bigram，Trigram出现的次数。</p>
 <p>举个例子：有</p>
-<p><code>C(in the kitchen)=0</code>,<code>C(the kitchen)=3</code>,<code>C(kitchen)=4</code>,<code>C(arboretum)=0</code>.在计算<code>p(kitchen|in the)</code>和<code>p(arboretum|in the)</code>的时候，从语料计算得出：\(p(kitchen|in,the)=p(arboretum|in,the)=0\),但是从经验上来讲\(p(kitchen|in,the)>p(arboretum|in,the)\)，因为kitchen要比arboretum常见的多。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权
+<p><code>C(in the kitchen)=0</code>,<code>C(the kitchen)=3</code>,<code>C(kitchen)=4</code>,<code>C(arboretum)=0</code>.在计算<code>p(kitchen|in the)</code>和<code>p(arboretum|in the)</code>的时候，从语料计算得出：\(p(kitchen|in,the)=p(arboretum|in,the)=0\),但是从经验上来讲\(p(kitchen|in,the)>p(arboretum|in,the)\)，因为kitchen要比arboretum常见的多。要实现这个，我们就希望把 bigram 和 unigram 结合起来，interpolate 就是这样一种方法。用线性差值把不同阶的 N-gram 结合起来，这里结合了 trigram，bigram 和 unigram。用 lambda 进行加权<br>
 \[
 \begin{aligned}
 \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right)=&amp; \lambda_{1} \mathrm{p}\left(\mathrm{w}_{\mathrm{n}} | \mathrm{w}_{\mathrm{n}-1}, \mathrm{w}_{\mathrm{n}-2}\right) \\

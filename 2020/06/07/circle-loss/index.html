@@ -316,10 +316,10 @@
 <li><code>p： positive</code>, 与 <code>a</code> 是同一类别的样本</li>
 <li><code>n： negative</code>, 与 <code>a</code> 是不同类别的样本</li>
 </ul>
-<p>公式是：
+<p>公式是：<br>
 \[
 L = max(d(a,p)-d(a,n)+margin,0)
-\]
+\]<br>
 最终的优化目标是拉近 <code>a, p</code> 的距离， 拉远 <code>a, n</code> 的距离</p>
 </blockquote>
 <p>这两种学习方法之间并无本质区别，其目标都是最大化类内相似度\(S_p\)和最小化类间相似度\(S_n\)。从这个角度看，很多常用的损失函数（如 triplet 损失、softmax 损失及其变体）有着相似的优化模式：它们会将\(S_n\)和\(S_p\)组合成相似对来优化，并试图减小\((S_n-S_p)\)。在\((S_n - S_p)\)中，增大\(S_p\)等效于降低\(S_n\)。这种对称的优化方法容易出现下面两个问题：</p>
@@ -330,7 +330,7 @@ L = max(d(a,p)-d(a,n)+margin,0)
 <p>优化\((S_n-S_p)\)得到的决策边界为\(S_n-S_p=m\)。这个决策边界平行于\(S_n=S_p\),维持边界上任意两个点(比如\(T=(0.4,0.7)\)和\(T^\prime (0.2,0.5)\))的对应难度相等，这种决策边界允许模棱两可的收敛状态。比如，\(T\)和\(T^\prime\)都满足了\(S_p-S_n=0.3\)的目标，可是比较两者时，会发现二者之间的分离量只有0.1\((S_p^\prime -S-n) = 0.1\),从而降低了特征空间的可分性。</p>
 <h1 id="jian-jie">简介</h1>
 <p>为此，旷视研究院仅仅做了一项非常简单的改变，把\((S_n-S_p)\)泛化为\((\alpha_nS_n-\alpha_pS_p)\),从而允许\(S_n\)和\(S_p\)能以各自不同的步调学习。</p>
-<p>具体来讲，把\(\alpha_n\)和\(\alpha_p\) 分别实现为\(S_n\) 和\(S_p\) 各自的线性函数，使学习速度与优化状态相适应。相似度分数偏离最优值越远，加权因子就越大。如此优化得到的决策边界为\(\alpha_nS_n-\alpha_pS_p=m\),能够证明这个分界面是\((S_n,S_p)\) 空间中的一段圆弧，因此，这一新提出的损失函数称之为 <code>Circle Loss</code>，即圆损失函数。
+<p>具体来讲，把\(\alpha_n\)和\(\alpha_p\) 分别实现为\(S_n\) 和\(S_p\) 各自的线性函数，使学习速度与优化状态相适应。相似度分数偏离最优值越远，加权因子就越大。如此优化得到的决策边界为\(\alpha_nS_n-\alpha_pS_p=m\),能够证明这个分界面是\((S_n,S_p)\) 空间中的一段圆弧，因此，这一新提出的损失函数称之为 <code>Circle Loss</code>，即圆损失函数。<br>
 由图 (a) 可知，降低\(S_n-S_p\) 容易导致优化不灵活（A、B、C 相较于\(S_n\)和\(S_p\)的梯度都相等）以及收敛状态不明确（决策边界上的 \(T\) 和 \(T\prime\) 都可接受）；而在 <code>Circle Loss</code> 所对应的图 (b) 中，减小\((\alpha_nS_n-\alpha_pS_p)\)  会动态调整其在\(S_n\) 和\(S_p\) 上的梯度，由此能使优化过程更加灵活。</p>
 <p>对于状态 A，它的\(S_p\)很小（而\(S_n\) 已经足够小），因此其重点是增大\(S_p\) ；对于 B，它的 \(S_n\) 很大 （而\(S_p\)已经足够大），因此其重点是降低\(S_n\) 。此外，圆形决策边界上的特定点 \(T\)（圆弧与45度斜线的切点）更有利于收敛。因此，<code>Circle Loss</code> 设计了一个更灵活的优化途径，通向一个更明确的优化目标。</p>
 <p><code>Circle Loss</code> 非常简单，而它对深度特征学习的意义却非常本质，表现为以下三个方面:</p>
@@ -340,15 +340,15 @@ L = max(d(a,p)-d(a,n)+margin,0)
 <li>明确的收敛状态。在这个圆形的决策边界上，Circle Loss 更偏爱特定的收敛状态（图  (b) 中的 \(T\)）。这种明确的优化目标有利于提高特征鉴别力。</li>
 </ol>
 <h1 id="tong-yi-de-xiang-si-xing-you-hua-shi-jiao">统一的相似性优化视角</h1>
-<p>深度特征学习的优化目标是最大化 \(S_p\) ，最小化\(S_n\) 。在两种基本学习范式中，采用的损失函数通常大相径庭，比如sofmax loss 和 triplet loss。
+<p>深度特征学习的优化目标是最大化 \(S_p\) ，最小化\(S_n\) 。在两种基本学习范式中，采用的损失函数通常大相径庭，比如sofmax loss 和 triplet loss。<br>
 这里不去在意相似性计算的具体方式——无论是样本对之间的相似性（相似性对标签情况下）还是样本与类别代理之间的相似性（类别标签情况下）。本文仅仅做这样一个假设定义：给定特征空间中的单个样本 \(x\)，假设与\(x\)相关的类内相似度分数有\(K\) 个，与 \(x\) 相关的类间相似度分数有\(L\) 个，分别记为 \(\{S^i_p\}(i=1,2,\ldots,K)\) 和 \(\{S^j_n\}(j=1,2,\ldots,L)\)。</p>
-<p>为了实现最大化\(S_p\)最小化\(S_n\)的优化目标，本文提出把所有的\(S_p\)和\(S_n\) 两两配对，并通过在所有的相似性对上穷举、减小二者之差，来获得以下的统一损失函数：
+<p>为了实现最大化\(S_p\)最小化\(S_n\)的优化目标，本文提出把所有的\(S_p\)和\(S_n\) 两两配对，并通过在所有的相似性对上穷举、减小二者之差，来获得以下的统一损失函数：<br>
 \[
 \begin{aligned}
 \mathcal{L}_{u n i} &amp;=\log \left[1+\sum_{i=1}^{K} \sum_{j=1}^{L} \exp \left(\gamma\left(s_{n}^{j}-s_{p}^{i}+m\right)\right)\right] \\
 &amp;=\log \left[1+\sum_{j=1}^{L} \exp \left(\gamma\left(s_{n}^{j}+m\right)\right) \sum_{i=1}^{K} \exp \left(\gamma\left(-s_{p}^{i}\right)\right)\right]
 \end{aligned}
-\]
+\]<br>
 这个公式仅需少量修改就能降级得到常见的 triplet 损失或分类损失，比如得到:</p>
 <p>AM-Softmax 损失。</p>
 <blockquote>
@@ -360,7 +360,7 @@ L = max(d(a,p)-d(a,n)+margin,0)
 &amp;=-\log \frac{\exp \left(\gamma\left(s_{p}-m\right)\right)}{\exp \left(\gamma\left(s_{p}-m\right)\right)+\sum_{j=1}^{N-1} \exp \left(\gamma s_{n}^{j}\right)}
 \end{aligned}
 \]</p>
-<p>或 triplet 损失：
+<p>或 triplet 损失：<br>
 \[
 \begin{aligned}
 \mathcal{L}_{t r i} &amp;=\lim _{\gamma \rightarrow+\infty} \frac{1}{\gamma} \mathcal{L}_{u n i} \\
@@ -369,14 +369,14 @@ L = max(d(a,p)-d(a,n)+margin,0)
 \end{aligned}
 \]</p>
 <h1 id="circle-loss-zi-ding-bu-diao-de-jia-quan-fang-shi">Circle Loss：自定步调的加权方式</h1>
-<p>忽略上文<code>Circle Loss</code>等式中的余量项 \(m\)并对\(S_n\) 和\(S_p\)  进行加权，可得到新提出的 <code>Circle Loss</code>：
+<p>忽略上文<code>Circle Loss</code>等式中的余量项 \(m\)并对\(S_n\) 和\(S_p\)  进行加权，可得到新提出的 <code>Circle Loss</code>：<br>
 \[
 \begin{aligned}
 \mathcal{L}_{\text {circle }} &amp;=\log \left[1+\sum_{i=1}^{K} \sum_{j=1}^{L} \exp \left(\gamma\left(\alpha_{n}^{j} s_{n}^{j}-\alpha_{p}^{i} s_{p}^{i}\right)\right)\right] \\
 &amp;=\log \left[1+\sum_{j=1}^{L} \exp \left(\gamma \alpha_{n}^{j} s_{n}^{j}\right) \sum_{i=1}^{K} \exp \left(-\gamma \alpha_{p}^{i} s_{p}^{i}\right)\right.
 \end{aligned}
-\]
-再定义\(S_p\)  的最优值为\(O_p\)，\(S_n\) 的最优值为\(O_n\)；\(O_n &lt; O_p\) 。当一个相似性得分与最优值偏离较远，<code>Circle Loss</code> 将分配较大的权重，从而对它进行强烈的优化更新。自定步调（self-paced）的方式给出了如下定义：
+\]<br>
+再定义\(S_p\)  的最优值为\(O_p\)，\(S_n\) 的最优值为\(O_n\)；\(O_n &lt; O_p\) 。当一个相似性得分与最优值偏离较远，<code>Circle Loss</code> 将分配较大的权重，从而对它进行强烈的优化更新。自定步调（self-paced）的方式给出了如下定义：<br>
 \[
 \left\{\begin{array}{c}
 \alpha_{p}^{i}=\left[O_{p}-s_{p}^{i}\right]_{+} \\
@@ -384,38 +384,38 @@ L = max(d(a,p)-d(a,n)+margin,0)
 \end{array}\right.
 \]</p>
 <h1 id="lei-nei-yu-liang-he-lei-jian-yu-liang">类内余量和类间余量</h1>
-<p>不同于优化\(S_n-S_p\) 的损失函数，在 <code>Circle Loss</code> 中， \(S_n\) 和 \(S_p\) 是不对称的，论文为其各自定义了余量\(\Delta_n\)和\(\Delta_p\),这样可得到最终带余量的 <code>Circle Loss</code>：
+<p>不同于优化\(S_n-S_p\) 的损失函数，在 <code>Circle Loss</code> 中， \(S_n\) 和 \(S_p\) 是不对称的，论文为其各自定义了余量\(\Delta_n\)和\(\Delta_p\),这样可得到最终带余量的 <code>Circle Loss</code>：<br>
 \[
 \mathcal{L}_{\text {circle}}=\log \left[1+\sum_{j=1}^{L} \exp \left(\gamma \alpha_{n}^{j}\left(s_{n}^{j}-\Delta_{n}\right)\right) \sum_{i=1}^{K} \exp \left(-\gamma \alpha_{p}^{i}\left(s_{p}^{i}-\Delta_{p}\right)\right)\right]
-\]
-通过推导决策边界，论文进一步分析\(\Delta_n\)和\(\Delta_p\)。为简单起见，这里以二元分类的情况进行说明，其中决策边界是在\(\alpha_n(S_n-\Delta_n)-\alpha_p(s_p-\Delta_p)=0\)处得到。结合:
+\]<br>
+通过推导决策边界，论文进一步分析\(\Delta_n\)和\(\Delta_p\)。为简单起见，这里以二元分类的情况进行说明，其中决策边界是在\(\alpha_n(S_n-\Delta_n)-\alpha_p(s_p-\Delta_p)=0\)处得到。结合:<br>
 \[
 \left\{\begin{array}{c}
 \alpha_{p}^{i}=\left[O_{p}-s_{p}^{i}\right]_{+} \\
 \alpha_{n}^{j}=\left[s_{n}^{j}-O_{n}\right]_{+}
 \end{array}\right.
-\]
-可得决策边界：
+\]<br>
+可得决策边界：<br>
 \[
 \left(s_{n}-\frac{O_{n}+\Delta_{n}}{2}\right)^{2}+\left(s_{p}-\frac{O_{p}+\Delta_{p}}{2}\right)^{2}=C
-\]
+\]<br>
 其中，\(C=\frac{\left(O_{n}-\Delta_{n}\right)^{2}+\left(O_{p}-\Delta_{p}\right)^{2}}{4}\)。</p>
-<p><code>Circle Loss</code> 有 5 个超参数，即\(O_p\) 、\(O_n\)、\(\gamma\) 、\(\Delta_n\)和\(\Delta_p\)。通过将\(O_p=1+m,O_n=-m,\Delta_p=1-m,\Delta_n=m\) 。可将上式约简为：
+<p><code>Circle Loss</code> 有 5 个超参数，即\(O_p\) 、\(O_n\)、\(\gamma\) 、\(\Delta_n\)和\(\Delta_p\)。通过将\(O_p=1+m,O_n=-m,\Delta_p=1-m,\Delta_n=m\) 。可将上式约简为：<br>
 \[
 \left(s_{n}-0\right)^{2}+\left(s_{p}-1\right)^{2}=2 m^{2}
-\]
+\]<br>
 基于上式定义的决策边界，可对 <code>Circle Loss</code> 进行另外一番解读。其目标是优化 \(S_p\) --&gt; 1 和\(S_n\) --&gt; 0。参数 \(m\)控制着决策边界的半径，并可被视为一个松弛因子。换句话说，<code>Circle Loss</code> 期望\(S_p^i > 1-m\)且 \(s^i_n &lt; m\)。因此，超参数仅有 2 个，即扩展因子 \(\gamma\) 和松弛因子\(m\) 。</p>
 <blockquote>
 <p>\(m\)(即半径)越大，损失越小。</p>
 </blockquote>
 <h1 id="you-shi">优势</h1>
-<p><code>Circle Loss</code> 在\(S_n^j\) 和 \(S^i_p\)上的梯度分别为：
+<p><code>Circle Loss</code> 在\(S_n^j\) 和 \(S^i_p\)上的梯度分别为：<br>
 \[
 \begin{array}{l}
 \frac{\partial \mathcal{L}_{\text {circle}}}{\partial s_{n}^{j}}=Z \frac{\exp \left(\gamma\left(\left(s_{n}^{j}\right)^{2}-m^{2}\right)\right)}{\sum_{l=1}^{L} \exp \left(\gamma\left(\left(s_{n}^{l}\right)^{2}-m^{2}\right)\right)} \gamma\left(s_{n}^{j}+m\right) \\
 \frac{\partial \mathcal{L}_{\text {circle}}}{\partial s_{p}^{i}}=Z \frac{\exp \left(\gamma\left(m^{2}-\left(s_{p}^{i}-1\right)^{2}\right)\right)}{\sum_{k=1}^{K} \exp \left(\gamma\left(m^{2}-\left(s_{p}^{k}-1\right)^{2}\right)\right)} \gamma\left(s_{p}^{i}-1-m\right)
 \end{array}
-\]
+\]<br>
 下图在二元分类的实验场景中可视化了不同 \(m\)值设置下的梯度情况，对比图中(a) 和 (b) 的triplet 损失和 AMSoftmax 损失的梯度，可知 Circle Loss 有这些优势：</p>
 <ol>
 <li>在\(S_n\) 和 \(S_p\)上能进行平衡的优化</li>

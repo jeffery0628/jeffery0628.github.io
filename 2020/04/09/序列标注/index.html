@@ -301,51 +301,51 @@
         <p>后面需要补充序列标注在分词、词性标注、命名实体识别等相关任务的代码实践(走过的坑。。)及相关理论知识。</p>
 <h3 id="tiao-jian-sui-ji-chang-crf">条件随机场(CRF)</h3>
 <h4 id="crf-yong-yu-xu-lie-biao-zhu-wen-ti">crf 用于序列标注问题</h4>
-<p>在 CRF 的序列标注问题中，要计算的是条件概率：
+<p>在 CRF 的序列标注问题中，要计算的是条件概率：<br>
 \[
 P\left(y_{1}, \ldots, y_{n} | x_{1}, \ldots, x_{n}\right)=P\left(y_{1}, \ldots, y_{n} | \boldsymbol{x}\right), \quad \boldsymbol{x}=\left(x_{1}, \ldots, x_{n}\right) \tag{1}
 \]</p>
 <a id="more"></a>
 <p>为了得到这个概率的估计，CRF 做了两个假设：</p>
 <h5 id="strong-jia-she-yi-gai-fen-bu-shi-zhi-shu-zu-fen-bu-strong"><strong>假设一：该分布是指数族分布。</strong></h5>
-<p>这个假设意味着存在函数 \(f(y_1,…,y_n;x)\)，使得：
+<p>这个假设意味着存在函数 \(f(y_1,…,y_n;x)\)，使得：<br>
 \[
 P\left(y_{1}, \ldots, y_{n} | \boldsymbol{x}\right)=\frac{1}{Z(\boldsymbol{x})} \exp \left(f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)\right) \tag{2}
-\]
+\]<br>
 其中 Z(x) 是归一化因子，因为这个是条件分布，所以归一化因子跟 x 有关。这个 f 函数可以视为一个打分函数，打分函数取指数并归一化后就得到概率分布。</p>
 <h5 id="strong-jia-she-er-shu-chu-zhi-jian-de-guan-lian-jin-fa-sheng-zai-xiang-lin-wei-zhi-bing-qie-guan-lian-shi-zhi-shu-jia-xing-de-strong"><strong>假设二：输出之间的关联仅发生在相邻位置，并且关联是指数加性的。</strong></h5>
-<p>这个假设意味着 f(y1,…,yn;x) 可以更进一步简化为：
+<p>这个假设意味着 f(y1,…,yn;x) 可以更进一步简化为：<br>
 \[
 \begin{aligned}
 f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)=h\left(y_{1} ; \boldsymbol{x}\right) &amp;+g\left(y_{1}, y_{2} ; \boldsymbol{x}\right)+h\left(y_{2} ; \boldsymbol{x}\right)+\ldots \\
 &amp;+g\left(y_{n-1}, y_{n} ; \boldsymbol{x}\right)+h\left(y_{n} ; \boldsymbol{x}\right)
 \end{aligned} \tag{3}
-\]
+\]<br>
 这也就是说，现在我们只需要对每一个标签和每一个相邻标签对分别打分，然后将所有打分结果求和得到总分。</p>
 <h5 id="xian-xing-lian-crf">线性链crf</h5>
-<p>尽管已经做了大量简化，但一般来说，(3)式所表示的概率模型还是过于复杂，难以求解。<strong>于是考虑到当前深度学习模型中，RNN 或者层叠 CNN 等模型已经能够比较充分捕捉各个 y 与输出 x 的联系</strong>，因此，不妨考虑函数 g 跟 x 无关，那么：
+<p>尽管已经做了大量简化，但一般来说，(3)式所表示的概率模型还是过于复杂，难以求解。<strong>于是考虑到当前深度学习模型中，RNN 或者层叠 CNN 等模型已经能够比较充分捕捉各个 y 与输出 x 的联系</strong>，因此，不妨考虑函数 g 跟 x 无关，那么：<br>
 \[
 \begin{aligned}
 f\left(y_{1}, \ldots, y_{n} ; \boldsymbol{x}\right)=h\left(y_{1} ; \boldsymbol{x}\right) &amp;+g\left(y_{1}, y_{2}\right)+h\left(y_{2} ; \boldsymbol{x}\right)+\ldots \\
 &amp;+g\left(y_{n-1}, y_{n}\right)+h\left(y_{n} ; \boldsymbol{x}\right)
 \end{aligned}
-\]
-这时候 g 实际上就是一个有限的、待训练的参数矩阵而已，而单标签的打分函数 \(h(y_i;x\)) 可以通过 RNN 或者 CNN 来建模。因此，该模型是可以建立的，其中概率分布变为：
+\]<br>
+这时候 g 实际上就是一个有限的、待训练的参数矩阵而已，而单标签的打分函数 \(h(y_i;x\)) 可以通过 RNN 或者 CNN 来建模。因此，该模型是可以建立的，其中概率分布变为：<br>
 \[
 P\left(y_{1}, \ldots, y_{n} | x\right)=\frac{1}{Z(x)} \exp \left(h\left(y_{1} ; x\right)+\sum_{k=1}^{n-1} g\left(y_{k}, y_{k+1}\right)+h\left(y_{k+1} ; x\right)\right)
 \]</p>
 <h5 id="gui-yi-hua-yin-zi">归一化因子</h5>
-<p>为了训练 CRF 模型，用最大似然方法，也就是用：\(-\log P\left(y_{1}, \ldots, y_{n} | x\right)\)，作为损失函数，可以算出它等于：
+<p>为了训练 CRF 模型，用最大似然方法，也就是用：\(-\log P\left(y_{1}, \ldots, y_{n} | x\right)\)，作为损失函数，可以算出它等于：<br>
 \[
 -\left(h\left(y_{1} ; \boldsymbol{x}\right)+\sum_{k=1}^{n-1} g\left(y_{k}, y_{k+1}\right)+h\left(y_{k+1} ; \boldsymbol{x}\right)\right)+\log Z(\boldsymbol{x})
-\]
+\]<br>
 其中第一项是原来概率式的<strong>分子</strong>的对数，它是对目标的序列的打分，虽然它看上去挺迂回的，但是并不难计算。真正的难度在于<strong>分母</strong>的对数 \(logZ(x)\) 这一项。</p>
 <p>归一化因子，在物理上也叫配分函数，在这里它需要我们对所有可能的路径的打分进行指数求和，而我们前面已经说到，这样的路径数是指数量级的（k^n），因此直接来算几乎是不可能的。</p>
 <p>事实上，<strong>归一化因子难算，几乎是所有概率图模型的公共难题</strong>。幸运的是，在 CRF 模型中，由于我们只考虑了临近标签的联系（马尔可夫假设），因此我们可以递归地算出归一化因子，这使得原来是指数级的计算量降低为线性级别。</p>
-<p>具体来说，我们将计算到时刻 \(t\) 的归一化因子记为\(Z_t\)，并将它分为 \(k\) 个部分：
+<p>具体来说，我们将计算到时刻 \(t\) 的归一化因子记为\(Z_t\)，并将它分为 \(k\) 个部分：<br>
 \[
 Z_{t}=Z_{t}^{(1)}+Z_{t}^{(2)}+\cdots+Z_{t}^{(k)}
-\]
+\]<br>
 分别是截止到当前时刻 \(t\) 中、以标签 \(1,…,k\) 为终点的所有路径的得分指数和。那么，我们可以递归地计算：</p>
 <p>\[
 \begin{aligned}
@@ -354,11 +354,11 @@ Z_{t+1}^{(2)} &amp;=\left(Z_{t}^{(1)} G_{12}+Z_{t}^{(2)} G_{22}+\cdots+Z_{t}^{(k
 &amp; \vdots \\
 Z_{t+1}^{(k)} &amp;=\left(Z_{t}^{(1)} G_{1 k}+Z_{t}^{(2)} G_{2 k}+\cdots+Z_{t}^{(k)} G_{k k}\right) h_{t+1}(k | x)
 \end{aligned}
-\]
-它可以简单写为矩阵形式：
+\]<br>
+它可以简单写为矩阵形式：<br>
 \[
 \mathbf{Z}_{t+1}=\mathbf{Z}_{t} \boldsymbol{G} \otimes H\left(y_{t+1} | \boldsymbol{x}\right) 
-\]
+\]<br>
 其中,\(Z_{t}=\left[Z_{t}^{(1)}, \ldots, Z_{t}^{(k)}\right]\),而 G 是对 g(yi,yj) (状态转移)各个元素取指数后的矩阵，即\(G=e^{g(y i, y j)}\),而\(H(y_{t+1}|x)\),是编码模型\(h(y_{t+1}|x)\),（RNN、CNN等）对位置 t+1 的各个标签的打分的指数，即\(H\left(y_{t+1} | x\right)=e^{h\left(y_{t+1} | x\right)}\)，也是一个向量。\(Z_tG\) 这一步是矩阵乘法，得到一个向量，而 \(⊗\) 是两个向量的逐位对应相乘。</p>
 <p><img src="/2020/04/09/%E5%BA%8F%E5%88%97%E6%A0%87%E6%B3%A8/decode-crf.png" alt="avatar"></p>
 <p>从t到t+1时刻的计算，包括转移概率和j+1节点本身的概率</p>
@@ -397,12 +397,12 @@ Z_{t+1}^{(k)} &amp;=\left(Z_{t}^{(1)} G_{1 k}+Z_{t}^{(2)} G_{2 k}+\cdots+Z_{t}^{
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ld.so.conf</span><br><span class="line"><span class="comment"># 添加</span></span><br><span class="line">include /usr/local/lib</span><br><span class="line"><span class="comment"># 保存后加载一下</span></span><br><span class="line">sudo /sbin/ldconfig -v</span><br></pre></td></tr></table></figure>
 <h5 id="xun-lian-shu-ju-ge-shi">训练数据格式</h5>
 <p>对于训练数据，首先需要多列，但不能不一致，既在一个文件里有的行是两列，有的行是三列（这种格式是错误的）；其次第一列代表的是需要标注的<strong>字或词</strong>，最后一列是输出位标记tag，\如果有额外的特征，例如词性什么的，可以加到中间列里，所以训练集或者测试集的文件最少要有两列。以分词举例，标签为BMES</p>
-<p>东	N	B
-南	N	M
-大	N	M
-学	N	E
-欢	V	B
-迎	V	E
+<p>东	N	B<br>
+南	N	M<br>
+大	N	M<br>
+学	N	E<br>
+欢	V	B<br>
+迎	V	E<br>
 您	N	S</p>
 <p>其中第3列是标签，也是测试文件中需要预测的结果，有BMES 4种状态。第二列是词性，不是必须的。</p>
 <h5 id="te-zheng-mo-ban">特征模板</h5>
@@ -410,29 +410,29 @@ Z_{t+1}^{(k)} &amp;=\left(Z_{t}^{(1)} G_{1 k}+Z_{t}^{(2)} G_{2 k}+\cdots+Z_{t}^{
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func1 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func2 = <span class="keyword">if</span> (output = M and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func3 = <span class="keyword">if</span> (output = E and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func4 = <span class="keyword">if</span> (output = S and feature=U01:<span class="string">"东"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func5 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"南"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">...</span><br><span class="line">func25 = <span class="keyword">if</span> (output = B and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func26 = <span class="keyword">if</span> (output = M and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func27 = <span class="keyword">if</span> (output = E and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">func28 = <span class="keyword">if</span> (output = S and feature=U01:<span class="string">"你"</span>) <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 <p>这些函数经过训练后，其权值表示函数内文字对应该标签的概率（形象说法，概率和可大于1）。</p>
 <h6 id="unigram">unigram</h6>
-<p>U00:%x[-2,0]
-U01:%x[-1,0]
-U02:%x[0,0]
-U03:%x[1,0]
-U04:%x[2,0]
-U05:%x[-2,0]/%x[-1,0]/%x[0,0]
-U06:%x[-1,0]/%x[0,0]/%x[1,0]
-U07:%x[0,0]/%x[1,0]/%x[2,0]
-U08:%x[-1,0]/%x[0,0]
+<p>U00:%x[-2,0]<br>
+U01:%x[-1,0]<br>
+U02:%x[0,0]<br>
+U03:%x[1,0]<br>
+U04:%x[2,0]<br>
+U05:%x[-2,0]/%x[-1,0]/%x[0,0]<br>
+U06:%x[-1,0]/%x[0,0]/%x[1,0]<br>
+U07:%x[0,0]/%x[1,0]/%x[2,0]<br>
+U08:%x[-1,0]/%x[0,0]<br>
 U09:%x[0,0]/%x[1,0]</p>
-<p>这是CRF<ins>例子中给出的模板，一共有９个模板，先看第一个模板，表示当前词和前面的第二个词组成的特征，以‘小明今天穿了一件红色上衣’为例，符合CRF</ins>处理格式的这句话应该变成如下形式：
-小　Ｂ
-明　Ｉ
-今　Ｂ   &lt;-- current word
-天　Ｉ
-穿　Ｓ
-了　Ｓ
-一　Ｂ
-件　Ｉ
-红　Ｂ
-色　Ｉ
-上　Ｂ
-衣　Ｉ
+<p>这是CRF<ins>例子中给出的模板，一共有９个模板，先看第一个模板，表示当前词和前面的第二个词组成的特征，以‘小明今天穿了一件红色上衣’为例，符合CRF</ins>处理格式的这句话应该变成如下形式：<br>
+小　Ｂ<br>
+明　Ｉ<br>
+今　Ｂ   &lt;-- current word<br>
+天　Ｉ<br>
+穿　Ｓ<br>
+了　Ｓ<br>
+一　Ｂ<br>
+件　Ｉ<br>
+红　Ｂ<br>
+色　Ｉ<br>
+上　Ｂ<br>
+衣　Ｉ<br>
 假设我们有三个标记tag，Ｂ（表示一个词的开头那个字），Ｉ（表示一个词的结尾那个字），Ｓ（表示单个字的词），先看第一个模板Ｕ00:%x[-2,0],第一个模板产生的特征如下： 如果当前词是‘今’，那-2位置对应的字就是‘小’， 每个特征对应的字如下：</p>
 <table>
 <thead>
@@ -495,17 +495,17 @@ U09:%x[0,0]/%x[1,0]</p>
 </tr>
 </tbody>
 </table>
-<p>根据第一个模板U00:%x[-2,0]能得到的转移特征函数如下：
-<code>func1=if(output=B and feature='U00:小' )　return 1 else return 0 </code>
-其中output=B 指的是当前词（字）的预测标记，也就是’今‘的预测标记，每个模板会把所有可能的标记输出都列一遍，然后通过训练确定每种标记的权重，合理的标记在训练样本中出现的次数多，对应的权重就高，不合理的标记在训练样本中出现的少，对应的权重就少，但是在利用模板生成转移特征函数是会把所有可能的特征函数都列出来，由模型通过训练决定每个特征的重要程度。
-<code>func2=if(output=M and feature=’U00:小’) return 1 else return 0 </code>
-<code>func3=if(output=E and feature=’U00:小’) return 1 else return 0 </code>
-<code>func4=if(output=S and feature=’U00:小) return 1 else return 0 </code>
-得到4个特征函数之后当前这个字’今‘的特征函数利用第一个模板就得到全部了，然后扫描下一个字‘天‘，以’天‘字作为当前字预测这个字的标记tag,同样会得到4个特征函数：
-<code>func5=if(output=B and feature=’U00:明’) return 1 else return 0 </code>
-<code>func6=if(output=M and feature=’U00:明’) return 1 else return 0 </code>
-<code>func7=if(output=E and feature=’U00:明’) return 1 else return 0 </code>
-<code>func7=if(output=S and feature=’U00:明’) return 1 else return 0 </code>
+<p>根据第一个模板U00:%x[-2,0]能得到的转移特征函数如下：<br>
+<code>func1=if(output=B and feature='U00:小' )　return 1 else return 0 </code><br>
+其中output=B 指的是当前词（字）的预测标记，也就是’今‘的预测标记，每个模板会把所有可能的标记输出都列一遍，然后通过训练确定每种标记的权重，合理的标记在训练样本中出现的次数多，对应的权重就高，不合理的标记在训练样本中出现的少，对应的权重就少，但是在利用模板生成转移特征函数是会把所有可能的特征函数都列出来，由模型通过训练决定每个特征的重要程度。<br>
+<code>func2=if(output=M and feature=’U00:小’) return 1 else return 0 </code><br>
+<code>func3=if(output=E and feature=’U00:小’) return 1 else return 0 </code><br>
+<code>func4=if(output=S and feature=’U00:小) return 1 else return 0 </code><br>
+得到4个特征函数之后当前这个字’今‘的特征函数利用第一个模板就得到全部了，然后扫描下一个字‘天‘，以’天‘字作为当前字预测这个字的标记tag,同样会得到4个特征函数：<br>
+<code>func5=if(output=B and feature=’U00:明’) return 1 else return 0 </code><br>
+<code>func6=if(output=M and feature=’U00:明’) return 1 else return 0 </code><br>
+<code>func7=if(output=E and feature=’U00:明’) return 1 else return 0 </code><br>
+<code>func7=if(output=S and feature=’U00:明’) return 1 else return 0 </code><br>
 特征函数中的feature指的是当前词的-2位置对应的词或对应的词的特征，因为在这里没有其他特征了，所以用字本身做特征，有的会有词性，那feature就会是’明‘这个字对应的词性而不是字本身了。 这个feature的作用就是确定模板所确定的当前词和临近词</p>
 <h6 id="bigram">bigram</h6>
 <p>与Unigram不同的是，Bigram类型模板生成的函数会多一个参数：上个节点的标签 \(y_{i-1}\)。生成函B01:%x[0,0] (当前词为“东南大学欢迎您” 的“您”)：<code>func1 = if (prev_output = E and output = S and feature=B01:&quot;您&quot;) return 1 else return 0</code></p>
@@ -522,13 +522,13 @@ U09:%x[0,0]/%x[1,0]</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.0491453814148901</span></span><br><span class="line"><span class="number">7.0388286231971700</span></span><br><span class="line"><span class="number">-7.2545558164093009</span></span><br><span class="line"><span class="number">5.2799470769112835</span></span><br><span class="line"><span class="number">-8.5333633546653758</span></span><br><span class="line"><span class="number">-5.3549190735606933</span></span><br><span class="line"><span class="number">5.2575182675282477</span></span><br><span class="line"><span class="number">-5.4259109736696054</span></span><br></pre></td></tr></table></figure>
 <p>比如说有一个句子“商品和服务”，对于每个字都按照上述模板生成一系列U特征函数的参数代入，得到一些类似010101的函数返回值，乘上这些函数的权值求和，就得到了各个标签的分数，由大到小代表输出这些标签的可能性。至于B特征函数（这里特指简单的f(s’, s)），在Viterbi后向解码的时候，前一个标签确定了后就可以代入当前的B特征函数，计算出每个输出标签的分数，再次求和排序即可。</p>
 <h5 id="xun-lian-ji-yu-ce">训练及预测</h5>
-<p>CRF++的训练命令一般格式如下：
-<code>crf_learn  -f 3 -c 4.0 template train.data model -t</code>
+<p>CRF++的训练命令一般格式如下：<br>
+<code>crf_learn  -f 3 -c 4.0 template train.data model -t</code><br>
 其中，template为模板文件，train.data为训练语料，-t表示可以得到一个model文件和一个model.txt文件，其他可选参数说明如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-f, –freq=INT使用属性的出现次数不少于INT(默认为<span class="number">1</span>)</span><br><span class="line">-m, –maxiter=INT设置INT为LBFGS的最大迭代次数 (默认<span class="number">10</span>k)</span><br><span class="line">-c, –cost=FLOAT    设置FLOAT为代价参数，过大会过度拟合 (默认<span class="number">1.0</span>)</span><br><span class="line">-e, –eta=FLOAT设置终止标准FLOAT(默认<span class="number">0.0001</span>)</span><br><span class="line">-C, –convert将文本模式转为二进制模式</span><br><span class="line">-t, –textmodel为调试建立文本模型文件</span><br><span class="line">-a, –algorithm=(CRF|MIRA)    选择训练算法，默认为CRF-L2</span><br><span class="line">-p, –thread=INT线程数(默认<span class="number">1</span>)，利用多个CPU减少训练时间</span><br><span class="line">-H, –shrinking-size=INT    设置INT为最适宜的跌代变量次数 (默认<span class="number">20</span>)</span><br><span class="line">-v, –version显示版本号并退出</span><br><span class="line">-h, –help显示帮助并退出</span><br></pre></td></tr></table></figure>
 <p>在训练过程中，会输出一些信息，其意义如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iter：迭代次数。当迭代次数达到maxiter时，迭代终止</span><br><span class="line">terr：标记错误率</span><br><span class="line">serr：句子错误率</span><br><span class="line">obj：当前对象的值。当这个值收敛到一个确定值的时候，训练完成</span><br><span class="line">diff：与上一个对象值之间的相对差。当此值低于eta时，训练完成</span><br></pre></td></tr></table></figure>
-<p>在训练完模型后，我们可以使用训练好的模型对新数据进行预测，预测命令格式如下：
+<p>在训练完模型后，我们可以使用训练好的模型对新数据进行预测，预测命令格式如下：<br>
 <code>crf_test -m model seg_word_predict.data &gt; predict.txt</code></p>
 <p><code>-m model</code>表示使用我们刚刚训练好的model模型，预测的数据文件为seg_word_predict.data, <code>&gt; predict.txt</code>表示将预测后的数据写入到predict.txt中。</p>
 <h6 id="dai-ma">代码</h6>

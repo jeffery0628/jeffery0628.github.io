@@ -311,7 +311,7 @@
 <h2 id="biao-da-shi-shi-shi-yao">表达式是什么</h2>
 <p>\[
 Y=wx+b
-\]
+\]<br>
 \(w\)叫做\(x\)的系数，\(b\)叫做偏置项。</p>
 <h1 id="ru-he-ji-suan">如何计算</h1>
 <h2 id="loss-function-mse">Loss Function–MSE</h2>
@@ -327,35 +327,35 @@ J=\frac{1}{2m}\sum^{i=1}_{m}(y^{'}-y)^2
 <li>解决欠拟合与过拟合的问题。</li>
 </ul>
 <h2 id="shi-yao-shi-l-2-zheng-ze-hua-ling-hui-gui">什么是L2正则化(岭回归)</h2>
-<p>方程：
+<p>方程：<br>
 \[
 J=J_0+\lambda\sum_{w}w^2
-\]
-\(J_0\)表示上面的 loss function ，在loss function的基础上加入\(w\)参数的平方和乘以 \(\lambda\) ，假设：
+\]<br>
+\(J_0\)表示上面的 loss function ，在loss function的基础上加入\(w\)参数的平方和乘以 \(\lambda\) ，假设：<br>
 \[
 L=\lambda({w_1}^2 + {w_2}^2)
-\]
-回忆以前学过的单位元的方程：
+\]<br>
+回忆以前学过的单位元的方程：<br>
 \[
 x^2+y^2=1
-\]
+\]<br>
 和L2正则化项一样，此时的任务变成在\(L\)约束下求出\(J\)取最小值的解。求解\(J_0\)的过程可以画出等值线。同时L2正则化的函数L也可以在\(w_1w_2\)的二维平面上画出来。如下图：</p>
 <p><img src="/2020/05/23/machine_learning/linear_regression/00630Defgy1g4ns9qha1nj308u089aav.jpg" alt></p>
 <p>L表示为图中的黑色圆形，随着梯度下降法的不断逼近，与圆第一次产生交点，而这个交点很难出现在坐标轴上。这就说明了L2正则化不容易得到稀疏矩阵，同时为了求出损失函数的最小值，使得\(w_1\)和\(w_2\)无限接近于0，达到防止过拟合的问题。</p>
 <h2 id="shi-yao-chang-jing-xia-yong-l-2-zheng-ze-hua">什么场景下用L2正则化</h2>
 <p>只要数据线性相关，用LinearRegression拟合的不是很好，<strong>需要正则化</strong>，可以考虑使用岭回归(L2), 如果输入特征的维度很高,而且是稀疏线性关系的话， 岭回归就不太合适,考虑使用Lasso回归。</p>
 <h2 id="shi-yao-shi-l-1-zheng-ze-hua-lasso-hui-gui">什么是L1正则化(Lasso回归)</h2>
-<p>L1正则化与L2正则化的区别在于惩罚项的不同：
+<p>L1正则化与L2正则化的区别在于惩罚项的不同：<br>
 \[
 J=J_0+\lambda(|w_1|+|w_2|)
-\]
+\]<br>
 求解J0的过程可以画出等值线。同时L1正则化的函数也可以在w1w2的二维平面上画出来。如下图：</p>
 <p><img src="/2020/05/23/machine_learning/linear_regression/00630Defgy1g4nse7rf9xj308u089gme.jpg" alt></p>
 <p>惩罚项表示为图中的黑色棱形，随着梯度下降法的不断逼近，与棱形第一次产生交点，而这个交点很容易出现在坐标轴上。<strong>这就说明了L1正则化容易得到稀疏矩阵。</strong></p>
 <h2 id="shi-yao-chang-jing-xia-shi-yong-l-1-zheng-ze-hua">什么场景下使用L1正则化</h2>
 <p><strong>L1正则化(Lasso回归)可以使得一些特征的系数变小,甚至还使一些绝对值较小的系数直接变为0</strong>，从而增强模型的泛化能力 。对于高的特征数据,尤其是线性关系是稀疏的，就采用L1正则化(Lasso回归),或者是要在一堆特征里面找出主要的特征，那么L1正则化(Lasso回归)更是首选了。</p>
 <h2 id="shi-yao-shi-elastic-net-hui-gui">什么是ElasticNet回归</h2>
-<p><strong>ElasticNet综合了L1正则化项和L2正则化项</strong>，它的公式是:
+<p><strong>ElasticNet综合了L1正则化项和L2正则化项</strong>，它的公式是:<br>
 \[
 min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2]+\lambda\sum_{j=1}^{n}|\theta|
 \]</p>
@@ -398,14 +398,14 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 </ol>
 </blockquote>
 <h2 id="mo-xing-xuan-ze">模型选择</h2>
-<p>一元线性回归
+<p>一元线性回归<br>
 \[
 y:h(x)=wx+b
-\]
-n元线性回归
+\]<br>
+n元线性回归<br>
 \[
 y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
-\]
+\]<br>
 这里，y表示要求的销售价格，x表示特征值。需要调用sklearn库来进行训练。</p>
 <h2 id="shu-ju-chu-li">数据处理</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取训练数据</span></span><br><span class="line">housing = pd.read_csv(<span class="string">'kc_train.csv'</span>)</span><br><span class="line"><span class="comment">#销售价格</span></span><br><span class="line">target=pd.read_csv(<span class="string">'kc_train2.csv'</span>)  </span><br><span class="line"><span class="comment">#测试数据</span></span><br><span class="line">t=pd.read_csv(<span class="string">'kc_test.csv'</span>)   </span><br><span class="line"></span><br><span class="line">train_set.info()</span><br></pre></td></tr></table></figure>

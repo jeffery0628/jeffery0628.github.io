@@ -339,13 +339,13 @@
 <li>通过训练学习 positional encoding 向量；</li>
 <li>使用公式来计算 positional encoding向量。</li>
 </ul>
-<p>试验后发现两种选择的结果是相似的，所以采用了第2种方法，优点是不需要训练参数，而且即使<strong>在训练集中没有出现过的句子长度上也能用</strong>。Positional Encoding的公式如下：
+<p>试验后发现两种选择的结果是相似的，所以采用了第2种方法，优点是不需要训练参数，而且即使<strong>在训练集中没有出现过的句子长度上也能用</strong>。Positional Encoding的公式如下：<br>
 \[
 \begin{aligned}
 P E_{(p o s, 2 i)} &amp;=\sin \left(p o s / 10000^{2 i / d_{\text {model }}}\right) \\
 P E_{(p o s, 2 i+1)} &amp;=\cos \left(p o s / 10000^{2 i / d_{\text {model }}}\right.
 \end{aligned}
-\]
+\]<br>
 其中，\(pos\)指的是这个 word 在这个句子中的位置；\(2i\)指的是 embedding 词向量的偶数维度，\(2i+1\)指的是embedding 词向量的奇数维度。具体实现如下：</p>
 <figure class="highlight python"><figcaption><span>PositionalEncoding</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PositionalEncoding</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="string">"Implement the PE function."</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, d_model, dropout, max_len=<span class="number">5000</span>)</span>:</span></span><br><span class="line">        super(PositionalEncoding, self).__init__()</span><br><span class="line">        self.dropout = nn.Dropout(p=dropout)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Compute the positional encodings once in log space.</span></span><br><span class="line">        pe = torch.zeros(max_len, d_model)</span><br><span class="line">        position = torch.arange(<span class="number">0</span>, max_len).unsqueeze(<span class="number">1</span>) <span class="comment"># [max_len, 1]</span></span><br><span class="line">        div_term = torch.exp(torch.arange(<span class="number">0</span>, d_model, <span class="number">2</span>) * -(math.log(<span class="number">10000.0</span>) / d_model)) </span><br><span class="line">        pe[:, <span class="number">0</span>::<span class="number">2</span>] = torch.sin(position * div_term) <span class="comment"># 偶数列</span></span><br><span class="line">        pe[:, <span class="number">1</span>::<span class="number">2</span>] = torch.cos(position * div_term) <span class="comment"># 奇数列</span></span><br><span class="line">        pe = pe.unsqueeze(<span class="number">0</span>)         <span class="comment"># [1, max_len, d_model]</span></span><br><span class="line">        self.register_buffer(<span class="string">'pe'</span>, pe) <span class="comment"># 上述代码只需计算一次，然后放到寄存器里，随用随取。</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = x + Variable(self.pe[:, :x.size(<span class="number">1</span>)], </span><br><span class="line">                         requires_grad=<span class="literal">False</span>)</span><br><span class="line">        <span class="keyword">return</span> self.dropout(x) <span class="comment"># 据说dropout=0.1</span></span><br></pre></td></tr></table></figure>
 <p><code>x = x + Variable(self.pe[:, :x.size(1)], requires_grad=False)</code> 这行代码表示；输入模型的整个Embedding是Word Embedding与Positional Embedding直接相加之后的结果。</p>
@@ -374,10 +374,10 @@ P E_{(p o s, 2 i+1)} &amp;=\cos \left(p o s / 10000^{2 i / d_{\text {model }}}\r
 </ul>
 <p>即：</p>
 <p><img src="/2020/05/11/transformer/qkv.png" alt></p>
-<p>linear_k, linear_q, linear_v是相互独立、权重\(𝑊^𝑄,𝑊^𝐾,W^V\))是不同的，通过训练可得到。得到query(Q)，key(K)，value(V)之后按照下面的公式计算attention(Q, K, V)：
+<p>linear_k, linear_q, linear_v是相互独立、权重\(𝑊^𝑄,𝑊^𝐾,W^V\))是不同的，通过训练可得到。得到query(Q)，key(K)，value(V)之后按照下面的公式计算attention(Q, K, V)：<br>
 \[
 \text {Attention}(Q, K, V)=\text {Softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V
-\]
+\]<br>
 <img src="/2020/05/11/transformer/attention.png" alt></p>
 <p>这里<code>Z</code>就是<code>attention(Q, K, V)</code>，\(𝑑_𝑘=\frac{𝑑_{𝑚𝑜𝑑𝑒𝑙}}{ℎ}=\frac{512}{8}=64\)。</p>
 <ol>
@@ -405,7 +405,7 @@ P E_{(p o s, 2 i+1)} &amp;=\cos \left(p o s / 10000^{2 i / d_{\text {model }}}\r
 <figure class="highlight python"><figcaption><span>Norm</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LayerNorm</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="string">"Construct a layernorm module (See citation for details)."</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, features, eps=<span class="number">1e-6</span>)</span>:</span></span><br><span class="line">        super(LayerNorm, self).__init__()</span><br><span class="line">        self.a_2 = nn.Parameter(torch.ones(features)) </span><br><span class="line">        self.b_2 = nn.Parameter(torch.zeros(features)) </span><br><span class="line">        self.eps = eps</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        mean = x.mean(<span class="number">-1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">        std = x.std(<span class="number">-1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">return</span> self.a_2 * (x - mean) / (std + self.eps) + self.b_2</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><figcaption><span>Add</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SublayerConnection</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    A residual connection followed by a layer norm.</span></span><br><span class="line"><span class="string">    Note for code simplicity the norm is first as opposed to last.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, size, dropout)</span>:</span></span><br><span class="line">        super(SublayerConnection, self).__init__()</span><br><span class="line">        self.norm = LayerNorm(size)</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, sublayer)</span>:</span></span><br><span class="line">        <span class="string">"Apply residual connection to any sublayer with the same size."</span></span><br><span class="line">        <span class="comment"># sublayer &lt;-- encoder layer</span></span><br><span class="line">        <span class="keyword">return</span> x + self.dropout(sublayer(self.norm(x)))</span><br></pre></td></tr></table></figure>
 <h3 id="feed-forward-network">Feed-Forward Network</h3>
-<p>Feed-Forward Network可以细分为有两层，第一层是一个线性激活函数，第二层是激活函数是ReLU。可以表示为：
+<p>Feed-Forward Network可以细分为有两层，第一层是一个线性激活函数，第二层是激活函数是ReLU。可以表示为：<br>
 \[
 F F N=\max \left(0, x W_{1}+b_{1}\right) W_{2}+b_{2}
 \]</p>
@@ -470,10 +470,10 @@ F F N=\max \left(0, x W_{1}+b_{1}\right) W_{2}+b_{2}
 <p>使用torch text来创建batch。在torchtext的一个函数中创建batch，确保填充到最大batch训练长度的大小不超过阈值</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">global</span> max_src_in_batch, max_tgt_in_batch</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_size_fn</span><span class="params">(new, count, sofar)</span>:</span></span><br><span class="line">    <span class="string">"Keep augmenting batch and calculate total number of tokens + padding."</span></span><br><span class="line">    <span class="keyword">global</span> max_src_in_batch, max_tgt_in_batch</span><br><span class="line">    <span class="keyword">if</span> count == <span class="number">1</span>: </span><br><span class="line">        max_src_in_batch = <span class="number">0</span></span><br><span class="line">        max_tgt_in_batch = <span class="number">0</span></span><br><span class="line">    max_src_in_batch = max(max_src_in_batch,  len(new.src))</span><br><span class="line">    max_tgt_in_batch = max(max_tgt_in_batch,  len(new.trg) + <span class="number">2</span>)</span><br><span class="line">    src_elements = count * max_src_in_batch</span><br><span class="line">    tgt_elements = count * max_tgt_in_batch</span><br><span class="line">    <span class="keyword">return</span> max(src_elements, tgt_elements)</span><br></pre></td></tr></table></figure>
 <h2 id="optimizer">Optimizer</h2>
-<p>选择Adam作为优化器，其参数为\(\beta_1 = 0.9, \beta_2=0.98,\epsilon=10^{-9}\)。根据
+<p>选择Adam作为优化器，其参数为\(\beta_1 = 0.9, \beta_2=0.98,\epsilon=10^{-9}\)。根据<br>
 \[
 lrate = d_{model}^{- \frac{1}{2}} * min(step\_num^{- \frac{1}{2}},step\_num \cdot warmup\_steps^{-1.5})
-\]
+\]<br>
 在训练过程中改变了学习率。在<code>warm_up</code>中随步数线性地增加学习速率，随后与步数的反平方根成比例地减小它。预热<code>warmup_steps</code>为4000。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoamOpt</span>:</span></span><br><span class="line">    <span class="string">"Optim wrapper that implements rate."</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, model_size, factor, warmup, optimizer)</span>:</span></span><br><span class="line">        self.optimizer = optimizer</span><br><span class="line">        self._step = <span class="number">0</span></span><br><span class="line">        self.warmup = warmup</span><br><span class="line">        self.factor = factor</span><br><span class="line">        self.model_size = model_size</span><br><span class="line">        self._rate = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">step</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"Update parameters and rate"</span></span><br><span class="line">        self._step += <span class="number">1</span></span><br><span class="line">        rate = self.rate()</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> self.optimizer.param_groups:</span><br><span class="line">            p[<span class="string">'lr'</span>] = rate</span><br><span class="line">        self._rate = rate</span><br><span class="line">        self.optimizer.step()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rate</span><span class="params">(self, step = None)</span>:</span></span><br><span class="line">        <span class="string">"Implement `lrate` above"</span></span><br><span class="line">        <span class="keyword">if</span> step <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            step = self._step</span><br><span class="line">        <span class="comment"># 对应上面公式</span></span><br><span class="line">        <span class="keyword">return</span> self.factor * (self.model_size ** (<span class="number">-0.5</span>) * min(step ** (<span class="number">-0.5</span>), step * self.warmup ** (<span class="number">-1.5</span>)))</span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_std_opt</span><span class="params">(model)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> NoamOpt(model.src_embed[<span class="number">0</span>].d_model, <span class="number">2</span>, <span class="number">4000</span>,torch.optim.Adam(model.parameters(), lr=<span class="number">0</span>, betas=(<span class="number">0.9</span>, <span class="number">0.98</span>), eps=<span class="number">1e-9</span>))</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">opts = [NoamOpt(<span class="number">512</span>, <span class="number">1</span>, <span class="number">4000</span>, <span class="literal">None</span>), </span><br><span class="line">        NoamOpt(<span class="number">512</span>, <span class="number">1</span>, <span class="number">8000</span>, <span class="literal">None</span>),</span><br><span class="line">        NoamOpt(<span class="number">256</span>, <span class="number">1</span>, <span class="number">4000</span>, <span class="literal">None</span>)]</span><br><span class="line">plt.plot(np.arange(<span class="number">1</span>, <span class="number">20000</span>), [[opt.rate(i) <span class="keyword">for</span> opt <span class="keyword">in</span> opts] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20000</span>)])</span><br><span class="line">plt.legend([<span class="string">"512:4000"</span>, <span class="string">"512:8000"</span>, <span class="string">"256:4000"</span>])</span><br></pre></td></tr></table></figure>
@@ -486,11 +486,11 @@ lrate = d_{model}^{- \frac{1}{2}} * min(step\_num^{- \frac{1}{2}},step\_num \cdo
 <h2 id="regularization">Regularization</h2>
 <h3 id="label-smoothing">Label Smoothing</h3>
 <h4 id="bei-jing-jie-shao">背景介绍</h4>
-<p>在多分类训练任务中，输入经过神级网络的计算，会得到当前输入对应于各个类别的置信度分数，这些分数会被softmax进行归一化处理，最终得到当前输入属于每个类别的概率。
+<p>在多分类训练任务中，输入经过神级网络的计算，会得到当前输入对应于各个类别的置信度分数，这些分数会被softmax进行归一化处理，最终得到当前输入属于每个类别的概率。<br>
 \[
 q_{i}=\frac{\exp \left(z_{i}\right)}{\sum_{j=1}^{K} \exp \left(z_{j}\right)}
-\]
-之后在使用交叉熵函数来计算损失值：
+\]<br>
+之后在使用交叉熵函数来计算损失值：<br>
 \[
 \begin{aligned}
 &amp;L o s s=-\sum_{i=1}^{K} p_{i} \log q_{i}\\
@@ -499,19 +499,19 @@ q_{i}=\frac{\exp \left(z_{i}\right)}{\sum_{j=1}^{K} \exp \left(z_{j}\right)}
 0, i f(i \neq y)
 \end{array}\right.
 \end{aligned}
-\]
+\]<br>
 其中，i表示多类中的某一类。</p>
-<p>最终在训练网络时，最小化预测概率和标签真实概率的交叉熵，从而得到最优的预测概率分布。在此过程中，为了达到最好的拟合效果，最优的预测概率分布为：
+<p>最终在训练网络时，最小化预测概率和标签真实概率的交叉熵，从而得到最优的预测概率分布。在此过程中，为了达到最好的拟合效果，最优的预测概率分布为：<br>
 \[
 Z_{i}=\left\{\begin{array}{l}
 +\infty, i f(i=y) \\
 0, i f(i \neq y)
 \end{array}\right.
-\]
+\]<br>
 也就是说，网络会驱使自身往正确标签和错误标签差值大的方向学习，在训练数据不足以表征所以的样本特征的情况下，就<strong>会导致网络过拟合</strong>。</p>
 <h4 id="label-smoothing-yuan-li">label smoothing原理</h4>
 <p>label smoothing的提出就是为了解决上述问题，是一种正则化的策略。其通过&quot;软化&quot;传统的one-hot类型标签，使得在计算损失值时能够有效抑制过拟合现象。label smoothing相当于减少真实样本标签的类别在计算损失函数时的权重，最终起到抑制过拟合的效果。</p>
-<p>1.label smoothing将真实概率分布作如下改变：
+<p>1.label smoothing将真实概率分布作如下改变：<br>
 \[
 P_{i}=\left\{\begin{array}{l}
 1, i f(i=y) \\
@@ -520,16 +520,16 @@ P_{i}=\left\{\begin{array}{l}
 (1-\varepsilon), i f(i=y) \\
 \frac{\varepsilon}{K-1}, i f(i \neq y)
 \end{array}\right.\right.
-\]
+\]<br>
 其实更新后的分布就相当于往真实分布中加入了噪声，为了便于计算，该噪声服从简单的均匀分布。</p>
-<p>2.与之对应，label smoothing将交叉熵损失函数作如下改变：
+<p>2.与之对应，label smoothing将交叉熵损失函数作如下改变：<br>
 \[
 L o s s=-\sum_{i=1}^{K} p_{i} \log q_{i} \Longrightarrow \operatorname{Loss}_{i}=\left\{\begin{array}{l}
 (1-\varepsilon)^{*} \operatorname{Loss}, \text {if}(i=y) \\
 \varepsilon^{*} \operatorname{Loss}, \text {if}(i \neq y)
 \end{array}\right.
-\]
-3.与之对应，label smoothing将最优的预测概率分布作如下改变：
+\]<br>
+3.与之对应，label smoothing将最优的预测概率分布作如下改变：<br>
 \[
 Z_{i}=\left\{\begin{array}{l}
 +\infty, i f(i=y) \\

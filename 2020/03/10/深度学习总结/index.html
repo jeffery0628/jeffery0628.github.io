@@ -344,7 +344,7 @@
 <p>神经网络中经常需要<strong>大量</strong>变量,因此采用<strong>梯度下降法</strong>来计算代价函数最小值:重复计算梯度,然后沿着<strong>相反</strong>的方向移动\(v \rightarrow v^{\prime}=v-\eta \nabla C\)</p>
 </li>
 <li>
-<p>假如需要计算每个训练输入的梯度值,训练速度会相当缓慢.因此引入了<strong>随机梯度下降</strong>,只计算小批量数据(mini-batch)的梯度值来求平均值
+<p>假如需要计算每个训练输入的梯度值,训练速度会相当缓慢.因此引入了<strong>随机梯度下降</strong>,只计算小批量数据(mini-batch)的梯度值来求平均值<br>
 \[
 \begin{aligned}
 w_{k} \rightarrow w_{k}^{\prime} &amp;=w_{k}-\frac{\eta}{m} \sum_{j} \frac{\partial C_{X_{j}}}{\partial w_{k}} \\
@@ -380,7 +380,7 @@ b_{l} \rightarrow b_{l}^{\prime} &amp;=b_{l}-\frac{\eta}{m} \sum_{j} \frac{\part
 </li>
 <li>
 <p>使用下一层的误差来表示当前层的误差:\(\delta^{l}=\left(\left(w^{l+1}\right)^{T} \delta^{l+1}\right) \odot \sigma^{\prime}\left(z^{l}\right)\)</p>
-<p>由递推公式
+<p>由递推公式<br>
 \[
 \begin{aligned}
 \frac{\partial  C}{\partial  z^l_j} &amp;=\delta^l_j \\
@@ -442,25 +442,25 @@ b_{l} \rightarrow b_{l}^{\prime} &amp;=b_{l}-\frac{\eta}{m} \sum_{j} \frac{\part
 </ol>
 <h3 id="xun-huan-shen-jing-wang-luo">循环神经网络</h3>
 <h4 id="rnn">RNN</h4>
-<p>对于前馈神经网络来说其公式：
+<p>对于前馈神经网络来说其公式：<br>
 \[
 O=f(W*X+b)
-\]
+\]<br>
 其中\(W\)和\(b\)是模型的参数，\(X\)是当前的输入，\(f(·)\)是激活函数，\(*\)是矩阵乘法，\(O\)是当前的输出。即输出等于输入经过线性与非线性映射后的结果。</p>
-<p>而RNN通过将前一时刻的运算结果添加到当前的运算中，从而实现了“考虑上文信息”的功能。
+<p>而RNN通过将前一时刻的运算结果添加到当前的运算中，从而实现了“考虑上文信息”的功能。<br>
 \[
 \mathrm{O}_{\mathrm{t}}=\mathrm{f}\left(\mathrm{X} * \mathrm{W}+\mathrm{O}_{\mathrm{t}-1} * \mathrm{V}+\mathrm{b}\right)
-\]
+\]<br>
 其中\(W,V,b\)是模型的参数，下标\(t\)代表当前的序列位置／时间点，\(t-1\)代表上个位置/上个时间点，\(X\)是当前的输入，\(f(·)\)是激活函数，\(*\)是矩阵乘法，\(O\)是模型输出。</p>
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/rnn.png" alt="avatar"></p>
 <p>BiRnn:RNN可以考虑上文的信息，那么如何将下文的信息也添加进去呢？这就是BiRNN要做的事情。</p>
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/birnn.png" alt="avatar"></p>
 <h5 id="rnn-cun-zai-de-wen-ti">RNN存在的问题</h5>
-<p>首先，从RNN的前向过程来看，可以认为它只有一层权重矩阵W（先不管V）。由此可见从深层的角度去看RNN的前向过程，就可以认为RNN是<strong>各个层的权重矩阵相同</strong>的深层网络。忽略V和激活函数，就可以近似的认为网络一共有T层（T等于序列的长度），那么第t层的输出就是连乘t次W，也就是\(W^t\)！,由于<strong>矩阵可以用它的特征值矩阵和特征向量矩阵去近似</strong>，即
+<p>首先，从RNN的前向过程来看，可以认为它只有一层权重矩阵W（先不管V）。由此可见从深层的角度去看RNN的前向过程，就可以认为RNN是<strong>各个层的权重矩阵相同</strong>的深层网络。忽略V和激活函数，就可以近似的认为网络一共有T层（T等于序列的长度），那么第t层的输出就是连乘t次W，也就是\(W^t\)！,由于<strong>矩阵可以用它的特征值矩阵和特征向量矩阵去近似</strong>，即<br>
 \[
 W = V diag(\lambda) V^{-1}  \\
 W^t = (V diag(\lambda) V^{-1})(V diag(\lambda) V^{-1})\cdots(V diag(\lambda) V^{-1})=V{ diag(\lambda)}^t V^{-1}
-\]
+\]<br>
 也就是说，**特征值矩阵中的每个特征值都会随着t的增大发生指数级变化！**所以某个特征值大于1时，就容易导致这个维度的值爆炸性增长；当特征值小于1时，会就会导致这个维度的值指数级速度衰减为0！</p>
 <p>前向过程如此，误差反向传播的过程也必然近似为输出层的误差会乘以\(W^t\)来得到倒数第t层的梯度，然而由于刚各个维度不是指数级衰减就是指数级爆炸，很容易看出当更新RNN的靠前的层的时候（即离着输出层较远的那些层，或者说与序列末端离得远的位置），计算出的梯度要么大的吓人，要么小的忽略。小的忽略的值不会对W的更新有任何指导作用，大的吓人的值一下子就把W中的某些值弄的大的吓人了，害得前面的优化都白做了。</p>
 <p>一个很简单的想法是进行<strong>梯度截断</strong>，在优化RNN的参数的时候，给梯度值设置一个上限。但是这样显然就会导致模型难以再顾及很靠前的历史信息了，因此理论上RNN可以保存任意长的历史信息来辅助当前时间点的决策，然而由于在优化时（训练RNN时），梯度无法准确合理的传到很靠前的时间点，因此RNN实际上只能记住并不长的序列信息（在NLP中，经验上认为序列大于30的时候，RNN基本记不住多于30的部分，而从多于10的位置开始就变得记性很差了），因此RNN相比前馈网络，可以记住的历史信息要长一些，但是无法记住长距离的信息（比如段落级的序列甚至篇章级的序列，用RNN就鸡肋了）。</p>
@@ -516,10 +516,10 @@ W^t = (V diag(\lambda) V^{-1})(V diag(\lambda) V^{-1})\cdots(V diag(\lambda) V^{
 </ol>
 <h4 id="word-2-vec">word2vec</h4>
 <h5 id="strong-c-bo-w-mo-xing-strong"><strong>CBoW模型</strong></h5>
-<p>CBOW是已知上下文，估算当前词语的语言模型。其学习目标是最大化对数似然函数：
+<p>CBOW是已知上下文，估算当前词语的语言模型。其学习目标是最大化对数似然函数：<br>
 \[
 \mathcal{L}=\sum_{w \in \mathcal{C}} \log p(w | \text {Context}(w))
-\]
+\]<br>
 其中，w表示语料库C中任意一个词。</p>
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/CBOW.png" alt="avatar"></p>
 <ol>
@@ -527,7 +527,7 @@ W^t = (V diag(\lambda) V^{-1})(V diag(\lambda) V^{-1})\cdots(V diag(\lambda) V^{
 <li><strong>投影层</strong>对其求和，所谓求和，就是简单的向量加法。</li>
 <li><strong>输出层</strong>输出最可能的w。由于语料库中词汇量是固定的|C|个，所以上述过程其实可以看做一个多分类问题。给定特征，从|C|个分类中挑一个。</li>
 </ol>
-<p>对于神经网络模型多分类，最朴素的做法是softmax回归：
+<p>对于神经网络模型多分类，最朴素的做法是softmax回归：<br>
 \[
 h_{\theta}\left(x^{(i)}\right)=\left[\begin{array}{c}
 p\left(y^{(i)}=1 | x^{(i)} ; \theta\right) \\
@@ -542,12 +542,12 @@ e^{\theta_{k}^{T} x^{(i)}}
 \end{array}\right]
 \]</p>
 <h5 id="skip-gram-mo-xing">skip-gram模型</h5>
-<p><strong>target word对context的预测中学习word vector</strong>
+<p><strong>target word对context的预测中学习word vector</strong><br>
 \[
 p(\text {Context}(w) | w)=\prod_{u \in \text {Context}(w)} p(u | w)
 \]</p>
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/skipgram.png" alt="avatar"></p>
-<p>如何将Skip-gram模型的前向计算过程写成数学形式，我们得到：
+<p>如何将Skip-gram模型的前向计算过程写成数学形式，我们得到：<br>
 \[
 p\left(w_{o} | w_{i}\right)=\frac{e^{U_{o} \cdot V_{i}}}{\sum_{j} e^{U_{j} V_{i}}}
 \]</p>
@@ -567,7 +567,7 @@ p\left(w_{o} | w_{i}\right)=\frac{e^{U_{o} \cdot V_{i}}}{\sum_{j} e^{U_{j} V_{i}
 <li>\(d^w_2,d^w_3,\cdots,d^w_{l^w} \in {0,1}\)词w的编码，\(d^w_j\)表示路径\(p^w\)第j个节点对应的编码（根节点无编码）</li>
 <li>\(\theta^w_1,\theta^w_2,\cdots,\theta^w_{l^w-1} \in R^m\)路径\(p^w\)中非叶节点对应的参数向量</li>
 </ol>
-<p>于是可以给出\(w\)的条件概率：
+<p>于是可以给出\(w\)的条件概率：<br>
 \[
 p(w | \text { Context }(w))=\prod_{j=2}^{l^{w}} p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)
 \]</p>
@@ -577,105 +577,105 @@ p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)=\left\{\begin{array}{
 \sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right), &amp; d_{j}^{w}=0 \\
 1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right), &amp; d_{j}^{w}=1
 \end{array}\right.
-\]
-考虑到d只有0和1两种取值，我们可以用指数形式方便地将其写到一起：
+\]<br>
+考虑到d只有0和1两种取值，我们可以用指数形式方便地将其写到一起：<br>
 \[
 p\left(d_{j}^{w} | \mathbf{x}_{w}, \theta_{j-1}^{w}\right)=\left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]^{1-d^w_{j}} \cdot\left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]^{d^w_{j}}
-\]
-我们的目标函数取对数似然：
+\]<br>
+我们的目标函数取对数似然：<br>
 \[
 \mathcal{L}=\sum_{w \in \mathcal{C}} \log p(w | \text { Context }(w))
-\]
-将\(p(w|Context(w))\)代入上式，有
+\]<br>
+将\(p(w|Context(w))\)代入上式，有<br>
 \[
 \begin{aligned}
 \mathcal{L} &amp;=\sum_{w \in \mathcal{C}} \log \prod_{j=2}^{l^{w}}\left\{\left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]^{1-d_{j}^{v}} \cdot\left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]^{d_{j}}\right\} \\
 &amp;=\sum_{w \in \mathcal{C}} \sum_{j=2}^{l^{w}}\left\{\left(1-d_{j}^{w}\right) \cdot \log \left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]+d_{j}^{w} \cdot \log \left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]\right\}
 \end{aligned}
-\]
-这也很直白，连乘的对数换成求和。不过还是有点长，我们把每一项简记为：
+\]<br>
+这也很直白，连乘的对数换成求和。不过还是有点长，我们把每一项简记为：<br>
 \[
 \mathcal{L}(w, j)=\left(1-d_{j}^{w}\right) \cdot \log \left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]+d_{j}^{w} \cdot \log \left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]
-\]
+\]<br>
 怎么最大化对数似然函数呢？分别最大化每一项即可（这应该是一种近似，最大化某一项不一定使整体增大，具体收敛的证明还不清楚）。怎么最大化每一项呢？先求函数对每个变量的偏导数，对每一个样本，代入偏导数表达式得到函数在该维度的增长梯度，然后让对应参数加上这个梯度，函数在这个维度上就增长了。</p>
-<p>每一项有两个参数，一个是每个节点的参数向量\(\theta^w_{j-1}\)，另一个是输出层的输入\(X_w\)，我们分别对其求偏导数：
+<p>每一项有两个参数，一个是每个节点的参数向量\(\theta^w_{j-1}\)，另一个是输出层的输入\(X_w\)，我们分别对其求偏导数：<br>
 \[
 \frac{\partial \mathcal{L}(w, j)}{\partial \theta_{j-1}^{w}}=\frac{\partial}{\partial \theta_{j-1}^{w}}\left\{\left(1-d_{j}^{w}\right) \cdot \log \left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]+d_{j}^{w} \cdot \log \left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]\right\}
-\]
-因为sigmoid函数的导数有个很棒的形式：
+\]<br>
+因为sigmoid函数的导数有个很棒的形式：<br>
 \[
 \sigma^{\prime}(x)=\sigma(x)[1-\sigma(x)]
-\]
-于是代入上上式得到：
+\]<br>
+于是代入上上式得到：<br>
 \[
 \left(1-d_{j}^{w}\right)\left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \mathbf{x}_{w}-d_{j}^{w} \sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right) \mathbf{x}_{w}
-\]
-合并同类项得到：
+\]<br>
+合并同类项得到：<br>
 \[
 \left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \mathbf{x}_{w}
-\]
-于是\(\theta^w_{j-1}\)的更新表达式就得到了：
+\]<br>
+于是\(\theta^w_{j-1}\)的更新表达式就得到了：<br>
 \[
 \theta_{j-1}^{w}:=\theta_{j-1}^{w}+\eta\left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \mathbf{x}_{w}
-\]
+\]<br>
 再来\(X_w\)的偏导数，注意到\(\mathcal{L}(w, j)=\left(1-d_{j}^{w}\right) \cdot \log \left[\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]+d_{j}^{w} \cdot \log \left[1-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right]\)中\(X_w\)和\(\theta^w_{j-1}\)是对称的，所有直接将\(\theta^w_{j-1}\)的偏导数中的\(\theta^w_{j-1}\)替换为\(X_w\)，得到关于\(X_w\)的偏导数：</p>
 <p>\[
 \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}=\left[1-d_{j}^{w}-\sigma\left(\mathbf{x}_{w}^{\top} \theta_{j-1}^{w}\right)\right] \theta_{j-1}^{w}
 \]</p>
-<p>不过\(X_w\)是上下文的词向量的和，不是上下文单个词的词向量。怎么把这个更新量应用到单个词的词向量上去呢？word2vec采取的是直接将\(X_w\)的更新量整个应用到每个单词的词向量上去：
+<p>不过\(X_w\)是上下文的词向量的和，不是上下文单个词的词向量。怎么把这个更新量应用到单个词的词向量上去呢？word2vec采取的是直接将\(X_w\)的更新量整个应用到每个单词的词向量上去：<br>
 \[
 \mathbf{v}(\tilde{w}):=\mathbf{v}(\tilde{w})+\eta \sum_{j=2}^{l^{w}} \frac{\partial \mathcal{L}(w, j)}{\partial \mathbf{x}_{w}}, \quad \tilde{w} \in \text { Context }(w)
-\]
+\]<br>
 其中，\(V(\tilde w)\)代表上下文中某一个单词的词向量。</p>
 <h4 id="glove">glove</h4>
 <p>CBOW和skip-gram虽然可以很好地进行词汇类比，但是因为这两种方法是基于一个个局部的上下文窗口方法，因此，没有有效地利用全局的词汇共现统计信息。为了克服全局矩阵分解和局部上下文窗口的缺陷，GloVe方法基于全局词汇共现的统计信息来学习词向量，从而将统计信息与局部上下文窗口方法的优点都结合起来，并发现其效果确实得到了提升。</p>
 <h5 id="li-zi">例子</h5>
-<p>假设i=ice,j=steam并对k取不同的词汇，如“solid”，“gas”，“water”，“fashion”，根据上面的定义，我们分别计算他们的概率\(P(k∣ice)\)、\(P(k∣steam)\)，并计算两者的比率\(P(k∣ice)/P(k∣steam)\)，可以发现，对于“solid”，其出现在“ice”上下文的概率应该比较大，出现在“steam”上下文的概率应该比较小，因此，他们的比值应该是一个比较大的数，在下表中是8.9，而对于“gas”，出现在“ice”上下文的概率应该比较小，而出现在“steam”上下文的概率应该比较大，因此，两者的比值应该是一个比较小的数，在下表中是\(8.5×10^{-2}\) ，而对于“water、fashion”这两个词汇，他们与“ice”和steam“的相关性应该比较小，因此，他们的比值应该都是接近1。因此，这样来看可以发现，比值\(P(k∣ice)/P(k∣steam)\)在一定程度上可以反映词汇之间的相关性，当相关性比较低时，其值应该在1附近，当相关性比较高时，比值应该偏离1比较远。
+<p>假设i=ice,j=steam并对k取不同的词汇，如“solid”，“gas”，“water”，“fashion”，根据上面的定义，我们分别计算他们的概率\(P(k∣ice)\)、\(P(k∣steam)\)，并计算两者的比率\(P(k∣ice)/P(k∣steam)\)，可以发现，对于“solid”，其出现在“ice”上下文的概率应该比较大，出现在“steam”上下文的概率应该比较小，因此，他们的比值应该是一个比较大的数，在下表中是8.9，而对于“gas”，出现在“ice”上下文的概率应该比较小，而出现在“steam”上下文的概率应该比较大，因此，两者的比值应该是一个比较小的数，在下表中是\(8.5×10^{-2}\) ，而对于“water、fashion”这两个词汇，他们与“ice”和steam“的相关性应该比较小，因此，他们的比值应该都是接近1。因此，这样来看可以发现，比值\(P(k∣ice)/P(k∣steam)\)在一定程度上可以反映词汇之间的相关性，当相关性比较低时，其值应该在1附近，当相关性比较高时，比值应该偏离1比较远。<br>
 <img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/glove.png" alt="avatar"></p>
 <h5 id="yuan-li">原理</h5>
-<p>基于这样的思想，作者提出了这样一种猜想，能不能通过训练词向量，使得词向量经过某种函数计算之后可以得到上面的比值，具体如下：
+<p>基于这样的思想，作者提出了这样一种猜想，能不能通过训练词向量，使得词向量经过某种函数计算之后可以得到上面的比值，具体如下：<br>
 \[
 F\left(w_{i}, w_{j}, \tilde{w}_{k}\right)=\frac{P_{i k}}{P_{j k}}
 \]</p>
-<p>其中，\(w_i\),\(w_j\),\(\tilde{w}_{k}\) 为词汇i,j,k对应的词向量，其维度都为d，而\(P_{ik}\)，\(P_{jk}\) 则可以直接通过语料计算得到，这里F为一个未知的函数。由于词向量都是在一个线性向量空间，因此，可以对\(w_i\),\(w_j\)进行差分，将上式转变为如下：
+<p>其中，\(w_i\),\(w_j\),\(\tilde{w}_{k}\) 为词汇i,j,k对应的词向量，其维度都为d，而\(P_{ik}\)，\(P_{jk}\) 则可以直接通过语料计算得到，这里F为一个未知的函数。由于词向量都是在一个线性向量空间，因此，可以对\(w_i\),\(w_j\)进行差分，将上式转变为如下：<br>
 \[
 F\left(w_{i}-w_{j}, \tilde{w}_{k}\right)=\frac{P_{i k}}{P_{j k}}
-\]
-由于上式中左侧括号中是两个维度为d的词向量，而右侧是一个标量，因此，很容易会想到向量的内积，因此，上式可以进一步改变为:
+\]<br>
+由于上式中左侧括号中是两个维度为d的词向量，而右侧是一个标量，因此，很容易会想到向量的内积，因此，上式可以进一步改变为:<br>
 \[
 F\left(\left(w_{i}-w_{j}\right)^{T} \tilde{w}_{k}\right)=F\left(w_{i}^{T} w_{k}-w_{j}^{T} w_{k}\right)=\frac{P_{i k}}{P_{j k}}
-\]
-由于上式中左侧是一种减法，而右侧是一种除法，很容易联想到指数计算，因此，可以把F限定为指数函数，此时有：
+\]<br>
+由于上式中左侧是一种减法，而右侧是一种除法，很容易联想到指数计算，因此，可以把F限定为指数函数，此时有：<br>
 \[
 \exp \left(w_{i}^{T} w_{k}-w_{j}^{T} w_{k}\right)=\frac{\exp \left(w_{i}^{T} w_{k}\right)}{\exp \left(w_{j}^{T} w_{k}\right)}=\frac{P_{i k}}{P_{j k}}
-\]
-因此，此时只要确保等式两边分子分母相等即可，即：
+\]<br>
+因此，此时只要确保等式两边分子分母相等即可，即：<br>
 \[
 \exp \left(w_{i}^{T} w_{k}\right)=P_{i k}, \exp \left(w_{j}^{T} w_{k}\right)=P_{j k}
-\]
-进一步的，可以转化为对语料中的所有词汇，考察\(exp(w^T_iw_k)\)=\(P_{ik}\)=\(\frac{X_{ik}}{X_i}\) ，即：
+\]<br>
+进一步的，可以转化为对语料中的所有词汇，考察\(exp(w^T_iw_k)\)=\(P_{ik}\)=\(\frac{X_{ik}}{X_i}\) ，即：<br>
 \[
 w_{i}^{T} w_{k}=\log \left(\frac{X_{i k}}{X_{i}}\right)=\log X_{i k}-\log X_{i}
-\]
-由于上式左侧\(w^T_iw_k\)中，调换i和k的值不会改变其结果，即具有对称性，因此，为了确保等式右侧也具备对称性，引入了两个偏置项，即
+\]<br>
+由于上式左侧\(w^T_iw_k\)中，调换i和k的值不会改变其结果，即具有对称性，因此，为了确保等式右侧也具备对称性，引入了两个偏置项，即<br>
 \[
 w_{i}^{T} w_{k}=\log X_{i k}-b_{i}-b_{k}
-\]
-此时，\(logX_i\)已经包含在\(bi\)当中。因此，此时模型的目标就转化为通过学习词向量的表示，使得上式两边尽量接近，因此，可以通过计算两者之间的平方差来作为目标函数，即：
+\]<br>
+此时，\(logX_i\)已经包含在\(bi\)当中。因此，此时模型的目标就转化为通过学习词向量的表示，使得上式两边尽量接近，因此，可以通过计算两者之间的平方差来作为目标函数，即：<br>
 \[
 J=\sum_{i, k=1}^{V}\left(w_{i}^{T} \tilde{w}_{k}+b_{i}+b_{k}-\log X_{i k}\right)^{2}
-\]
-但是这样的目标函数有一个缺点，就是对所有的共现词汇都是采用同样的权重，因此，作者对目标函数进行了进一步的修正，通过语料中的词汇共现统计信息来改变他们在目标函数中的权重，具体如下：
+\]<br>
+但是这样的目标函数有一个缺点，就是对所有的共现词汇都是采用同样的权重，因此，作者对目标函数进行了进一步的修正，通过语料中的词汇共现统计信息来改变他们在目标函数中的权重，具体如下：<br>
 \[
 J=\sum_{i, k=1}^{V} f\left(X_{i k}\right)\left(w_{i}^{T} \tilde{w}_{k}+b_{i}+b_{k}-\log X_{i k}\right)^{2}
-\]
+\]<br>
 这里\(V\)表示词汇的数量，并且权重函数\(f\)必须具备以下的特性</p>
 <ul>
 <li>\(f(0)=0\)，当词汇共现的次数为0时，此时对应的权重应该为0。</li>
 <li>f(x)必须是一个非减函数，这样才能保证当词汇共现的次数越大时，其权重不会出现下降的情况。</li>
 <li>对于那些太频繁的词，\(f(x)\)应该能给予他们一个相对小的数值，这样才不会出现过度加权。</li>
 </ul>
-<p>综合以上三点特性，作者提出了下面的权重函数：
+<p>综合以上三点特性，作者提出了下面的权重函数：<br>
 \[
 f(x)=\left\{\begin{array}{cc}
 \left(x / x_{\max }\right)^{\alpha} &amp; \text { if } x&lt;x_{\max } \\
@@ -696,15 +696,15 @@ f(x)=\left\{\begin{array}{cc}
 <p>在进行有监督的NLP任务时，可以将ELMo直接当做特征拼接到具体任务模型的词向量输入或者是模型的最高层表示上。不像传统的词向量，每一个词只对应一个词向量，ELMo利用预训练好的双向语言模型，然后根据具体输入从该语言模型中可以得到上下文依赖的当前词表示（<strong>对于不同上下文的同一个词的表示是不一样的</strong>），再当成特征加入到具体的NLP有监督模型里。</p>
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/emlo_embedding.png" alt="avatar"></p>
 <p>EMLO使用的是一个<strong>双向的LSTM语言模型</strong>，由一个前向和一个后向语言模型构成，目标函数就是取这两个方向语言模型的最大似然。</p>
-<p>前向LSTM结构：
+<p>前向LSTM结构：<br>
 \[
 p\left(t_{1}, t_{2}, \ldots, t_{N}\right)=\prod_{k=1}^{N} p\left(t_{k} | t_{1}, t_{2}, \ldots, t_{k-1}\right)
-\]
-反向LSTM结构：
+\]<br>
+反向LSTM结构：<br>
 \[
 p\left(t_{1}, t_{2}, \ldots, t_{N}\right)=\prod_{k=1}^{N} p\left(t_{k} | t_{k+1}, t_{k+2}, \ldots, t_{N}\right)
-\]
-最大似然函数：
+\]<br>
+最大似然函数：<br>
 \[
 \sum_{k=1}^{N}\left(\log p\left(t_{k} | t_{1}, t_{2}, \ldots, t_{k-1}\right)+\log p\left(t_{k} | t_{k+1}, t_{k+2}, \ldots, t_{N}\right)\right)
 \]</p>
@@ -719,7 +719,7 @@ p\left(t_{1}, t_{2}, \ldots, t_{N}\right)=\prod_{k=1}^{N} p\left(t_{k} | t_{k+1}
 <p><img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/gpt_2.png" alt="avatar"></p>
 <h5 id="masked-attention">Masked Attention</h5>
 <p>在transformer中，Encoder因为要编码整个句子，所以每个词都需要考虑上下文的关系。所以每个词在计算的过程中都是可以看到句子中所有的词的。但是Decoder与Seq2Seq中的解码器类似，每个词都只能看到前面词的状态，所以是一个单向的Self-Attention结构。Masked Attention的实现也非常简单，只要在普通的Self Attention的Softmax步骤之前，与按位乘上一个下三角矩阵M就好了</p>
-<p>attention：
+<p>attention：<br>
 \[
 \begin{aligned}
 Q &amp;=X W_{Q} \\
@@ -727,8 +727,8 @@ K &amp;=X W_{K} \\
 V &amp;=X W_{V} \\
 \text {Attention}(Q, K, V) &amp;=\operatorname{Softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V
 \end{aligned}
-\]
-masked-attention
+\]<br>
+masked-attention<br>
 \[
 \text { Attention }(Q, K, V)=\operatorname{Softmax}\left(\frac{Q K^{T} \Theta M}{\sqrt{d_{k}}}\right) V
 \]</p>
@@ -786,7 +786,7 @@ masked-attention
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model_class, tokenizer_class, pretrained_weights = (ppb.DistilBertModel, ppb.DistilBertTokenizer, <span class="string">'distilbert-base-uncased'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Want BERT instead of distilBERT? Uncomment the following line:</span></span><br><span class="line"><span class="comment">#model_class, tokenizer_class, pretrained_weights = (ppb.BertModel, ppb.BertTokenizer, 'bert-base-uncased')# </span></span><br><span class="line"></span><br><span class="line">Load pretrained model/tokenizertokenizer = tokenizer_class.from_pretrained(pretrained_weights)</span><br><span class="line">model = model_class.from_pretrained(pretrained_weights)</span><br></pre></td></tr></table></figure>
 <ol start="3">
-<li>tokenize：分词+[cls]+[sep]
+<li>tokenize：分词+[cls]+[sep]<br>
 <img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/bert_tokenize.png" alt="avatar"></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer.encode(<span class="string">"a visually stunning rumination on love"</span>, add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
@@ -822,16 +822,16 @@ masked-attention
 <img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/multi-head.png" alt="avatar" style="zoom:67%;">
 <img src="/2020/03/10/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/multi-head-1.png" alt="avatar">
 <h4 id="encoder">encoder</h4>
-<p>Encoder由N=6个相同的layer组成，layer指的就是上图左侧的单元，最左边有个“Nx”，这里是x6个。每个Layer由两个sub-layer组成，分别是multi-head self-attention mechanism和fully connected feed-forward network。其中每个sub-layer都加了residual connection和normalisation，因此可以将sub-layer的输出表示为：
+<p>Encoder由N=6个相同的layer组成，layer指的就是上图左侧的单元，最左边有个“Nx”，这里是x6个。每个Layer由两个sub-layer组成，分别是multi-head self-attention mechanism和fully connected feed-forward network。其中每个sub-layer都加了residual connection和normalisation，因此可以将sub-layer的输出表示为：<br>
 \[
 sub_layer_output=LayerNorm(x+(\text {SubLayer}(x)))
 \]</p>
 <h5 id="multi-head-self-attention-1">Multi-head self-attention</h5>
-<p>由于attention：
+<p>由于attention：<br>
 \[
 attention_output=Attention(Q, K, V)
-\]
-multi-head attention则是通过h个不同的<strong>线性变换</strong>对Q，K，V进行投影，最后将不同的attention结果拼接起来：
+\]<br>
+multi-head attention则是通过h个不同的<strong>线性变换</strong>对Q，K，V进行投影，最后将不同的attention结果拼接起来：<br>
 \[
 \begin{array}{l}\text { MultiHead(Q,K,V)}= Concat(head_1,\ldots,head_h)W^{O}  \\ head_i = Attention(QW_i\left.^{Q}, K W_{i}^{K}, V W_{i}^{V}\right) \\ \text { Attention }(Q, K, V)=\operatorname{softmax}\left(\frac{Q K^{T}}{\sqrt{d_{k}}}\right) V\end{array}
 \]</p>

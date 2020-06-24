@@ -306,7 +306,7 @@
 <p>函数中\(t\)无论取什么值，其结果都在\([0,1]\)的区间内，一个分类问题就有两种答案，一种是“是”，一种是“否”，那0对应着“否”，1对应着“是”，假设分类的<strong>阈值</strong>是0.5，那么超过0.5的归为1分类，低于0.5的归为0分类，阈值是可以自己设定的。把\(w \ast x + b\)带入t中就得到了逻辑回归的一般模型方程：</p>
 <p>\[
 H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
-\]
+\]<br>
 结果可以理解为概率，概率大于0.5的属于1分类，概率小于0.5的属于0分类，这样就达到了分类的目的。</p>
 <h2 id="sun-shi-han-shu-shi-shi-yao">损失函数是什么</h2>
 <p>逻辑回归的损失函数是 <strong>log loss</strong>，也就是<strong>对数似然函数</strong>，函数公式如下：</p>
@@ -317,18 +317,18 @@ H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 \end{aligned}\right.
 \]</p>
 <p>公式中的 \(y=1\) 表示的是真实值为1时用第一个公式，真实 \(y=0\) 用第二个公式计算损失。当真实样本为\(y=1\)时，但\(h=0\)概率，那么\(log0=\infty\)，这就对模型最大的惩罚力度；当真实样本\(y=1\)，并且\(h=1\)时，那么\(log1=0\)，相当于没有惩罚，也就是没有损失，达到最优结果。</p>
-<p>上面公式也可以表示成：
+<p>上面公式也可以表示成：<br>
 \[
 \begin{aligned} L(w) &amp;=\sum_{i=1}^{N}\left[y_{i} \log \pi\left(x_{i}\right)+\left(1-y_{i}\right)\log\left(1-\pi\left(x_{i}\right)\right)\right]\\ &amp;=\sum_{i=1}^{N}\left[y_{i} \log \frac{\pi\left(x_{i}\right)}{1-\pi\left(x_{i}\right)}+\log \left(1-\pi\left(x_{i}\right)\right)\right]\\&amp;=\sum_{i=1}^{N}\left[y_{i}\left(w \cdot x_{i}\right)-\log \left(1+\exp \left(w \cdot x_{i}\right)\right]\right.\end{aligned}
 \]</p>
 <p>最后按照梯度下降法一样，求解极小值点，得到想要的模型效果。</p>
 <h2 id="ru-he-jin-xing-duo-xiang-luo-ji-hui-gui">如何进行多项逻辑回归</h2>
 <p>当问题是多分类问题时,可以作如下推广:设Y有K类可能取值,\(P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1 \quad P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}\),实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
-<p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：
+<p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：<br>
 \[
 P(\boldsymbol{W})=\prod_{n=1}^{N}\left(\frac{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}\right)
-\]
-对函数取对数再乘以-1，推导得到：
+\]<br>
+对函数取对数再乘以-1，推导得到：<br>
 \[
 \begin{aligned}
 F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}\right) \\
@@ -368,15 +368,15 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 <h2 id="strong-zui-da-shang-mo-xing-strong"><strong>最大熵模型</strong></h2>
 <p>给定训练数据集,可以确定联合分布P(X,Y)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布P(X)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中v表示频数,N表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布P(Y|X)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
 <h2 id="strong-zui-da-shang-mo-xing-de-xue-xi-strong"><strong>最大熵模型的学习</strong></h2>
-<p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong>
+<p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
 \[
 \begin{aligned}
 &amp;\max _{P_{e c}} H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
 &amp;\text { s.t. } \quad E_{p}\left(f_{i}\right)=E_{p}\left(f_{i}\right), \quad i=1,2, \cdots, n\\
      &amp;\sum_{y} P(y | x)=1
 \end{aligned}
-\]
-,将求最大值问题改为等价的求最小值问题
+\]<br>
+,将求最大值问题改为等价的求最小值问题<br>
 \[
 \begin{aligned}
 &amp;\min _{R \in C}-H(P)=\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
@@ -384,21 +384,21 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 &amp;\sum_{y} P(y | x)=1
 \end{aligned}
 \]</p>
-<p>引入<strong>拉格朗日乘子</strong>
+<p>引入<strong>拉格朗日乘子</strong><br>
 \[
 \begin{aligned}
 L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w_{i}\left(E_{p}\left(f_{i}\right)-E_{P}\left(f_{i}\right)\right) \\
 &amp;=\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)+w_{0}\left(1-\sum_{y} P(y | x)\right) \\
 &amp;+\sum_{i=1}^{n} w_{i}\left(\sum_{x, y} \tilde{P}(x, y) f_{i}(x, y)-\sum_{x, y} \tilde{P}(x) P(y | x) f_{i}(x, y)\right)
 \end{aligned}
-\]
-将原始问题\(\min _{p \in C} \max _{w} L(P, w)\)转换为无约束最优化的<strong>对偶问题</strong>\(\max _{w} \min _{P \in \mathbf{C}} L(P, w)\).首先求解内部的<strong>极小化问题</strong>,即求\(L(P,W)\)对\(P(y|x)\)的偏导数.
+\]<br>
+将原始问题\(\min _{p \in C} \max _{w} L(P, w)\)转换为无约束最优化的<strong>对偶问题</strong>\(\max _{w} \min _{P \in \mathbf{C}} L(P, w)\).首先求解内部的<strong>极小化问题</strong>,即求\(L(P,W)\)对\(P(y|x)\)的偏导数.<br>
 \[
 \begin{aligned}
 \frac{\partial L(P, w)}{\partial P(y | x)} &amp;=\sum_{x, y} \tilde{P}(x)(\log P(y | x)+1)-\sum_{y} w_{0}-\sum_{x, y}\left(\tilde{P}(x) \sum_{i=1}^{n} w_{i} f_{i}(x, y)\right) \\
 &amp;=\sum_{x, y} \tilde{P}(x)\left(\log P(y | x)+1-w_{0}-\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)
 \end{aligned}
-\]
+\]<br>
 ,并令偏导数等于0,解得\(Z_{w}(x)=\sum_{y} \exp \left(\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)\).可以证明对偶函数等价于对数似然函数,那么对偶函数极大化等价于最大熵模型的<strong>极大似然估计</strong>\(L(w)=\sum_{x, y} \tilde{P}(x, y) \sum_{i=1}^{n} w_{i} f_{i}(x, y)-\sum_{x} \tilde{P}(x) \log Z_{w}(x)\).之后可以用最优化算法求解得到w.</p>
 <h2 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h2>
 <p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>

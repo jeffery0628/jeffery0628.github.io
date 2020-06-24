@@ -551,65 +551,65 @@
 <p>保存BERT的各种参数配置</p>
 </li>
 <li>
-<p>BertOnlyMLMHead
-使用mask 方法训练语言模型时用的，返回预测值
+<p>BertOnlyMLMHead<br>
+使用mask 方法训练语言模型时用的，返回预测值<br>
 过程：调用BertLMPredictionHead，返回的就是prediction_scores</p>
 </li>
 <li>
-<p>BertLMPredictionHead
-decode功能
+<p>BertLMPredictionHead<br>
+decode功能<br>
 过程：调用BertPredictionHeadTransform -&gt; linear层，输出维度是vocab_size</p>
 </li>
 <li>
-<p>BertPredictionHeadTransform
+<p>BertPredictionHeadTransform<br>
 过程：dense -&gt; 激活(gelu or relu or swish) -&gt; LayerNorm</p>
 </li>
 <li>
-<p>BertOnlyNSPHead
-NSP策略训练模型用的，返回0或1
+<p>BertOnlyNSPHead<br>
+NSP策略训练模型用的，返回0或1<br>
 过程：添加linear层输出size是2，返回seq_relationship_score</p>
 </li>
 <li>
-<p>BertPreTrainingHeads
-MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, pooled_output
+<p>BertPreTrainingHeads<br>
+MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, pooled_output<br>
 返回（prediction_scores, seq_relationship_score）分别是MLM和NSP下的分值</p>
 </li>
 <li>
-<p>BertPreTrainedModel
+<p>BertPreTrainedModel<br>
 从全局变量BERT_PRETRAINED_MODEL_ARCHIVE_MAP加载BERT模型的权重</p>
 </li>
 <li>
-<p>BertForPreTraining
-计算score和loss
+<p>BertForPreTraining<br>
+计算score和loss<br>
 通过BertPreTrainingHeads，得到prediction后计算loss，然后反向传播。</p>
 </li>
 <li>
-<p>BertForMaskedLM
+<p>BertForMaskedLM<br>
 只有MLM策略的loss</p>
 </li>
 <li>
-<p>BertForNextSentencePrediction
+<p>BertForNextSentencePrediction<br>
 只有NSP策略的loss</p>
 </li>
 <li>
-<p>BertForSequenceClassification
+<p>BertForSequenceClassification<br>
 计算句子分类任务的loss</p>
 </li>
 <li>
-<p>BertForMultipleChoice
+<p>BertForMultipleChoice<br>
 计算句子选择任务的loss</p>
 </li>
 <li>
-<p>BertForTokenClassification
+<p>BertForTokenClassification<br>
 计算对token分类or标注任务的loss</p>
 </li>
 <li>
-<p>BertForQuestionAnswering
+<p>BertForQuestionAnswering<br>
 计算问答任务的loss</p>
 </li>
 </ol>
 <h3 id="shi-yong-yu-xun-lian-mo-xing">使用预训练模型</h3>
-<p>在BertModel class中有两个函数。get_pool_output表示获取每个batch第一个词的[CLS]表示结果。BERT认为这个词包含了整条语料的信息；适用于句子级别的分类问题。get_sequence_output表示BERT最终的输出结果,shape为[batch_size,seq_length,hidden_size]。可以直观理解为对每条语料的最终表示，适用于seq2seq问题。
+<p>在BertModel class中有两个函数。get_pool_output表示获取每个batch第一个词的[CLS]表示结果。BERT认为这个词包含了整条语料的信息；适用于句子级别的分类问题。get_sequence_output表示BERT最终的输出结果,shape为[batch_size,seq_length,hidden_size]。可以直观理解为对每条语料的最终表示，适用于seq2seq问题。<br>
 对于其它序列标注或生成任务，也可以使用 BERT 对应的输出信息作出预测，例如每一个时间步输出一个标注或词等。下图展示了 BERT 在 11 种任务中的微调方法，它们都只添加了一个额外的输出层。在下图中，Tok 表示不同的词、E 表示输入的嵌入向量、\(T_i\)表示第\(i\) 个词在经过 BERT 处理后输出的上下文向量。</p>
 <p><img src="/2020/05/13/bert_code/bert-specific-models.png" alt></p>
 <h1 id="can-kao">参考</h1>

@@ -422,7 +422,7 @@
 <figure class="highlight python"><figcaption><span>hello world</span><a href="https://jeffery0628.github.io/" target="_blank" rel="noopener">我的主页</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Hello world!"</span>);</span><br></pre></td></tr></table></figure>
 <p>代码块进阶语法规则：</p>
 <div class="note ">
-            <p>``` [language] [title] [url] [link text]code snippet```</p>
+            <p>``` [language] [title] [url] [link text]<br>code snippet<br>```</p>
           </div>
 <p>其中，各参数意义如下：</p>
 <ul>
@@ -465,14 +465,14 @@
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% label [<span class="class"><span class="keyword">class</span>]<span class="meta">@text</span>  %&#125;</span></span><br></pre></td></tr></table></figure>
 <p>支持的 class 种类包括 <code>default</code> <code>primary</code> <code>success</code> <code>info</code> <code>warning</code> <code>danger</code>，默认使用 <code>default</code> 作为缺省。</p>
 <figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I heard the echo, &#123;% label default@from the valleys and the heart %&#125;</span><br><span class="line">Open to the lonely soul <span class="keyword">of</span> &#123;% label info@sickle harvesting %&#125;</span><br><span class="line"><span class="keyword">Repeat</span> <span class="keyword">outrightly</span>, but also repeat the well-being of</span><br><span class="line"><span class="keyword">Eventually</span> &#123;% label warning@swaying <span class="keyword">in</span> the desert oasis %&#125;</span><br><span class="line">&#123;% label success@I believe %&#125; <span class="keyword">I</span> <span class="keyword">am</span></span><br><span class="line">&#123;% label primary@Born as the bright summer flowers %&#125;</span><br><span class="line"><span class="keyword">Do</span> <span class="keyword">not</span> <span class="keyword">withered</span> <span class="keyword">undefeated</span> <span class="keyword">fiery</span> <span class="keyword">demon</span> <span class="keyword">rule</span></span><br><span class="line"><span class="keyword">Heart</span> <span class="keyword">rate</span> <span class="keyword">and</span> <span class="keyword">breathing</span> <span class="keyword">to</span> <span class="keyword">bear</span> &#123;% label danger@the load of the cumbersome %&#125;</span><br><span class="line"><span class="keyword">Bored</span></span><br></pre></td></tr></table></figure>
-<p>I heard the echo, <span class="label default">from the valleys and the heart</span>
-Open to the lonely soul of <span class="label info">sickle harvesting</span>
-Repeat outrightly, but also repeat the well-being of
+<p>I heard the echo, <span class="label default">from the valleys and the heart</span><br>
+Open to the lonely soul of <span class="label info">sickle harvesting</span><br>
+Repeat outrightly, but also repeat the well-being of<br>
 Eventually <span class="label warning">swaying in the desert oasis</span></p>
 <span class="label success">I believe</span> I am
 <span class="label primary">Born as the bright summer flowers</span>
-<p>Do not withered undefeated fiery demon rule
-Heart rate and breathing to bear <span class="label danger">the load of the cumbersome</span>
+<p>Do not withered undefeated fiery demon rule<br>
+Heart rate and breathing to bear <span class="label danger">the load of the cumbersome</span><br>
 Bored</p>
 <p>可在主题配置文件中设置 <code>label: false</code> 来取消 label 标签默认 CSS 样式。</p>
 <h2 id="button-an-niu">button 按钮</h2>

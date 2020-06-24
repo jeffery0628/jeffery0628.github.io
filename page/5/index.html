@@ -378,13 +378,13 @@
 <h4 id="dong-tai-gui-hua-qiu-jie">动态规划求解：</h4>
 <p>状态：问题所求最大价值，设状态即为背包中物品的价值</p>
 <p>状态转移方程：</p>
-<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为
+<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为<br>
 \[
 \mathrm{dp}[\mathrm{i}][\mathrm{v}]=\max \left\{\begin{array}{l}
 dp[i-1][v](\text {not select}) \\
 dp[i-1][v-C[i]]+W[i](\text {select})
 \end{array}\right.
-\]
+\]<br>
 其中<code>dp[i-1][v-C[i]]</code>表示前<code>i-1</code>件物品放入容量为<code>v-C[i]</code>的背包中。</p>
 <h4 id="dai-ma">代码</h4>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># F[0, 0...V] = 0</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>):</span><br><span class="line">    dp[<span class="number">0</span>][v] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 容量装不下当前物品时，保留原值</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">0</span>, C[i]):</span><br><span class="line">        dp[i][v] = dp[i<span class="number">-1</span>][v]</span><br><span class="line">    <span class="comment"># 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>

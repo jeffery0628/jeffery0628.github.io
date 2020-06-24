@@ -403,7 +403,7 @@
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model_class, tokenizer_class, pretrained_weights = (ppb.DistilBertModel, ppb.DistilBertTokenizer, <span class="string">'distilbert-base-uncased'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Want BERT instead of distilBERT? Uncomment the following line:</span></span><br><span class="line"><span class="comment">#model_class, tokenizer_class, pretrained_weights = (ppb.BertModel, ppb.BertTokenizer, 'bert-base-uncased')# </span></span><br><span class="line"></span><br><span class="line">Load pretrained model/tokenizertokenizer = tokenizer_class.from_pretrained(pretrained_weights)</span><br><span class="line">model = model_class.from_pretrained(pretrained_weights)</span><br></pre></td></tr></table></figure>
 <ol start="3">
-<li>tokenize：分词+[cls]+[sep]
+<li>tokenize：分词+[cls]+[sep]<br>
 <img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_tokenize.png" alt="avatar"></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer.encode(<span class="string">'a visually stunning rumination on love'</span>, add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
@@ -425,12 +425,12 @@
 <h3 id="strong-bert-wwm-strong"><strong>BERT-WWM</strong></h3>
 <p><a href>论文</a></p>
 <h4 id="jian-jie">简介</h4>
-<p>wwm 即 Whole Word Masking（对全词进行Mask）。相比于bert的改进是用Mask标签替换一个完整的词而不是字，中文和英文不同，英文最小的token是一个单词，而中文中最小的token却是字，词是由一个或多个字组成，且每个词之间没有明显的分割，包含更多信息的是词，对全词mask就是对整个词都通过mask进行掩码。
+<p>wwm 即 Whole Word Masking（对全词进行Mask）。相比于bert的改进是用Mask标签替换一个完整的词而不是字，中文和英文不同，英文最小的token是一个单词，而中文中最小的token却是字，词是由一个或多个字组成，且每个词之间没有明显的分割，包含更多信息的是词，对全词mask就是对整个词都通过mask进行掩码。<br>
 <img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_wwm_exam.png" alt></p>
 <h4 id="strong-bert-wwm-ext-strong"><strong>Bert-wwm-ext</strong></h4>
-<p>它是BERT-wwm的一个升级版，相比于BERT-wwm的改进是增加了训练数据集同时也增加了训练步数。
-BERT-wwm-ext主要是有两点改进：
-1）预训练数据集做了增加，达到5.4B；
+<p>它是BERT-wwm的一个升级版，相比于BERT-wwm的改进是增加了训练数据集同时也增加了训练步数。<br>
+BERT-wwm-ext主要是有两点改进：<br>
+1）预训练数据集做了增加，达到5.4B；<br>
 2）训练步数增大，训练第一阶段1M步，训练第二阶段400K步。</p>
 <p><a href="https://github.com/ymcui/Chinese-BERT-wwm" target="_blank" rel="noopener">模型下载</a></p>
 <h3 id="xl-net">XLNet</h3>
@@ -460,7 +460,7 @@ BERT-wwm-ext主要是有两点改进：
 <p>AE模型采用的就是以上下文的方式，最典型的成功案例就是bert。简单回顾下bert的预训练阶段，预训练包括了两个任务，Masked Language Model与Next Sentence Prediction，Next Sentence Prediction即判断两个序列的推断关系，Masked Language Model采用了一个标志位[MASK]来随机替换一些词，再用[MASK]的上下文来预测[MASK]的真实值，bert的最大问题也是处在这个MASK的点，因为在微调阶段，没有MASK这就导致预训练和微调数据的不统一，从而引入了一些人为误差。</p>
 <p>在xlnet中，采用了<strong>AR模型</strong>，但是怎么解决这个上下文的问题呢？</p>
 <h4 id="pai-lie-yu-yan-mo-xing-wei-liao-kao-lu-shang-xia-wen-xin-xi">排列语言模型(为了考虑上下文信息)</h4>
-<p>为了解决上文提到的问题，作者提出了排列语言模型，该模型不再对传统的AR模型的序列的值按顺序进行建模，而是最大化所有可能的序列的因式分解顺序的期望对数似然，这句话可能有点不好理解，举个栗子，假如我们有一个序列\([1,2,3,4]\)，如果我们的预测目标是3，对于传统的AR模型来说，结果是\(p(3)=\prod^3_{t=1}p(3|x_{&lt;t})\)，如果采用本文的方法，先对该序列进行因式分解，最终会有24种排列方式，下图是其中可能的四种情况，对于第一种情况因为3的左边没有其他的值，所以该情况无需做对应的计算，第二种情况3的左边还包括了2与4，所以得到的结果是\(p(3)=p(3|2)p(3|2,4)\)，后续的情况类似，这样处理过后不但保留了序列的上下文信息，也<strong>避免了采用mask标记位，巧妙的改进了bert与传统AR模型的缺点</strong>。
+<p>为了解决上文提到的问题，作者提出了排列语言模型，该模型不再对传统的AR模型的序列的值按顺序进行建模，而是最大化所有可能的序列的因式分解顺序的期望对数似然，这句话可能有点不好理解，举个栗子，假如我们有一个序列\([1,2,3,4]\)，如果我们的预测目标是3，对于传统的AR模型来说，结果是\(p(3)=\prod^3_{t=1}p(3|x_{&lt;t})\)，如果采用本文的方法，先对该序列进行因式分解，最终会有24种排列方式，下图是其中可能的四种情况，对于第一种情况因为3的左边没有其他的值，所以该情况无需做对应的计算，第二种情况3的左边还包括了2与4，所以得到的结果是\(p(3)=p(3|2)p(3|2,4)\)，后续的情况类似，这样处理过后不但保留了序列的上下文信息，也<strong>避免了采用mask标记位，巧妙的改进了bert与传统AR模型的缺点</strong>。<br>
 <img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/xlnet.png" alt></p>
 <h5 id="ru-he-xun-lian">如何训练？</h5>
 <ol>
@@ -468,17 +468,17 @@ BERT-wwm-ext主要是有两点改进：
 <li>为获得丰富的上下文语义信息，对抽取的样本最后的几个单词进行预测。</li>
 </ol>
 <h4 id="ji-yu-mu-biao-gan-zhi-biao-zheng-de-strong-shuang-liu-zi-zhu-yi-li-strong-wei-liao-jie-jue-wei-zhi-xin-xi">基于目标感知表征的<strong>双流自注意力</strong>(为了解决位置信息)</h4>
-<p>虽然排列语言模型能满足目前的目标，但是对于普通的transformer结构来说是存在一定的问题的，为什么这么说呢，假设我们要求这样的一个对数似然，\(p_\theta(X_{z_t}|x_{z_{&lt;t}})\)，如果采用标准的softmax的话，那么
+<p>虽然排列语言模型能满足目前的目标，但是对于普通的transformer结构来说是存在一定的问题的，为什么这么说呢，假设我们要求这样的一个对数似然，\(p_\theta(X_{z_t}|x_{z_{&lt;t}})\)，如果采用标准的softmax的话，那么<br>
 \[
 p_{\theta}\left(X_{z_t} | x_{z_{&lt;t}}\right)=\frac{\exp \left(e(x)^{T} h_{\theta}\left(x_{z_{&lt;t}}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} h_{\theta}\left(x_{z_{&lt;t}}\right)\right)}
-\]
-其中\(h_\theta (x_{z_{&lt;t}})\)表示的是添加了mask后的transformer的输出值，可以发现\(h_\theta (x_{z_{&lt;t}})\)并不依赖于其要预测的内容的位置信息，因为无论预测目标的位置在哪里，因式分解后得到的所有情况都是一样的，并且transformer的权重对于不同的情况是一样的，因此无论目标位置怎么变都能得到相同的分布结果，如下图所示，假如我们的序列index表示为[1,2,3]，对于目标2与3来说，其因式分解后的结果是一样的，那么经过transformer之后得到的结果肯定也是一样的。
+\]<br>
+其中\(h_\theta (x_{z_{&lt;t}})\)表示的是添加了mask后的transformer的输出值，可以发现\(h_\theta (x_{z_{&lt;t}})\)并不依赖于其要预测的内容的位置信息，因为无论预测目标的位置在哪里，因式分解后得到的所有情况都是一样的，并且transformer的权重对于不同的情况是一样的，因此无论目标位置怎么变都能得到相同的分布结果，如下图所示，假如我们的序列index表示为[1,2,3]，对于目标2与3来说，其因式分解后的结果是一样的，那么经过transformer之后得到的结果肯定也是一样的。<br>
 <img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/123.png" alt></p>
-<p>这就导致模型没法得到正确的表述，为了解决这个问题，论文中提出来新的分布计算方法，来实现目标位置感知
+<p>这就导致模型没法得到正确的表述，为了解决这个问题，论文中提出来新的分布计算方法，来实现目标位置感知<br>
 \[
 p_{\theta}\left(X_{zt}=x | x_{z&lt;t}\right)=\frac{\exp \left(e(x)^{T} g_{\theta}\left(x_{z&lt;t}, z_{t}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} g_{\theta}\left(x_{z&lt;t}, z_{t}\right)\right)}
-\]
-其中\(g_{\theta}\left(x_{z_{&lt;t}}, z_{t}\right)\)是新的表示形式，并且把位置信息\(z_t\)作为了其输入。
+\]<br>
+其中\(g_{\theta}\left(x_{z_{&lt;t}}, z_{t}\right)\)是新的表示形式，并且把位置信息\(z_t\)作为了其输入。<br>
 这个新的表示形式，论文把该方法称为Two-Stream Self-Attention，双流自注意力，该机制需要解决了两个问题:</p>
 <ul>
 <li>如果目标是预测\(x_{z_t}\)，\(g_\theta (x_{z&lt;t},z_t)\)那么只能有其位置信息\(z_t\) 而不能包含内容信息\(x_{z_t}\)</li>
@@ -487,14 +487,14 @@ p_{\theta}\left(X_{zt}=x | x_{z&lt;t}\right)=\frac{\exp \left(e(x)^{T} g_{\theta
 <p>传统的transformer并不满足这样的需求，因此作者采用了两种表述来代替原来的表述，这也是为什么称为<strong>双流</strong>的原因:</p>
 <ul>
 <li>
-<p>content representation内容表述，即\(h_\theta (x_{z_{\leq t}})\)下文用\(h_{z_t}\)表示，该表述和传统的transformer一样，同时编码了上下文和\(x_{z_t}\)自身
+<p>content representation内容表述，即\(h_\theta (x_{z_{\leq t}})\)下文用\(h_{z_t}\)表示，该表述和传统的transformer一样，同时编码了上下文和\(x_{z_t}\)自身<br>
 \[
 h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=h_{z \leq t}^{(m-1)} ; \theta\right)
-\]
+\]<br>
 <img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/content_representation.png" alt></p>
 </li>
 <li>
-<p>query representation查询表述，即\(g_\theta (x_{z_{&lt;t}})\)，下文用\(g_{z_t}\) 表示，该表述包含上下文的内容信息\(x_{z_{&lt;t}}\) 和目标的位置信息\(z_t\)，但是不包括目标的内容信息\(x_{z_{t}}\) ，从图中可以看到，K与V的计算并没有包括Q，自然也就无法获取到目标的内容信息，但是目标的位置信息在计算Q的时候保留了下来，
+<p>query representation查询表述，即\(g_\theta (x_{z_{&lt;t}})\)，下文用\(g_{z_t}\) 表示，该表述包含上下文的内容信息\(x_{z_{&lt;t}}\) 和目标的位置信息\(z_t\)，但是不包括目标的内容信息\(x_{z_{t}}\) ，从图中可以看到，K与V的计算并没有包括Q，自然也就无法获取到目标的内容信息，但是目标的位置信息在计算Q的时候保留了下来，<br>
 \[
 g_{z_{t}}^{(m)}=\text {Attention}\left(Q=g_{z_{t}}^{(m-1)}, K V=h_{z&lt;t}^{(m-1)} ; \theta\right)
 \]</p>
@@ -506,8 +506,8 @@ g_{z_{t}}^{(m)}=\text {Attention}\left(Q=g_{z_{t}}^{(m-1)}, K V=h_{z&lt;t}^{(m-1
 <h4 id="yin-ru-transformer-xl">引入transformer XL</h4>
 <p>作者还将transformer-xl的两个最重要的技术点应用了进来，即片段循环机制与相对位置编码。</p>
 <h5 id="pian-duan-xun-huan-ji-zhi">片段循环机制</h5>
-<p>ransformer-xl的提出主要是为了解决超长序列的依赖问题，对于普通的transformer由于有一个最长序列的超参数控制其长度（如果不对文本控制，则会极大消耗内存，因为在计算score矩阵的时候，会开辟\(n^2\)大小的矩阵，对于一篇文本，长度为\(10^5\),则需要开辟\(10^5 * 10^5 = 10^10\)大小的score矩阵，极其消耗内存。），对于特别长的序列就会导致丢失一些信息，transformer-xl就能解决这个问题。我们看个例子，假设我们有一个长度为1000的序列，如果我们设置transformer的最大序列长度是100，那么这个1000长度的序列需要计算十次，并且每一次的计算都没法考虑到每一个段之间的关系，如果采用transformer-xl，首先取第一个段进行计算，然后把得到的结果的隐藏层的值进行缓存，第二个段计算的过程中，把缓存的值拼接起来再进行计算（RNN）。该机制不但能保留长依赖关系还能加快训练，因为每一个前置片段都保留了下来，不需要再重新计算，在transformer-xl的论文中，经过试验其速度比transformer快了1800倍。
-在xlnet中引入片段循环机制其实也很简单，只需要在计算KV的时候做简单的修改，其中\(\tilde{h}^{m-1}\)表示的是缓存值。
+<p>ransformer-xl的提出主要是为了解决超长序列的依赖问题，对于普通的transformer由于有一个最长序列的超参数控制其长度（如果不对文本控制，则会极大消耗内存，因为在计算score矩阵的时候，会开辟\(n^2\)大小的矩阵，对于一篇文本，长度为\(10^5\),则需要开辟\(10^5 * 10^5 = 10^10\)大小的score矩阵，极其消耗内存。），对于特别长的序列就会导致丢失一些信息，transformer-xl就能解决这个问题。我们看个例子，假设我们有一个长度为1000的序列，如果我们设置transformer的最大序列长度是100，那么这个1000长度的序列需要计算十次，并且每一次的计算都没法考虑到每一个段之间的关系，如果采用transformer-xl，首先取第一个段进行计算，然后把得到的结果的隐藏层的值进行缓存，第二个段计算的过程中，把缓存的值拼接起来再进行计算（RNN）。该机制不但能保留长依赖关系还能加快训练，因为每一个前置片段都保留了下来，不需要再重新计算，在transformer-xl的论文中，经过试验其速度比transformer快了1800倍。<br>
+在xlnet中引入片段循环机制其实也很简单，只需要在计算KV的时候做简单的修改，其中\(\tilde{h}^{m-1}\)表示的是缓存值。<br>
 \[
 h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=\left[\tilde{h}^{(m-1)}, h_{z \leq t}^{(m-1)}\right] ; \theta\right)
 \]</p>
@@ -556,18 +556,18 @@ h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=\left[\tilde{h}^
 <p>和在 BERT 中一样，作者将 Y 的规模设定为 X 的15%，其中 80% 使用 [MASK] 进行替换，10% 使用随机单词替换，10%保持不变。与之不同的是，作者是在分词级别进行的这一替换，而非将每个单词单独替换。</p>
 <h4 id="fen-ci-bian-jie-mu-biao-sbo">分词边界目标(SBO)???</h4>
 <p>分词选择模型一般使用其边界词创建一个固定长度的分词表示。为了于该模型相适应，作者希望结尾分词的表示的总和与中间分词的内容尽量相同。为此，作者引入了 SBO ，其仅使用观测到的边界词来预测带掩膜的分词的内容。</p>
-<p>具体做法是，在训练时取 Span 前后边界的两个词，值得指出，这两个词不在 Span 内，然后<strong>用这两个词向量加上 Span 中被遮盖掉词的位置向量，来预测原词</strong>。
+<p>具体做法是，在训练时取 Span 前后边界的两个词，值得指出，这两个词不在 Span 内，然后<strong>用这两个词向量加上 Span 中被遮盖掉词的位置向量，来预测原词</strong>。<br>
 \[
 \mathbf{y}_{i}=f\left(\mathbf{x}_{s-1}, \mathbf{x}_{e+1}, \mathbf{p}_{i}\right)
-\]
+\]<br>
 详细做法是将词向量和位置向量拼接起来，作者使用一个两层的前馈神经网络作为表示函数，该网络使用 GeLu 激活函数，并使用层正则化：</p>
 <p>\[
 \begin{aligned}
 \mathbf{h} &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{1} \cdot\left[\mathbf{x}_{s-1} ; \mathbf{x}_{e+1} ; \mathbf{p}_{i}\right]\right)\right) \\
 f(\cdot) &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \mathbf{h}\right)\right)
 \end{aligned}
-\]
-作者使用向量表示\(y_i\)来预测\(x_i\)，并和 MLM 一样使用交叉熵作为损失函数，就是 SBO 目标的损失，之后将这个损失和 BERT 的 **Mased Language Model （MLM）**的损失加起来，一起用于训练模型。
+\]<br>
+作者使用向量表示\(y_i\)来预测\(x_i\)，并和 MLM 一样使用交叉熵作为损失函数，就是 SBO 目标的损失，之后将这个损失和 BERT 的 **Mased Language Model （MLM）**的损失加起来，一起用于训练模型。<br>
 \[
 \mathcal{L}(\text { football })=\mathcal{L}_{\mathrm{MLM}}\left(\mathbf{x}_{7}\right)+\mathcal{L}_{\mathrm{SBO}}\left(\mathbf{x}_{4}, \mathbf{x}_{9}, \mathbf{p}_{7}\right)
 \]</p>
@@ -600,23 +600,23 @@ f(\cdot) &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \ma
 <h5 id="t-encoder">T-Encoder</h5>
 <p>这部分就是纯粹的bert结构，在该部分模型中主要负责对输入句子（token embedding, segment embedding和positional embedding）进行编码.</p>
 <h5 id="k-encoder">K-Encoder</h5>
-<p>引入实体信息，使用了TransE训练实体向量，再通过多头Attention进行编码，然后通过实体对齐技术，将实体向量加入到对应实体的第一个token编码后的向量上。（例如姚明是一个实体，在输入时会被分割成姚、明，最后在这部分引入的姚明这个实体的向量会被加入到“姚”这个字经过bert之后的向量上去）
+<p>引入实体信息，使用了TransE训练实体向量，再通过多头Attention进行编码，然后通过实体对齐技术，将实体向量加入到对应实体的第一个token编码后的向量上。（例如姚明是一个实体，在输入时会被分割成姚、明，最后在这部分引入的姚明这个实体的向量会被加入到“姚”这个字经过bert之后的向量上去）<br>
 \[
 \begin{aligned}
 \left\{\tilde{\boldsymbol{w}}_{1}^{(i)}, \ldots, \tilde{\boldsymbol{w}}_{n}^{(i)}\right\} &amp;=\mathrm{MH}-\mathrm{ATT}\left(\left\{\boldsymbol{w}_{1}^{(i-1)}, \ldots, \boldsymbol{w}_{n}^{(i-1)}\right\}\right) \\
 \left\{\tilde{\boldsymbol{e}}_{1}^{(i)}, \ldots, \tilde{\boldsymbol{e}}_{m}^{(i)}\right\} &amp;=\mathrm{MH}-\mathrm{ATT}\left(\left\{\boldsymbol{e}_{1}^{(i-1)}, \ldots, \boldsymbol{e}_{m}^{(i-1)}\right\}\right)
 \end{aligned}
-\]
+\]<br>
 由于直接拼接后向量维度会与其他未拼接的向量维度不同，所以加入information fusion layer，另外考虑到后面的实体自编码任务，所以这里在融合信息之后，有实体向量加入的部分需要另外多输出一个实体向量。</p>
-<p>加入实体信息之后的融合输出过程：
+<p>加入实体信息之后的融合输出过程：<br>
 \[
 \begin{aligned}
 \boldsymbol{h}_{j} &amp;=\sigma\left(\tilde{\boldsymbol{W}}_{t}^{(i)} \tilde{\boldsymbol{w}}_{j}^{(i)}+\tilde{\boldsymbol{W}}_{e}^{(i)} \tilde{\boldsymbol{e}}_{k}^{(i)}+\tilde{\boldsymbol{b}}^{(i)}\right) \\
 \boldsymbol{w}_{j}^{(i)} &amp;=\sigma\left(\boldsymbol{W}_{t}^{(i)} \boldsymbol{h}_{j}+\boldsymbol{b}_{t}^{(i)}\right) \\
 \boldsymbol{e}_{k}^{(i)} &amp;=\sigma\left(\boldsymbol{W}_{e}^{(i)} \boldsymbol{h}_{j}+\boldsymbol{b}_{e}^{(i)}\right)
 \end{aligned}
-\]
-未加入实体信息之后的融合输出过程：
+\]<br>
+未加入实体信息之后的融合输出过程：<br>
 \[
 \begin{aligned}
 \boldsymbol{h}_{j} &amp;=\sigma\left(\tilde{\boldsymbol{W}}_{t}^{(i)} \tilde{\boldsymbol{w}}_{j}^{(i)}+\tilde{\boldsymbol{b}}^{(i)}\right) \\
@@ -624,10 +624,10 @@ f(\cdot) &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \ma
 \end{aligned}
 \]</p>
 <h5 id="shi-ti-zi-bian-ma">实体自编码???</h5>
-<p>为了更好地使用实体信息，作者在这里多加入了一个预训练任务 entity auto-encoder(dEA)。
+<p>为了更好地使用实体信息，作者在这里多加入了一个预训练任务 entity auto-encoder(dEA)。<br>
 \[
 p\left(e_{j} | w_{i}\right)=\frac{\exp \left(\operatorname{linear}\left(\boldsymbol{w}_{i}^{o}\right) \cdot \boldsymbol{e}_{j}\right)}{\sum_{k=1}^{m} \exp \left(\operatorname{linear}\left(\boldsymbol{w}_{i}^{o}\right) \cdot \boldsymbol{e}_{k}\right)}
-\]
+\]<br>
 该预训练任务和bert相似，按以下方式进行训练：</p>
 <ol>
 <li>15% 的情况下：用 [MASK] 替换被选择的单词，例如，my dog is hairy → my dog is [MASK]</li>
@@ -659,31 +659,31 @@ p\left(e_{j} | w_{i}\right)=\frac{\exp \left(\operatorname{linear}\left(\boldsym
 <li>相关性排序：给定一个问题和一系列候选答案，模型根据问题对所有候选答案进行排序。QNLI是斯坦福问答数据集的一个版本，任务是预测候选答案中是否包含对问题的正确答案。尽管这是一个二分类任务，但我们依旧把它当作排序任务，因为模型重排了候选答案，将正确答案排在更前。</li>
 </ul>
 <h6 id="dan-ju-fen-lei">单句分类</h6>
-<p>用[CLS]的表征作为特征，设为\(x\)，则对于单句的分类任务，直接在后面接入一个分类层即可.
+<p>用[CLS]的表征作为特征，设为\(x\)，则对于单句的分类任务，直接在后面接入一个分类层即可.<br>
 \[
 P_{r}(c | X)=\operatorname{softmax}\left(W^{T} \cdot x\right)
-\]
-loss是交叉熵损失：
+\]<br>
+loss是交叉熵损失：<br>
 \[
 -\sum_{c} I(X, c) \log \left(P_{r}(c | X)\right)
 \]</p>
 <h6 id="ju-zi-xiang-si-du">句子相似度</h6>
-<p>将两句话pack后送进去，得到的[CLS]的表征，可拿出来计算分数：
+<p>将两句话pack后送进去，得到的[CLS]的表征，可拿出来计算分数：<br>
 \[
 \operatorname{sim}\left(X_{1}, X_{2}\right)=\operatorname{sigmoid}\left(w^{T} \cdot x\right)
-\]
-loss是MSE：
+\]<br>
+loss是MSE：<br>
 \[
 \left(y-\operatorname{Sim}\left(X_{1}, X_{2}\right)\right)^{2}
 \]</p>
 <h6 id="ju-zi-dui-fen-lei">句子对分类</h6>
 <p>对这个任务不熟悉。。。</p>
 <h6 id="xiang-guan-xing-pai-xu">相关性排序</h6>
-<p>先计算两个句子之间的相似度，输入两个句子pack，采用[CLS]的输出作为表征。
+<p>先计算两个句子之间的相似度，输入两个句子pack，采用[CLS]的输出作为表征。<br>
 \[
 \operatorname{Rel}(Q, A)=g\left(w^{T} \cdot x\right)
-\]
-loss采用排序损失：
+\]<br>
+loss采用排序损失：<br>
 \[
 \begin{aligned}
 &amp;-\sum_{Q, A^{+}} P_{r}\left(A^{+} | Q\right) \\
@@ -693,7 +693,7 @@ P_{r}\left(A^{+} | Q\right) &amp;=\frac{\exp \left(\gamma \operatorname{Rel}\lef
 <h5 id="xun-lian-guo-cheng">训练过程</h5>
 <p>MT-DNN 的训练程序包含两个阶段：预训练和多任务微调。</p>
 <ol>
-<li>预训练阶段遵循 BERT 模型的方式。lexicon encoder和Transformer encoder参数的学习是通过两个无监督预测任务：掩码语言建模(masked language modeling)和下一句预测(next sentence pre-
+<li>预训练阶段遵循 BERT 模型的方式。lexicon encoder和Transformer encoder参数的学习是通过两个无监督预测任务：掩码语言建模(masked language modeling)和下一句预测(next sentence pre-<br>
 diction)。</li>
 <li>在多任务微调阶段，使用基于minibatch的随机梯度下降（SGD）来学习模型参数（也就是，所有共享层和任务特定层的参数），算法流程如下图所示。每个epoch，选择一个mini-batch \(b_t\)(在9个GLUE任务中)，再对特定任务\(k\)进行模型参数的更新。这近似地优化所有多任务的和。</li>
 </ol>
@@ -729,16 +729,16 @@ diction)。</li>
 <p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/next_word.png" alt></p>
 <p>BERT 提出的 20 大高概率用词猜测结果。语言模型确定了两个可能性最高的选项（day 与 life），接下来的词汇相比之下概率要低得多。</p>
 <h6 id="ru-he-fu-zhi-zhe-xie-an-zhi-shi">如何复制这些“暗知识”</h6>
-<p>在训练当中，通过训练学生网络，来模拟老师网络的全部输出分布（也就是知识），也就是通过匹配输出分布的方式训练学生网络，从而实现与老师网络相同的泛化方式，即通过软目标（老师概率）将交叉熵从老师处传递给学生。
+<p>在训练当中，通过训练学生网络，来模拟老师网络的全部输出分布（也就是知识），也就是通过匹配输出分布的方式训练学生网络，从而实现与老师网络相同的泛化方式，即通过软目标（老师概率）将交叉熵从老师处传递给学生。<br>
 \[
 L=-\sum_{i} t_{i} * \log \left(s_{i}\right)
-\]
-其中 \(t_i\)为来自老师的 \(logit\)，\(s_i\) 为学生的 \(logit\)。以老师的行为\(t_i\)作为标签，让学生去学习老师的行为。**这个损失函数属于更丰富的训练信号，因为单一示例要比单一硬目标拥有更高的强制约束效果。**为了进一步揭示分类结果的质量，Hinton 等人提出了 softmax 温度的概念：
+\]<br>
+其中 \(t_i\)为来自老师的 \(logit\)，\(s_i\) 为学生的 \(logit\)。以老师的行为\(t_i\)作为标签，让学生去学习老师的行为。**这个损失函数属于更丰富的训练信号，因为单一示例要比单一硬目标拥有更高的强制约束效果。**为了进一步揭示分类结果的质量，Hinton 等人提出了 softmax 温度的概念：<br>
 \[
 p_{i}=\frac{\exp \left(z_{i} / T\right)}{\sum_{j} \exp \left(z_{j} / T\right)}
-\]
+\]<br>
 T 为温度参数。当\(T \rightarrow 0\)时，分布变为 Kronecker（相当于独热目标矢量）；当 \(T \rightarrow +\infty\)时，则变为均匀分布。在训练过程中，将相同的温度参数应用于学生与老师网络，即可进一步为每个训练示例揭示更多信号。T 被设置为 1 即为标准 Softmax。</p>
-<p>在蒸馏方面，使用 Kullback-Leibler 损失函数，因为其拥有相同的优化效果：
+<p>在蒸馏方面，使用 Kullback-Leibler 损失函数，因为其拥有相同的优化效果：<br>
 \[
 K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_{i} * \log \left(p_{i}\right)-\sum_{i} p_{i} * \log \left(q_{i}\right)
 \]</p>
@@ -747,7 +747,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <h4 id="mo-xing-jie-gou">模型结构</h4>
 <p>DistilBERT想较于BERT删除了 token-type 嵌入与 pooler（用于下一句分类任务），但其余部分架构保持不变，而层数也减少至原本的二分之一。总体而言，蒸馏模型 DistilBERT 在总体参数数量上约为 BERT 的一半，但在 GLUE 语言理解基准测试中能够保留 95% 的 BERT 性能表现。</p>
 <ol>
-<li><strong>为什么不降低隐藏层的大小？</strong>
+<li><strong>为什么不降低隐藏层的大小？</strong><br>
 将 768 减至 512 ，意味着总参数量约下降至原本的二分之一。在现代框架当中，大多数运算都经过高度优化，而且张量的最终维度（隐藏维度）的变化会对 Transformer 架构（线性分层与层规范化）中的大部分运算产生小幅影响。实验中发现，层数对于推理时间的影响要远高于隐藏层的大小。因此，更小并不代表着一定更快。</li>
 </ol>
 <p>训练子网络的核心不只是建立架构，还要求为子网络找到正确的初始化方式以实现收敛。 DistilBERT 使用bert的参数进行初始化，将层数削减一半，并采用相同的隐藏大小。DistilBERT还用到了最近 RoBERTa 论文当中提到的一些训练技巧，这也再次证明 BERT 模型的训练方式对其最终表现有着至关重要的影响。与 RoBERTa 类似，对 DIstilBERT 进行大批次训练，使用梯度累积（每批最多 4000 个例子）、配合动态遮挡并删除了下一句预测目标。</p>
@@ -799,7 +799,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <h5 id="embedding-layer-distillation">Embedding-layer Distillation</h5>
 <p>\[
 \mathcal{L}_{\mathrm{embd}}=\operatorname{MSE}\left(\boldsymbol{E}^{S} \boldsymbol{W}_{e}, \boldsymbol{E}^{T}\right)
-\]
+\]<br>
 其中，\(E^s \in R^{l \times ds}\),\(E^T \ in R^{l \times dt}\)分别表示 student 网络的 embedding 和 teacher 网络的 embedding. 其中 l 代表 sequence length, ds 代表 student embedding 维度， dt 代表 teacher embedding 维度。由于 student 网络的 embedding 层通常较 teacher 会变小以获得更小的模型和加速，所以 \(W_e\) 是一个 \(d_s \times d_t\)维的可训练的线性变换矩阵，把 student 的 embedding 投影到 teacher embedding 所在的空间。最后再算 MSE，得到 embedding loss.</p>
 <h5 id="transformer-layer-distillation">Transformer-layer Distillation</h5>
 <p>TinyBERT 的 transformer 蒸馏采用隔 k 层蒸馏的方式。举个例子，teacher BERT 一共有 12 层，若是设置 student BERT 为 4 层，就是每隔 3 层计算一个 transformer loss. 映射函数为 g(m) = 3 * m(???), m 为 student encoder 层数。具体对应为 student 第 1 层 transformer 对应 teacher 第 3 层，第 2 层对应第 6 层，第 3 层对应第 9 层，第 4 层对应第 12 层。每一层的 transformer loss 又分为两部分组成，attention based distillation 和 hidden states based distillation.</p>
@@ -825,11 +825,11 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <li>在 BERT-PKD 模型中，这个 loss 是 teacher BERT 和 student BERT 的交叉熵和 student BERT 和 hard target( one-hot)的交叉熵的加权平均。</li>
 </ol>
 <p>直接用 hard target loss，效果比使用 teacher student softmax 交叉熵下降 5-6 个点。因为 softmax 比 one-hot 编码了更多概率分布的信息。并且softmax cross-entropy loss 容易发生不收敛的情况，把 softmax 交叉熵改成 MSE, 收敛效果变好，但泛化效果变差。这是因为使用 softmax cross-entropy 需要学到整个概率分布，更难收敛，因为拟合了 teacher BERT 的概率分布，有更强的泛化性。MSE 对极值敏感，收敛的更快，但泛化效果不如前者。</p>
-<p>所以总的loss：
+<p>所以总的loss：<br>
 \[
 \mathcal{L}_{\text {model }}=\sum_{m=0}^{M+1} \lambda_{m} \mathcal{L}_{\text {layer }}\left(S_{m}, T_{g(m)}\right)
-\]
-其中
+\]<br>
+其中<br>
 \[
 \mathcal{L}_{\text {layer }}\left(S_{m}, T_{g(m)}\right)=\left\{\begin{array}{ll}
 \mathcal{L}_{\text {embd }}\left(S_{0}, T_{0}\right), &amp; m=0 \\
