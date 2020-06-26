@@ -27,160 +27,160 @@
 <h1 id="liu-yue">六月</h1>
 <h2 id="6-26">6.26</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" disabled="true"><label for="checkbox0"> 完成PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> 返程</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> 跑实验</label></div></li>
-<li>[ ]</li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" checked="true" disabled="true"><label for="checkbox0"> 完成PLMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" checked="true" disabled="true"><label for="checkbox1"> 返程</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" checked="true" disabled="true"><label for="checkbox2"> 跑实验</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" checked="true" disabled="true"><label for="checkbox3"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" checked="true" disabled="true"><label for="checkbox4"> 算法屠龙14式：双指针</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" checked="true" disabled="true"><label for="checkbox5"> 早睡计划，启动（11：40）</label></div></li>
 </ul>
 <h2 id="6-25">6.25</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" checked="true" disabled="true"><label for="checkbox3"> 吃烤鱼</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" checked="true" disabled="true"><label for="checkbox4"> 打游戏</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" checked="true" disabled="true"><label for="checkbox5"> 出发去仪征</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" disabled="true"><label for="checkbox6"> 完成PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" checked="true" disabled="true"><label for="checkbox7"> 跑实验</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" checked="true" disabled="true"><label for="checkbox8"> 早睡计划</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" checked="true" disabled="true"><label for="checkbox6"> 吃烤鱼</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" checked="true" disabled="true"><label for="checkbox7"> 打游戏</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" checked="true" disabled="true"><label for="checkbox8"> 出发去仪征</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> 跑实验</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 早睡计划</label></div></li>
 </ul>
 <h2 id="6-24">6.24</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> PLMEE(数据处理部分完成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 跑步(达成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> 修改to do list 样式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 王者荣耀</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 讨论实验方案</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" disabled="true"><label for="checkbox14"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> PLMEE(数据处理部分完成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 跑步(达成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 修改to do list 样式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> 王者荣耀</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> 讨论实验方案</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" disabled="true"><label for="checkbox16"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
 </ul>
 <h2 id="6-23">6.23</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> 吃饭</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> 改实验模型，debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 吃饭</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> 改实验模型，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> 跑步</label></div></li>
 </ul>
 <h2 id="6-22">6.22</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" checked="true" disabled="true"><label for="checkbox22"> debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 跑步</label></div></li>
 </ul>
 <h2 id="6-21">6.21</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" disabled="true"><label for="checkbox22"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 改模型，数据处理，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" disabled="true"><label for="checkbox24"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> 改模型，数据处理，debug</label></div></li>
 </ul>
 <h2 id="6-20">6.20</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-19">6.19</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" checked="true" disabled="true"><label for="checkbox27"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-18">6.18</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-17">6.17</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" disabled="true"><label for="checkbox27"> JMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" disabled="true"><label for="checkbox28"> PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" disabled="true"><label for="checkbox29"> DMCNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" disabled="true"><label for="checkbox30"> JRNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" checked="true" disabled="true"><label for="checkbox31"> Word embedding pytorch 实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" disabled="true"><label for="checkbox29"> JMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" disabled="true"><label for="checkbox30"> DMCNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" disabled="true"><label for="checkbox31"> JRNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> Word embedding pytorch 实现</label></div></li>
 </ul>
 <h2 id="6-16">6.16</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> 深度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> JMEE论文/讨论</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> GCN？如何嵌入GCN？</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> 深度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> JMEE论文/讨论</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> GCN？如何嵌入GCN？</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-15">6.15</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 模型baseline实现</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> 深度优先搜索模板</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> 划水摸鱼:神盾局特工3</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> 模型baseline实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> 深度优先搜索模板</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" checked="true" disabled="true"><label for="checkbox39"> 划水摸鱼:神盾局特工3</label></div></li>
 </ul>
 <h2 id="6-14">6.14</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" checked="true" disabled="true"><label for="checkbox39"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-13">6.13</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> 10.201.104.93 T640</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> TensorFlow2.0的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> 10.201.104.93 T640</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> TensorFlow2.0的学习</label></div></li>
 </ul>
 <h2 id="6-12">6.12</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> 广度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> tensorflow2.0 的学习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" checked="true" disabled="true"><label for="checkbox44"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> 广度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" checked="true" disabled="true"><label for="checkbox44"> tensorflow2.0 的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-11">6.11</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> 聚餐</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" checked="true" disabled="true"><label for="checkbox46"> 颓废一下午</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> 屠龙14：二分</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" checked="true" disabled="true"><label for="checkbox48"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" checked="true" disabled="true"><label for="checkbox46"> 聚餐</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> 颓废一下午</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" checked="true" disabled="true"><label for="checkbox48"> 屠龙14：二分</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" checked="true" disabled="true"><label for="checkbox49"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-10">6.10</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" checked="true" disabled="true"><label for="checkbox49"> 检查标注质量，返工，统计标注人员</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" checked="true" disabled="true"><label for="checkbox50"> 越狱</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> 神盾局特工1，2</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" checked="true" disabled="true"><label for="checkbox50"> 检查标注质量，返工，统计标注人员</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> 越狱</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 神盾局特工1，2</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-9">6.9</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> 文本摘要整理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> 学习编辑Latex</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 屠龙14：滑动窗口</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> 文本摘要整理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 学习编辑Latex</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 屠龙14：滑动窗口</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-8">6.8</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-7">6.7</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60">  配置latex环境，画法律事件抽取表格</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" checked="true" disabled="true"><label for="checkbox61">  配置latex环境，画法律事件抽取表格</label></div></li>
 </ul>
 <h2 id="6-5">6.5</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" checked="true" disabled="true"><label for="checkbox61"> 论辩挖掘比赛baseline复现。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" checked="true" disabled="true"><label for="checkbox62"> 军事爬虫2个网站,星岛环球</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" checked="true" disabled="true"><label for="checkbox63"> 跑步30min</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" disabled="true"><label for="checkbox64"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" disabled="true"><label for="checkbox65"> 数据结构屠龙14式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" disabled="true"><label for="checkbox66"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" checked="true" disabled="true"><label for="checkbox62"> 论辩挖掘比赛baseline复现。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" checked="true" disabled="true"><label for="checkbox63"> 军事爬虫2个网站,星岛环球</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" checked="true" disabled="true"><label for="checkbox64"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" disabled="true"><label for="checkbox65"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" disabled="true"><label for="checkbox66"> 数据结构屠龙14式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" disabled="true"><label for="checkbox67"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
 </ul>
 <h2 id="6-4">6.4</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" checked="true" disabled="true"><label for="checkbox67"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" disabled="true"><label for="checkbox68"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" checked="true" disabled="true"><label for="checkbox69"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" checked="true" disabled="true"><label for="checkbox68"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" disabled="true"><label for="checkbox69"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-3">6.3</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 复习LightGBM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 复习SVM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 复习LightGBM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72"> 复习SVM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-2">6.2</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 被浪费掉的时间：服务器网速。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75">  跑步1h</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75"> 被浪费掉的时间：服务器网速。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76">  跑步1h</label></div></li>
 </ul>
 <h2 id="6-1">6.1</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 完成Xgboost的复习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox78" checked="true" disabled="true"><label for="checkbox78"> 卖掉打印机1020p</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox79" checked="true" disabled="true"><label for="checkbox79"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox80" checked="true" disabled="true"><label for="checkbox80"> 跑步45‘</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox78" checked="true" disabled="true"><label for="checkbox78"> 完成Xgboost的复习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox79" checked="true" disabled="true"><label for="checkbox79"> 卖掉打印机1020p</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox80" checked="true" disabled="true"><label for="checkbox80"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox81" checked="true" disabled="true"><label for="checkbox81"> 跑步45‘</label></div></li>
 </ul>
 ]]></content>
       <categories>
@@ -192,8 +192,8 @@
   </entry>
   <entry>
     <title>事件抽取模型复现核心代码</title>
-    <url>/2020/06/26/ee-model/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/26/ee-model/image-20200626162628002.png" alt></p>
+    <url>/2020/06/26/research/ee_model/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/26/research/ee_model/image-20200626162628002.png" alt></p>
 <a id="more"></a>
 <h1 id="plmee">plmee</h1>
 <p>plmee事件抽取用于裁判文书事件抽取</p>
@@ -202,7 +202,7 @@
 <p>触发器抽取器的输入和BERT的一样，是WordPiece嵌入、位置嵌入和segment嵌入的和。因为输入只有一个句子，所以所有的segment ids设为0。句子首尾的token分别是[CLS]和[SEP]。</p>
 <p>触发词有时不是一个单词而是一个词组。因此，作者令连续的tokens共享同一个预测标签，作为一个完整的触发词。</p>
 <p>采用交叉熵损失函数用于微调（fine-tune）。</p>
-<p><img src="/2020/06/26/ee-model/image-20200626162628002.png" alt></p>
+<p><img src="/2020/06/26/research/ee_model/image-20200626162628002.png" alt></p>
 <h3 id="mo-xing">模型</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TriggerExtractor</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, bert_path, bert_train, dropout,event_type_num)</span>:</span></span><br><span class="line">        super(TriggerExtractor,self).__init__()</span><br><span class="line">        self.bert = BertModel.from_pretrained(bert_path)</span><br><span class="line">        <span class="comment"># 对bert进行训练</span></span><br><span class="line">        <span class="keyword">for</span> name, param <span class="keyword">in</span> self.bert.named_parameters():</span><br><span class="line">            param.requires_grad = bert_train</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line">        self.taggers = nn.ModuleList([nn.Linear(self.bert.config.to_dict()[<span class="string">'hidden_size'</span>],<span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(event_type_num)])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, text_lengths, text_ids, masks)</span>:</span></span><br><span class="line">        bert_out,bert_cls = self.bert(text_ids,attention_mask=masks)</span><br><span class="line">        bert_out = self.dropout(bert_out)</span><br><span class="line">        outputs = []</span><br><span class="line">        <span class="keyword">for</span> tagger <span class="keyword">in</span> self.taggers:</span><br><span class="line">            out = tagger(bert_out).unsqueeze(<span class="number">-2</span>)</span><br><span class="line">            outputs.append(out[:,<span class="number">1</span>:,:])</span><br><span class="line">        <span class="keyword">return</span> torch.cat(outputs,dim=<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="ping-ce-zhi-biao">评测指标</h3>
@@ -255,6 +255,10 @@ I(r, v)=\frac{\exp ^{\operatorname{RF}-\operatorname{IEF}}(r, v)}{\sum_{r^{\prim
       <categories>
         <category>技术/论文复现</category>
       </categories>
+      <tags>
+        <tag>信息抽取</tag>
+        <tag>事件抽取</tag>
+      </tags>
   </entry>
   <entry>
     <title>词向量</title>
@@ -419,8 +423,8 @@ P\left(w_{i}\right)=1-\sqrt{\frac{t}{f\left(w_{i}\right)}}
   </entry>
   <entry>
     <title>Circle Loss</title>
-    <url>/2020/06/07/circle-loss/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/07/circle-loss/image-20200607122847009.png" alt></p>
+    <url>/2020/06/07/research/circle_loss/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/07/research/circle_loss/image-20200607122847009.png" alt></p>
 <a id="more"></a>
 <p>旷世在CVPR 2020上的一篇<a href="https://arxiv.org/abs/2002.10857" target="_blank" rel="noopener">论文</a>。</p>
 <p>简单来讲，原来特征学习有 2 种基本范式，分类学习和 pairwise 学习，人们普遍都觉得这两者虽然有联系，但是总体上仍是割裂的。旷视在这项工作中首次将两者放在一个统一的框架下，用一个general 的公式定义了这两种范式，且在这统一的公式下，获得了比两者各自最高水平方法都要好的性能。这项工作已经发表在CVPR 2020。</p>
@@ -451,7 +455,7 @@ L = max(d(a,p)-d(a,n)+margin,0)
 最终的优化目标是拉近 <code>a, p</code> 的距离， 拉远 <code>a, n</code> 的距离</p>
 </blockquote>
 <p>这两种学习方法之间并无本质区别，其目标都是最大化类内相似度\(S_p\)和最小化类间相似度\(S_n\)。从这个角度看，很多常用的损失函数（如 triplet 损失、softmax 损失及其变体）有着相似的优化模式：它们会将\(S_n\)和\(S_p\)组合成相似对来优化，并试图减小\((S_n-S_p)\)。在\((S_n - S_p)\)中，增大\(S_p\)等效于降低\(S_n\)。这种对称的优化方法容易出现下面两个问题：</p>
-<p><img src="/2020/06/07/circle-loss/image-20200607122847009.png" alt></p>
+<p><img src="/2020/06/07/research/circle_loss/image-20200607122847009.png" alt></p>
 <h2 id="1-you-hua-que-fa-ling-huo-xing">1.  优化缺乏灵活性</h2>
 <p>\(S_n\)和\(S_p\)上的惩罚力度是严格相等的。换而言之，给定指定的损失函数，在\(S_n\)和\(S_p\)上的梯度的幅度总是一样的。例如图<code>(a)</code>中A点，它的\(S_n\)已经很小了，但是\(S_n\)会不断受到较大的梯度。这样的现象低效切不合理。</p>
 <h2 id="2-shou-lian-zhuang-tai-bu-ming-que">2. 收敛状态不明确</h2>
@@ -550,7 +554,7 @@ L = max(d(a,p)-d(a,n)+margin,0)
 <li>梯度会逐渐减弱</li>
 <li>收敛目标更加明确</li>
 </ol>
-<p><img src="/2020/06/07/circle-loss/image-20200607211829089.png" alt></p>
+<p><img src="/2020/06/07/research/circle_loss/image-20200607211829089.png" alt></p>
 <p>上图的可视化结果表明，triplet 损失和 AMSoftmax 损失都缺乏优化的灵活性。它们相对于 \(S_n\)（左图）和 \(S_p\)（右图）的梯度严格相等，而且在收敛方面出现了陡然的下降（相似度配对 B）。比如，在 A 处，类内相似度分数\(S_p\) 已接近 1 ，但仍出现了较大的梯度。此外，决策边界平行于\(S_p=S_n\) ，这会导致收敛不明确。</p>
 <p>相对而言，新提出的 <code>Circle Loss</code> 可根据相似性得分与最优值的距离，动态地为相似度分数分配不同的梯度。对于 A（ \(S_n\)和\(S_p\)都很大），<code>Circle Loss</code> 的重点是优化 \(S_n\) ；对于 B，因为\(S_n\)  显著下降，<code>Circle Loss</code> 会降低它的梯度，并因此会施加温和的优化。</p>
 <p><code>Circle Loss</code> 的决策边界是圆形的，与 \(S_n-S_p=m\) 直线有着明确的切点，而这个切点将成为明确的收敛目标。这是因为，对于同样的损失值，该切点具有最小的类间-类内差距，是最容易维持的。</p>
@@ -570,7 +574,7 @@ L = max(d(a,p)-d(a,n)+margin,0)
 </ol>
 ]]></content>
       <categories>
-        <category>技术/优化</category>
+        <category>技术/优化算法</category>
       </categories>
   </entry>
   <entry>
@@ -2016,45 +2020,119 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
     <url>/2020/05/15/data-structures-and-algorithms/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/15/data-structures-and-algorithms/0.png" alt></p>
 <a id="more"></a>
+<h1 id="shuang-zhi-zhen-mo-shi">双指针模式</h1>
+<p><strong>基本思想</strong>:使用两个指针以不同的速度在数组或链表中移动。在处理<strong>循环链表</strong>或<strong>数组</strong>时，此方法非常有用。</p>
+<p>通过以不同的速度移动（例如，在循环链表中），算法证明两个指针必然会相遇。 一旦两个指针都处于循环循环中，快速指针就应该捕获慢速指针。这种方法在解决有环的链表和数组时特别有用。</p>
+<h2 id="kuai-man-zhi-zhen">快慢指针</h2>
+<p>快慢指针一般都初始化指向链表的头结点 head，前进时快指针 fast 在前，慢指针 slow 在后，巧妙解决一些链表中的问题。</p>
+<h3 id="pan-ding-lian-biao-zhong-shi-fou-han-you-huan">判定链表中是否含有环</h3>
+<p>如果链表中不含环，那么这个指针最终会遇到空指针 null 表示链表到头了，可以判断该链表不含环。但是如果链表中含有环，那么这个指针就会陷入死循环，因为环形数组中没有 null 指针作为尾部节点。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">def has_cycle(head) &#123;</span><br><span class="line">    <span class="keyword">while</span> head:</span><br><span class="line">        head = head.next</span><br><span class="line">    <span class="keyword">return</span> false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经典解法就是用两个指针，一个跑得快，一个跑得慢。如果不含有环，跑得快的那个指针最终会遇到 null，说明链表不含环；如果含有环，快指针最终会超慢指针一圈，和慢指针相遇，说明链表含有环。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">def has_cycle(head) &#123;</span><br><span class="line">    </span><br><span class="line">    fast = head</span><br><span class="line">    slow = head</span><br><span class="line">    <span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span><br><span class="line">        fast = fast.next.next</span><br><span class="line">        slow = slow.next</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> fast == slow: </span><br><span class="line">    		<span class="keyword">return</span> true</span><br><span class="line">    <span class="keyword">return</span> false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="yi-zhi-lian-biao-zhong-han-you-huan-fan-hui-zhe-ge-huan-de-qi-shi-wei-zhi">已知链表中含有环，返回这个环的起始位置</h3>
+<p><img src="/2020/05/15/data-structures-and-algorithms/fast_slow_pointer.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">def detect_cycle(head) &#123;</span><br><span class="line">    </span><br><span class="line">    fast = head</span><br><span class="line">    slow = head</span><br><span class="line">    <span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span><br><span class="line">        fast = fast.next.next</span><br><span class="line">        slow = slow.next</span><br><span class="line">        <span class="keyword">if</span> fast == slow:</span><br><span class="line">        	<span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 上面的代码类似 hasCycle 函数</span></span><br><span class="line">    slow = head;</span><br><span class="line">    <span class="keyword">while</span> slow != fast:</span><br><span class="line">        fast = fast.next</span><br><span class="line">        slow = slow.next</span><br><span class="line">    <span class="keyword">return</span> slow</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当快慢指针相遇时，让其中任一个指针指向头节点，然后让它俩以相同速度前进，再次相遇时所在的节点位置就是环开始的位置。</p>
+<p>第一次相遇时，假设慢指针 <code>slow</code> 走了 <code>k</code> 步，那么快指针 <code>fast</code> 一定走了 <code>2k</code> 步，也就是说比 <code>slow</code> 多走了 <code>k</code> 步（也就是环的长度）。</p>
+<p><img src="/2020/05/15/data-structures-and-algorithms/fast_slow_pointer_2.png" alt></p>
+<p>设相遇点距环的起点的距离为 <code>m</code>，那么环的起点距头结点 <code>head</code> 的距离为 <code>k - m</code>，也就是说如果从 <code>head</code> 前进 <code>k - m</code> 步就能到达环起点。如果从相遇点继续前进 <code>k - m</code> 步，也恰好到达环起点。</p>
+<p><img src="/2020/05/15/data-structures-and-algorithms/fast_slow_pointer_3.png" alt></p>
+<p>所以，只要把快慢指针中的任一个重新指向 <code>head</code>，然后两个指针同速前进，<code>k - m</code> 步后就会相遇，相遇之处就是环的起点了。</p>
+<h3 id="xun-zhao-lian-biao-de-zhong-dian">寻找链表的中点</h3>
+<p>让快指针一次前进两步，慢指针一次前进一步，当快指针到达链表尽头时，慢指针就处于链表的中间位置。当链表的长度是奇数时，slow 恰巧停在中点位置；如果长度是偶数，slow 最终的位置是中间偏右：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span><br><span class="line">    fast = fast.next.next</span><br><span class="line">    slow = slow.next</span><br><span class="line"></span><br><span class="line"><span class="comment"># slow 就在中间位置</span></span><br><span class="line"><span class="keyword">return</span> slow</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/05/15/data-structures-and-algorithms/middle_pointer.png" alt></p>
+<blockquote>
+<p>寻找链表中点的一个重要作用是对链表进行归并排序。</p>
+<p>归并排序：求中点索引递归地把数组二分，最后合并两个有序数组。对于链表，合并两个有序链表是很简单的，难点就在于二分。</p>
+</blockquote>
+<h3 id="xun-zhao-lian-biao-de-dao-shu-di-k-ge-yuan-su">寻找链表的倒数第 k 个元素</h3>
+<p>使用快慢指针，让快指针先走 k 步，然后快慢指针开始同速前进。这样当快指针走到链表末尾 null 时，慢指针所在的位置就是倒数第 k 个链表节点:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_k</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">  slow = head</span><br><span class="line">    fast = head</span><br><span class="line">    <span class="keyword">while</span> k &gt; <span class="number">0</span>:</span><br><span class="line">        fast = fast.next</span><br><span class="line">        k -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> fast :</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">  <span class="keyword">return</span> slow;</span><br></pre></td></tr></table></figure>
+<h3 id="ying-yong-chang-jing">应用场景</h3>
+<ul>
+<li>链表或数组循环</li>
+<li>用于找中间元素</li>
+<li>需要知道某个元素的位置或链表的总长度</li>
+</ul>
+<h3 id="ti-mu">题目</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" disabled="true"><label for="checkbox0"> <a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank" rel="noopener">环形链表（LEETCODE）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> <a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="noopener">相交链表（LEETCODE）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> <a href="https://leetcode-cn.com/problems/linked-list-cycle-ii/" target="_blank" rel="noopener">环形链表入口节点（LEETCODE）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" disabled="true"><label for="checkbox3"> 链表是否有环（简单）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" disabled="true"><label for="checkbox4"> 链表是否满足回文（中等）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" disabled="true"><label for="checkbox5"> 环状数组中检测环（困难）</label></div></li>
+</ul>
+<h2 id="zuo-you-zhi-zhen">左右指针</h2>
+<p>左右指针在数组中实际是指两个索引值，一般初始化为 <code>left = 0, right = nums.length - 1</code>。</p>
+<h3 id="er-fen-cha-zhao">二分查找</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(nums, target)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = len(nums) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] == target:</span><br><span class="line">            <span class="comment"># 直接返回（适合列表中不存在重复元素）</span></span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<h3 id="liang-shu-he">两数和</h3>
+<p><img src="/2020/05/15/data-structures-and-algorithms/2.png" alt></p>
+<blockquote>
+<p>只要数组有序，就应该想到双指针技巧。</p>
+</blockquote>
+<h3 id="fan-zhuan-shu-zu">反转数组</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">def reverse(nums) &#123;</span><br><span class="line">    left = <span class="number">0</span>;</span><br><span class="line">    right = len(nums) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> left &lt; right:</span><br><span class="line">        <span class="comment"># swap(nums[left], nums[right])</span></span><br><span class="line">        temp = nums[left]</span><br><span class="line">        nums[left] = nums[right]</span><br><span class="line">        nums[right] = temp</span><br><span class="line">        left += <span class="number">1</span></span><br><span class="line">    	right -= <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="hua-dong-chuang-kou-suan-fa">滑动窗口算法</h3>
+<p>滑动窗口模式用于对给定数组或链表的特定窗口大小执行所需操作.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">slide_window</span><span class="params">(s,t)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 窗口: 字典/list/set</span></span><br><span class="line">    window = defaultdict(int)</span><br><span class="line">    <span class="comment"># gold: 字典/list</span></span><br><span class="line">    need = defaultdict(int)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化need</span></span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> t:</span><br><span class="line">        <span class="comment"># need do something</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> right &lt; len(s):</span><br><span class="line">        <span class="comment"># 要添加的字符</span></span><br><span class="line">        c = s[right]</span><br><span class="line">        <span class="comment"># right 指针右移，扩大窗口</span></span><br><span class="line">        right += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对窗口内的数据进行更新操作 1</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 判断左侧窗口是否要收缩</span></span><br><span class="line">        <span class="keyword">while</span> (window needs shrink):</span><br><span class="line">            <span class="comment"># d 是将移出窗口的字符</span></span><br><span class="line">            d = s[left]</span><br><span class="line">            <span class="comment"># 左移窗口</span></span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 进行窗口内数据的一系列更新操作 2（与1处保持对称）</span></span><br><span class="line">            <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h3 id="ying-yong-chang-jing-1">应用场景</h3>
+<ul>
+<li>问题为排序数组或链表，并且需要满足某些约束的一组元素问题</li>
+<li>数组中的元素集是一对，三元组，甚至是子数组</li>
+</ul>
+<h3 id="ti-mu-1">题目</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" disabled="true"><label for="checkbox6"> [N-sum问题(leetcode)]</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" disabled="true"><label for="checkbox7"> <a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">无重复字符的最长子串(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" disabled="true"><label for="checkbox8"> <a href="https://leetcode-cn.com/problems/trapping-rain-water/" target="_blank" rel="noopener">接雨水(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" disabled="true"><label for="checkbox9"> <a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">长度最小的子数组(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" disabled="true"><label for="checkbox10"> [输出一个排好序的数组的平方数组（简单）]</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" disabled="true"><label for="checkbox11"> [3-Sum（中等）]</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" disabled="true"><label for="checkbox12"> [比较两个字符是否相等，字符中包括得有退格键（中等）]</label></div></li>
+</ul>
 <h1 id="hua-dong-chuang-kou">滑动窗口</h1>
 <p>滑动窗口模式用于对给定数组或链表的特定窗口大小执行所需操作，例如查找包含所有1的最长子序列。滑动窗口从第一个元素开始，每次向右移动一个元素并根据要解决的问题调整窗口的长度。在某些情况下，窗口的大小保持不变，而在其他情况下，大小会增大或缩小。</p>
 <p><img src="/2020/05/15/data-structures-and-algorithms/1.png" alt></p>
-<h2 id="ying-yong-chang-jing">应用场景</h2>
+<h2 id="ying-yong-chang-jing-2">应用场景</h2>
 <ul>
 <li>问题输入是线性数据结构，如链表、数组或字符串</li>
 <li>题目要求查找最长/最短的子字符串、子数组或所需的值</li>
 </ul>
-<h2 id="ti-mu">题目</h2>
+<h2 id="ti-mu-2">题目</h2>
 <ul class="contains-task-list">
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" checked="true" disabled="true"><label for="checkbox0"> <a href="https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&amp;tqId=11217&amp;tPage=4&amp;rp=4&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">滑动窗口的最大值(剑指offer)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> <a href="https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&amp;tqId=11217&amp;tPage=4&amp;rp=4&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">滑动窗口的最大值(剑指offer)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" checked="true" disabled="true"><label for="checkbox1"> <a href="https://leetcode-cn.com/problems/sliding-window-median/" target="_blank" rel="noopener">滑动窗口中位数(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> <a href="https://leetcode-cn.com/problems/sliding-window-median/" target="_blank" rel="noopener">滑动窗口中位数(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" checked="true" disabled="true"><label for="checkbox2"> <a href="https://leetcode-cn.com/problems/minimum-window-substring/" target="_blank" rel="noopener">最小覆盖子串(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> <a href="https://leetcode-cn.com/problems/minimum-window-substring/" target="_blank" rel="noopener">最小覆盖子串(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" checked="true" disabled="true"><label for="checkbox3"> <a href="https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/" target="_blank" rel="noopener">找到字符串中所有字母异位词(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> <a href="https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/" target="_blank" rel="noopener">找到字符串中所有字母异位词(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" checked="true" disabled="true"><label for="checkbox4"> <a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">无重复字符的最长子串(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> <a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">无重复字符的最长子串(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" checked="true" disabled="true"><label for="checkbox5"> <a href="https://leetcode-cn.com/problems/permutation-in-string/" target="_blank" rel="noopener">字符串的排列(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> <a href="https://leetcode-cn.com/problems/permutation-in-string/" target="_blank" rel="noopener">字符串的排列(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" disabled="true"><label for="checkbox6"> <a href="https://leetcode-cn.com/problems/subarrays-with-k-different-integers/" target="_blank" rel="noopener">k个不同整数的子数组</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" disabled="true"><label for="checkbox19"> <a href="https://leetcode-cn.com/problems/subarrays-with-k-different-integers/" target="_blank" rel="noopener">k个不同整数的子数组</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" disabled="true"><label for="checkbox7"> [窗口大小为K的最大子数组和]</label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" disabled="true"><label for="checkbox20"> [窗口大小为K的最大子数组和]</label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" disabled="true"><label for="checkbox8"> [拥有K个不同的字母的最长子串]</label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" disabled="true"><label for="checkbox21"> [拥有K个不同的字母的最长子串]</label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" disabled="true"><label for="checkbox9"> [字符串的同字母异序词]</label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" disabled="true"><label for="checkbox22"> [字符串的同字母异序词]</label></div></p>
 </li>
 </ul>
 <h2 id="fen-xi-yu-zong-jie">分析与总结</h2>
@@ -2063,44 +2141,6 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <li>关注的元素是否有效（有效是指：元素的index是否在窗口范围内）</li>
 </ol>
 <figure class="highlight python"><figcaption><span>滑动窗口模板</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">slide_window</span><span class="params">(s,t)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 窗口: 字典/list/set</span></span><br><span class="line">    window = defaultdict(int)</span><br><span class="line">    <span class="comment"># gold: 字典/list</span></span><br><span class="line">    need = defaultdict(int)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化need</span></span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> t:</span><br><span class="line">        <span class="comment"># need do something</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> right &lt; len(s):</span><br><span class="line">        <span class="comment"># 要添加的字符</span></span><br><span class="line">        c = s[right]</span><br><span class="line">        <span class="comment"># right 指针右移，扩大窗口</span></span><br><span class="line">        right += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对窗口内的数据进行更新操作 1</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 判断左侧窗口是否要收缩</span></span><br><span class="line">        <span class="keyword">while</span> (window needs shrink):</span><br><span class="line">            <span class="comment"># d 是将移出窗口的字符</span></span><br><span class="line">            d = s[left]</span><br><span class="line">            <span class="comment"># 左移窗口</span></span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 进行窗口内数据的一系列更新操作 2（与1处保持对称）</span></span><br><span class="line">            <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
-<h1 id="shuang-zhi-zhen-mo-shi">双指针模式</h1>
-<p>双指针是这样的模式：两个指针朝着左右方向移动（双指针分为同向双指针和异向双指针），直到他们有一个或是两个都满足某种条件。双指针通常用在排好序的数组或是链表中寻找对子。比如，你需要去比较数组中每个元素和其他元素的关系时，你就需要用到双指针了。</p>
-<p>我们需要双指针的原因是：如果你只用一个指针的话，你得来回跑才能在数组中找到你需要的答案。这一个指针来来回回的过程就很耗时和浪费空间了 。虽然brute force一个指针的解法可能会奏效，但时间复杂度一般会是O(n²)。在很多情况下，双指针能帮助我们找到空间或是时间复杂度更低的解。</p>
-<p><img src="/2020/05/15/data-structures-and-algorithms/2.png" alt></p>
-<h2 id="ying-yong-chang-jing-1">应用场景</h2>
-<ul>
-<li>问题为排序数组或链表，并且需要满足某些约束的一组元素问题</li>
-<li>数组中的元素集是一对，三元组，甚至是子数组</li>
-</ul>
-<h2 id="ti-mu-1">题目</h2>
-<ol>
-<li>[N-sum问题(leetcode)]</li>
-<li><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">无重复字符的最长子串(leetcode)</a></li>
-<li><a href="https://leetcode-cn.com/problems/trapping-rain-water/" target="_blank" rel="noopener">接雨水(leetcode)</a></li>
-<li><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">长度最小的子数组(leetcode)</a></li>
-<li>[输出一个排好序的数组的平方数组（简单）]</li>
-<li>[3-Sum（中等）]</li>
-<li>[比较两个字符是否相等，字符中包括得有退格键（中等）]</li>
-</ol>
-<h1 id="kuai-man-zhi-zhen">快慢指针</h1>
-<p>也被称为“龟兔算法”，基本思想是使用两个指针以不同的速度在数组或链表中移动。在处理循环链接列表或数组时，此方法非常有用。通过以不同的速度移动（例如，在循环链表中），算法证明两个指针必然会相遇。 一旦两个指针都处于循环循环中，快速指针就应该捕获慢速指针。这种方法在解决有环的链表和数组时特别有用。</p>
-<p><img src="/2020/05/15/data-structures-and-algorithms/3.png" alt></p>
-<h2 id="ying-yong-chang-jing-2">应用场景</h2>
-<ul>
-<li>链表或数组循环</li>
-<li>用于找中间元素</li>
-<li>需要知道某个元素的位置或链表的总长度</li>
-</ul>
-<p>什么时候用双指针，什么时候用快慢指针？</p>
-<h2 id="ti-mu-2">题目</h2>
-<ol>
-<li><a href="https://leetcode-cn.com/problems/linked-list-cycle/" target="_blank" rel="noopener">环形链表（LEETCODE）</a></li>
-<li><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="noopener">相交链表（LEETCODE）</a></li>
-<li><a href="https://leetcode-cn.com/problems/linked-list-cycle-ii/" target="_blank" rel="noopener">环形链表入口节点（LEETCODE）</a></li>
-<li>链表是否有环（简单）</li>
-<li>链表是否满足回文（中等）</li>
-<li>环状数组中检测环（困难）</li>
-</ol>
 <h1 id="qu-jian-he-bing">区间合并</h1>
 <p>合并间隔模式是<strong>处理重叠间隔</strong>的有效技术。 在涉及间隔的许多问题中，你可以需要找到重叠间隔或合并间隔（如果它们重叠）。给定两个间隔aaa和bbb，可能存在6中不同的间隔交互情况：<br>
 <img src="/2020/05/15/data-structures-and-algorithms/4.png" alt></p>
@@ -2157,28 +2197,28 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <h3 id="ti-mu-6">题目</h3>
 <ul class="contains-task-list">
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> <a href="https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/" target="_blank" rel="noopener">N叉树的层序遍历(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> <a href="https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/" target="_blank" rel="noopener">N叉树的层序遍历(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> <a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">二叉树的层序遍历(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> <a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">二叉树的层序遍历(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> <a href="https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank" rel="noopener">二叉树的锯齿形层次遍历(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> <a href="https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank" rel="noopener">二叉树的锯齿形层次遍历(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/" target="_blank" rel="noopener">从上到下打印二叉树(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/" target="_blank" rel="noopener">从上到下打印二叉树(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/" target="_blank" rel="noopener">从上到下打印二叉树 II(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" checked="true" disabled="true"><label for="checkbox27"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/" target="_blank" rel="noopener">从上到下打印二叉树 II(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/" target="_blank" rel="noopener">从上到下打印二叉树 III(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> <a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/" target="_blank" rel="noopener">从上到下打印二叉树 III(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> <a href="https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/" target="_blank" rel="noopener">在每个树行中找最大值(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" checked="true" disabled="true"><label for="checkbox29"> <a href="https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/" target="_blank" rel="noopener">在每个树行中找最大值(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> <a href="https://leetcode-cn.com/problems/list-of-depth-lcci/" target="_blank" rel="noopener">特定深度节点链表(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" checked="true" disabled="true"><label for="checkbox30"> <a href="https://leetcode-cn.com/problems/list-of-depth-lcci/" target="_blank" rel="noopener">特定深度节点链表(leetcode)</a></label></div></p>
 </li>
 </ul>
 <h3 id="dai-ma-mo-ban">代码模板</h3>
@@ -2198,31 +2238,31 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <h3 id="ti-mu-7">题目</h3>
 <ul class="contains-task-list">
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> <a href="https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/" target="_blank" rel="noopener">求根到叶子节点数字之和（leetcode）</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" checked="true" disabled="true"><label for="checkbox31"> <a href="https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/" target="_blank" rel="noopener">求根到叶子节点数字之和（leetcode）</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> <a href="https://leetcode-cn.com/problems/path-sum/" target="_blank" rel="noopener">路径总和(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> <a href="https://leetcode-cn.com/problems/path-sum/" target="_blank" rel="noopener">路径总和(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> <a href="https://leetcode-cn.com/problems/path-sum-ii/" target="_blank" rel="noopener">路径总和II(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> <a href="https://leetcode-cn.com/problems/path-sum-ii/" target="_blank" rel="noopener">路径总和II(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> <a href="https://leetcode-cn.com/problems/path-sum-iii/" target="_blank" rel="noopener">路径总和III(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> <a href="https://leetcode-cn.com/problems/path-sum-iii/" target="_blank" rel="noopener">路径总和III(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" checked="true" disabled="true"><label for="checkbox22"> <a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最大深度（leetcode）</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> <a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最大深度（leetcode）</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> <a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最小深度(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> <a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最小深度(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> <a href="https://leetcode-cn.com/problems/leaf-similar-trees/" target="_blank" rel="noopener">叶子相似的树(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> <a href="https://leetcode-cn.com/problems/leaf-similar-trees/" target="_blank" rel="noopener">叶子相似的树(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> <a href="https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/" target="_blank" rel="noopener">N叉树的最大深度(leetcode)</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> <a href="https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/" target="_blank" rel="noopener">N叉树的最大深度(leetcode)</a></label></div></p>
 </li>
 <li class="task-list-item">
-<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" disabled="true"><label for="checkbox26"> <a href="https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/" target="_blank" rel="noopener">从中序与后序遍历序列构造二叉树（leetcode）</a></label></div></p>
+<p><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" disabled="true"><label for="checkbox39"> <a href="https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/" target="_blank" rel="noopener">从中序与后序遍历序列构造二叉树（leetcode）</a></label></div></p>
 </li>
 </ul>
 <h3 id="dai-ma">代码</h3>
@@ -2274,15 +2314,15 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <p><img src="/2020/05/15/data-structures-and-algorithms/11.png" alt></p>
 <h2 id="ti-mu-10">题目</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" checked="true" disabled="true"><label for="checkbox27"> <a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">二分查找(leetcode)</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> <a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener">搜索旋转排序数组（leetcode）</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" checked="true" disabled="true"><label for="checkbox29"> <a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii" target="_blank" rel="noopener">搜索旋转排序数组 II(leetcode)</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" checked="true" disabled="true"><label for="checkbox30"> <a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">在排序数组中查找元素的第一个和最后一个位置(leetcode)</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" disabled="true"><label for="checkbox31"> <a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">寻找两个有序数组的中位数（leetcode）</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> <a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank" rel="noopener">寻找旋转排序数组中的最小值（leetcode）</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" disabled="true"><label for="checkbox33"> <a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii" target="_blank" rel="noopener">寻找旋转排序数组中的最小值 II(leetcode)</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" disabled="true"><label for="checkbox34"> 顺序未知的二分（可能翻转过了，简单）</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" disabled="true"><label for="checkbox35"> 无界排序数组的二分（中等）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> <a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">二分查找(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> <a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener">搜索旋转排序数组（leetcode）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> <a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii" target="_blank" rel="noopener">搜索旋转排序数组 II(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> <a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener">在排序数组中查找元素的第一个和最后一个位置(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" disabled="true"><label for="checkbox44"> <a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">寻找两个有序数组的中位数（leetcode）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> <a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank" rel="noopener">寻找旋转排序数组中的最小值（leetcode）</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" disabled="true"><label for="checkbox46"> <a href="https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii" target="_blank" rel="noopener">寻找旋转排序数组中的最小值 II(leetcode)</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" disabled="true"><label for="checkbox47"> 顺序未知的二分（可能翻转过了，简单）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" disabled="true"><label for="checkbox48"> 无界排序数组的二分（中等）</label></div></li>
 </ul>
 <h2 id="dai-ma-mo-ban-1">代码模板</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(nums, target)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = len(nums) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] == target:</span><br><span class="line">            <span class="comment"># 直接返回（适合列表中不存在重复元素）</span></span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search_left</span><span class="params">(nums, target)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = len(nums) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] == target:</span><br><span class="line">            <span class="comment"># 向左边界搜索,用right</span></span><br><span class="line">            right = mid <span class="number">-1</span></span><br><span class="line">    <span class="comment"># 检查是否越界</span></span><br><span class="line">    <span class="keyword">if</span> left &gt;= len(nums) <span class="keyword">or</span> <span class="keyword">not</span> nums[left] == target:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> left</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_search_right</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">    left = <span class="number">0</span></span><br><span class="line">    right = len(nums) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> left &lt;= right:</span><br><span class="line">        mid = left + (right - left) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] &lt; target:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] == target:</span><br><span class="line">            <span class="comment"># 向右边界搜索，用left</span></span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">    <span class="comment"># 检查是否越界</span></span><br><span class="line">    <span class="keyword">if</span> right &lt; <span class="number">0</span> <span class="keyword">or</span> <span class="keyword">not</span> nums[right] == target:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">return</span> right</span><br></pre></td></tr></table></figure>
@@ -2384,9 +2424,9 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 </ol>
 <h1 id="can-kao">参考</h1>
 <ol>
-<li><a href="https://medium.com/hackernoon/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed" target="_blank" rel="noopener">https://medium.com/hackernoon/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/90664857" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/90664857</a></li>
-<li><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">https://labuladong.gitbook.io/algo/</a></li>
+<li><a href="https://medium.com/hackernoon/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed" target="_blank" rel="noopener">14 Patterns to Ace Any Coding Interview Question</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/90664857" target="_blank" rel="noopener">码农找工作之：秒杀算法面试必须掌握的14种模式</a></li>
+<li><a href="https://labuladong.gitbook.io/algo/" target="_blank" rel="noopener">labuladong的算法小抄</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -2399,8 +2439,8 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
   </entry>
   <entry>
     <title>bert源码</title>
-    <url>/2020/05/13/bert_code/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/13/bert_code/bert.jpg" alt></p>
+    <url>/2020/05/13/research/bert_code/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/13/research/bert_code/bert.jpg" alt></p>
 <a id="more"></a>
 <h1 id="jian-jie">简介</h1>
 <p>BERT——来自<strong>Transformer的双向编码器表征</strong>。与最近的语言表征模型不同，BERT旨在基于<strong>所有层</strong>的<strong>左、右语境</strong>来预训练深度双向表征。BERT是首个在<strong>大批句子层面</strong>和<strong>token层面</strong>任务中取得当前最优性能的<strong>基于微调的表征模型</strong>，其性能超越许多使用任务特定架构的系统，刷新了11项NLP任务的最优性能记录。</p>
@@ -2424,7 +2464,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <p>其中，\(L\):表示层数，\(H\):表示隐藏层的size，\(A\):表示自注意力head的个数。feed-forward的size为\(4H\),即\(H=768\)时为3072，\(H=1024\)时为4096。</p>
 <h2 id="bert-amp-open-ai-gpt-amp-el-mo">BERT &amp; OpenAI GPT &amp; ELMo</h2>
 <p>\(BERT_{Base}\)和OpenAI GPT的大小是一样的。BERT Transformer使用<strong>双向自注意力机制</strong>，而GPT Transformer使用受限的自注意力机制，导致每个token只能关注其左侧的语境。双向Transformer在文献中通常称为**“Transformer 编码器”<strong>，而只</strong>关注左侧语境的版本<strong>则因能用于文本生成而被称为</strong>“Transformer 解码器”**。</p>
-<p><img src="/2020/05/13/bert_code/bert-gpt-transformer-elmo.png" alt></p>
+<p><img src="/2020/05/13/research/bert_code/bert-gpt-transformer-elmo.png" alt></p>
 <ul>
 <li>BERT 使用双向Transformer</li>
 <li>OpenAI GPT 使用从左到右的Transformer</li>
@@ -2492,7 +2532,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <p>有了样本和特征，构建数据集类。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NerDataset</span><span class="params">(Dataset)</span>:</span></span><br><span class="line">    features: List[InputFeatures]</span><br><span class="line">    <span class="comment"># 对于pad的部分不计算损失 </span></span><br><span class="line">    pad_token_label_id: int = nn.CrossEntropyLoss().ignore_index</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        self,</span></span></span><br><span class="line"><span class="function"><span class="params">        data_dir: str,</span></span></span><br><span class="line"><span class="function"><span class="params">        tokenizer: PreTrainedTokenizer,</span></span></span><br><span class="line"><span class="function"><span class="params">        labels: List[str],</span></span></span><br><span class="line"><span class="function"><span class="params">        model_type: str,</span></span></span><br><span class="line"><span class="function"><span class="params">        max_seq_length: Optional[int] = None,</span></span></span><br><span class="line"><span class="function"><span class="params">        overwrite_cache=False,</span></span></span><br><span class="line"><span class="function"><span class="params">        mode: Split = Split.train,</span></span></span><br><span class="line"><span class="function"><span class="params">        local_rank=<span class="number">-1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        )</span>:</span></span><br><span class="line">        <span class="comment"># 加载数据集文件</span></span><br><span class="line">        cached_features_file = os.path.join(data_dir, <span class="string">"cached_&#123;&#125;_&#123;&#125;_&#123;&#125;"</span>.format(mode.value, tokenizer.__class__.__name__, str(max_seq_length)), )</span><br><span class="line">        <span class="keyword">with</span> torch_distributed_zero_first(local_rank):</span><br><span class="line">        <span class="comment"># Make sure only the first process in distributed training processes the dataset,</span></span><br><span class="line">        <span class="comment"># and the others will use the cache.</span></span><br><span class="line">            <span class="keyword">if</span> os.path.exists(cached_features_file) <span class="keyword">and</span> <span class="keyword">not</span> overwrite_cache:</span><br><span class="line">                logger.info(<span class="string">f"Loading features from cached file <span class="subst">&#123;cached_features_file&#125;</span>"</span>)</span><br><span class="line">                self.features = torch.load(cached_features_file)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                logger.info(<span class="string">f"Creating features from dataset file at <span class="subst">&#123;data_dir&#125;</span>"</span>)</span><br><span class="line">                examples = read_examples_from_file(data_dir, mode)</span><br><span class="line">                <span class="comment"># TODO clean up all this to leverage built-in features of tokenizers</span></span><br><span class="line">                self.features = convert_examples_to_features(</span><br><span class="line">                    examples,</span><br><span class="line">                    labels,</span><br><span class="line">                    max_seq_length,</span><br><span class="line">                    tokenizer,</span><br><span class="line">                    cls_token_at_end=bool(model_type <span class="keyword">in</span> [<span class="string">"xlnet"</span>]),</span><br><span class="line">                    <span class="comment"># xlnet has a cls token at the end</span></span><br><span class="line">                    cls_token=tokenizer.cls_token,</span><br><span class="line">                    cls_token_segment_id=<span class="number">2</span> <span class="keyword">if</span> model_type <span class="keyword">in</span> [<span class="string">"xlnet"</span>] <span class="keyword">else</span> <span class="number">0</span>,</span><br><span class="line">                    sep_token=tokenizer.sep_token,</span><br><span class="line">                    sep_token_extra=bool(model_type <span class="keyword">in</span> [<span class="string">"roberta"</span>]),</span><br><span class="line">                    <span class="comment"># roberta uses an extra separator b/w pairs of sentences, cf. github.com/pytorch/fairseq/commit/1684e166e3da03f5b600dbb7855cb98ddfcd0805</span></span><br><span class="line">                    pad_on_left=bool(tokenizer.padding_side == <span class="string">"left"</span>),</span><br><span class="line">                    pad_token=tokenizer.pad_token_id,</span><br><span class="line">                    pad_token_segment_id=tokenizer.pad_token_type_id,</span><br><span class="line">                    pad_token_label_id=self.pad_token_label_id,</span><br><span class="line">                )</span><br><span class="line">                <span class="comment"># 保存0卡上的数据到缓存</span></span><br><span class="line">                <span class="keyword">if</span> local_rank <span class="keyword">in</span> [<span class="number">-1</span>, <span class="number">0</span>]:</span><br><span class="line">                    logger.info(<span class="string">f"Saving features into cached file <span class="subst">&#123;cached_features_file&#125;</span>"</span>)</span><br><span class="line">                    torch.save(self.features, cached_features_file)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.features)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, i)</span> -&gt; InputFeatures:</span></span><br><span class="line">        <span class="keyword">return</span> self.features[i]</span><br></pre></td></tr></table></figure>
 <h2 id="bert-model">BertModel</h2>
-<p><img src="/2020/05/13/bert_code/BertModel.png" alt></p>
+<p><img src="/2020/05/13/research/bert_code/BertModel.png" alt></p>
 <p>从整体来看BertModel由三部分组成：BertEmbeddings、BertEncoder、BertPooler,需要注意<code>attention_mask和head_mask</code>的处理。</p>
 <p>forward：(符号’是可以为None的意思)</p>
 <ul>
@@ -2509,7 +2549,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BertModel</span><span class="params">(BertPreTrainedModel)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config)</span>:</span></span><br><span class="line">        super().__init__(config)</span><br><span class="line">        self.config = config</span><br><span class="line"></span><br><span class="line">        self.embeddings = BertEmbeddings(config)</span><br><span class="line">        self.encoder = BertEncoder(config)</span><br><span class="line">        self.pooler = BertPooler(config)</span><br><span class="line"></span><br><span class="line">        self.init_weights()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_input_embeddings</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.embeddings.word_embeddings</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_input_embeddings</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self.embeddings.word_embeddings = value</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_prune_heads</span><span class="params">(self, heads_to_prune)</span>:</span></span><br><span class="line">        <span class="string">""" E.g. &#123;1: [0, 2], 2: [2, 3]&#125; will prune heads 0 and 2 on layer 1 and heads 2 and 3 on layer 2.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">for</span> layer, heads <span class="keyword">in</span> heads_to_prune.items():</span><br><span class="line">            self.encoder.layer[layer].attention.prune_heads(heads)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @add_start_docstrings_to_callable(BERT_INPUTS_DOCSTRING)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self,input_ids=None,attention_mask=None,token_type_ids=None,position_ids=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        head_mask=None,inputs_embeds=None,encoder_hidden_states=None,encoder_attention_mask=None,)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        参数：</span></span><br><span class="line"><span class="string">        head_mask: head_mask has shape [num_heads] or [num_hidden_layers x num_heads]</span></span><br><span class="line"><span class="string">        encoder_hidden_states: encoder 的输出</span></span><br><span class="line"><span class="string">        encoder_attention_mask:</span></span><br><span class="line"><span class="string">        返回值：</span></span><br><span class="line"><span class="string">        last_hidden_state :[batch_size, sequence_length, hidden_size]，是序列在模型最后一层的输出的隐藏层</span></span><br><span class="line"><span class="string">        pooler_output :[batch_size, hidden_size]:[CLS]对应的隐状态的输出，由于这个token是用来做NSP任务的，这个输出通常不能很好的summary 整个序列的语义，如果想要获取整句话的语义通常需要对整个序列取平均或者池化。</span></span><br><span class="line"><span class="string">        hidden_states:[batch_size, sequence_length, hidden_size],embedding + output of each layer.</span></span><br><span class="line"><span class="string">        attention:[batch_size, num_heads, sequence_length, sequence_length],矩阵的权值是经过softmax的。</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> input_ids <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> inputs_embeds <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"You cannot specify both input_ids and inputs_embeds at the same time"</span>)</span><br><span class="line">        <span class="keyword">elif</span> input_ids <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            input_shape = input_ids.size()</span><br><span class="line">        <span class="keyword">elif</span> inputs_embeds <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            input_shape = inputs_embeds.size()[:<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"You have to specify either input_ids or inputs_embeds"</span>)</span><br><span class="line"></span><br><span class="line">        device = input_ids.device <span class="keyword">if</span> input_ids <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> inputs_embeds.device</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> attention_mask <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 全部mask成 1</span></span><br><span class="line">            attention_mask = torch.ones(input_shape, device=device)</span><br><span class="line">        <span class="keyword">if</span> token_type_ids <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 全表示成0（第一句）</span></span><br><span class="line">            token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 1. attention_mask:[bs,seq_len] --&gt; [bs,num_heads,seq_len,seq_len]</span></span><br><span class="line">        <span class="comment"># 2. attention_value:1 --&gt; 0, 0--&gt;-10000,这样做的目的是为了和算出来的score（没有经过softmax）相加，相当于从序列中移除掉了mask的内容。</span></span><br><span class="line">        extended_attention_mask: torch.Tensor = self.get_extended_attention_mask(attention_mask, input_shape, self.device)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.config.is_decoder <span class="keyword">and</span> encoder_hidden_states <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            encoder_batch_size, encoder_sequence_length, _ = encoder_hidden_states.size()</span><br><span class="line">            encoder_hidden_shape = (encoder_batch_size, encoder_sequence_length) <span class="comment"># [bs,seq_len]</span></span><br><span class="line">            <span class="keyword">if</span> encoder_attention_mask <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                encoder_attention_mask = torch.ones(encoder_hidden_shape, device=device)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 1. attention_mask:[bs,seq_len] --&gt; [bs,num_heads,seq_len,seq_len]</span></span><br><span class="line">            <span class="comment"># 2. attention_value:1 --&gt; 0, 0--&gt;-10000,这样做的目的是为了和算出来的score（没有经过softmax）相加，相当于从序列中移除掉了mask的内容。</span></span><br><span class="line">            encoder_extended_attention_mask = self.invert_attention_mask(encoder_attention_mask)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            encoder_extended_attention_mask = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># input head_mask： [num_heads] or [num_hidden_layers x num_heads]，1表示保留这个head。</span></span><br><span class="line">        <span class="comment"># 因为有多个head，每个head都需要mask序列中哪些是token，哪些是padding，所以需要转化head_mask为：[num_hidden_layers,bsz,num_heads,seq_length,seq_length]</span></span><br><span class="line">        head_mask = self.get_head_mask(head_mask, self.config.num_hidden_layers)</span><br><span class="line"></span><br><span class="line">        embedding_output = self.embeddings(</span><br><span class="line">            input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids, inputs_embeds=inputs_embeds</span><br><span class="line">        )</span><br><span class="line">        encoder_outputs = self.encoder(</span><br><span class="line">            embedding_output,</span><br><span class="line">            attention_mask=extended_attention_mask,</span><br><span class="line">            head_mask=head_mask,</span><br><span class="line">            encoder_hidden_states=encoder_hidden_states,</span><br><span class="line">            encoder_attention_mask=encoder_extended_attention_mask,</span><br><span class="line">        )</span><br><span class="line">        sequence_output = encoder_outputs[<span class="number">0</span>]</span><br><span class="line">        pooled_output = self.pooler(sequence_output)</span><br><span class="line">        <span class="comment"># add hidden_states and attentions if they are here</span></span><br><span class="line">        outputs = (sequence_output, pooled_output,) + encoder_outputs[<span class="number">1</span>:]  </span><br><span class="line">        <span class="keyword">return</span> outputs  <span class="comment"># sequence_output, pooled_output, (hidden_states), (attentions)</span></span><br></pre></td></tr></table></figure>
 <h3 id="bert-embeddings">BertEmbeddings</h3>
 <p>从Bert的论文中可以知道，Bert的词向量主要是由三个向量相加组合而成，分别是单词本身的向量，单词所在句子中位置的向量和句子所在单个训练文本中位置的向量。这样做的好处主要可以解决只有词向量时碰见多义词时模型预测不准的问题。</p>
-<p><img src="/2020/05/13/bert_code/bert-input-representation.png" alt></p>
+<p><img src="/2020/05/13/research/bert_code/bert-input-representation.png" alt></p>
 <p>forward：(符号’是可以为None的意思)</p>
 <ul>
 <li>
@@ -2583,7 +2623,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <p>过程:<code>self-attention 过程</code></p>
 </li>
 </ul>
-<p><img src="/2020/05/13/bert_code/image-20200515100926049.png" alt></p>
+<p><img src="/2020/05/13/research/bert_code/image-20200515100926049.png" alt></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BertSelfAttention</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        <span class="keyword">if</span> config.hidden_size % config.num_attention_heads != <span class="number">0</span> <span class="keyword">and</span> <span class="keyword">not</span> hasattr(config, <span class="string">"embedding_size"</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">"The hidden size (%d) is not a multiple of the number of attention "</span></span><br><span class="line">                <span class="string">"heads (%d)"</span> % (config.hidden_size, config.num_attention_heads)</span><br><span class="line">            )</span><br><span class="line">        </span><br><span class="line">        self.output_attentions = config.output_attentions</span><br><span class="line">        <span class="comment"># 12</span></span><br><span class="line">        self.num_attention_heads = config.num_attention_heads</span><br><span class="line">        <span class="comment"># 64 = 768/12 </span></span><br><span class="line">        self.attention_head_size = int(config.hidden_size / config.num_attention_heads)</span><br><span class="line">        <span class="comment"># 768 = 12 * 64</span></span><br><span class="line">        self.all_head_size = self.num_attention_heads * self.attention_head_size</span><br><span class="line"></span><br><span class="line">        self.query = nn.Linear(config.hidden_size, self.all_head_size)</span><br><span class="line">        self.key = nn.Linear(config.hidden_size, self.all_head_size)</span><br><span class="line">        self.value = nn.Linear(config.hidden_size, self.all_head_size)</span><br><span class="line"></span><br><span class="line">        self.dropout = nn.Dropout(config.attention_probs_dropout_prob)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">transpose_for_scores</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># x:[bs,seq_len,768]--&gt; x:[bs,seq_len, 12, 64]   multi-head</span></span><br><span class="line">        new_x_shape = x.size()[:<span class="number">-1</span>] + (self.num_attention_heads, self.attention_head_size)</span><br><span class="line">        x = x.view(*new_x_shape)</span><br><span class="line">        <span class="keyword">return</span> x.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self,hidden_states,attention_mask=None,head_mask=None,encoder_hidden_states=None,encoder_attention_mask=None, )</span>:</span></span><br><span class="line">        mixed_query_layer = self.query(hidden_states)</span><br><span class="line">    <span class="comment"># q,k,v</span></span><br><span class="line">        <span class="keyword">if</span> encoder_hidden_states <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            mixed_key_layer = self.key(encoder_hidden_states)</span><br><span class="line">            mixed_value_layer = self.value(encoder_hidden_states)</span><br><span class="line">            attention_mask = encoder_attention_mask</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mixed_key_layer = self.key(hidden_states)</span><br><span class="line">            mixed_value_layer = self.value(hidden_states)</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># multi-head </span></span><br><span class="line">        query_layer = self.transpose_for_scores(mixed_query_layer) <span class="comment"># [bs,seq_len, 12, 64]</span></span><br><span class="line">        key_layer = self.transpose_for_scores(mixed_key_layer) <span class="comment"># [bs,seq_len, 12, 64]</span></span><br><span class="line">        value_layer = self.transpose_for_scores(mixed_value_layer) <span class="comment"># [bs,seq_len, 12, 64]</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 得到权值矩阵</span></span><br><span class="line">        attention_scores = torch.matmul(query_layer, key_layer.transpose(<span class="number">-1</span>, <span class="number">-2</span>))</span><br><span class="line">        attention_scores = attention_scores / math.sqrt(self.attention_head_size)</span><br><span class="line">        <span class="keyword">if</span> attention_mask <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 用求和的方式，因为在attention_mask 中：1--&gt;0,0--&gt;-10000.</span></span><br><span class="line">            attention_scores = attention_scores + attention_mask</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对最后一个维度用 softmax 计算概率</span></span><br><span class="line">        attention_probs = nn.Softmax(dim=<span class="number">-1</span>)(attention_scores)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># This is actually dropping out entire tokens to attend to, which might</span></span><br><span class="line">        <span class="comment"># seem a bit unusual, but is taken from the original Transformer paper .</span></span><br><span class="line">        attention_probs = self.dropout(attention_probs)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># </span></span><br><span class="line">        <span class="keyword">if</span> head_mask <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            attention_probs = attention_probs * head_mask</span><br><span class="line"></span><br><span class="line">        context_layer = torch.matmul(attention_probs, value_layer)</span><br><span class="line"></span><br><span class="line">        context_layer = context_layer.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>).contiguous()</span><br><span class="line">        <span class="comment"># [bs,seq_len,12,64]--&gt; x:[bs,seq_len, 768]   把multi-head 再拼接回去</span></span><br><span class="line">        new_context_layer_shape = context_layer.size()[:<span class="number">-2</span>] + (self.all_head_size,)</span><br><span class="line">        context_layer = context_layer.view(*new_context_layer_shape)</span><br><span class="line"></span><br><span class="line">        outputs = (context_layer, attention_probs) <span class="keyword">if</span> self.output_attentions <span class="keyword">else</span> (context_layer,)</span><br><span class="line">        <span class="keyword">return</span> outputs</span><br></pre></td></tr></table></figure>
 <h6 id="bert-self-output">BertSelfOutput</h6>
 <p>forward：(符号’是可以为None的意思)</p>
@@ -2714,7 +2754,7 @@ MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, po
 <h3 id="shi-yong-yu-xun-lian-mo-xing">使用预训练模型</h3>
 <p>在BertModel class中有两个函数。get_pool_output表示获取每个batch第一个词的[CLS]表示结果。BERT认为这个词包含了整条语料的信息；适用于句子级别的分类问题。get_sequence_output表示BERT最终的输出结果,shape为[batch_size,seq_length,hidden_size]。可以直观理解为对每条语料的最终表示，适用于seq2seq问题。<br>
 对于其它序列标注或生成任务，也可以使用 BERT 对应的输出信息作出预测，例如每一个时间步输出一个标注或词等。下图展示了 BERT 在 11 种任务中的微调方法，它们都只添加了一个额外的输出层。在下图中，Tok 表示不同的词、E 表示输入的嵌入向量、\(T_i\)表示第\(i\) 个词在经过 BERT 处理后输出的上下文向量。</p>
-<p><img src="/2020/05/13/bert_code/bert-specific-models.png" alt></p>
+<p><img src="/2020/05/13/research/bert_code/bert-specific-models.png" alt></p>
 <h1 id="can-kao">参考</h1>
 <ol start="3">
 <li><a href="http://fancyerii.github.io/2019/03/09/bert-codes/" target="_blank" rel="noopener">BERT代码阅读</a></li>
@@ -4305,14 +4345,14 @@ P(W_i|D_m) = \sum_{k=1}^K{\phi_i^{t=k}*\theta_{t=k}^m}
   </entry>
   <entry>
     <title>bert系列</title>
-    <url>/2020/04/13/bert%E7%B3%BB%E5%88%97/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/Sesame_japan_cast_white_bg.jpg" alt></p>
+    <url>/2020/04/13/research/bert%E7%B3%BB%E5%88%97/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/Sesame_japan_cast_white_bg.jpg" alt></p>
 <a id="more"></a>
 <h2 id="bert-ji-qi-hou-xu-mo-xing">BERT 及其后续模型</h2>
 <p>了解这些后续的模型，方便在后续的研究和应用中来更好的选择模型。</p>
 <h3 id="bert">BERT</h3>
 <p>BERT模型的主要创新点都在pre-train方法上，即用了Masked LM和Next Sentence Prediction两种方法分别捕捉词语和句子级别的representation。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/bert.jpg" alt></p>
 <p>对比OpenAI GPT(Generative pre-trained transformer)，BERT是双向的Transformer block连接；就像单向rnn和双向rnn的区别，直觉上来讲效果会好一些。</p>
 <p>对比ELMo，虽然都是“双向”，但目标函数其实是不同的。ELMo是分别以 \(P(w_i|w_1,\cdots,w_{i-1})\) 和\(P(w_i|w_{i+1},\cdots,w_n)\)作为目标函数，独立训练处两个representation然后拼接，而BERT则是以\(P(w_i|w_1,\cdots,w_{i-1},w_{i+1}\cdots,w_n)\)  作为目标函数训练LM。</p>
 <h4 id="task-1-mlm">Task 1: MLM</h4>
@@ -4337,14 +4377,14 @@ P(W_i|D_m) = \sum_{k=1}^K{\phi_i^{t=k}*\theta_{t=k}^m}
 <p>具体任务即为一个句子关系判断任务，即判断句子B是否是句子A的下文，如果是的话输出’IsNext‘，否则输出’NotNext‘。</p>
 <p>训练数据的生成方式是从平行语料中随机抽取的连续两句话，其中50%保留抽取的两句话，它们符合IsNext关系，另外50%的第二句话是随机从预料中提取的，它们的关系是NotNext的。这个关系保存在图4中的[CLS]符号中.</p>
 <h4 id="shu-ru">输入</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_input.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/bert_input.jpg" alt></p>
 <ul>
 <li>Token Embeddings：即传统的词向量层，每个输入样本的首字符需要设置为[CLS]，可以用于之后的分类任务，若有两个不同的句子，需要用[SEP]分隔，且最后一个字符需要用[SEP]表示终止</li>
 <li>Segment Embeddings：为[0,1]序列，用来在NSP任务中区别两个句子，便于做句子关系判断任务</li>
 <li>Position Embeddings：与Transformer中的位置向量不同，BERT中的位置向量是直接训练出来的</li>
 </ul>
 <h4 id="fine-tunninng">Fine-tunninng</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_finetune.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/bert_finetune.jpg" alt></p>
 <p>对于不同的下游任务，我们仅需要对BERT不同位置的输出进行处理即可，或者直接将BERT不同位置的输出直接输入到下游模型当中。具体的如下所示：</p>
 <ul>
 <li>对于情感分析等单句分类任务，可以直接输入单个句子（不需要[SEP]分隔双句），将[CLS]的输出直接输入到分类器进行分类</li>
@@ -4376,7 +4416,7 @@ P(W_i|D_m) = \sum_{k=1}^K{\phi_i^{t=k}*\theta_{t=k}^m}
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">model_class, tokenizer_class, pretrained_weights = (ppb.DistilBertModel, ppb.DistilBertTokenizer, <span class="string">'distilbert-base-uncased'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Want BERT instead of distilBERT? Uncomment the following line:</span></span><br><span class="line"><span class="comment">#model_class, tokenizer_class, pretrained_weights = (ppb.BertModel, ppb.BertTokenizer, 'bert-base-uncased')# </span></span><br><span class="line"></span><br><span class="line">Load pretrained model/tokenizertokenizer = tokenizer_class.from_pretrained(pretrained_weights)</span><br><span class="line">model = model_class.from_pretrained(pretrained_weights)</span><br></pre></td></tr></table></figure>
 <ol start="3">
 <li>tokenize：分词+[cls]+[sep]<br>
-<img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_tokenize.png" alt="avatar"></li>
+<img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/bert_tokenize.png" alt="avatar"></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tokenizer.encode(<span class="string">'a visually stunning rumination on love'</span>, add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 <ol start="4">
@@ -4398,7 +4438,7 @@ P(W_i|D_m) = \sum_{k=1}^K{\phi_i^{t=k}*\theta_{t=k}^m}
 <p><a href>论文</a></p>
 <h4 id="jian-jie">简介</h4>
 <p>wwm 即 Whole Word Masking（对全词进行Mask）。相比于bert的改进是用Mask标签替换一个完整的词而不是字，中文和英文不同，英文最小的token是一个单词，而中文中最小的token却是字，词是由一个或多个字组成，且每个词之间没有明显的分割，包含更多信息的是词，对全词mask就是对整个词都通过mask进行掩码。<br>
-<img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/bert_wwm_exam.png" alt></p>
+<img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/bert_wwm_exam.png" alt></p>
 <h4 id="strong-bert-wwm-ext-strong"><strong>Bert-wwm-ext</strong></h4>
 <p>它是BERT-wwm的一个升级版，相比于BERT-wwm的改进是增加了训练数据集同时也增加了训练步数。<br>
 BERT-wwm-ext主要是有两点改进：<br>
@@ -4433,7 +4473,7 @@ BERT-wwm-ext主要是有两点改进：<br>
 <p>在xlnet中，采用了<strong>AR模型</strong>，但是怎么解决这个上下文的问题呢？</p>
 <h4 id="pai-lie-yu-yan-mo-xing-wei-liao-kao-lu-shang-xia-wen-xin-xi">排列语言模型(为了考虑上下文信息)</h4>
 <p>为了解决上文提到的问题，作者提出了排列语言模型，该模型不再对传统的AR模型的序列的值按顺序进行建模，而是最大化所有可能的序列的因式分解顺序的期望对数似然，这句话可能有点不好理解，举个栗子，假如我们有一个序列\([1,2,3,4]\)，如果我们的预测目标是3，对于传统的AR模型来说，结果是\(p(3)=\prod^3_{t=1}p(3|x_{&lt;t})\)，如果采用本文的方法，先对该序列进行因式分解，最终会有24种排列方式，下图是其中可能的四种情况，对于第一种情况因为3的左边没有其他的值，所以该情况无需做对应的计算，第二种情况3的左边还包括了2与4，所以得到的结果是\(p(3)=p(3|2)p(3|2,4)\)，后续的情况类似，这样处理过后不但保留了序列的上下文信息，也<strong>避免了采用mask标记位，巧妙的改进了bert与传统AR模型的缺点</strong>。<br>
-<img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/xlnet.png" alt></p>
+<img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/xlnet.png" alt></p>
 <h5 id="ru-he-xun-lian">如何训练？</h5>
 <ol>
 <li>假如句子长度为20，则会产生\(20\)!种排列，在这\(20\)!种排列中随机抽样，得到训练样本。</li>
@@ -4445,7 +4485,7 @@ BERT-wwm-ext主要是有两点改进：<br>
 p_{\theta}\left(X_{z_t} | x_{z_{&lt;t}}\right)=\frac{\exp \left(e(x)^{T} h_{\theta}\left(x_{z_{&lt;t}}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} h_{\theta}\left(x_{z_{&lt;t}}\right)\right)}
 \]<br>
 其中\(h_\theta (x_{z_{&lt;t}})\)表示的是添加了mask后的transformer的输出值，可以发现\(h_\theta (x_{z_{&lt;t}})\)并不依赖于其要预测的内容的位置信息，因为无论预测目标的位置在哪里，因式分解后得到的所有情况都是一样的，并且transformer的权重对于不同的情况是一样的，因此无论目标位置怎么变都能得到相同的分布结果，如下图所示，假如我们的序列index表示为[1,2,3]，对于目标2与3来说，其因式分解后的结果是一样的，那么经过transformer之后得到的结果肯定也是一样的。<br>
-<img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/123.png" alt></p>
+<img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/123.png" alt></p>
 <p>这就导致模型没法得到正确的表述，为了解决这个问题，论文中提出来新的分布计算方法，来实现目标位置感知<br>
 \[
 p_{\theta}\left(X_{zt}=x | x_{z&lt;t}\right)=\frac{\exp \left(e(x)^{T} g_{\theta}\left(x_{z&lt;t}, z_{t}\right)\right)}{\sum_{x^{\prime}} \exp \left(e\left(x^{\prime}\right)^{T} g_{\theta}\left(x_{z&lt;t}, z_{t}\right)\right)}
@@ -4463,7 +4503,7 @@ p_{\theta}\left(X_{zt}=x | x_{z&lt;t}\right)=\frac{\exp \left(e(x)^{T} g_{\theta
 \[
 h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=h_{z \leq t}^{(m-1)} ; \theta\right)
 \]<br>
-<img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/content_representation.png" alt></p>
+<img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/content_representation.png" alt></p>
 </li>
 <li>
 <p>query representation查询表述，即\(g_\theta (x_{z_{&lt;t}})\)，下文用\(g_{z_t}\) 表示，该表述包含上下文的内容信息\(x_{z_{&lt;t}}\) 和目标的位置信息\(z_t\)，但是不包括目标的内容信息\(x_{z_{t}}\) ，从图中可以看到，K与V的计算并没有包括Q，自然也就无法获取到目标的内容信息，但是目标的位置信息在计算Q的时候保留了下来，<br>
@@ -4472,9 +4512,9 @@ g_{z_{t}}^{(m)}=\text {Attention}\left(Q=g_{z_{t}}^{(m-1)}, K V=h_{z&lt;t}^{(m-1
 \]</p>
 </li>
 </ul>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/query_representation.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/query_representation.png" alt></p>
 <p>总的计算过程，首先，第一层的查询流是随机初始化了一个向量即\(g_i^{0}=w\)，内容流是采用的词向量即\(h_i^{0}=e(x_i)\)，self-attention的计算过程中两个流的网络权重是共享的，最后在微调阶段，只需要简单的把query stream移除，只采用content stream即可。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/two_stream.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/two_stream.png" alt></p>
 <h4 id="yin-ru-transformer-xl">引入transformer XL</h4>
 <p>作者还将transformer-xl的两个最重要的技术点应用了进来，即片段循环机制与相对位置编码。</p>
 <h5 id="pian-duan-xun-huan-ji-zhi">片段循环机制</h5>
@@ -4518,13 +4558,13 @@ h_{z_{t}}^{(m)}=\text {Attention}\left(Q=h_{z_{t}}^{(m-1)}, K V=\left[\tilde{h}^
 <li>MLM+SBO:通过使用分词边界的表示来预测被添加mask的分词的内容，不再依赖分词内单个 token 的表示。</li>
 </ol>
 <p>SpanBERT 能够对分词进行更好地表示和预测。该模型和 BERT 在mask机制和训练目标上存在差别。首先，SpanBERT 不再对随机的单个 token 添加mask，而是对随机对邻接分词添加mask。其次，SpanBert提出了一个新的训练目标 span-boundary objective (SBO) 进行模型训练。通过对分词添加mask，作者能够使模型依据其所在语境预测整个分词。另外，SBO 能使模型在边界词中存储其分词级别的信息，使得模型的调优更佳容易。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/spanbert.png" alt></p>
 <p>模型使用边界词 was和 to来预测分词中的每个单词。</p>
 <p>为了搭建 SpanBERT ，作者首先构建了一个 BERT 模型的并进行了微调，SpanBERT的表现优于原始 BERT 模型。在搭建baseline的时候，作者发现对单个部分进行预训练的效果，比使用 next sentence prediction (NSP) 目标对两个长度为一半的部分进行训练的效果更优，在下游任务中表现尤其明显。因此，作者在经过调优的 BERT 模型的顶端对模型进行了改进。</p>
 <h4 id="span-masking">Span Masking(???)</h4>
 <p>对于每一个单词序列 \(X = (x_1, \ldots , x_n )\)，作者通过迭代地采样文本的分词选择单词，直到达到掩膜要求的大小（例如 X 的 15%），并形成 X 的子集 Y。在每次迭代中，作者首先从几何分布 \(l \sim Geo(p)\)中采样得到分词的长度，该几何分布是偏态分布，偏向于较短的分词。之后，作者随机（均匀地）选择分词的起点。</p>
 <p>根据几何分布，先随机选择一段（span）的长度，之后再根据均匀分布随机选择这一段的起始位置，最后按照长度遮盖。作者设定几何分布取 p=0.2，并裁剪最大长度只能是 10（不应当是长度 10 以上修剪，而应当为丢弃），利用此方案获得平均采样长度分布。因此分词的平均长度为 3.8 。作者还测量了词语（word）中的分词程度，使得添加掩膜的分词更长。下图展示了分词掩膜长度的分布情况。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_fenci.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/spanbert_fenci.png" alt></p>
 <p>和在 BERT 中一样，作者将 Y 的规模设定为 X 的15%，其中 80% 使用 [MASK] 进行替换，10% 使用随机单词替换，10%保持不变。与之不同的是，作者是在分词级别进行的这一替换，而非将每个单词单独替换。</p>
 <h4 id="fen-ci-bian-jie-mu-biao-sbo">分词边界目标(SBO)???</h4>
 <p>分词选择模型一般使用其边界词创建一个固定长度的分词表示。为了于该模型相适应，作者希望结尾分词的表示的总和与中间分词的内容尽量相同。为此，作者引入了 SBO ，其仅使用观测到的边界词来预测带掩膜的分词的内容。</p>
@@ -4553,10 +4593,10 @@ f(\cdot) &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \ma
 </ol>
 <h5 id="mask-ji-zhi">mask机制</h5>
 <p>作者在子单词、完整词语、命名实体、名词短语和随机分词方面进行了比较：发现使用随机分词掩膜机制效果更优。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_token.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/spanbert_token.png" alt></p>
 <h5 id="fu-zhu-mu-biao">辅助目标</h5>
 <p>使用 SBO 替换 NSP 并使用单序列进行预测的效果更优。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/spanbert_a_o.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/spanbert_a_o.png" alt></p>
 <h4 id="zong-jie-1">总结</h4>
 <p>SpanBERT是基于分词的预训练模型，在多个评测任务中的得分都超越了 BERT 且在分词选择类任务中的提升尤其明显。</p>
 <h3 id="ernie">ERNIE</h3>
@@ -4564,10 +4604,10 @@ f(\cdot) &amp;=\text { LayerNorm }\left(\operatorname{GeLU}\left(W_{2} \cdot \ma
 <h4 id="jian-jie-3">简介</h4>
 <p>无论是Elmo、GPT, 还是能力更强的 BERT 模型，其建模对象主要聚焦在原始语言信号上，较少利用语义知识单元建模。这个问题在中文方面尤为明显，例如，BERT 在处理中文语言时，通过预测汉字进行建模，模型很难学出更大语义单元的完整语义表示。例如，对于乒 [mask] 球，清明上 [mask] 图，[mask] 颜六色这些词，BERT 模型通过字的搭配，很容易推测出掩码的字信息，但没有显式地对语义概念单元 (如乒乓球、清明上河图) 以及其对应的语义关系进行建模。如果能够让模型学习到海量文本中蕴含的潜在知识，势必会进一步提升各个 NLP 任务效果。</p>
 <p>ERNIE 模型通过建模海量数据中的实体概念等先验语义知识，学习真实世界的语义关系。具体来说，ERNIE 模型通过对词、实体等语义单元的掩码，使得模型学习完整概念的语义表示。相较于 BERT 学习原始语言信号，ERNIE 直接对先验语义知识单元进行建模，增强了模型语义表示能力。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/ernie.png" alt></p>
 <p>在 BERT 模型中，通过『哈』与『滨』的局部共现，即可判断出『尔』字，模型没有学习与『哈尔滨』相关的知识。而 ERNIE 通过学习词与实体的表达，使模型能够建模出『哈尔滨』与『黑龙江』的关系，学到『哈尔滨』是『黑龙江』的省会以及『哈尔滨』是个冰雪城市。</p>
 <h4 id="mo-xing">模型</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_ar.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/ernie_ar.png" alt></p>
 <p>模型上主要的改进是在bert的后段加入了实体向量和经过bert编码后的向量拼接，另外在输出时多加了实体自编码的任务，从而帮助模型注入实体知识信息。</p>
 <h5 id="t-encoder">T-Encoder</h5>
 <p>这部分就是纯粹的bert结构，在该部分模型中主要负责对输入句子（token embedding, segment embedding和positional embedding）进行编码.</p>
@@ -4608,9 +4648,9 @@ p\left(e_{j} | w_{i}\right)=\frac{\exp \left(\operatorname{linear}\left(\boldsym
 </ol>
 <h5 id="extra-task">Extra-task</h5>
 <p>除了正常的任务之外，ERNIE引入了两个新任务Entity Typing和Relation Classification</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_extra_task.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/ernie_extra_task.png" alt></p>
 <h5 id="zong-jie-2">总结</h5>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/ernie_experiment.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/ernie_experiment.png" alt></p>
 <p>ERNIE在通用任务其实相比bert优势不大，尽管文章提到了ERNIE更鲁棒以及GLUE的评估对ERNIE不是很友好，在增加复杂度的同时，并没有取得期待的效果。ERNIE提供了一种很好的实体信息引入思路，并且其新提出的预训练方法也给希望将bert这一模型引入关系抽取领域提供了很好的例子。</p>
 <h3 id="mt-dnn-yu-xun-lian-duo-ren-wu">MT-DNN（预训练+多任务）</h3>
 <p><a href="https://arxiv.org/pdf/1901.11504.pdf" target="_blank" rel="noopener">论文</a>,<a href="https://github.com/namisan/mt-dnn" target="_blank" rel="noopener">源码</a></p>
@@ -4620,7 +4660,7 @@ p\left(e_{j} | w_{i}\right)=\frac{\exp \left(\operatorname{linear}\left(\boldsym
 <p><strong>多任务</strong>学习( MTL )的灵感来自于人的学习活动。在人类的学习活动中，人们经常应用从以前的任务中学到的知识来帮助学习新的任务。例如，在学习滑冰这件事情上，一个知道如何滑雪的人比什么都不知道的人容易。同样，**联合学习多个(相关)**任务也很有用，这样在一个任务中学习到的知识有益于其他任务。对于MTL（Multi-task Learning，多任务学习）来说，其优点有两个：1）弥补了有些任务的数据不足问题；2）有正则的作用，防止模型过拟合。</p>
 <p><strong>两者结合</strong>（强强联手！）：MT-DNN认为，MTL和pretrain有很好的互补作用，那么是不是可以结合一下，发挥两者的作用。更具体的就是，先用BERT进行pretrain，然后用MTL进行finetune，这就形成了MT-DNN。可见，与BERT的不同在于finetune的过程，这里用MTL作为目标。</p>
 <h4 id="mo-xing-1">模型</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/mtdnn.png" alt></p>
 <p>表征学习 MT-DNN 模型的架构。下面的网络层在所有任务中都共享，上面的两层是针对特定任务。输入\(X\)(一句话或句子对)首先表征为一个序列的嵌入向量，在\(l_1\)  中每个词对应一个向量。然后 Transformer 编码器捕捉每个单词的语境信息并在\(l_2\)中生成共享的语境嵌入向量。最后，针对每个任务，特定任务层生成特定任务的表征，而后是分类、相似性打分、关联排序等必需的操作。</p>
 <h5 id="duo-ren-wu">多任务</h5>
 <p>MT-DNN是结合了4种类型的NLU任务：单句分类、句子对分类、文本相似度打分和相关度排序。</p>
@@ -4669,7 +4709,7 @@ P_{r}\left(A^{+} | Q\right) &amp;=\frac{\exp \left(\gamma \operatorname{Rel}\lef
 diction)。</li>
 <li>在多任务微调阶段，使用基于minibatch的随机梯度下降（SGD）来学习模型参数（也就是，所有共享层和任务特定层的参数），算法流程如下图所示。每个epoch，选择一个mini-batch \(b_t\)(在9个GLUE任务中)，再对特定任务\(k\)进行模型参数的更新。这近似地优化所有多任务的和。</li>
 </ol>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/mtdnn_al.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/mtdnn_al.png" alt></p>
 <h3 id="distil-bert">DistilBERT</h3>
 <p><a href="https://arxiv.org/pdf/1910.01108" target="_blank" rel="noopener">论文</a></p>
 <h4 id="dong-ji-1">动机</h4>
@@ -4678,12 +4718,12 @@ diction)。</li>
 <ol>
 <li>
 <p>量化</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/quantization.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/quantization.jpg" alt></p>
 </li>
 </ol>
 <p>量化方法意味着降低模型权重的精度。比如K-means 量化方法：对模型权重矩阵W进行分组，分成n簇，然后把权重矩阵里的值转化成\(1,\cdots,n\)的正数。通过这种方式把矩阵中的32位的float型转化成只有8位（或者1位，binarizing matrix）的整数。</p>
 <h5 id="cai-jian-pruning">裁剪（Pruning）</h5>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/Pruning.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/Pruning.png" alt></p>
 <h6 id="weight-pruning">weight pruning</h6>
 <p>把权重矩阵中数值较大的值设置为0，从而构造稀疏矩阵。（理论上稀疏矩阵乘法速度快于normal(danse)矩阵乘法。）</p>
 <h6 id="removing-neurons">Removing neurons</h6>
@@ -4691,14 +4731,14 @@ diction)。</li>
 <h6 id="removing-weight-matrices">Removing weight matrices</h6>
 <p>[10]从big transformers中直接删除对accuracy贡献不大的整个attention head。但是这种方式不能保证能够并行加速，因为相邻的权重矩阵的size变的不同了。</p>
 <h5 id="zhi-shi-zheng-liu">知识蒸馏</h5>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/Knowledge-distillation.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/Knowledge-distillation.jpg" alt></p>
 <p>DistilBert使用模型蒸馏技术：这是一种能够将大型模型（被称为「老师」）压缩为较小模型（即「学生」）的技术。</p>
 <p><a href="https://blog.csdn.net/nature553863/article/details/80568658" target="_blank" rel="noopener">知识蒸馏方法</a></p>
 <h6 id="zhi-shi-zheng-liu-qian-yi-fan-hua-neng-li">知识蒸馏：迁移泛化能力</h6>
 <p>知识蒸馏是一种压缩技术，要求对小型模型进行训练，以使其拥有类似于大型模型的行为特征。在监督学习领域，我们在训练分类模型时往往会利用对数似然信号实现概率最大化（logits 的 softmax），进而预测出正确类。在大多数情况下，性能良好的模型能够利用具有高概率的正确类预测输出分布，同时其它类的发生概率则接近于零。</p>
 <p><strong>但是，某些“接近于零”的概率要比其它概率更大，这在一定程度上反映出模型的泛化能力</strong>。例如，把普通椅子误认为扶手椅虽然属于错误，但这种错误远比将其误认为蘑菇来得轻微。这种不确定性，有时被称为“暗知识”。也可以从另一个角度来理解蒸馏——用于防止模型对预测结果太过确定（类似于标签平滑）。</p>
 <p>在语言建模当中，可以通过查看词汇表中的分布轻松观察到这种不确定性。下图为 BERT 对《卡萨布兰卡》电影当中经典台词下一句用词的猜测：</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/next_word.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/next_word.png" alt></p>
 <p>BERT 提出的 20 大高概率用词猜测结果。语言模型确定了两个可能性最高的选项（day 与 life），接下来的词汇相比之下概率要低得多。</p>
 <h6 id="ru-he-fu-zhi-zhe-xie-an-zhi-shi">如何复制这些“暗知识”</h6>
 <p>在训练当中，通过训练学生网络，来模拟老师网络的全部输出分布（也就是知识），也就是通过匹配输出分布的方式训练学生网络，从而实现与老师网络相同的泛化方式，即通过软目标（老师概率）将交叉熵从老师处传递给学生。<br>
@@ -4734,13 +4774,13 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <p>在BERT、XLNet、RoBERTa等模型中，由于模型结构的限制，WordePiece embedding的大小\(E\) 总是与隐层大小\(H\)相同，即 \(E \equiv H\) 。从建模的角度考虑，词嵌入学习的是单词与上下文无关的表示，而隐层则是学习与上下文相关的表示。显然后者更加复杂，需要更多的参数，也就是说模型应当增大隐层大小\(H\)，或者说满足 \(H \gg E\)。但实际上词汇表的大小\(V\)通常非常大，如果\(E=H\)的话，增加隐层大小\(H\)后将会使embedding matrix的维度\(V \times E\)非常巨大。</p>
 <p>因此ALBERT想要打破\(E\)与\(H\) 之间的绑定关系，从而减小模型的参数量，同时提升模型表现。具体做法是将embedding matrix分解为两个大小分别为\(V \times  E\) 和\(E \times H\) 矩阵，也就是说先将单词投影到一个低维的embedding空间 \(E\) ，再将其投影到高维的隐藏空间\(H\)  。这使得embedding matrix的维度从\(O(V \times H)\)  减小到\(O(v \times E + E \times H)\) 。当 \(H \gg E\)时，参数量减少非常明显。在实现时，随机初始化\(V\times E\)和\(E\times H\)的矩阵，计算某个单词的表示需用一个单词的one-hot向量乘以\(V\times E\)维的矩阵（也就是lookup），再用得到的结果乘\(E\times H\)维的矩阵即可。两个矩阵的参数通过模型学习。</p>
 <p>从下图实验结果可见，对于不共享参数的情况，\(E\)几乎是与大越好；而共享参数之后， \(E\)太大反而会使模型表现变差，\(E=128\)模型表现最好，因此ALBERT的默认参数设置中\(E=128\).</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_embedding.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/albert_embedding.png" alt></p>
 <p>考虑到ALBERT-base的 \(h=768\)，那么 \(E=768\)时，模型应该可以看作没有减少embedding参数量的情况。而不共享参数的实验结果表明此时模型表现更好，那么似乎说明了Factorized embedding在一定程度上降低了模型的表现。</p>
 <h5 id="kua-ceng-can-shu-gong-xiang-can-shu-liang-jian-shao-zhu-yao-gong-xiang">跨层参数共享（参数量减少主要共享）</h5>
 <p>另一个减少参数量的方法就是层之间的参数共享，即多个层使用相同的参数。参数共享有三种方式：只共享feed-forward network的参数、只共享attention的参数、共享全部参数。ALBERT默认是共享全部参数的。实验表明加入参数共享之后，每一层的输入embedding和输出embedding的L2距离和余弦相似度都比BERT稳定了很多。这证明参数共享能够使模型参数更加稳定。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/cross.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/cross.png" alt></p>
 <p>如下图所示，可以看出参数共享几乎也是对模型结果有负面影响的。但是考虑到其能够大幅削减参数量，并且对结果影响不是特别大，因此权衡之下选择了参数共享。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_crosslayer.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/albert_crosslayer.png" alt></p>
 <h5 id="ju-jian-lian-guan-xing">句间连贯性</h5>
 <ul>
 <li><strong>NSP</strong>：下一句预测， 正样本=上下相邻的2个句子，负样本=随机2个句子</li>
@@ -4749,14 +4789,14 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <p>NSP任务过于简单，只要模型发现两个句子的主题不一样就行了，所以SOP预测任务能够让模型学习到更多的信息。</p>
 <p>除了减少模型参数外，还对BERT的预训练任务Next-sentence prediction (NSP)进行了改进。在BERT中，NSP任务的正例是文章中连续的两个句子，而负例则是从两篇文档中各选一个句子构造而成。在先前的研究中，已经证明NSP是并不是一个合适的预训练任务。作者推测其原因是模型在判断两个句子的关系时不仅考虑了两个句子之间的连贯性（coherence），还会考虑到两个句子的话题（topic）。而两篇文档的话题通常不同，模型会更多的通过话题去分析两个句子的关系，而不是句子间的连贯性，这使得NSP任务变成了一个相对简单的任务。</p>
 <p>因此本文提出了Sentence-order prediction (SOP)来取代NSP。具体来说，其正例与NSP相同，但负例是通过选择一篇文档中的两个连续的句子并将它们的顺序交换构造的。这样两个句子就会有相同的话题，模型学习到的就更多是句子间的连贯性。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_sop.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/albert_sop.png" alt></p>
 <p>如上实验结果所示，如果不使用NSP或SOP作为预训练任务的话，模型在NSP和SOP两个任务上表现都很差；如果使用NSP作为预训练任务的话，模型确实能很好的解决NSP问题，但是在SOP问题上表现却很差，几乎相当于随机猜，因此说明NSP任务确实很难学到句子间的连贯性；而如果用SOP作为预训练任务，则模型也可以较好的解决NSP问题，同时模型在下游任务上表现也更好。说明SOP确实是更好的预训练任务。</p>
 <h4 id="qi-ta">其他</h4>
 <h5 id="e-wai-de-xun-lian-shu-ju-he-dropout">额外的训练数据和dropout</h5>
 <p>ALBERT训练时还加入了XLNet和RoBERTa训练时用的额外数据，实验表明加入额外数据（W additional data）确实会提升模型表现。此外，作者还观察到模型似乎一直没有过拟合数据，因此去除了Dropout，从对比试验可以看出，去除Dropout（W/O Dropout）后模型表现确实更好。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_dropout.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/albert_dropout.png" alt></p>
 <h4 id="zong-jie-4">总结</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/albert_bert.png" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/albert_bert.png" alt></p>
 <p>ALBERT的训练速度明显比BERT快，ALBERT-xxlarge的表现更是全方面超过了BERT。</p>
 <p>本文有两个小细节可以学习，一个是在模型不会过拟合的情况下不使用dropout；另一个则是warm-start，即在训练深层网络（例如12层）时，可以先训练浅层网络（例如6层），再在其基础上做fine-tune，这样可以加快深层模型的收敛。</p>
 <h3 id="tiny-bert">TinyBERT</h3>
@@ -4766,7 +4806,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <p>目前主流的几种蒸馏方法大概分成 1. 利用 transformer 结构蒸馏, 2. 利用其它简单的结构比如 BiLSTM 等蒸馏。由于 BiLSTM 等结构简单，且一般是用 BERT 最后一层的输出结果进行蒸馏，不能学到 transformer 中间层的信息，对于复杂的语义匹配任务，效果有点不尽人意。</p>
 <p>基于 transformer 结构的蒸馏方法目前比较出名的有微软的 BERT-PKD (Patient Knowledge Distillation for BERT)，huggingface 的 DistilBERT，以及华为的 TinyBERT。他们的基本思路都是减少 transformer encoding 的层数和 hidden size 大小，实现细节上各有不同，主要差异体现在 loss 的设计上。</p>
 <h4 id="mo-xing-3">模型</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/tinyBert.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/tinyBert.jpg" alt></p>
 <p>整个 TinyBERT 的 loss 设计分为三部分：</p>
 <h5 id="embedding-layer-distillation">Embedding-layer Distillation</h5>
 <p>\[
@@ -4775,7 +4815,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 其中，\(E^s \in R^{l \times ds}\),\(E^T \ in R^{l \times dt}\)分别表示 student 网络的 embedding 和 teacher 网络的 embedding. 其中 l 代表 sequence length, ds 代表 student embedding 维度， dt 代表 teacher embedding 维度。由于 student 网络的 embedding 层通常较 teacher 会变小以获得更小的模型和加速，所以 \(W_e\) 是一个 \(d_s \times d_t\)维的可训练的线性变换矩阵，把 student 的 embedding 投影到 teacher embedding 所在的空间。最后再算 MSE，得到 embedding loss.</p>
 <h5 id="transformer-layer-distillation">Transformer-layer Distillation</h5>
 <p>TinyBERT 的 transformer 蒸馏采用隔 k 层蒸馏的方式。举个例子，teacher BERT 一共有 12 层，若是设置 student BERT 为 4 层，就是每隔 3 层计算一个 transformer loss. 映射函数为 g(m) = 3 * m(???), m 为 student encoder 层数。具体对应为 student 第 1 层 transformer 对应 teacher 第 3 层，第 2 层对应第 6 层，第 3 层对应第 9 层，第 4 层对应第 12 层。每一层的 transformer loss 又分为两部分组成，attention based distillation 和 hidden states based distillation.</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/transormers_distillation.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/transormers_distillation.jpg" alt></p>
 <h6 id="attention-based-loss">Attention based loss</h6>
 <p>\[
 \mathcal{L}_{\mathrm{attn}}=\frac{1}{h} \sum_{i=1}^{h} \operatorname{MSE}\left(\boldsymbol{A}_{i}^{S}, \boldsymbol{A}_{i}^{T}\right)
@@ -4810,7 +4850,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 \end{array}\right.
 \]</p>
 <h4 id="liang-jie-duan-xue-xi-kuang-jia">两阶段学习框架</h4>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/two_step.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/two_step.jpg" alt></p>
 <p>类似于原生的 BERT 先 pre-train, 根据具体任务再 fine-tine。TinyBERT 先在 general domain 数据集上用未经微调的 BERT 充当教师蒸馏出一个 base 模型，在此基础上，具体任务通过数据增强，利用微调后的 BERT 再进行重新执行蒸馏。这种两阶段的方法给 TinyBERT 提供了像 BERT 一样的泛化能力。</p>
 <h4 id="zong-jie-5">总结</h4>
 <p>TinyBERT 作为一种蒸馏方法，能有效的提取 BERT transformer 结构中丰富的语意信息，在不牺牲性能的情况下，速度能获得 8 到 9 倍的提升。</p>
@@ -4818,7 +4858,7 @@ K L(p \| q)=\mathbb{E}_{p}\left(\log \left(\frac{p}{q}\right)\right)=\sum_{i} p_
 <h4 id="jian-jie-7">简介</h4>
 <p>FastBERT的创新点很容易理解，就是在每层Transformer后都去预测样本标签，如果某样本预测结果的置信度很高，就不用继续计算了。论文把这个逻辑称为样本自适应机制（Sample-wise adaptive mechanism），就是自适应调整每个样本的计算量，容易的样本通过一两层就可以预测出来，较难的样本则需要走完全程。</p>
 <p>举个例子，比如 text_a = ‘北京鲜花快递’ text_b = ‘北京鲜花速递’ 这种case可能浅层的bert就已经能够很好的算出其相关性打分，所以算完两层bert的打分和12层的结果基本一致，而text_a = ‘北京鲜花快递’ text_b = ‘有没有哪个地方卖花卉，而且包送，位置北京’ 这种case可能需要深层的bert去抽取两边的语义特征，并计算其是否匹配，所以在inference阶段就需要算完12层。</p>
-<p><img src="/2020/04/13/bert%E7%B3%BB%E5%88%97/fastbert.jpg" alt></p>
+<p><img src="/2020/04/13/research/bert%E7%B3%BB%E5%88%97/fastbert.jpg" alt></p>
 <p>作者将原BERT模型称为主干（Backbone），每个分类器称为分支（Branch）。这里的分支Classifier都是最后一层的分类器蒸馏来的，作者将这称为自蒸馏（Self-distillation）。就是在预训练和精调阶段都只更新主干参数，精调完后<strong>freeze主干参数，用分支分类器（图中的student）蒸馏主干分类器（图中的teacher）的概率分布</strong>。之所以叫自蒸馏，是因为之前的蒸馏都是用两个模型去做，一个模型学习另一个模型的知识，而FastBERT是自己（分支）蒸馏自己（主干）的知识。值得注意的是，蒸馏时需要freeze主干部分，保证pretrain和finetune阶段学习的知识不被影响，仅用brach 来尽可能的拟合teacher的分布。同时，使用自蒸馏还有一点重要的好处，就是<strong>不再依赖于标注数据</strong>。蒸馏的效果可以通过源源不断的无标签数据来提升。</p>
 <h4 id="zong-jie-6">总结</h4>
 <p>FastBERT通过提前输出简单样本的预测结果，减少模型的计算负担，从而提高推理速度。虽然每层都多了一个分类器，但分类器的计算量也比Transformer小了两个数量级，对速度影响较小。后续的分支自蒸馏也设计的比较巧妙，可以利用无监督数据不断提升分支分类器的效果。</p>
@@ -5861,8 +5901,8 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
   </entry>
   <entry>
     <title>数据预处理</title>
-    <url>/2020/03/28/data_clean/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/03/28/data_clean/image-20200528110918927.png" alt></p>
+    <url>/2020/03/28/data_preprocessing/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/03/28/data_preprocessing/image-20200528110918927.png" alt></p>
 <a id="more"></a>
 <h1 id="shu-ju-qing-xi">数据清洗</h1>
 <h2 id="jian-jie">简介</h2>
@@ -5879,7 +5919,7 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
 <h3 id="re-tu">热图</h3>
 <p>当特征数量较少时，可以通过热图对缺失数据进行可视化。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cols = df.columns[:<span class="number">30</span>] <span class="comment"># first 30 columns</span></span><br><span class="line">colours = [<span class="string">'#000099'</span>, <span class="string">'#ffff00'</span>] <span class="comment"># specify the colours - yellow is missing. blue is not missing.</span></span><br><span class="line">sns.heatmap(df[cols].isnull(), cmap=sns.color_palette(colours))</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/output_4_1.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/output_4_1.png" alt></p>
 <p>上图展示了前 30 个特征的缺失数据模式。横轴表示特征名，纵轴表示观察值/行数，黄色表示缺失数据，蓝色表示非缺失数据。例如，图中特征 life_sq 在多个行中存在缺失值。而特征 floor 只在第 7000 行左右出现零星缺失值。</p>
 <h3 id="bai-fen-bi-lie-biao">百分比列表</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># if it's a larger dataset and the visualization takes too long can do this.</span></span><br><span class="line"><span class="comment"># % of missing.</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    pct_missing = np.mean(df[col].isnull())</span><br><span class="line">    print(<span class="string">'&#123;&#125; - &#123;&#125;%'</span>.format(col, round(pct_missing*<span class="number">100</span>)))</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">id - <span class="number">0.0</span>%</span><br><span class="line">timestamp - <span class="number">0.0</span>%</span><br><span class="line">full_sq - <span class="number">0.0</span>%</span><br><span class="line">life_sq - <span class="number">21.0</span>%</span><br><span class="line">floor - <span class="number">1.0</span>%</span><br><span class="line">big_market_raion - <span class="number">0.0</span>%</span><br><span class="line">nuclear_reactor_raion - <span class="number">0.0</span>%</span><br><span class="line">detention_facility_raion - <span class="number">0.0</span>%</span><br><span class="line">full_all - <span class="number">0.0</span>%</span><br><span class="line">male_f - <span class="number">0.0</span>%</span><br><span class="line">hospital_beds_raion - <span class="number">47.0</span>%</span><br><span class="line">raion_build_count_with_material_info - <span class="number">16.0</span>%</span><br><span class="line">build_count_block - <span class="number">16.0</span>%</span><br><span class="line">build_count_wood - <span class="number">16.0</span>%</span><br><span class="line">build_count_frame - <span class="number">16.0</span>%</span><br><span class="line">build_count_brick - <span class="number">16.0</span>%</span><br><span class="line">build_count_monolith - <span class="number">16.0</span>%</span><br><span class="line">build_count_panel - <span class="number">16.0</span>%</span><br><span class="line">build_count_foam - <span class="number">16.0</span>%</span><br><span class="line">build_count_slag - <span class="number">16.0</span>%</span><br><span class="line">build_count_mix - <span class="number">16.0</span>%</span><br><span class="line">raion_build_count_with_builddate_info - <span class="number">16.0</span>%</span><br><span class="line">build_count_before_1920 - <span class="number">16.0</span>%</span><br><span class="line">build_count_1921<span class="number">-1945</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_1946<span class="number">-1970</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_1971<span class="number">-1995</span> - <span class="number">16.0</span>%</span><br><span class="line">build_count_after_1995 - <span class="number">16.0</span>%</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
@@ -5887,7 +5927,7 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
 <h3 id="zhi-fang-tu">直方图</h3>
 <p>在存在很多特征时，缺失数据直方图也不失为一种有效方法。要想更深入地了解观察值中的缺失值模式，我们可以用直方图的形式进行可视化。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># first create missing indicator for features with missing data</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    missing = df[col].isnull()</span><br><span class="line">    num_missing = np.sum(missing)</span><br><span class="line">  <span class="comment"># 如果该列存在缺失值，对该列中每一行是否缺失进行标记</span></span><br><span class="line">    <span class="keyword">if</span> num_missing &gt; <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'created missing indicator for: &#123;&#125;'</span>.format(col))</span><br><span class="line">        df[<span class="string">'&#123;&#125;_ismissing'</span>.format(col)] = missing</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># then based on the indicator, plot the histogram of missing values</span></span><br><span class="line">ismissing_cols = [col <span class="keyword">for</span> col <span class="keyword">in</span> df.columns <span class="keyword">if</span><span class="string">'ismissing'</span><span class="keyword">in</span> col]</span><br><span class="line"><span class="comment"># 统计一行中，有多少缺失值</span></span><br><span class="line">df[<span class="string">'num_missing'</span>] = df[ismissing_cols].sum(axis=<span class="number">1</span>)</span><br><span class="line">df[<span class="string">'num_missing'</span>].value_counts().reset_index().sort_values(by=<span class="string">'index'</span>).plot.bar(x=<span class="string">'index'</span>, y=<span class="string">'num_missing'</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/output_6_2.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/output_6_2.png" alt></p>
 <p>直方图可以帮助在 30,471 个观察值中识别缺失值状况。例如，从上图中可以看到，超过 6000 个观察值不存在缺失值，接近 4000 个观察值具备一个缺失值。</p>
 <h3 id="ru-he-chu-li-que-shi-shu-ju">如何处理缺失数据</h3>
 <h4 id="shan-chu-guan-cha-zhi">删除观察值</h4>
@@ -5916,17 +5956,17 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
 <h4 id="zhi-fang-tu-1">直方图</h4>
 <p>当特征是数值变量时，使用直方图和箱形图来检测异常值。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># histogram of life_sq.</span></span><br><span class="line">df[<span class="string">'life_sq'</span>].hist(bins=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/21B8CEEC-A71F-4D53-9A70-A539685A1B39.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/21B8CEEC-A71F-4D53-9A70-A539685A1B39.png" alt></p>
 <p>由于数据中可能存在异常值，因此图中数据高度偏斜。</p>
 <p>比较正常的情况</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">'floor'</span>].hist(bins=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/722E5EFF-CD89-4994-90A4-7AA1ADE60CA5.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/722E5EFF-CD89-4994-90A4-7AA1ADE60CA5.png" alt></p>
 <h4 id="xiang-xing-tu">箱形图</h4>
 <p>为了进一步研究特征，看一下箱形图。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># box plot.</span></span><br><span class="line">df.boxplot(column=[<span class="string">'life_sq'</span>])</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/924F9994-B7CF-478E-B4BA-68CE136FE990.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/924F9994-B7CF-478E-B4BA-68CE136FE990.png" alt></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># box plot.</span></span><br><span class="line">df.boxplot(column=[<span class="string">'floor'</span>])</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/65762A44-008B-4239-9024-97A9CE86EFD3.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/65762A44-008B-4239-9024-97A9CE86EFD3.png" alt></p>
 <h3 id="miao-shu-xing-tong-ji">描述性统计</h3>
 <p>对于数值特征，当异常值过于独特时，箱形图无法显示该值。因此，可以查看其描述统计学。<br>
 例如，对于特征 life_sq，可以看到其最大值是 7478，而上四分位数（数据的第 75 个百分位数据）是 43。因此值 7478 是异常值。</p>
@@ -5935,7 +5975,7 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
 <p>当特征是<strong>分类变量</strong>时，可以使用条形图来了解其类别和分布。</p>
 <p>例如，特征 ecology 具备合理的分布。但如果某个类别「other」仅有一个值，则它就是异常值。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># barchart -  distributionofacategoricalvariabledf['ecology'].value_counts().plot.bar()</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/9F67A55F-2E88-4704-87FF-89DB72CE37FB.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/9F67A55F-2E88-4704-87FF-89DB72CE37FB.png" alt></p>
 <p>其他方法：还有很多方法可以找出异常值，如散点图、z 分数和聚类。</p>
 <h3 id="ru-he-chu-li-yi-chang-zhi">如何处理异常值</h3>
 <p>处理异常值的方法与处理缺失值有些类似：要么丢弃，要么修改，要么保留。</p>
@@ -5972,19 +6012,19 @@ y^{(k)}=\gamma^{(k)} \hat{x}^{(k)}+\beta^{(k)}
 <p>识别它们的一种简单方式是模糊逻辑（或编辑距离）。该方法可以衡量使一个值匹配另一个值需要更改的字母数量（距离）。</p>
 <p>已知这些类别应仅有四个值：「toronto」、「vancouver」、「montreal」和「calgary」。计算所有值与单词「toronto」（和「vancouver」）之间的距离，我们可以看到疑似拼写错误的值与正确值之间的距离较小，因为它们只有几个字母不同。</p>
 <figure class="highlight prolog"><table><tr><td class="code"><pre><span class="line">from nltk.metrics import edit_distance</span><br><span class="line"></span><br><span class="line">df_city_ex = pd.<span class="symbol">DataFrame</span>(data=&#123;<span class="string">'city'</span>: [<span class="string">'torontoo'</span>, <span class="string">'toronto'</span>, <span class="string">'tronto'</span>, <span class="string">'vancouver'</span>, <span class="string">'vancover'</span>, <span class="string">'vancouvr'</span>, <span class="string">'montreal'</span>, <span class="string">'calgary'</span>]&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df_city_ex[<span class="string">'city_distance_toronto'</span>] = df_city_ex[<span class="string">'city'</span>].map(lambda x: edit_distance(x, <span class="string">'toronto'</span>))</span><br><span class="line">df_city_ex[<span class="string">'city_distance_vancouver'</span>] = df_city_ex[<span class="string">'city'</span>].map(lambda x: edit_distance(x, <span class="string">'vancouver'</span>))</span><br><span class="line">df_city_ex</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/image-20200528145223629.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/image-20200528145223629.png" alt></p>
 <p>处理类别值不一致的数据，可以设置标准将这些拼写错误转换为正确值。</p>
 <p>例如，下列代码规定所有值与「toronto」的距离在 2 个字母以内。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">msk = df_city_ex[<span class="string">'city_distance_toronto'</span>] &lt;= <span class="number">2</span></span><br><span class="line">df_city_ex.loc[msk, <span class="string">'city'</span>] = <span class="string">'toronto'</span></span><br><span class="line"></span><br><span class="line">msk = df_city_ex[<span class="string">'city_distance_vancouver'</span>] &lt;= <span class="number">2</span></span><br><span class="line">df_city_ex.loc[msk, <span class="string">'city'</span>] = <span class="string">'vancouver'</span></span><br><span class="line"></span><br><span class="line">df_city_ex</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/image-20200528145327127.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/image-20200528145327127.png" alt></p>
 <h3 id="strong-bu-yi-zhi-shu-ju-lei-xing-4-di-zhi-strong"><strong>不一致数据类型 4：地址</strong></h3>
 <p>由于人们往数据库中输入数据时通常不会遵循标准格式，所以地址处理是一个比较难的问题。</p>
 <p>处理地址不一致的数据，可以用浏览的方式可以找出混乱的地址数据。即便有时我们看不出什么问题，也可以运行代码执行标准化。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># no address column in the housing dataset. So create one to show the code.</span></span><br><span class="line">df_add_ex = pd.DataFrame([<span class="string">'123 MAIN St Apartment 15'</span>, <span class="string">'123 Main Street Apt 12   '</span>, <span class="string">'543 FirSt Av'</span>, <span class="string">'  876 FIRst Ave.'</span>], columns=[<span class="string">'address'</span>])</span><br><span class="line">df_add_ex</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/image-20200528150318273.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/image-20200528150318273.png" alt></p>
 <p>处理地址不一致的数据，运行以下代码将所有字母转为小写，删除空格，删除句号，并将措辞标准化。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address'</span>].str.lower()</span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.strip() <span class="comment"># remove leading and trailing whitespace.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\.'</span>, <span class="string">''</span>) <span class="comment"># remove period.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bstreet\\b'</span>, <span class="string">'st'</span>) <span class="comment"># replace street with st.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bapartment\\b'</span>, <span class="string">'apt'</span>) <span class="comment"># replace apartment with apt.</span></span><br><span class="line">df_add_ex[<span class="string">'address_std'</span>] = df_add_ex[<span class="string">'address_std'</span>].str.replace(<span class="string">'\\bav\\b'</span>, <span class="string">'ave'</span>) <span class="comment"># replace apartment with apt.</span></span><br><span class="line"></span><br><span class="line">df_add_ex</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/03/28/data_clean/image-20200528150416408.png" alt></p>
+<p><img src="/2020/03/28/data_preprocessing/image-20200528150416408.png" alt></p>
 <h1 id="can-kao">参考</h1>
 <ol>
 <li><a href="https://mp.weixin.qq.com/s/TpiLd94iet902WK6SEjHrQ" target="_blank" rel="noopener">数据缺失、混乱、重复怎么办？最全数据清洗指南让你所向披靡</a></li>
@@ -10710,7 +10750,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 <figure class="highlight yml"><figcaption><span>themes\next\_config.yml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment"># typing effect</span></span><br><span class="line"><span class="attr">typing_effect:</span></span><br><span class="line">  <span class="attr">colorful:</span> <span class="literal">true</span>  <span class="comment"># 礼花特效</span></span><br><span class="line">  <span class="attr">shake:</span> <span class="literal">false</span>  <span class="comment"># 震动特效</span></span><br></pre></td></tr></table></figure>
 <p>如果从本地加载 JS 脚本速度较慢，可以考虑将脚本放到 CDN 上再引入。</p>
 <h1 id="can-kao">参考</h1>
-<ul>
+<ol>
 <li><a href="https://asdfv1929.github.io/2018/01/28/add-the-end/" target="_blank" rel="noopener">asdfv1929 | Hexo NexT 主题内给每篇文章后添加结束标语</a></li>
 <li><a href="https://fjkang.github.io/2017/12/08/%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%90%8C%E7%89%A9/" target="_blank" rel="noopener">FJKang | 添加一个萌物</a></li>
 <li><a href="http://evanyou.me/" target="_blank" rel="noopener">尤雨溪的个人主页</a></li>
@@ -10718,8 +10758,9 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 <li><a href="https://www.ofind.cn/" target="_blank" rel="noopener">猪猪侠的博客</a></li>
 <li><a href="https://qianling.pw/hexo-optimization/" target="_blank" rel="noopener">千灵夙赋 | Hexo 优化汇总</a></li>
 <li><a href="https://www.ilxtx.com/comment-input-effects.html" target="_blank" rel="noopener">龙笑天下 | 给 WordPress 博客网站添加评论输入打字礼花及震动特效</a></li>
-<li><a href="https://sunhwee.com/posts/6e8839eb.html#toc-heading-26" target="_blank" rel="noopener">https://sunhwee.com/posts/6e8839eb.html#toc-heading-26</a></li>
-</ul>
+<li><a href="https://sunhwee.com/posts/6e8839eb.html#toc-heading-26" target="_blank" rel="noopener">Hexo+Github博客搭建完全教程</a></li>
+<li><a href="https://www.aomanhao.top/2019/11/04/hexo_clock/" target="_blank" rel="noopener">粒子时钟特效</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>技术/博客</category>
