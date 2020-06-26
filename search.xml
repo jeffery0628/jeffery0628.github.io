@@ -25,155 +25,162 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/01/life/timeline/1.jpg" alt></p>
 <a id="more"></a>
 <h1 id="liu-yue">六月</h1>
+<h2 id="6-26">6.26</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" disabled="true"><label for="checkbox0"> 完成PLMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> 返程</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> 跑实验</label></div></li>
+<li>[ ]</li>
+</ul>
 <h2 id="6-25">6.25</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" disabled="true"><label for="checkbox0"> 吃烤鱼</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> 打游戏</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> 出发去仪征</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" disabled="true"><label for="checkbox3"> 完成PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" disabled="true"><label for="checkbox4"> 跑实验</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" disabled="true"><label for="checkbox5"> 早睡计划</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" checked="true" disabled="true"><label for="checkbox3"> 吃烤鱼</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" checked="true" disabled="true"><label for="checkbox4"> 打游戏</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" checked="true" disabled="true"><label for="checkbox5"> 出发去仪征</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" disabled="true"><label for="checkbox6"> 完成PLMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" checked="true" disabled="true"><label for="checkbox7"> 跑实验</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" checked="true" disabled="true"><label for="checkbox8"> 早睡计划</label></div></li>
 </ul>
 <h2 id="6-24">6.24</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" checked="true" disabled="true"><label for="checkbox6"> PLMEE(数据处理部分完成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" checked="true" disabled="true"><label for="checkbox7"> 跑步(达成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" checked="true" disabled="true"><label for="checkbox8"> 修改to do list 样式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> 王者荣耀</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 讨论实验方案</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" disabled="true"><label for="checkbox11"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> PLMEE(数据处理部分完成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 跑步(达成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> 修改to do list 样式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 王者荣耀</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 讨论实验方案</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" disabled="true"><label for="checkbox14"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
 </ul>
 <h2 id="6-23">6.23</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 吃饭</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> 改实验模型，debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> 吃饭</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> 改实验模型，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 跑步</label></div></li>
 </ul>
 <h2 id="6-22">6.22</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 跑步</label></div></li>
 </ul>
 <h2 id="6-21">6.21</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" disabled="true"><label for="checkbox19"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> 改模型，数据处理，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" disabled="true"><label for="checkbox22"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 改模型，数据处理，debug</label></div></li>
 </ul>
 <h2 id="6-20">6.20</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-19">6.19</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" checked="true" disabled="true"><label for="checkbox22"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-18">6.18</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-17">6.17</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" disabled="true"><label for="checkbox24"> JMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" disabled="true"><label for="checkbox25"> PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" disabled="true"><label for="checkbox26"> DMCNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" disabled="true"><label for="checkbox27"> JRNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> Word embedding pytorch 实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" disabled="true"><label for="checkbox27"> JMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" disabled="true"><label for="checkbox28"> PLMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" disabled="true"><label for="checkbox29"> DMCNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" disabled="true"><label for="checkbox30"> JRNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" checked="true" disabled="true"><label for="checkbox31"> Word embedding pytorch 实现</label></div></li>
 </ul>
 <h2 id="6-16">6.16</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" checked="true" disabled="true"><label for="checkbox29"> 深度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" checked="true" disabled="true"><label for="checkbox30"> JMEE论文/讨论</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" checked="true" disabled="true"><label for="checkbox31"> GCN？如何嵌入GCN？</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> 深度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> JMEE论文/讨论</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> GCN？如何嵌入GCN？</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-15">6.15</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> 模型baseline实现</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> 深度优先搜索模板</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> 划水摸鱼:神盾局特工3</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 模型baseline实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> 深度优先搜索模板</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> 划水摸鱼:神盾局特工3</label></div></li>
 </ul>
 <h2 id="6-14">6.14</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" checked="true" disabled="true"><label for="checkbox39"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-13">6.13</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> 10.201.104.93 T640</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> TensorFlow2.0的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> 10.201.104.93 T640</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> TensorFlow2.0的学习</label></div></li>
 </ul>
 <h2 id="6-12">6.12</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" checked="true" disabled="true"><label for="checkbox39"> 广度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> tensorflow2.0 的学习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> 广度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> tensorflow2.0 的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" checked="true" disabled="true"><label for="checkbox44"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-11">6.11</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> 聚餐</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> 颓废一下午</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" checked="true" disabled="true"><label for="checkbox44"> 屠龙14：二分</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> 聚餐</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" checked="true" disabled="true"><label for="checkbox46"> 颓废一下午</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> 屠龙14：二分</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" checked="true" disabled="true"><label for="checkbox48"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-10">6.10</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" checked="true" disabled="true"><label for="checkbox46"> 检查标注质量，返工，统计标注人员</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> 越狱</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" checked="true" disabled="true"><label for="checkbox48"> 神盾局特工1，2</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" checked="true" disabled="true"><label for="checkbox49"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" checked="true" disabled="true"><label for="checkbox49"> 检查标注质量，返工，统计标注人员</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" checked="true" disabled="true"><label for="checkbox50"> 越狱</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> 神盾局特工1，2</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-9">6.9</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" checked="true" disabled="true"><label for="checkbox50"> 文本摘要整理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> 学习编辑Latex</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 屠龙14：滑动窗口</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> 文本摘要整理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> 学习编辑Latex</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 屠龙14：滑动窗口</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-8">6.8</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-7">6.7</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57">  配置latex环境，画法律事件抽取表格</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60">  配置latex环境，画法律事件抽取表格</label></div></li>
 </ul>
 <h2 id="6-5">6.5</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 论辩挖掘比赛baseline复现。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> 军事爬虫2个网站,星岛环球</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60"> 跑步30min</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" disabled="true"><label for="checkbox61"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" disabled="true"><label for="checkbox62"> 数据结构屠龙14式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" disabled="true"><label for="checkbox63"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" checked="true" disabled="true"><label for="checkbox61"> 论辩挖掘比赛baseline复现。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" checked="true" disabled="true"><label for="checkbox62"> 军事爬虫2个网站,星岛环球</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" checked="true" disabled="true"><label for="checkbox63"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" disabled="true"><label for="checkbox64"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" disabled="true"><label for="checkbox65"> 数据结构屠龙14式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" disabled="true"><label for="checkbox66"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
 </ul>
 <h2 id="6-4">6.4</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" checked="true" disabled="true"><label for="checkbox64"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" disabled="true"><label for="checkbox65"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" checked="true" disabled="true"><label for="checkbox66"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" checked="true" disabled="true"><label for="checkbox67"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" disabled="true"><label for="checkbox68"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" checked="true" disabled="true"><label for="checkbox69"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-3">6.3</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" checked="true" disabled="true"><label for="checkbox67"> 复习LightGBM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" checked="true" disabled="true"><label for="checkbox68"> 复习SVM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" checked="true" disabled="true"><label for="checkbox69"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 复习LightGBM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 复习SVM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-2">6.2</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 被浪费掉的时间：服务器网速。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72">  跑步1h</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 被浪费掉的时间：服务器网速。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75">  跑步1h</label></div></li>
 </ul>
 <h2 id="6-1">6.1</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 完成Xgboost的复习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75"> 卖掉打印机1020p</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 跑步45‘</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 完成Xgboost的复习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox78" checked="true" disabled="true"><label for="checkbox78"> 卖掉打印机1020p</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox79" checked="true" disabled="true"><label for="checkbox79"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox80" checked="true" disabled="true"><label for="checkbox80"> 跑步45‘</label></div></li>
 </ul>
 ]]></content>
       <categories>
@@ -182,6 +189,72 @@
       <tags>
         <tag>时光集</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>事件抽取模型复现核心代码</title>
+    <url>/2020/06/26/ee-model/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/26/ee-model/image-20200626162628002.png" alt></p>
+<a id="more"></a>
+<h1 id="plmee">plmee</h1>
+<p>plmee事件抽取用于裁判文书事件抽取</p>
+<h2 id="hong-fa-qi-de-chou-qu">触发器的抽取</h2>
+<p>触发器抽取器的目的是预测出触发了事件的token，形式化为token级别的多类别分类任务，分类标签是事件类型。在BERT上添加一个多类分类器就构成了触发器抽取器。</p>
+<p>触发器抽取器的输入和BERT的一样，是WordPiece嵌入、位置嵌入和segment嵌入的和。因为输入只有一个句子，所以所有的segment ids设为0。句子首尾的token分别是[CLS]和[SEP]。</p>
+<p>触发词有时不是一个单词而是一个词组。因此，作者令连续的tokens共享同一个预测标签，作为一个完整的触发词。</p>
+<p>采用交叉熵损失函数用于微调（fine-tune）。</p>
+<p><img src="/2020/06/26/ee-model/image-20200626162628002.png" alt></p>
+<h3 id="mo-xing">模型</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TriggerExtractor</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, bert_path, bert_train, dropout,event_type_num)</span>:</span></span><br><span class="line">        super(TriggerExtractor,self).__init__()</span><br><span class="line">        self.bert = BertModel.from_pretrained(bert_path)</span><br><span class="line">        <span class="comment"># 对bert进行训练</span></span><br><span class="line">        <span class="keyword">for</span> name, param <span class="keyword">in</span> self.bert.named_parameters():</span><br><span class="line">            param.requires_grad = bert_train</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line">        self.taggers = nn.ModuleList([nn.Linear(self.bert.config.to_dict()[<span class="string">'hidden_size'</span>],<span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(event_type_num)])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, text_lengths, text_ids, masks)</span>:</span></span><br><span class="line">        bert_out,bert_cls = self.bert(text_ids,attention_mask=masks)</span><br><span class="line">        bert_out = self.dropout(bert_out)</span><br><span class="line">        outputs = []</span><br><span class="line">        <span class="keyword">for</span> tagger <span class="keyword">in</span> self.taggers:</span><br><span class="line">            out = tagger(bert_out).unsqueeze(<span class="number">-2</span>)</span><br><span class="line">            outputs.append(out[:,<span class="number">1</span>:,:])</span><br><span class="line">        <span class="keyword">return</span> torch.cat(outputs,dim=<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="ping-ce-zhi-biao">评测指标</h3>
+<ol>
+<li>位置正确</li>
+<li>位置正确且类别正确</li>
+</ol>
+<h2 id="yuan-su-de-chou-qu">元素的抽取</h2>
+<p>给定触发器的条件下，元素抽取器的目的是抽取出和触发器所对应事件相关的元素，以及这些元素扮演的角色。</p>
+<p>和触发器抽取相比较，元素的抽取更加复杂，主要有3个原因：</p>
+<ol>
+<li>元素对触发器的依赖；</li>
+<li>大多数元素是较长的名词短语；</li>
+<li>角色重叠问题。</li>
+</ol>
+<p>和触发器抽取器一样，元素抽取器也需要3种嵌入相加作为输入，但还需要知道哪些tokens组成了触发器，因此特征表示输入的segment将触发词所在的span设为1。</p>
+<p>为了克服元素抽取面临的后2个问题，作者在BERT上添加了多组二类分类器（多组分类器设为所有角色标签的集合，对每个元素判断所有类型角色的概率）。每组分类器服务于一个角色，以确定所有属于它的元素的范围（span：每个span都包括start和end）。</p>
+<p>由于预测和角色是分离的，所以一个元素可以扮演多个角色（对一个元素使用一组二类分类器，一组二类分类器中有多个分类器，对应多个角色），一个token可以属于不同的元素。这就缓解了角色重叠问题。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArgumentExtractor</span><span class="params">(BaseModel)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, bert_path, bert_train, role_type_num, dropout)</span>:</span></span><br><span class="line">        super(ArgumentExtractor, self).__init__()</span><br><span class="line">        self.bert = BertModel.from_pretrained(bert_path)</span><br><span class="line">        <span class="comment"># 对bert进行训练</span></span><br><span class="line">        <span class="keyword">for</span> name, param <span class="keyword">in</span> self.bert.named_parameters():</span><br><span class="line">            param.requires_grad = bert_train</span><br><span class="line"></span><br><span class="line">        self.start_taggers = nn.ModuleList(</span><br><span class="line">            [nn.Linear(self.bert.config.to_dict()[<span class="string">'hidden_size'</span>], <span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(role_type_num)])</span><br><span class="line">        self.end_taggers = nn.ModuleList(</span><br><span class="line">            [nn.Linear(self.bert.config.to_dict()[<span class="string">'hidden_size'</span>], <span class="number">2</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(role_type_num)])</span><br><span class="line"></span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, text_lengths, text_ids, masks, type_ids)</span>:</span></span><br><span class="line">        bert_out, bert_cls = self.bert(text_ids, attention_mask=masks, token_type_ids=type_ids)</span><br><span class="line">        bert_out = self.dropout(bert_out)</span><br><span class="line">        start_outputs = []</span><br><span class="line">        end_outputs = []</span><br><span class="line">        <span class="keyword">for</span> start_tagger, end_tagger <span class="keyword">in</span> zip(self.start_tagger, self.end_taggers):</span><br><span class="line">            start_out = start_tagger(bert_out).unsqueeze(<span class="number">-2</span>)</span><br><span class="line">            end_out = end_tagger(bert_out).unsqueeze(<span class="number">-2</span>)</span><br><span class="line">            start_outputs.append(start_out[:, <span class="number">1</span>:, :])</span><br><span class="line">            end_outputs.append(end_out[:, <span class="number">1</span>:, :])</span><br><span class="line">        <span class="keyword">return</span> torch.cat(start_outputs, dim=<span class="number">-2</span>), torch.cat(end_outputs, dim=<span class="number">-2</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="ping-ce-zhi-biao-1">评测指标</h3>
+<ol>
+<li>位置正确</li>
+<li>位置正确且类别正确</li>
+</ol>
+<h2 id="af-ief">AF-IEF</h2>
+<p>Role Frequency （RF）<br>
+RF定义为角色r在类型为v的事件中出现的频率：<br>
+\[
+\operatorname{RF}(r, v)=\frac{N_{v}^{r}}{\sum_{k \in \mathcal{R}} N_{v}^{k}}
+\]<br>
+Inverse Event Frequency （IEF）</p>
+<p>log内的分母表示论元角色r在多少个事件从出现<br>
+\[
+\operatorname{IEF}(r)=\log \frac{|\mathcal{V}|}{|\{v \in \mathcal{V}: r \in v\}|}
+\]</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_AF_IEF</span><span class="params">(self, dataset)</span>:</span></span><br><span class="line">        event_num = len(self.schema.event_type_2_id)</span><br><span class="line">        role_num = len(self.schema.role_type_2_id)</span><br><span class="line"></span><br><span class="line">        self.rf = np.zeros((event_num, role_num), dtype=float)</span><br><span class="line">        self.ief = np.zeros((role_num, ), dtype=float)</span><br><span class="line">    </span><br><span class="line">         <span class="keyword">with</span> open(os.path.join(self.data_dir, file), <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">             <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">                json_item = json.loads(line)</span><br><span class="line">                <span class="keyword">for</span> event <span class="keyword">in</span> json_item[<span class="string">'events'</span>].values():</span><br><span class="line">                    event_id = self.schema.event_type_2_id[event[<span class="string">'event_type'</span>]]</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">for</span> argu <span class="keyword">in</span> event[<span class="string">'argument'</span>]:</span><br><span class="line">                        role_id = self.schema.role_type_2_id[argu[<span class="string">'role_type'</span>]]</span><br><span class="line">                        self.rf[event_id, role_id] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> idx <span class="keyword">in</span> range(role_num):</span><br><span class="line">                    self.ief[idx] = np.log(event_num/np.sum(self.af[:,idx] != <span class="number">0</span>))</span><br><span class="line">                role_count_per_event = np.sum(self.rf, axis=<span class="number">1</span>)</span><br><span class="line">                self.rf = self.rf / (role_count_per_event+<span class="number">1e-13</span>)</span><br></pre></td></tr></table></figure>
+<p>将\(RF(r,v)\)和\(IEF(r)\)相乘得到\(RF−IEF(r,v)\)，使用RF-IEF度量角色r对于v类型事件的重要性：</p>
+<p>\[
+I(r, v)=\frac{\exp ^{\operatorname{RF}-\operatorname{IEF}}(r, v)}{\sum_{r^{\prime} \in R} \exp ^{\operatorname{RF}-\operatorname{IEF}}\left(r^{\prime}, v\right)}
+\]<br>
+给定输入的事件类型\(v\)，根据每个角色对于\(v\)类型事件的重要性，计算损失\(L_s\)和\(L_e\) ，将两者取平均就得到最终的损失。<br>
+\[
+\begin{aligned}
+\mathcal{L}_{s} &amp;=\sum_{r \in \mathcal{R}} \frac{I(r, v)}{|\mathcal{S}|} \mathrm{CE}\left(P_{s}^{r}, \boldsymbol{y}_{s}^{r}\right) \\
+\mathcal{L}_{e} &amp;=\sum_{r \in \mathcal{R}} \frac{I(r, v)}{|\mathcal{S}|} \mathrm{CE}\left(P_{e}^{r}, \boldsymbol{y}_{e}^{r}\right)
+\end{aligned}
+\]</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">rf_ief = ief * rf</span><br><span class="line">batch_weight = torch.exp(rf_ief)</span><br><span class="line">batch_weight_sum = torch.sum(batch_weight)</span><br><span class="line">batch_weight = batch_weight / batch_weight_sum</span><br><span class="line">batch_loss = batch_loss * batch_weight</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术/论文复现</category>
+      </categories>
   </entry>
   <entry>
     <title>词向量</title>
