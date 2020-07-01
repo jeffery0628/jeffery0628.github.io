@@ -27,7 +27,11 @@
 <h1 id="qi-yue">七月</h1>
 <h2 id="7-1">7.1</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" disabled="true"><label for="checkbox0"> 实习入职</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox0" checked="true" disabled="true"><label for="checkbox0"> 实习入职</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> 模型融合</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> 算法</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" disabled="true"><label for="checkbox3"> 事件抽取模型</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" disabled="true"><label for="checkbox4"> 模型复现</label></div></li>
 </ul>
 <h1 id="liu-yue">六月</h1>
 <h2 id="zong-jie">总结</h2>
@@ -35,190 +39,190 @@
 <p>期间穿插部分算法练习。</p>
 <h2 id="qi-yue-ji-hua">七月计划</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox1" disabled="true"><label for="checkbox1"> 掌握Tensorflow</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox2" disabled="true"><label for="checkbox2"> 学会对数据可视化分析</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox3" disabled="true"><label for="checkbox3"> 算法题不间断，坚持下去</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox4" disabled="true"><label for="checkbox4"> 坚持跑步、早睡、规律作息</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" disabled="true"><label for="checkbox5"> 掌握Tensorflow</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" disabled="true"><label for="checkbox6"> 学会对数据可视化分析</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" disabled="true"><label for="checkbox7"> 算法题不间断，坚持下去</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" disabled="true"><label for="checkbox8"> 坚持跑步、早睡、规律作息</label></div></li>
 </ul>
 <h2 id="6-30">6.30</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox5" checked="true" disabled="true"><label for="checkbox5"> 帮写法律抽取代码</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox6" checked="true" disabled="true"><label for="checkbox6"> 打王者</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox7" checked="true" disabled="true"><label for="checkbox7"> 刷算法题</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> 帮写法律抽取代码</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 打王者</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> 刷算法题</label></div></li>
 </ul>
 <h2 id="6-29">6.29</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox8" checked="true" disabled="true"><label for="checkbox8"> 收拾行李</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox9" checked="true" disabled="true"><label for="checkbox9"> 论文实验代码</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 收拾行李</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 论文实验代码</label></div></li>
 </ul>
 <h2 id="6-28">6.28</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox10" checked="true" disabled="true"><label for="checkbox10"> 过生日-空白的一天</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> 过生日-空白的一天</label></div></li>
 </ul>
 <h2 id="6-27">6.27</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox11" checked="true" disabled="true"><label for="checkbox11"> Leetcode 双指针</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox12" checked="true" disabled="true"><label for="checkbox12"> 实验数据整理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox13" checked="true" disabled="true"><label for="checkbox13"> 电影：心火</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox14" checked="true" disabled="true"><label for="checkbox14"> 早睡</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> Leetcode 双指针</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> 实验数据整理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> 电影：心火</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 早睡</label></div></li>
 </ul>
 <h2 id="6-26">6.26</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox15" checked="true" disabled="true"><label for="checkbox15"> 完成PLMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox16" checked="true" disabled="true"><label for="checkbox16"> 返程</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox17" checked="true" disabled="true"><label for="checkbox17"> 跑实验</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox18" checked="true" disabled="true"><label for="checkbox18"> 跑步(达成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> 算法屠龙14式：双指针</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> 早睡计划，启动（11：40）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox19" checked="true" disabled="true"><label for="checkbox19"> 完成PLMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox20" checked="true" disabled="true"><label for="checkbox20"> 返程</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 跑实验</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" checked="true" disabled="true"><label for="checkbox22"> 跑步(达成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 算法屠龙14式：双指针</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> 早睡计划，启动（11：40）</label></div></li>
 </ul>
 <h2 id="6-25">6.25</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox21" checked="true" disabled="true"><label for="checkbox21"> 吃烤鱼</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox22" checked="true" disabled="true"><label for="checkbox22"> 打游戏</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox23" checked="true" disabled="true"><label for="checkbox23"> 出发去仪征</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox24" checked="true" disabled="true"><label for="checkbox24"> 跑实验</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> 早睡计划</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox25" checked="true" disabled="true"><label for="checkbox25"> 吃烤鱼</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> 打游戏</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" checked="true" disabled="true"><label for="checkbox27"> 出发去仪征</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> 跑实验</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" checked="true" disabled="true"><label for="checkbox29"> 早睡计划</label></div></li>
 </ul>
 <h2 id="6-24">6.24</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox26" checked="true" disabled="true"><label for="checkbox26"> PLMEE(数据处理部分完成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox27" checked="true" disabled="true"><label for="checkbox27"> 跑步(达成)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox28" checked="true" disabled="true"><label for="checkbox28"> 修改to do list 样式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox29" checked="true" disabled="true"><label for="checkbox29"> 王者荣耀</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" checked="true" disabled="true"><label for="checkbox30"> 讨论实验方案</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" disabled="true"><label for="checkbox31"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox30" checked="true" disabled="true"><label for="checkbox30"> PLMEE(数据处理部分完成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox31" checked="true" disabled="true"><label for="checkbox31"> 跑步(达成)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> 修改to do list 样式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> 王者荣耀</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> 讨论实验方案</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" disabled="true"><label for="checkbox35"> 早睡计划失败(明天我一定十一点之前睡！！！)</label></div></li>
 </ul>
 <h2 id="6-23">6.23</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox32" checked="true" disabled="true"><label for="checkbox32"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox33" checked="true" disabled="true"><label for="checkbox33"> 和申博聚餐</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> 和申博聚餐</label></div></li>
 <li>[x]</li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox34" checked="true" disabled="true"><label for="checkbox34"> 改实验模型，debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox35" checked="true" disabled="true"><label for="checkbox35"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> 改实验模型，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" checked="true" disabled="true"><label for="checkbox39"> 跑步</label></div></li>
 </ul>
 <h2 id="6-22">6.22</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox36" checked="true" disabled="true"><label for="checkbox36"> 数据处理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox37" checked="true" disabled="true"><label for="checkbox37"> debug</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox38" checked="true" disabled="true"><label for="checkbox38"> 跑步</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> 跑步</label></div></li>
 </ul>
 <h2 id="6-21">6.21</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox39" disabled="true"><label for="checkbox39"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox40" checked="true" disabled="true"><label for="checkbox40"> 改模型，数据处理，debug</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" disabled="true"><label for="checkbox43"> 整理https://mp.weixin.qq.com/s/ONv5oPA2VMZLRUhB037hFw</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" checked="true" disabled="true"><label for="checkbox44"> 改模型，数据处理，debug</label></div></li>
 </ul>
 <h2 id="6-20">6.20</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox41" checked="true" disabled="true"><label for="checkbox41"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" checked="true" disabled="true"><label for="checkbox45"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-19">6.19</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox42" checked="true" disabled="true"><label for="checkbox42"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" checked="true" disabled="true"><label for="checkbox46"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-18">6.18</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox43" checked="true" disabled="true"><label for="checkbox43"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-17">6.17</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox44" disabled="true"><label for="checkbox44"> JMEE</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox45" disabled="true"><label for="checkbox45"> DMCNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox46" disabled="true"><label for="checkbox46"> JRNN</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox47" checked="true" disabled="true"><label for="checkbox47"> Word embedding pytorch 实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" disabled="true"><label for="checkbox48"> JMEE</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" disabled="true"><label for="checkbox49"> DMCNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" disabled="true"><label for="checkbox50"> JRNN</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> Word embedding pytorch 实现</label></div></li>
 </ul>
 <h2 id="6-16">6.16</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox48" checked="true" disabled="true"><label for="checkbox48"> 深度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox49" checked="true" disabled="true"><label for="checkbox49"> JMEE论文/讨论</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox50" checked="true" disabled="true"><label for="checkbox50"> GCN？如何嵌入GCN？</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox51" checked="true" disabled="true"><label for="checkbox51"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 深度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> JMEE论文/讨论</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> GCN？如何嵌入GCN？</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-15">6.15</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox52" checked="true" disabled="true"><label for="checkbox52"> 模型baseline实现</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox53" checked="true" disabled="true"><label for="checkbox53"> 深度优先搜索模板</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox54" checked="true" disabled="true"><label for="checkbox54"> 划水摸鱼:神盾局特工3</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 模型baseline实现</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57"> 深度优先搜索模板</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 划水摸鱼:神盾局特工3</label></div></li>
 </ul>
 <h2 id="6-14">6.14</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox55" checked="true" disabled="true"><label for="checkbox55"> 数据处理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> 数据处理</label></div></li>
 </ul>
 <h2 id="6-13">6.13</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox56" checked="true" disabled="true"><label for="checkbox56"> 10.201.104.93 T640</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox57" checked="true" disabled="true"><label for="checkbox57"> TensorFlow2.0的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60"> 10.201.104.93 T640</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" checked="true" disabled="true"><label for="checkbox61"> TensorFlow2.0的学习</label></div></li>
 </ul>
 <h2 id="6-12">6.12</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox58" checked="true" disabled="true"><label for="checkbox58"> 广度优先搜索</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox59" checked="true" disabled="true"><label for="checkbox59"> tensorflow2.0 的学习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox60" checked="true" disabled="true"><label for="checkbox60"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" checked="true" disabled="true"><label for="checkbox62"> 广度优先搜索</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" checked="true" disabled="true"><label for="checkbox63"> tensorflow2.0 的学习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" checked="true" disabled="true"><label for="checkbox64"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-11">6.11</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox61" checked="true" disabled="true"><label for="checkbox61"> 聚餐</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox62" checked="true" disabled="true"><label for="checkbox62"> 颓废一下午</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox63" checked="true" disabled="true"><label for="checkbox63"> 屠龙14：二分</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox64" checked="true" disabled="true"><label for="checkbox64"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" checked="true" disabled="true"><label for="checkbox65"> 聚餐</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" checked="true" disabled="true"><label for="checkbox66"> 颓废一下午</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" checked="true" disabled="true"><label for="checkbox67"> 屠龙14：二分</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" checked="true" disabled="true"><label for="checkbox68"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-10">6.10</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox65" checked="true" disabled="true"><label for="checkbox65"> 检查标注质量，返工，统计标注人员</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox66" checked="true" disabled="true"><label for="checkbox66"> 越狱</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox67" checked="true" disabled="true"><label for="checkbox67"> 神盾局特工1，2</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox68" checked="true" disabled="true"><label for="checkbox68"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" checked="true" disabled="true"><label for="checkbox69"> 检查标注质量，返工，统计标注人员</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 越狱</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 神盾局特工1，2</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-9">6.9</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox69" checked="true" disabled="true"><label for="checkbox69"> 文本摘要整理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox70" checked="true" disabled="true"><label for="checkbox70"> 学习编辑Latex</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox71" checked="true" disabled="true"><label for="checkbox71"> 屠龙14：滑动窗口</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox72" checked="true" disabled="true"><label for="checkbox72"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 文本摘要整理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 学习编辑Latex</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75"> 屠龙14：滑动窗口</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-8">6.8</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox73" checked="true" disabled="true"><label for="checkbox73"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox74" checked="true" disabled="true"><label for="checkbox74"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox78" checked="true" disabled="true"><label for="checkbox78"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-7">6.7</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox75" checked="true" disabled="true"><label for="checkbox75"> 标注质量管理</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox76" checked="true" disabled="true"><label for="checkbox76">  配置latex环境，画法律事件抽取表格</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox79" checked="true" disabled="true"><label for="checkbox79"> 标注质量管理</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox80" checked="true" disabled="true"><label for="checkbox80">  配置latex环境，画法律事件抽取表格</label></div></li>
 </ul>
 <h2 id="6-5">6.5</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox77" checked="true" disabled="true"><label for="checkbox77"> 论辩挖掘比赛baseline复现。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox78" checked="true" disabled="true"><label for="checkbox78"> 军事爬虫2个网站,星岛环球</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox79" checked="true" disabled="true"><label for="checkbox79"> 跑步30min</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox80" disabled="true"><label for="checkbox80"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox81" disabled="true"><label for="checkbox81"> 数据结构屠龙14式</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox82" disabled="true"><label for="checkbox82"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox81" checked="true" disabled="true"><label for="checkbox81"> 论辩挖掘比赛baseline复现。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox82" checked="true" disabled="true"><label for="checkbox82"> 军事爬虫2个网站,星岛环球</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox83" checked="true" disabled="true"><label for="checkbox83"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox84" disabled="true"><label for="checkbox84"> <a href="https://www.kesci.com/home/project/5eb7958f366f4d002d783d4a" target="_blank" rel="noopener">pyecharts</a></label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox85" disabled="true"><label for="checkbox85"> 数据结构屠龙14式</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox86" disabled="true"><label for="checkbox86"> 比赛trick总结：防止过拟合的损失阶段</label></div></li>
 </ul>
 <h2 id="6-4">6.4</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox83" checked="true" disabled="true"><label for="checkbox83"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox84" disabled="true"><label for="checkbox84"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox85" checked="true" disabled="true"><label for="checkbox85"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox87" checked="true" disabled="true"><label for="checkbox87"> 2015年以来引用较多的，法律事件抽取的文章（谷歌学术）legal event 10片左右，15年之前的综述一下。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox88" disabled="true"><label for="checkbox88"> 复盘事件抽取比赛(除了苏神，暂时没有其他人放出来)</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox89" checked="true" disabled="true"><label for="checkbox89"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-3">6.3</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox86" checked="true" disabled="true"><label for="checkbox86"> 复习LightGBM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox87" checked="true" disabled="true"><label for="checkbox87"> 复习SVM</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox88" checked="true" disabled="true"><label for="checkbox88"> 跑步30min</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox90" checked="true" disabled="true"><label for="checkbox90"> 复习LightGBM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox91" checked="true" disabled="true"><label for="checkbox91"> 复习SVM</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox92" checked="true" disabled="true"><label for="checkbox92"> 跑步30min</label></div></li>
 </ul>
 <h2 id="6-2">6.2</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox89" checked="true" disabled="true"><label for="checkbox89"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox90" checked="true" disabled="true"><label for="checkbox90"> 被浪费掉的时间：服务器网速。</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox91" checked="true" disabled="true"><label for="checkbox91">  跑步1h</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox93" checked="true" disabled="true"><label for="checkbox93"> 军事命名实体识别任务：数据扩充，主要方法 1. 捞出每个类别下的全部实体 2. 把实体通过bert，得到每个实体的向量表示 3. 替换原始文本中相似（相似度计算：向量相乘）的实体，替换方案：对于每个实体80%不进行替换，15%替换成相同类别的其他实体，5%替换成其他类别的实体。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox94" checked="true" disabled="true"><label for="checkbox94"> 被浪费掉的时间：服务器网速。</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox95" checked="true" disabled="true"><label for="checkbox95">  跑步1h</label></div></li>
 </ul>
 <h2 id="6-1">6.1</h2>
 <ul class="contains-task-list">
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox92" checked="true" disabled="true"><label for="checkbox92"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox93" checked="true" disabled="true"><label for="checkbox93"> 完成Xgboost的复习</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox94" checked="true" disabled="true"><label for="checkbox94"> 卖掉打印机1020p</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox95" checked="true" disabled="true"><label for="checkbox95"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
-<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox96" checked="true" disabled="true"><label for="checkbox96"> 跑步45‘</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox96" checked="true" disabled="true"><label for="checkbox96"> 军事命名实体识别任务：修改bert映射关系，学会了向句子中加入词、动词、语法关系等特征。（记得不要下标越界！）</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox97" checked="true" disabled="true"><label for="checkbox97"> 完成Xgboost的复习</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox98" checked="true" disabled="true"><label for="checkbox98"> 卖掉打印机1020p</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox99" checked="true" disabled="true"><label for="checkbox99"> 讨论比赛（裁判文书的论辩挖掘）效率很低！</label></div></li>
+<li class="task-list-item"><div class="task-list-item-checkbox"><input type="checkbox" id="checkbox100" checked="true" disabled="true"><label for="checkbox100"> 跑步45‘</label></div></li>
 </ul>
 ]]></content>
       <categories>
@@ -229,15 +233,226 @@
       </tags>
   </entry>
   <entry>
+    <title>数据探索性分析(EDA)</title>
+    <url>/2020/07/01/machine_learning/exploratory-data-analysis/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/eda.png" alt></p>
+<a id="more"></a>
+<p>导入一些包</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno <span class="comment"># 缺失值的可视化处理</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""导入数据集"""</span></span><br><span class="line"><span class="comment"># data = pd.read_csv('test.csv'，sep ='|' ，header = 0，skiprows = 10，nrows = 10)</span></span><br><span class="line">train_data = pd.read_csv(<span class="string">'./dataset/used_car_train_20200313.csv'</span>, sep=<span class="string">' '</span>) <span class="comment"># 指定分隔符为空格</span></span><br><span class="line">test_data = pd.read_csv(<span class="string">'./dataset/used_car_testA_20200313.csv'</span>, sep=<span class="string">' '</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="shu-ju-chu-shi">数据初识</h1>
+<p>主要是对读取的数据有一个大致的了解，包括简单了解数据的行列信息，数据的统计特征等。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看数据的形状（行数和列数）</span></span><br><span class="line">print(<span class="string">'train_data shape :'</span>, train_data.shape) <span class="comment"># (150000, 31)</span></span><br><span class="line">print(<span class="string">'test_data shape :'</span>, test_data.shape) <span class="comment"># (50000, 30)</span></span><br><span class="line"><span class="comment"># 从形状可以看出训练集共 150000 个样本，30 个特征，1 列价格；测试集共 50000 个样本，30 个特征</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据简要概览</span></span><br><span class="line">train_data.head().append(train_data.tail()) <span class="comment"># 将开头5行和结尾5行拼接起来展示，head()和tail()默认值是5</span></span><br><span class="line">test_data.head().append(test_data.tail())</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LEk6S.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数据信息的查看 .info()可以看到每列的type，以及NAN缺失值的信息</span></span><br><span class="line">train_data.info()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LZ5wQ.png" alt></p>
+<p>通过<code>info()</code>可以发现几点信息，首先就是字段的类型，有一个 object（后面需要单独处理）。其次有一些字段有空值，清洗的时候需要处理。</p>
+<p>通过<code>info()</code>了解数据每列的 type，还有助于了解是否存在除了 nan 以外的特殊符号异常</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 通过 .columns 查看列名</span></span><br><span class="line">train_data.columns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据的统计信息概览</span></span><br><span class="line">train_data.describe()</span><br></pre></td></tr></table></figure>
+<p><code>describe()</code>中有每列的统计值，包括：个数 count、平均值 mean、方差 std、最小值 min、下四分位数 25%、中位数 50%、上四分位数 75%、以及最大值 max。查看这些信息可以瞬间掌握数据的大概范围<strong>以及异常值判断，例如 999999，-1 这些值其实是 nan 的另一种表达方式</strong>，有时候需要注意下。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LmXa4.png" alt></p>
+<p>注意看左下角，提示有 30 列，但是刚才输出<code>shape</code>的时候明明提示有 31 列。注意，<code>describe()</code>是不包括 object 类型字段的统计信息的，毕竟不是数值类型。当然也可以单独用<code>describe()</code>看看</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_data[<span class="string">'notRepairedDamage'</span>].describe()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果：</span></span><br><span class="line">count     <span class="number">150000</span></span><br><span class="line">unique         <span class="number">3</span></span><br><span class="line">top          <span class="number">0.0</span></span><br><span class="line">freq      <span class="number">111361</span></span><br><span class="line">Name: notRepairedDamage, dtype: object</span><br></pre></td></tr></table></figure>
+<h1 id="shu-ju-gan-zhi">数据感知</h1>
+<p>数据感知是在数据初识的基础上，进一步挖掘数据的信息，主要包括数据的确实值和异常值等</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看每列存在nan的情况</span></span><br><span class="line">train_data.isnull().sum()</span><br><span class="line"><span class="comment"># test_data.isnull().sum()</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LuGnK.png" alt></p>
+<p>可以看出，<code>model</code>、<code>bodyType</code>、<code>fuelType</code>、<code>gearbox</code>有缺失值。还可以对 nan 进行可视化，看的更加明显。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">missing = train_data.isnull().sum()</span><br><span class="line">missing = missing[missing &gt; <span class="number">0</span>]</span><br><span class="line">missing.sort_values(inplace=<span class="literal">True</span>)</span><br><span class="line">missing.plot.bar()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LMJFe.png" alt></p>
+<p>可视化 nan 的个数主要目的在于，查看 nan 存在的个数是否真的很大，如果很小一般选择填充，如果使用 lgb 等树模型可以直接让树自己去优化，但如果 nan 存在的过多，可以考虑删掉。</p>
+<p>下面是可视化缺失值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 可视化缺失值</span></span><br><span class="line">msno.matrix(train_data.sample(<span class="number">250</span>)) <span class="comment"># sample(250)表示抽取250个样本</span></span><br><span class="line"><span class="comment"># msno.matrix(test_data.sample(250))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># msno.bar(train_data.sample(1000))</span></span><br><span class="line"><span class="comment"># msno.bar(test_data.sample(1000))</span></span><br></pre></td></tr></table></figure>
+<p>下图是代码运行后得到的结果，白线越多，代表缺失值越多（fuleType 缺失的最多）。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LQpkD.png" alt></p>
+<p><strong>对数据持着怀疑的角度审视，尤其是 object 字段</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 看看object这个字段的取值情况</span></span><br><span class="line">train_data[<span class="string">'notRepairedDamage'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line"><span class="number">0.0</span>    <span class="number">111361</span></span><br><span class="line">-       <span class="number">24324</span></span><br><span class="line"><span class="number">1.0</span>     <span class="number">14315</span></span><br><span class="line">Name: notRepairedDamage, dtype: int64</span><br></pre></td></tr></table></figure>
+<p>这个字段里面居然有个<code>-</code>值，如果单看比赛给的字段描述：0 代表有未修复的损害，1 代表没有，如果不持着怀疑的态度，很难发现这里还有个<code>-</code>，这个也代表缺失，因为很多模型可以对 nan 直接处理，所以这里我们先将<code>-</code>替换为 nan。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_data[<span class="string">'noRepairedDamage'</span>].replace(<span class="string">'-'</span>, np.nan, inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># test_data['noRepairedDamage'].replace('-', np.nan, inplace=True)</span></span><br></pre></td></tr></table></figure>
+<h1 id="shu-ju-bu-huo">数据不惑</h1>
+<p>通过初识和感知，不仅认识了数据，还发现了一些异常和缺失，下面进一步挖掘数据信息，主要包括查看预测值的分布以及将字段分成数值型和类别型，后面分开查看和处理</p>
+<h2 id="liao-jie-shu-ju-de-fen-bu">了解数据的分布</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""查看预测值的频数"""</span></span><br><span class="line">train_data[<span class="string">'price'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直方图可视化 自动划分10（默认值）个价格区间 统计每个区间的频数</span></span><br><span class="line">plt.hist(train_data[<span class="string">'price'</span>], orientation=<span class="string">'vertical'</span>, histtype=<span class="string">'bar'</span>, color=<span class="string">'red'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8L36H0.png" alt></p>
+<p>查看频数，发现价格大于 20000 的值极少，其实这里也可以把这些值当作特殊值（或异常值）直接删掉，不过直接删掉不太好，毕竟这是个回归问题。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""总体分布概况（无界约翰逊分布等）"""</span></span><br><span class="line"><span class="keyword">import</span> scipy.stats <span class="keyword">as</span> st</span><br><span class="line">y = train_data[<span class="string">'price'</span>]</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">plt.title(<span class="string">'Johnson SU'</span>)</span><br><span class="line">sns.distplot(y, kde=<span class="literal">False</span>, fit=st.johnsonsu)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">plt.title(<span class="string">'normal'</span>)</span><br><span class="line">sns.distplot(y, kde=<span class="literal">False</span>, fit=st.norm)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">plt.title(<span class="string">'Log Normal'</span>)</span><br><span class="line">sns.distplot(y, kde=<span class="literal">False</span>, fit=st.lognorm)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LGmWD.png" alt></p>
+<p>可以发现，价格不服从正态分布，所以在进行回归之前，必须将它进行转换，最佳拟合的是无界约翰逊分布。对预测标签做 log 转换，使其更加服从正态分布</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># log变换之后的分布会变得比较均匀，可以进行log变换进行预测，这也是预测问题常用的trick</span></span><br><span class="line">plt.hist(np.log(train_data[<span class="string">'price'</span>]), orientation=<span class="string">'vertical'</span>, histtype=<span class="string">'bar'</span>, color=<span class="string">'red'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LGW6J.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""查看偏度和峰度"""</span></span><br><span class="line">sns.distplot(train_data[<span class="string">'price'</span>])</span><br><span class="line">print(<span class="string">'Skewness : %f'</span> % train_data[<span class="string">'price'</span>].skew()) <span class="comment"># 偏度</span></span><br><span class="line">print(<span class="string">'Kurtosis : %f'</span> % train_data[<span class="string">'price'</span>].kurt()) <span class="comment"># 峰度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line">Skewness : <span class="number">3.346487</span></span><br><span class="line">Kurtosis : <span class="number">18.995183</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LJDjH.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># train_data.skew(), train_data.kurt()</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">plt.subplot(<span class="number">121</span>)</span><br><span class="line">sns.distplot(train_data.skew(), color=<span class="string">'blue'</span>, axlabel=<span class="string">'Skewness'</span>)</span><br><span class="line">plot.subplot(<span class="number">122</span>)</span><br><span class="line">sns.distplot(train_data.kurt(), color=<span class="string">'orange'</span>, axlabel=<span class="string">'Kurtness'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LYJxg.png" alt></p>
+<p>峰度 Kurt 代表数据分布的尖锐程度，偏度简单来说就是数据的不对称程度。</p>
+<blockquote>
+<p>我们一般会拿偏度和峰度来看数据的分布形态，而且一般会跟正态分布做比较，我们把正态分布的偏度和峰度都看做零。如果我们在实操中，算到偏度峰度不为0，即表明变量存在左偏右偏，或者是高顶平顶这么一说。</p>
+<p><strong>偏度（Skewness）</strong>: 是描述数据分布形态的统计量，其描述的是某总体取值分布的<strong>对称性</strong>，简单来说就是数据的不对称程度。\(Skewness=E[\frac{x-E(x)}{\sqrt{D(x)}^3}]\)</p>
+<ol>
+<li>
+<p>Skewness = 0 ，分布形态与正态分布偏度相同。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/histogram_symmetrical_nonskewed_normal.png" alt></p>
+</li>
+<li>
+<p>Skewness &gt; 0 ，正偏差数值较大，为正偏或右偏。长尾巴拖在右边，数据右端有较多的极端值。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/histogram_right_skewness_with_arrow.png" alt></p>
+</li>
+<li>
+<p>Skewness &lt; 0 ，负偏差数值较大，为负偏或左偏。长尾巴拖在左边，数据左端有较多的极端值。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/histogram_left_skewness_with_arrow.png" alt></p>
+</li>
+<li>
+<p>数值的绝对值越大，表明数据分布越不对称，偏斜程度大。</p>
+</li>
+</ol>
+<p><strong>峰度（Kurtosis）</strong>:是描述某变量所有取值分布形态陡缓程度的统计量，简单来说就是数据分布顶的<strong>尖锐程度</strong>。</p>
+<ol>
+<li>
+<p>Kurtosis=0 与正态分布的陡缓程度相同。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/distribution_plot_normal_dist_for_kurtosis.png" alt="img"></p>
+</li>
+<li>
+<p>Kurtosis&gt;0 比正态分布的高峰更加陡峭——尖顶峰:具有正峰度值的分布表明，相比于正态分布，该分布有更重的尾部。实线表示正态分布，虚线表示具有正峰度值的分布。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/distribution_plot_positive_kurtosis.png" alt></p>
+</li>
+<li>
+<p>Kurtosis&lt;0 比正态分布的高峰来得平台——平顶峰:具有负峰度值的分布表明，相比于正态分布，该分布有更轻的尾部。实线表示正态分布，虚线表示具有负峰度值的分布。</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/distribution_plot_negative_kurtosis.png" alt></p>
+</li>
+</ol>
+</blockquote>
+<h2 id="ba-zi-duan-fen-wei-shu-zhi-zi-duan-he-lei-bie-zi-duan">把字段分为数值字段和类别字段</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""先分离出label值"""</span></span><br><span class="line">y_train = train_data[<span class="string">'price'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数值特征</span></span><br><span class="line"><span class="comment"># numeric_features = train_data.select_dtypes(include=[np.number])</span></span><br><span class="line"><span class="comment"># numeric_features.columns</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类别特征</span></span><br><span class="line"><span class="comment"># categorical_features = train_data.select_dtypes(include=[np.object])</span></span><br><span class="line"><span class="comment"># categorical_features.columns</span></span><br></pre></td></tr></table></figure>
+<p>上面是自动选取的方式，也可以人为设定</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""人为设定"""</span></span><br><span class="line">numeric_features = [<span class="string">'power'</span>, <span class="string">'kilometer'</span>].extend([<span class="string">'v_'</span>+str(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">15</span>)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里我感觉这个name和预测值没有关系，所以虽然是类别，可以先去掉看看, 日期的也去掉</span></span><br><span class="line">categorical_features = [<span class="string">'model'</span>, <span class="string">'brand'</span>, <span class="string">'bodyType'</span>, <span class="string">'fuelType'</span>, <span class="string">'gearbox'</span>, </span><br><span class="line">                        <span class="string">'notRepairedDamage'</span>,<span class="string">'regionCode'</span>, <span class="string">'seller'</span>, <span class="string">'offerType'</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="shu-ju-dong-xuan">数据洞玄</h1>
+<p>前面的工作已经分析了预测值的分布，从分布中可以看到，如果把预测值进行对数变化一下，效果可能更好。然后把特征字段拆分为数值型和类别型。接下来我们主要对数值特征和类别特征进一步挖掘信息，包括类别偏斜，类别分布可视化，数值可视化等。</p>
+<h2 id="lei-bie-te-zheng-de-tan-suo">类别特征的探索</h2>
+<p>类别特征主要是看一下每个类别字段的取值和分布，会用到箱型图、小提琴图、柱状图等各种可视化技巧。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别偏斜处理"""</span></span><br><span class="line"><span class="keyword">for</span> cat_fea <span class="keyword">in</span> categorical_features:</span><br><span class="line">    print(cate_fea + <span class="string">'特征分布如下：'</span>)</span><br><span class="line">    print(<span class="string">'&#123;&#125;特征有&#123;&#125;不同的值'</span>.format(cate_fea, len(train_data[cat_fea].unique())))</span><br><span class="line">    print(train_data[cat_fea].value_counts())</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<p>这里主要是重点查看一下类别特征有没有数量严重偏斜的情况（由于太多，不在这里显示），这样的情况一般对预测没有什么帮助</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train_data[<span class="string">'seller'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>    <span class="number">149999</span></span><br><span class="line"><span class="number">1</span>         <span class="number">1</span></span><br><span class="line">Name: seller, dtype: int64</span><br><span class="line"></span><br><span class="line">train_data[<span class="string">'offerType'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>    <span class="number">150000</span></span><br><span class="line">Name: offerType, dtype: int64</span><br></pre></td></tr></table></figure>
+<p>像<code>seller</code>、<code>offerType</code>字段偏斜就比较严重，直接删除这些字段:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">del</span> train_data[<span class="string">'seller'</span>]</span><br><span class="line"><span class="keyword">del</span> train_data[<span class="string">'offerType'</span>]</span><br><span class="line"><span class="keyword">del</span> test_data[<span class="string">'seller'</span>]</span><br><span class="line"><span class="keyword">del</span> test_data[<span class="string">'offerType'</span>]</span><br><span class="line"></span><br><span class="line">categorical_features.remove(<span class="string">'seller'</span>)</span><br><span class="line">categorical_features.remove(<span class="string">'offerType'</span>)</span><br></pre></td></tr></table></figure>
+<p>下面看一下每个字段，有多少类（unique）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别的unique分布"""</span></span><br><span class="line"><span class="keyword">for</span> cat <span class="keyword">in</span> categorical_features:</span><br><span class="line">    print(len(train_data[cat].unique()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果</span></span><br><span class="line"><span class="number">249</span></span><br><span class="line"><span class="number">40</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">7905</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为regionCode的类别太稀疏了，所以先去掉，因为后面要可视化，不画稀疏的</span></span><br><span class="line">categorical_features.remove(<span class="string">'regionCode'</span>)</span><br></pre></td></tr></table></figure>
+<p>下面使用各种可视化方式，可视化类别特征:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别特征箱型图可视化"""</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> categorical_features:</span><br><span class="line">    train_data[c] = train_data[c].astype(<span class="string">'category'</span>)</span><br><span class="line">    <span class="keyword">if</span> train_data[c].isnull().any():</span><br><span class="line">        train_data[c] = train_data[c].cat.add_categories([<span class="string">'MISSING'</span>])</span><br><span class="line">        train_data[c] = train_data[c].fillna(<span class="string">'MISSING'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">boxplot</span><span class="params">(x, y, **kwargs)</span>:</span></span><br><span class="line">    sns.boxenplot(x=x, y=y)</span><br><span class="line">    x = plt.xticks(rotation=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">f = pd.melt(train_data, id_vars=[<span class="string">'price'</span>], value_vars=categorical_features)</span><br><span class="line">g = sns.FacetGrid(f, col=<span class="string">"variable"</span>,  col_wrap=<span class="number">3</span>, sharex=<span class="literal">False</span>, sharey=<span class="literal">False</span>, size=<span class="number">5</span>)</span><br><span class="line">g = g.map(boxplot, <span class="string">"value"</span>, <span class="string">"price"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LaCQO.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别特征的小提琴图可视化， 小提琴图类似箱型图，比后者高级点，图好看些"""</span></span><br><span class="line">catg_list = categorical_features</span><br><span class="line">target = <span class="string">'price'</span></span><br><span class="line"><span class="keyword">for</span> catg <span class="keyword">in</span> catg_list :</span><br><span class="line">    sns.violinplot(x=catg, y=target, data=train_data)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>小提琴的不在这展示。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别特征的柱形图可视化"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar_plot</span><span class="params">(x, y, **kwargs)</span>:</span></span><br><span class="line">    sns.barplot(x=x, y=y)</span><br><span class="line">    x=plt.xticks(rotation=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">f = pd.melt(train_data, id_vars=[<span class="string">'price'</span>], value_vars=categorical_features)</span><br><span class="line">g = sns.FacetGrid(f, col=<span class="string">"variable"</span>,  col_wrap=<span class="number">3</span>, sharex=<span class="literal">False</span>, sharey=<span class="literal">False</span>, size=<span class="number">5</span>)</span><br><span class="line">g = g.map(bar_plot, <span class="string">"value"</span>, <span class="string">"price"</span>)</span><br></pre></td></tr></table></figure>
+<p>看一下柱形图的结果</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8La50H.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""类别特征的每个类别频数可视化(count_plot)"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_plot</span><span class="params">(x,  **kwargs)</span>:</span></span><br><span class="line">    sns.countplot(x=x)</span><br><span class="line">    x=plt.xticks(rotation=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">f = pd.melt(train_data,  value_vars=categorical_features)</span><br><span class="line">g = sns.FacetGrid(f, col=<span class="string">"variable"</span>,  col_wrap=<span class="number">3</span>, sharex=<span class="literal">False</span>, sharey=<span class="literal">False</span>, size=<span class="number">5</span>)</span><br><span class="line">g = g.map(count_plot, <span class="string">"value"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8Lda4I.png" alt></p>
+<blockquote>
+<p>规整数据/转换数据:melt()</p>
+<p>df.melt() 是 df.pivot() 逆转操作函数,将列名转换为列数据(columns name → column values)，重构DataFrame。如果说 df.pivot() 将长数据集转换成宽数据集，df.melt() 则是将宽数据集变成长数据集。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>frame</td>
+<td>dataframe</td>
+<td>被 melt 的数据集名称</td>
+</tr>
+<tr>
+<td>id_vars</td>
+<td>tuple、list、ndarray</td>
+<td><strong>不需要被转换的列名</strong>，在转换后作为标识符列（不是索引列）</td>
+</tr>
+<tr>
+<td>value_vars</td>
+<td>tuple、list、ndarray</td>
+<td><strong>需要被转换的现有列</strong>，如果未指明，除 id_vars 之外的其他列都被转换</td>
+</tr>
+<tr>
+<td>var_name</td>
+<td>ndarray</td>
+<td>自定义列名名称，<strong>设置由 ‘value_vars’ 组成的新的 column name</strong></td>
+</tr>
+<tr>
+<td>value_name</td>
+<td>string</td>
+<td>自定义列名名称，<strong>设置由 ‘value_vars’ 的数据组成的新的 column name</strong></td>
+</tr>
+<tr>
+<td>col_level</td>
+<td>int、string</td>
+<td>如果列是MultiIndex，则使用此级别</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df = pd.DataFrame(&#123;<span class="string">'A'</span>: &#123;<span class="number">0</span>: <span class="string">'a'</span>, <span class="number">1</span>: <span class="string">'b'</span>, <span class="number">2</span>: <span class="string">'c'</span>&#125;,</span><br><span class="line"><span class="meta">... </span>                   <span class="string">'B'</span>: &#123;<span class="number">0</span>: <span class="number">1</span>, <span class="number">1</span>: <span class="number">3</span>, <span class="number">2</span>: <span class="number">5</span>&#125;,</span><br><span class="line"><span class="meta">... </span>                   <span class="string">'C'</span>: &#123;<span class="number">0</span>: <span class="number">2</span>, <span class="number">1</span>: <span class="number">4</span>, <span class="number">2</span>: <span class="number">6</span>&#125;&#125;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   A  B  C</span><br><span class="line"><span class="number">0</span>  a  <span class="number">1</span>  <span class="number">2</span></span><br><span class="line"><span class="number">1</span>  b  <span class="number">3</span>  <span class="number">4</span></span><br><span class="line"><span class="number">2</span>  c  <span class="number">5</span>  <span class="number">6</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#保留 B 列</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.melt(id_vars=[<span class="string">'A'</span>], value_vars=[<span class="string">'B'</span>])</span><br><span class="line">   A variable  value</span><br><span class="line"><span class="number">0</span>  a        B      <span class="number">1</span></span><br><span class="line"><span class="number">1</span>  b        B      <span class="number">3</span></span><br><span class="line"><span class="number">2</span>  c        B      <span class="number">5</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#保留 B C 列</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.melt(id_vars=[<span class="string">'A'</span>], value_vars=[<span class="string">'B'</span>, <span class="string">'C'</span>])</span><br><span class="line">   A variable  value</span><br><span class="line"><span class="number">0</span>  a        B      <span class="number">1</span></span><br><span class="line"><span class="number">1</span>  b        B      <span class="number">3</span></span><br><span class="line"><span class="number">2</span>  c        B      <span class="number">5</span></span><br><span class="line"><span class="number">3</span>  a        C      <span class="number">2</span></span><br><span class="line"><span class="number">4</span>  b        C      <span class="number">4</span></span><br><span class="line"><span class="number">5</span>  c        C      <span class="number">6</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#自定义列名</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.melt(id_vars=[<span class="string">'A'</span>], value_vars=[<span class="string">'B'</span>],var_name=<span class="string">'myVarname'</span>, value_name=<span class="string">'myValname'</span>)</span><br><span class="line">   A myVarname  myValname</span><br><span class="line"><span class="number">0</span>  a         B          <span class="number">1</span></span><br><span class="line"><span class="number">1</span>  b         B          <span class="number">3</span></span><br><span class="line"><span class="number">2</span>  c         B          <span class="number">5</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#如果 columns 是MultiIndex</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.columns = [list(<span class="string">'ABC'</span>), list(<span class="string">'DEF'</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df</span><br><span class="line">   A  B  C</span><br><span class="line">   D  E  F</span><br><span class="line"><span class="number">0</span>  a  <span class="number">1</span>  <span class="number">2</span></span><br><span class="line"><span class="number">1</span>  b  <span class="number">3</span>  <span class="number">4</span></span><br><span class="line"><span class="number">2</span>  c  <span class="number">5</span>  <span class="number">6</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.melt(col_level=<span class="number">0</span>, id_vars=[<span class="string">'A'</span>], value_vars=[<span class="string">'B'</span>])</span><br><span class="line">   A variable  value</span><br><span class="line"><span class="number">0</span>  a        B      <span class="number">1</span></span><br><span class="line"><span class="number">1</span>  b        B      <span class="number">3</span></span><br><span class="line"><span class="number">2</span>  c        B      <span class="number">5</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>df.melt(id_vars=[(<span class="string">'A'</span>, <span class="string">'D'</span>)], value_vars=[(<span class="string">'B'</span>, <span class="string">'E'</span>)])</span><br><span class="line">  (A, D) variable_0 variable_1  value</span><br><span class="line"><span class="number">0</span>      a          B          E      <span class="number">1</span></span><br><span class="line"><span class="number">1</span>      b          B          E      <span class="number">3</span></span><br><span class="line"><span class="number">2</span>      c          B          E      <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/70.png" alt></p>
+</blockquote>
+<h2 id="shu-zhi-te-zheng-de-tan-suo">数值特征的探索</h2>
+<p>数值特征的探索我们要分析相关性等，也会学习各种相关性可视化的技巧：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numeric_train_data = train_data[numeric_features]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把price这一列加上，这个也是数值</span></span><br><span class="line">numeric_train_data[<span class="string">'price'</span>] = Y_train</span><br><span class="line"></span><br><span class="line"><span class="string">"""相关性分析"""</span></span><br><span class="line">correlation = numeric_train_data.corr()</span><br><span class="line">print(correlation[<span class="string">'price'</span>].sort_values(ascending=<span class="literal">False</span>), <span class="string">'\n'</span>)   <span class="comment"># 与price相关的特征排序</span></span><br></pre></td></tr></table></figure>
+<p><code>.corr()</code>可以看到每个特征与 price 的相关性，并且排了个序。下面进行相关性可视化，使用热力图比较合适。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 热力图可视化</span></span><br><span class="line">f, ax = plt.subplots(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">plt.title(<span class="string">'Correlation of Numeric Features with Price'</span>, y=<span class="number">1</span>, size=<span class="number">16</span>)</span><br><span class="line">sns.heatmap(correlation, square=<span class="literal">True</span>, vmax=<span class="number">0.8</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LcF3j.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 删除price</span></span><br><span class="line"><span class="keyword">del</span> numeric_train_data[<span class="string">'price'</span>]</span><br><span class="line"></span><br><span class="line"><span class="string">"""查看几个数值特征的偏度和峰度"""</span></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> numeric_train_data.columns:</span><br><span class="line">     print(<span class="string">'&#123;:15&#125;'</span>.format(col), </span><br><span class="line">          <span class="string">'Skewness: &#123;:05.2f&#125;'</span>.format(numeric_train_data[col].skew()) , </span><br><span class="line">          <span class="string">'   '</span> ,</span><br><span class="line">          <span class="string">'Kurtosis: &#123;:06.2f&#125;'</span>.format(numeric_train_data[col].kurt())  </span><br><span class="line">         )</span><br><span class="line"></span><br><span class="line"><span class="string">"""每个数字特征得分布可视化"""</span></span><br><span class="line">f = pd.melt(train_data, value_vars=numeric_features)</span><br><span class="line">g = sns.FacetGrid(f, col=<span class="string">"variable"</span>,  col_wrap=<span class="number">5</span>, sharex=<span class="literal">False</span>, sharey=<span class="literal">False</span>)</span><br><span class="line">g = g.map(sns.distplot, <span class="string">"value"</span>)</span><br></pre></td></tr></table></figure>
+<p>数值特征的分布可视化，从这里可以看到数值特征的分布情况，其中匿名特征的分布相对均匀.</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LcgVf.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""数字特征相互之间的关系可视化"""</span></span><br><span class="line">sns.set()</span><br><span class="line">columns = [<span class="string">'price'</span>, <span class="string">'v_12'</span>, <span class="string">'v_8'</span> , <span class="string">'v_0'</span>, <span class="string">'power'</span>, <span class="string">'v_5'</span>,  <span class="string">'v_2'</span>, <span class="string">'v_6'</span>, <span class="string">'v_1'</span>, <span class="string">'v_14'</span>]</span><br><span class="line">sns.pairplot(train_data[columns],size = <span class="number">2</span> ,kind =<span class="string">'scatter'</span>,diag_kind=<span class="string">'kde'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>这里面会看到有些特征之间是相关的， 比如 v_1 和 v_6:</p>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8L2c4S.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""多变量之间的关系可视化"""</span></span><br><span class="line">fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6), (ax7, ax8), (ax9, ax10)) = plt.subplots(nrows=<span class="number">5</span>, ncols=<span class="number">2</span>, figsize=(<span class="number">24</span>, <span class="number">20</span>))</span><br><span class="line"><span class="comment"># ['v_12', 'v_8' , 'v_0', 'power', 'v_5',  'v_2', 'v_6', 'v_1', 'v_14']</span></span><br><span class="line">v_12_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_12'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_12'</span>,y = <span class="string">'price'</span>, data = v_12_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax1)</span><br><span class="line"></span><br><span class="line">v_8_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_8'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_8'</span>,y = <span class="string">'price'</span>,data = v_8_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax2)</span><br><span class="line"></span><br><span class="line">v_0_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_0'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_0'</span>,y = <span class="string">'price'</span>,data = v_0_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax3)</span><br><span class="line"></span><br><span class="line">power_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'power'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'power'</span>,y = <span class="string">'price'</span>,data = power_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax4)</span><br><span class="line"></span><br><span class="line">v_5_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_5'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_5'</span>,y = <span class="string">'price'</span>,data = v_5_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax5)</span><br><span class="line"></span><br><span class="line">v_2_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_2'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_2'</span>,y = <span class="string">'price'</span>,data = v_2_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax6)</span><br><span class="line"></span><br><span class="line">v_6_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_6'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_6'</span>,y = <span class="string">'price'</span>,data = v_6_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax7)</span><br><span class="line"></span><br><span class="line">v_1_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_1'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_1'</span>,y = <span class="string">'price'</span>,data = v_1_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax8)</span><br><span class="line"></span><br><span class="line">v_14_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_14'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_14'</span>,y = <span class="string">'price'</span>,data = v_14_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax9)</span><br><span class="line"></span><br><span class="line">v_13_scatter_plot = pd.concat([Y_train,train_data[<span class="string">'v_13'</span>]],axis = <span class="number">1</span>)</span><br><span class="line">sns.regplot(x=<span class="string">'v_13'</span>,y = <span class="string">'price'</span>,data = v_13_scatter_plot,scatter= <span class="literal">True</span>, fit_reg=<span class="literal">True</span>, ax=ax10)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8L2Xv9.png" alt></p>
+<h1 id="shu-ju-zhi-ming">数据知命</h1>
+<p>这里会综合上面的这些过程，用 pandas_profiling 这个包使用函数 ProfileReport 生成一份数据探索性报告， 在这里面会看到：</p>
+<ul>
+<li>总体的数据信息（首先是数据集信息：变量数 (列)、观察数 (行)、数据缺失率、内存；数据类型的分布情况）</li>
+<li>警告信息
+<ul>
+<li>类型，唯一值，缺失值</li>
+<li>分位数统计量，如最小值，Q1，中位数，Q3，最大值，范围，四分位数范围</li>
+<li>描述性统计数据，如均值，模式，标准差，总和，中位数绝对偏差，变异系数，峰度，偏度</li>
+</ul>
+</li>
+<li>单变量描述（对每一个变量进行描述）</li>
+<li>相关性分析（皮尔逊系数和斯皮尔曼系数）</li>
+<li>采样查看等</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 两行简单的代码即可搞定上面的这些信息</span></span><br><span class="line">pfr = ppf.ProfileReport(train_data)</span><br><span class="line">pfr.to_file(<span class="string">"./EDA.html"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/01/machine_learning/exploratory-data-analysis/8LRgVx.png" alt></p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li>
+<p><a href="https://wmathor.com/index.php/archives/1425/" target="_blank" rel="noopener">数据探索性分析</a></p>
+</li>
+<li>
+<p><a href="https://support.minitab.com/zh-cn/minitab/18/help-and-how-to/statistics/basic-statistics/supporting-topics/data-concepts/how-skewness-and-kurtosis-affect-your-distribution/" target="_blank" rel="noopener">偏度和峰度如何影响您的分布</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/wyy1480/p/10474046.html" target="_blank" rel="noopener">数据的偏度和峰度——df.skew()、df.kurt()</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>技术/机器学习</category>
+      </categories>
+      <tags>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>模型融合</title>
-    <url>/2020/06/30/model_fusion/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/30/model_fusion/model_fusion.png" alt></p>
+    <url>/2020/06/30/machine_learning/model_fusion/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/30/machine_learning/model_fusion/model_fusion.png" alt></p>
 <a id="more"></a>
 <p>一般来说，通过融合多个不同模型的结果，可以提升最终的成绩，所以这以方法在各种数据竞赛中应用非常广泛。模型融合又可以从<strong>模型结果</strong>、<strong>模型自身</strong>、<strong>样本集</strong>等不同的角度进行融合。</p>
 <h1 id="jian-dan-jia-quan-rong-he">简单加权融合</h1>
 <h2 id="hui-gui-ren-wu-zhong-de-jia-quan-rong-he">回归任务中的加权融合</h2>
 <p>对于回归问题，对各种模型的预测结果进行平均，所得到的结果能够减少过拟合，并使得边界更加平滑，(单个模型的边界可能很粗糙)。</p>
-<p><img src="/2020/06/30/model_fusion/1739510-20190711144542394-704578871.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/1739510-20190711144542394-704578871.png" alt></p>
 <p><strong>加权融合根据各个模型的最终预测表现分配不同的权重，以改变其队最终结果影响的大小</strong>。例如，对于正确率低的模型给予较小的权重，而正确率高的模型给予更高的权重。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成一些简单的样本，test_predi代表第i个模型的预测值</span></span><br><span class="line">test_pred1 = [<span class="number">1.2</span>, <span class="number">3.2</span>, <span class="number">2.1</span>, <span class="number">6.2</span>]</span><br><span class="line">test_pred2 = [<span class="number">0.9</span>, <span class="number">3.1</span>, <span class="number">2.0</span>, <span class="number">5.9</span>]</span><br><span class="line">test_pred3 = [<span class="number">1.1</span>, <span class="number">2.9</span>, <span class="number">2.2</span>, <span class="number">6.0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># y_test_true 代表模型的真实值</span></span><br><span class="line">y_test_true = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以先看一下各个模型的预测结果</span></span><br><span class="line">print(<span class="string">'Pred1 MAE:'</span>,mean_absolute_error(y_test_true, test_pred1)) </span><br><span class="line">print(<span class="string">'Pred2 MAE:'</span>,mean_absolute_error(y_test_true, test_pred2)) </span><br><span class="line">print(<span class="string">'Pred3 MAE:'</span>,mean_absolute_error(y_test_true, test_pred3))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line">Pred1 MAE: <span class="number">0.175</span></span><br><span class="line">Pred2 MAE: <span class="number">0.075</span></span><br><span class="line">Pred3 MAE: <span class="number">0.1</span></span><br></pre></td></tr></table></figure>
 <p>可以发现，第 2 个模型的误差更小，准确率更高，所以应该给第二个模型的预测值赋予更高的权重</p>
@@ -286,14 +501,14 @@
 <ul>
 <li>
 <p><strong>硬投票</strong>选择各个模型输出最多的标签，如果标签数量相同，那么按照升序的次序进行选择:</p>
-<p><img src="/2020/06/30/model_fusion/GwharR.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/GwharR.png" alt></p>
 </li>
 </ul>
 <p>hard voting 的少数服从多数原则在上面这种情况似乎不太合理，虽然只有模型 1 和模型 4 结果为 A，但它们俩的概率的高于 90%，也就是说很确定结果为 A，其它三个模型结果为 B，但从概率来看，并不是很确定。</p>
 <ul>
 <li>
 <p><strong>软投票</strong>是根据各个模型输出的类别概率来进行类别的预测。如果给定权重，则会得到每个类别概率的加权平均值；否则就是普通的算术平均值。</p>
-<p><img src="/2020/06/30/model_fusion/Gw4mFK.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/Gw4mFK.png" alt></p>
 </li>
 </ul>
 </blockquote>
@@ -305,8 +520,8 @@
 <p>Boosting/Bagging 都是从样本集的角度考虑把多个若模型集成起来的一种方式，只不过两者在集成的时候有些区别。xgb、lgb 属于 Boosting，而随机森林是 Bagging 的方式。</p>
 <h2 id="boosting">Boosting</h2>
 <p>Boosting 是将各种弱分类器串联起来的集成学习方式，每一个分类器的训练都依赖于前一个分类器的结果。串联（顺序运行）的方式导致了运行速度比较慢。和所有融合方式一样，它不会考虑各个弱分类器的内部结构，只是对训练数据（样本集）和连接方式进行操纵，以获得更小的误差。其基本思想是一种迭代的方法，<strong>每次训练的时候都更关心分类错误的样例，给这些分类错误的样例增加更大的权重，下一次迭代的目标就是更容易辨别出上一轮分类错误的样例</strong>。最终将这些弱分类器进行加权相加。</p>
-<p><img src="/2020/06/30/model_fusion/GwOnHg.png" alt></p>
-<p><img src="/2020/06/30/model_fusion/GwO33q.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/GwOnHg.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/GwO33q.png" alt></p>
 <p>Boosting 可以这么理解，比如用很多模型 M1,M2,…,Mn 去预测二手车的价格，但是这些模型的具体工作是这样安排的。首先让 M1 先训练然后预测价格，等 M1 预测完了之后，M2 的训练是对 M1 训练的改进和提升，即优化 M1 没有做好的事情。同样，M3 会基于 M2 的结果再次进行优化，这样一直到 Mn。这就是所谓的串联，即在训练过程中这 K 个模型之间是有依赖关系的，当引入第 i 个模型的时候，实际上是对前 i-1 个模型进行优化。最终的预测结果是对这 k 个模型结果的一个大组合。</p>
 <p>Boosting 家族的代表有 adaboost、GBDT、xgboost、lightbgm 等，但是这些模型之间还是有区别的，可以分成 AdaBoost 流派和 GBDT 流派。比如 AdaBoost，在引入 M2 的时候，其实它关注的是 M1 预测不好的那些样本，这些样本在 M2 训练的时候，<strong>会加大权重</strong>。后面的模型引入也都是这个道理， 即关注前面模型预测不好的那些样本；而 GBDT，包括后面的 xgboost 这些，它们则是更加<strong>聚焦于残差</strong>，即 M2 引入的时候，它关注的是 M1 的所有预测结果与真实结果之间的差距，它想减少这个差距，后面的模型引入也是这个道理，即关注前面模型预测结果与真实结果之间的差距，然后一步一步的进行缩小。</p>
 <h2 id="bagging">Bagging</h2>
@@ -363,7 +578,7 @@
 <h2 id="stacking">Stacking</h2>
 <p>Stacking 的本质是一种分层的结构，用了大量的基分类器，将其预测的结果作为下一层输入的特征，这样的结构使得它比相互独立训练的模型能够获得更多的特征。</p>
 <p>下面以一种易于理解但不会实际使用的两层 stacking 方法为例，简要说明其结构和工作原理：</p>
-<p><img src="/2020/06/30/model_fusion/G0PSzQ.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0PSzQ.png" alt></p>
 <p>假设有三个基模型 <code>M1</code>，<code>M2</code>，<code>M3</code> 和一个元模型 <code>M4</code>，有训练集 train 和测试集 test，则：</p>
 <ol>
 <li>用训练集 train 训练基模型 M1（<code>M1.fit(train)</code>），然后分别在 train 和 test 上做预测，得到 P1（<code>M1.predict(train)</code>）和 T1（<code>M1.predict(test)</code>）</li>
@@ -381,7 +596,7 @@
 <li>第一层训练模型使用交叉验证的方式</li>
 </ul>
 <p>第一种方法很容易理解，重点是看第二种方法到底是怎么做的:</p>
-<p><img src="/2020/06/30/model_fusion/G0i24K.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0i24K.png" alt></p>
 <p>以 5 折交叉验证为例</p>
 <ol>
 <li>
@@ -395,11 +610,11 @@
 </li>
 <li>
 <p>利用 train2 训练第二层的模型，然后在 test2 上得到预测结果，就是最终的结果。</p>
-<p><img src="/2020/06/30/model_fusion/G0knSS.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0knSS.png" alt></p>
 </li>
 </ol>
 <p>Stacking 的过程可以用下面的图表示：</p>
-<p><img src="/2020/06/30/model_fusion/G0kay4.png" alt></p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0kay4.png" alt></p>
 <h3 id="hui-gui-zhong-de-stacking">回归中的stacking</h3>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成一些简单的样本数据， test_predi代表第i个模型的预测值</span></span><br><span class="line">train_reg1 = [<span class="number">3.2</span>, <span class="number">8.2</span>, <span class="number">9.1</span>, <span class="number">5.2</span>]</span><br><span class="line">train_reg2 = [<span class="number">2.9</span>, <span class="number">8.1</span>, <span class="number">9.0</span>, <span class="number">4.9</span>]</span><br><span class="line">train_reg3 = [<span class="number">3.1</span>, <span class="number">7.9</span>, <span class="number">9.2</span>, <span class="number">5.0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># y_test_true代表模型的真实值</span></span><br><span class="line">y_train_true = [<span class="number">3</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">test_pred1 = [<span class="number">1.2</span>, <span class="number">3.2</span>, <span class="number">2.1</span>, <span class="number">6.2</span>]</span><br><span class="line">test_pred2 = [<span class="number">0.9</span>, <span class="number">3.1</span>, <span class="number">2.0</span>, <span class="number">5.9</span>]</span><br><span class="line">test_pred3 = [<span class="number">1.1</span>, <span class="number">2.9</span>, <span class="number">2.2</span>, <span class="number">6.0</span>]</span><br><span class="line"></span><br><span class="line">y_test_true = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Stacking_method</span><span class="params">(train_reg1, train_reg2, train_reg3, y_train_true, test_pred1, test_pred2, test_pred3, model_L2 = LinearRegression<span class="params">()</span>)</span>:</span></span><br><span class="line">    model_L2.fit(pd.concat([pd.Series(train_reg1), pd.Series(train_reg2), pd.Series(train_reg3)], axis=<span class="number">1</span>).values, y_train_true)</span><br><span class="line">    Stacking_result = model_L2.predict(pd.concat([pd.Series(test_pre1), pd.Series(test_pre2), pd.Series(test_pre3)], axis=<span class="number">1</span>).values)</span><br><span class="line">    <span class="keyword">return</span> Stacking_result</span><br><span class="line"> </span><br><span class="line">model_L2 = LinearRegression()</span><br><span class="line">Stacking_pre = Stacking_method(train_reg1, train_reg2, train_reg3, y_train_true,</span><br><span class="line">                               test_pre1, test_pre2, test_pre3, model_L2)</span><br><span class="line">print(<span class="string">'Stacking_pre MAE:'</span>, mean_absolute_error(y_test_true, Stacking_pre))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line">Stacking_pre MAE: <span class="number">0.04213</span></span><br></pre></td></tr></table></figure>
 <p>这里的逻辑就是把第一层模型在训练集上的预测值，当作第二层训练集的特征，第一层模型在测试集上的预测值，当作第二层测试集的特征，然后在第二层建立一个简单的线性模型进行训练。</p>
@@ -421,8 +636,8 @@
 </ul>
 </blockquote>
 <h3 id="fen-lei-zhong-de-stacking">分类中的stacking</h3>
-<p>以鸢尾花数据集为例，首先手动实现一下 stacking 加深理解，然后使用<code>mlxtend.classifier.StackingClassifier</code>实现</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> ExtraTreesClassifier, GradientBoostingClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据集</span></span><br><span class="line">iris = load_iris()</span><br><span class="line">data_0 = iris.data</span><br><span class="line">data = data_0[:<span class="number">100</span>, :]</span><br><span class="line"></span><br><span class="line">target_0 = iris.target</span><br><span class="line">target = target_0[:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型融合中用到的单个模型</span></span><br><span class="line">clfs = [LogisticRegression(solver=<span class="string">'lbfgs'</span>),</span><br><span class="line">        RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'entropy'</span>),</span><br><span class="line">        GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切分一部分数据作为训练集</span></span><br><span class="line">X, X_predict, y, y_predict = train_test_split(data, target, test_size=<span class="number">0.3</span>, random_state=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dataset_blend_train = np.zeros((X.shape[<span class="number">0</span>], len(clfs)))   <span class="comment"># 每个模型的预测作为第二层的特征</span></span><br><span class="line">dataset_blend_test = np.zeros((X_predict.shape[<span class="number">0</span>], len(clfs)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5折stacking</span></span><br><span class="line">n_splits = <span class="number">5</span></span><br><span class="line">skf = StratifiedKFold(n_splits)</span><br><span class="line">skf = skf.split(X, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j, clf <span class="keyword">in</span> enumerate(clfs):</span><br><span class="line">    <span class="comment"># 依次训练各个单模型</span></span><br><span class="line">    dataset_blend_test_j = np.zeros((X_predict.shape[<span class="number">0</span>], <span class="number">5</span>))</span><br><span class="line">    <span class="keyword">for</span> i, (train, test) <span class="keyword">in</span> enumerate(skf):</span><br><span class="line">        <span class="comment"># 5——fold交叉训练，使用第i个部分作为预测， 剩余的部分来训练模型， 获得其预测的输出作为第i部分的新特征。</span></span><br><span class="line">        X_train, y_train, X_test, y_test = X[train], y[train], X[test], y[test]</span><br><span class="line">        clf.fit(X_train, y_train)</span><br><span class="line">        y_submission = clf.predict_proba(X_test)[:,<span class="number">1</span>]</span><br><span class="line">        dataset_blend_train[test, j] = y_submission</span><br><span class="line">        dataset_blend_test_j[:, j] = clf.predict_proba(X_predict)[:, <span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 对于测试集， 直接用这k个模型的预测值均值作为新的特征</span></span><br><span class="line">    dataset_blend_test[:, j] = dataset_blend_test_j.mean(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">"val auc Score: %f"</span> % roc_auc_score(y_predict, dataset_blend_test[:, j]))</span><br><span class="line"></span><br><span class="line">clf = LogisticRegression(solver=<span class="string">'lbfgs'</span>)</span><br><span class="line">clf.fit(dataset_blend_train, y)</span><br><span class="line">y_submission = clf.predict_proba(dataset_blend_test)[:,<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Val auc Score of Stacking: %f"</span> % (roc_auc_score(y_predict, y_submission)))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果如下：</span></span><br><span class="line">val auc Score: <span class="number">1.000000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">Val auc Score of Stacking: <span class="number">1.000000</span></span><br></pre></td></tr></table></figure>
+<p>以鸢尾花数据集为例，首先手写实现 stacking 加深理解，然后使用<code>mlxtend.classifier.StackingClassifier</code>实现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> ExtraTreesClassifier, GradientBoostingClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据集</span></span><br><span class="line">iris = load_iris()</span><br><span class="line">data_0 = iris.data</span><br><span class="line">data = data_0[:<span class="number">100</span>, :]</span><br><span class="line"></span><br><span class="line">target_0 = iris.target</span><br><span class="line">target = target_0[:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型融合中用到的单个模型</span></span><br><span class="line">clfs = [LogisticRegression(solver=<span class="string">'lbfgs'</span>),</span><br><span class="line">        RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'entropy'</span>),</span><br><span class="line">        GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切分一部分数据作为训练集</span></span><br><span class="line">X, X_predict, y, y_predict = train_test_split(data, target, test_size=<span class="number">0.3</span>, random_state=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">dataset_blend_train = np.zeros((X.shape[<span class="number">0</span>], len(clfs)))   <span class="comment"># 每个模型的预测作为第二层的特征</span></span><br><span class="line">dataset_blend_test = np.zeros((X_predict.shape[<span class="number">0</span>], len(clfs)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5折stacking</span></span><br><span class="line">n_splits = <span class="number">5</span></span><br><span class="line">skf = StratifiedKFold(n_splits)</span><br><span class="line">skf = skf.split(X, y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j, clf <span class="keyword">in</span> enumerate(clfs):</span><br><span class="line">    <span class="comment"># 依次训练各个单模型</span></span><br><span class="line">    dataset_blend_test_j = np.zeros((X_predict.shape[<span class="number">0</span>], <span class="number">5</span>))</span><br><span class="line">    <span class="keyword">for</span> i, (train, test) <span class="keyword">in</span> enumerate(skf):</span><br><span class="line">        <span class="comment"># 5—fold交叉训练，使用第i个部分作为预测， 剩余的部分来训练模型， 获得其预测的输出作为第i部分的新特征。</span></span><br><span class="line">        X_train, y_train, X_test, y_test = X[train], y[train], X[test], y[test]</span><br><span class="line">        clf.fit(X_train, y_train)</span><br><span class="line">        y_submission = clf.predict_proba(X_test)[:,<span class="number">1</span>]</span><br><span class="line">        dataset_blend_train[test, j] = y_submission</span><br><span class="line">        dataset_blend_test_j[:, j] = clf.predict_proba(X_predict)[:, <span class="number">1</span>]</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 对于测试集， 直接用这k个模型的预测值均值作为新的特征</span></span><br><span class="line">    dataset_blend_test[:, j] = dataset_blend_test_j.mean(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">"val auc Score: %f"</span> % roc_auc_score(y_predict, dataset_blend_test[:, j]))</span><br><span class="line"></span><br><span class="line">clf = LogisticRegression(solver=<span class="string">'lbfgs'</span>)</span><br><span class="line">clf.fit(dataset_blend_train, y)</span><br><span class="line">y_submission = clf.predict_proba(dataset_blend_test)[:,<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Val auc Score of Stacking: %f"</span> % (roc_auc_score(y_predict, y_submission)))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果如下：</span></span><br><span class="line">val auc Score: <span class="number">1.000000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">val auc Score: <span class="number">0.500000</span></span><br><span class="line">Val auc Score of Stacking: <span class="number">1.000000</span></span><br></pre></td></tr></table></figure>
 <p>StackingClassifier 的 API 及参数如下：</p>
 <blockquote>
 <p>StackingClassifier(classifiers, meta_classifier, use_probas=False, average_probas=False, verbose=0, use_features_in_secondary=False)， 这里的参数和上面的 StackingCVRegressor 基本上差不多</p>
@@ -437,6 +652,41 @@
 </ul>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mlxtend.classifier <span class="keyword">import</span> StackingCVClassifier</span><br><span class="line"><span class="comment"># 上面的这个操作，如果换成StackingClassifier， 是这样的形式：</span></span><br><span class="line">clf1 = RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>)</span><br><span class="line">clf2 = ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>)</span><br><span class="line">clf3 = ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'entropy'</span>)</span><br><span class="line">clf4 = GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">5</span>)</span><br><span class="line">clf5 = LogisticRegression(solver=<span class="string">'lbfgs'</span>)</span><br><span class="line"></span><br><span class="line">sclf = StackingCVClassifier(classifiers=[clf1, clf2, clf3, clf4], meta_classifier=clf, cv=<span class="number">3</span>)</span><br><span class="line">sclf.fit(X, y)</span><br><span class="line"><span class="comment"># 5这交叉验证</span></span><br><span class="line"><span class="comment">#scores = cross_val_score(sclf, X, y, cv=3, scoring='accuracy')</span></span><br><span class="line"></span><br><span class="line">y_submission = sclf.predict(X_predict)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Val auc Score of Stacking: %f"</span> % (roc_auc_score(y_predict, y_submission)))</span><br></pre></td></tr></table></figure>
+<h2 id="blending">Blending</h2>
+<p>Blending 是一种和 Stacking 很相像的模型融合方式，它与 Stacking 的区别在于训练集不是通过 K-Fold 的策略来获得预测值，而是先建立一个 Holdout（留出集）。</p>
+<h3 id="blending-dan-chun-holdout">Blending（单纯Holdout）</h3>
+<p>单纯的 Holdout 就是直接把训练集分成两部分，70% 作为新的训练集，30% 作为验证集，然后用这 70% 的训练集分别训练第一层的模型，然后在 30% 的验证集上进行预测，把预测的结果作为第二层模型的训练集特征，这是训练部分。预测部分就是把<strong>真正的测试集</strong>先用第一层的模型预测，把预测结果作为第二层测试集的特征进行第二层的预测。 过程图如下：</p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0nNNj.png" alt></p>
+<p>这种方法实现起来也比较容易，基本和 stacking 的代码差不多，只不过少了内层的循环，毕竟每个模型不用交叉验证了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建训练的数据集</span></span><br><span class="line"><span class="comment">#创建训练的数据集</span></span><br><span class="line">data_0 = iris.data</span><br><span class="line">data = data_0[:<span class="number">100</span>,:]</span><br><span class="line"></span><br><span class="line">target_0 = iris.target</span><br><span class="line">target = target_0[:<span class="number">100</span>]</span><br><span class="line"> </span><br><span class="line"><span class="comment">#模型融合中使用到的各个单模型</span></span><br><span class="line">clfs = [LogisticRegression(solver=<span class="string">'lbfgs'</span>),</span><br><span class="line">        RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'entropy'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        <span class="comment">#ExtraTreesClassifier(n_estimators=5, n_jobs=-1, criterion='entropy'),</span></span><br><span class="line">        GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">5</span>)]</span><br><span class="line"> </span><br><span class="line"><span class="comment">#切分一部分数据作为测试集</span></span><br><span class="line">X, X_predict, y, y_predict = train_test_split(data, target, test_size=<span class="number">0.3</span>, random_state=<span class="number">2020</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#切分训练数据集为d1,d2两部分</span></span><br><span class="line">X_d1, X_d2, y_d1, y_d2 = train_test_split(X, y, test_size=<span class="number">0.5</span>, random_state=<span class="number">2020</span>)</span><br><span class="line">dataset_d1 = np.zeros((X_d2.shape[<span class="number">0</span>], len(clfs)))</span><br><span class="line">dataset_d2 = np.zeros((X_predict.shape[<span class="number">0</span>], len(clfs)))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> j, clf <span class="keyword">in</span> enumerate(clfs):</span><br><span class="line">    <span class="comment">#依次训练各个单模型</span></span><br><span class="line">    clf.fit(X_d1, y_d1)</span><br><span class="line">    y_submission = clf.predict_proba(X_d2)[:, <span class="number">1</span>]</span><br><span class="line">    dataset_d1[:, j] = y_submission</span><br><span class="line">    <span class="comment">#对于测试集，直接用这k个模型的预测值作为新的特征。</span></span><br><span class="line">    dataset_d2[:, j] = clf.predict_proba(X_predict)[:, <span class="number">1</span>]</span><br><span class="line">    <span class="comment">#print("val auc Score: %f" % roc_auc_score(y_predict, dataset_d2[:, j]))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#融合使用的模型</span></span><br><span class="line">clf = GradientBoostingClassifier(learning_rate=<span class="number">0.02</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">30</span>)</span><br><span class="line">clf.fit(dataset_d1, y_d2)</span><br><span class="line">y_submission = clf.predict_proba(dataset_d2)[:, <span class="number">1</span>]</span><br><span class="line">print(<span class="string">"Val auc Score of Blending: %f"</span> % (roc_auc_score(y_predict, y_submission)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果：</span></span><br><span class="line">Val auc Score of Blending: <span class="number">1.000000</span></span><br></pre></td></tr></table></figure>
+<h3 id="blending-holdout-jiao-cha">Blending(Holdout交叉)</h3>
+<p>第二种引入了交叉验证的思想，也就是每个模型看到的 Holdout 集合并不一样。说白了，就是把 Stacking 流程中的 K-Fold CV 改成 HoldOut CV。第二阶段的 stacker 模型就基于第一阶段模型对这 30% 训练数据的预测值进行拟合</p>
+<ol>
+<li>在第一层中， 用 70% 的训练集训练多个模型， 然后去预测那 30% 的数据得到预测值 \(P_i\)， 同时也预测 test 集得到预测值 \(T_i\)。这里注意，那 30% 的数据每个模型并不是一样，也是类似于交叉验证的那种划分方式，只不过 stacking 那里是每个模型都会经历 K 折交叉验证，也就是有多少模型，就会有多少次 K 折交叉验证，而 blending 这里是所有模型合起来只经历了一次 K 折交叉验证（看下图就容易懂了）</li>
+<li>第二层直接对 <em>P**i</em> 进行合并，作为新的训练集 train2，test 集的预测值 <em>T**i</em> 合并作为新的测试集 test2，然后训练第二层的模型</li>
+</ol>
+<p>Blending 的过程训练和预测过程可以使用下图来表示：</p>
+<p><img src="/2020/06/30/machine_learning/model_fusion/G0ufoQ.png" alt></p>
+<blockquote>
+<p>Blending 的优势在于：</p>
+<ul>
+<li>Blending 比较简单，而 Stacking 相对比较复杂；</li>
+<li>能够防止信息泄露：generalizers 和 stackers 使用不同的数据；</li>
+</ul>
+<p>Blending 缺点在于：</p>
+<ul>
+<li>只用了整体数据的一部分；</li>
+<li>最终模型可能对留出集（holdout set）过拟合；</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 模型融合中用到的单个模型</span></span><br><span class="line">clfs = [LogisticRegression(solver=<span class="string">'lbfgs'</span>),</span><br><span class="line">        RandomForestClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'gini'</span>),</span><br><span class="line">        ExtraTreesClassifier(n_estimators=<span class="number">5</span>, n_jobs=<span class="number">-1</span>, criterion=<span class="string">'entropy'</span>),</span><br><span class="line">        GradientBoostingClassifier(learning_rate=<span class="number">0.05</span>, subsample=<span class="number">0.5</span>, max_depth=<span class="number">6</span>, n_estimators=<span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切分一部分数据作为训练集</span></span><br><span class="line">X, X_predict, y, y_predict = train_test_split(data, target, test_size=<span class="number">0.3</span>, random_state=<span class="number">2020</span>)</span><br><span class="line"></span><br><span class="line">dataset_blend_train = np.zeros((int(X.shape[<span class="number">0</span>]/n_splits), len(clfs)))   <span class="comment"># 每个模型的预测作为第二层的特征</span></span><br><span class="line">dataset_blend_test = np.zeros((X_predict.shape[<span class="number">0</span>], len(clfs)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5折stacking</span></span><br><span class="line">n_splits = <span class="number">5</span></span><br><span class="line">skf = StratifiedKFold(n_splits)</span><br><span class="line">skf = skf.split(X, y)</span><br><span class="line"></span><br><span class="line">fold = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i, (train, test) <span class="keyword">in</span> enumerate(skf):</span><br><span class="line">    fold[i] = (X[train], y[train], X[test], y[test])</span><br><span class="line">Y_blend = []</span><br><span class="line"><span class="keyword">for</span> j, clf <span class="keyword">in</span> enumerate(clfs):</span><br><span class="line">    <span class="comment"># 依次训练各个单模型</span></span><br><span class="line">    dataset_blend_test_j = np.zeros((X_predict.shape[<span class="number">0</span>], <span class="number">5</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 5—fold交叉训练，使用第i个部分作为预测， 剩余的部分来训练模型， 获得其预测的输出作为第i部分的新特征。</span></span><br><span class="line">    X_train, y_train, X_test, y_test = fold[j]</span><br><span class="line">    clf.fit(X_train, y_train)</span><br><span class="line">    dataset_blend_train[:, j] =  clf.predict(X_test)</span><br><span class="line">    Y_blend.extend(y_test)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 对于测试集，直接用这k个模型的预测值作为新的特征</span></span><br><span class="line">    dataset_blend_test[:, j] = clf.predict(X_predict)</span><br><span class="line">        </span><br><span class="line">    print(<span class="string">"val auc Score: %f"</span> % roc_auc_score(y_predict, dataset_blend_test[:, j]))</span><br><span class="line"></span><br><span class="line">dataset_blend_train = dataset_blend_train.T.reshape(<span class="number">70</span>, <span class="number">-1</span>)</span><br><span class="line">dataset_blend_test = np.mean(dataset_blend_test, axis=<span class="number">1</span>).reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">Y_blend = np.array(Y_blend).reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">clf = LogisticRegression(solver=<span class="string">'lbfgs'</span>)</span><br><span class="line">clf.fit(dataset_blend_train, Y_blend)</span><br><span class="line">y_submission = clf.predict(dataset_blend_test)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Val auc Score of Stacking: %f"</span> % (roc_auc_score(y_predict, y_submission)))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line">Val auc Score of Stacking: <span class="number">1.000000</span></span><br></pre></td></tr></table></figure>
+<h1 id="zong-jie">总结</h1>
+<p>这篇文章是基于已经调参好的模型去研究如何发挥出模型更大的性能。从模型的结果、样本集的集成和模型自身融合三个方面去整理。</p>
+<ol>
+<li><strong>模型的结果方面</strong>，对于回归问题，可以对模型的结果进行加权融合等方式；对于分类问题，我们可以使用 Voting 的方式去得到最终的结果。</li>
+<li><strong>样本集的集成技术方面</strong>，有 Boosting 和 Bagging 方式，都是把多个弱分类器进行集成的技术，但是两者是不同的。</li>
+<li><strong>模型自身的融合方面</strong>， Stacking 和 Blending 的原理及具体实现方法，介绍了 mlxtend 库里面的模型融合工具</li>
+</ol>
 <h1 id="can-kao">参考</h1>
 <ol>
 <li><a href="https://wmathor.com/index.php/archives/1428/" target="_blank" rel="noopener">模型融合</a></li>
