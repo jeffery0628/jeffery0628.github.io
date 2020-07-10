@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="建模调参">
+<meta property="og:url" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/%E5%BB%BA%E6%A8%A1%E8%B0%83%E5%8F%82.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8UgOO.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8UH6f.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8Uzhn.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8a3He.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8dwGR.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G80L2n.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8sgdf.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8yDtU.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G86agH.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G8g3tK.png">
+<meta property="og:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/G82PjH.png">
+<meta property="article:published_time" content="2020-04-02T13:05:01.000Z">
+<meta property="article:modified_time" content="2020-07-05T06:48:17.013Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="建模调参">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/%E5%BB%BA%E6%A8%A1%E8%B0%83%E5%8F%82.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>建模调参 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/04/02/machine_learning/modeling_modify_parameters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          建模调参
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 14:48:17" itemprop="dateModified" datetime="2020-07-05T14:48:17+08:00">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/02/machine_learning/modeling_modify_parameters/" class="post-meta-item leancloud_visitors" data-flag-title="建模调参" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/04/02/machine_learning/modeling_modify_parameters/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/02/machine_learning/modeling_modify_parameters/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/%E5%BB%BA%E6%A8%A1%E8%B0%83%E5%8F%82.png" alt></p>
+<a id="more"></a>
+<p><code><a class="btn" href="建模调参.xmind">
+            <i class="fa fa-download"></i>xmind文件下载
+          </a></code></p>
+<p><a href="https://share.weiyun.com/EDpohPCk" target="_blank" rel="noopener">数据集下载</a></p>
+<p>本篇文章将会从简单的线性模型开始，了解如何建立一个模型以及建立完模型之后要分析什么东西，然后学习交叉验证的思想和技术，并且会构建一个线下测试集，之后我们会尝试建立更多的模型去解决这个问题，并对比它们的效果，当把模型选择出来之后，我们还得掌握一些调参的技术发挥模型最大的性能，模型选择出来之后，也调完参数，但是模型真的就没有问题了吗？我们还需要绘制学习率曲线看模型是否存在过拟合或者欠拟合的问题并给出相应的解决方法。</p>
+<h1 id="cong-jian-dan-de-xian-xing-mo-xing-kai-shi">从简单的线性模型开始</h1>
+<p><a href="https://tianchi.aliyun.com/competition/entrance/231784/information" target="_blank" rel="noopener">二手车交易价格预测</a>比赛是一个回归问题，所以需要选择一些回归模型来解决，线性模型就是一个比较简单的回归模型了，所以就从这个模型开始，看看针对这个模型，会得到什么结果以及这些结果究竟是什么含义。</p>
+<p>线性回归 (Linear Regression) 是利用最小平方损失函数对一个或多个自变量和因变量之间关系进行建模的一种回归分析。简单的说，假设预测的二手车价格用\(Y\)来表示，而构造的特征用\(x_i\)，之后就可以建立如下的等式来描述它们的关系<br>
+\[
+Y=w_{1} x_{1}+w_{2} x_{2}+\ldots+w_{n} x_{n}+b
+\]<br>
+训练模型其实就是根据训练集的\(\left(x_{1}, x_{2}, \ldots, x_{n}, Y\right)\)样本求出合适权重\(\left(w_{1}, w_{2}, \dots, w_{n}\right)\)的过程。</p>
+<p>首先导入特征工程处理完毕后保存的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入之前处理好的数据</span></span><br><span class="line">data = pd.read_csv(<span class="string">'./pre_data/pre_data.csv'</span>)</span><br><span class="line">data.head()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后训练集和测试集分开</span></span><br><span class="line">train = data[:train_data.shape[<span class="number">0</span>]]</span><br><span class="line">test = data[train_data.shape[<span class="number">0</span>]:]    <span class="comment"># 这个先不用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择那些数值型的数据特征</span></span><br><span class="line">continue_fea = [<span class="string">'power'</span>, <span class="string">'kilometer'</span>, <span class="string">'v_2'</span>, <span class="string">'v_3'</span>, <span class="string">'v_4'</span>, <span class="string">'v_5'</span>, <span class="string">'v_6'</span>, <span class="string">'v_10'</span>, <span class="string">'v_11'</span>, <span class="string">'v_12'</span>, <span class="string">'v_14'</span>,</span><br><span class="line">                <span class="string">'v_std'</span>, <span class="string">'fuelType_price_average'</span>, <span class="string">'gearbox_std'</span>, <span class="string">'bodyType_price_average'</span>, <span class="string">'brand_price_average'</span>,</span><br><span class="line">                <span class="string">'used_time'</span>, <span class="string">'estivalue_price_average'</span>, <span class="string">'estivalueprice_std'</span>, <span class="string">'estivalue_price_min'</span>]</span><br><span class="line">train_x = train[continue_fea]</span><br><span class="line">train_y = train_data[<span class="string">'price'</span>]</span><br></pre></td></tr></table></figure>
+<p>然后建立线性模型，直接使用 sklearn 库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line">model = LinearRegression(normalize=<span class="literal">True</span>)</span><br><span class="line">model.fit(train_x, train_y)</span><br></pre></td></tr></table></figure>
+<p>通过上面两行代码，其实就已经建立并且训练完了一个线性模型，接下来可以查看一下模型的一些参数\(w,b\)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""查看训练的线性回归模型的截距(intercept)与权重(coef)"""</span></span><br><span class="line">print(<span class="string">'intercept: '</span> + str(model.intercept_))</span><br><span class="line">sorted(dict(zip(continue_fea, model.coef_)).items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line">intercept: <span class="number">-178881.74591832393</span></span><br><span class="line">[(<span class="string">'v_6'</span>, <span class="number">482008.29891714785</span>),</span><br><span class="line"> (<span class="string">'v_std'</span>, <span class="number">23713.66414841167</span>),</span><br><span class="line"> (<span class="string">'v_10'</span>, <span class="number">7035.056136559963</span>),</span><br><span class="line"> (<span class="string">'v_14'</span>, <span class="number">1418.4037751433352</span>),</span><br><span class="line"> (<span class="string">'used_time'</span>, <span class="number">186.48306334062053</span>),</span><br><span class="line"> (<span class="string">'power'</span>, <span class="number">12.19202369791551</span>),</span><br><span class="line"> (<span class="string">'estivalue_price_average'</span>, <span class="number">0.4082359327905722</span>),</span><br><span class="line"> (<span class="string">'brand_price_average'</span>, <span class="number">0.38196351334425965</span>),</span><br><span class="line"> (<span class="string">'gearbox_std'</span>, <span class="number">0.1716754674248321</span>),</span><br><span class="line"> (<span class="string">'fuelType_price_average'</span>, <span class="number">0.023785798378739224</span>),</span><br><span class="line"> (<span class="string">'estivalueprice_std'</span>, <span class="number">-0.016868767797045624</span>),</span><br><span class="line"> (<span class="string">'bodyType_price_average'</span>, <span class="number">-0.21364358471329278</span>),</span><br><span class="line"> (<span class="string">'kilometer'</span>, <span class="number">-155.11999534761347</span>),</span><br><span class="line"> (<span class="string">'estivalue_price_min'</span>, <span class="number">-574.6952072539285</span>),</span><br><span class="line"> (<span class="string">'v_11'</span>, <span class="number">-1164.0263997737668</span>),</span><br><span class="line"> (<span class="string">'v_12'</span>, <span class="number">-1953.0558048250668</span>),</span><br><span class="line"> (<span class="string">'v_4'</span>, <span class="number">-2198.03802357537</span>),</span><br><span class="line"> (<span class="string">'v_3'</span>, <span class="number">-3811.7514971187525</span>),</span><br><span class="line"> (<span class="string">'v_2'</span>, <span class="number">-5116.825271420712</span>),</span><br><span class="line"> (<span class="string">'v_5'</span>, <span class="number">-447495.6394686485</span>)]</span><br></pre></td></tr></table></figure>
+<p>上面的这些就是等式中每个\(x_i\)前面的系数 ， intercept 代表\(b\)。如果已经有了一系列\[\left(x_{1}, x_{2}, \ldots, x_{n}\right)\] 的样本，要预测\(y\)，只需要:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y_pred = model.predict(x_test)</span><br></pre></td></tr></table></figure>
+<p>虽然线性模型非常简单，但是关于线性模型还有些重要的东西我们得了解一下，比如从这些权重中如何看出哪个特征对线性模型来说更加重要些？这个其实我们看的是权重的绝对值，因为正相关和负相关都是相关，越大的说明那个特征对线性模型影响就越大。</p>
+<p>其次，我们还可以看一下线性回归的训练效果，绘制一下 v_6 这个特征和标签的散点图：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">subsample_index = np.random.randint(low=<span class="number">0</span>, high=len(train_y), size=<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">plt.scatter(train_x[<span class="string">'v_6'</span>][subsample_index], train_y[subsample_index], color=<span class="string">'black'</span>)</span><br><span class="line">plt.scatter(train_x[<span class="string">'v_6'</span>][subsample_index], model.predict(train_x.loc[subsample_index]), color=<span class="string">'blue'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'v_6'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'price'</span>)</span><br><span class="line">plt.legend([<span class="string">'True Price'</span>,<span class="string">'Predicted Price'</span>],loc=<span class="string">'upper right'</span>)</span><br><span class="line">print(<span class="string">'The predicted price is obvious different from true price'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8UgOO.png" alt></p>
+<p>从上图中我们可以发现发现模型的预测结果（蓝色点）与真实标签（黑色点）的分布差异较大，且部分预测值出现了小于 0 的情况，说明我们的模型存在一些问题。 这个还是需要会看的，从这里我们也可以看出或许 price 这个需要处理一下。</p>
+<p>price 的分布图如下：</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8UH6f.png" alt></p>
+<p>通过这张图我们发现 price 呈长尾分布，不利于我们的建模预测。<strong>原因是很多模型都假设数据误差项符合正态分布，而长尾分布的数据违背了这一假设</strong>。</p>
+<p><code><a class="btn" href="分布假设.pdf">
+            <i class="fa fa-download"></i>回归分析的五个基本假设
+          </a></code></p>
+<p>所以可以先尝试取个对数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">train_y_ln = np.log1p(train_y)</span><br><span class="line">print(<span class="string">'The transformed price seems like normal distribution'</span>)</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">5</span>))</span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">sns.distplot(train_y_ln)</span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">sns.distplot(train_y_ln[train_y_ln &lt; np.quantile(train_y_ln, <span class="number">0.9</span>)])</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8Uzhn.png" alt></p>
+<p>这样效果就好多了，然后重新训练一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">model = model.fit(train_x, train_y_ln)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'intercept:'</span>+ str(model.intercept_))</span><br><span class="line">sorted(dict(zip(continue_fea, model.coef_)).items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>画出 v_6 和 price 的散点图看一下：</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8a3He.png" alt></p>
+<h2 id="jiao-cha-yan-zheng">交叉验证</h2>
+<p>在使用数据集对参数进行训练的时候，经常会发现人们通常会将整个训练集分为三个部分：训练集、验证集和测试集。这其实是为了保证训练效果而特意设置的。测试集很好理解，就是完全不参与训练的过程，仅仅用来观测测试效果的数据。而训练集和验证集则牵涉到下面的知识。</p>
+<p>因为在实际的训练中，训练的结果对于训练集的拟合程度通常还是挺好的（初始条件敏感），但是对于训练集之外的数据的拟合程度通常就不那么令人满意了。因此我们通常并不会把所有的数据集都拿来训练，而是分出一部分来（这一部分不参加训练）对训练集生成的模型进行测试，相对客观的判断这个模型对训练集之外的数据的符合程度。在验证中，比较常用的就是 K 折交叉验证了，它可以有效的避免过拟合，最后得到的结果也比较具有说服性</p>
+<p>K 折交叉验证是将原始数据分成 K 组，将每个子集数据分别做一次验证集，其余的 K-1 组子集数据作为训练集，这样会得到 K 个模型，用这 K 个模型最终的验证集分类准确率的平均数，作为此 K 折交叉验证下分类器的性能指标。以下图为例：</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8dwGR.png" alt></p>
+<p>交叉验证，sklearn 中提供了一个函数，叫做<code>cross_val_score</code>，用这个函数实现交叉验证，函数具体的作用可以去查一下 sklearn 的官方文档。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error, make_scorer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_transfer</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(y, yhat)</span>:</span></span><br><span class="line">        result = func(np.log(y), np.nan_to_num(np.log(yhat)))   <span class="comment"># 这个是为了解决不合法的值的</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面是交叉验证</span></span><br><span class="line">scores = cross_val_score(model, X=train_x, y=train_y, verbose=<span class="number">1</span>, cv=<span class="number">5</span>, scoring=make_scorer(log_transfer(mean_absolute_error)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用线性回归模型，对未处理标签的特征数据进行五折交叉验证（Error 1.36）</span></span><br><span class="line">print(<span class="string">'AVG:'</span>, np.mean(scores))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对处理的标签交叉验证</span></span><br><span class="line">scores = cross_val_score(model, X=train_x, y=train_y_ln, verbose=<span class="number">1</span>, cv = <span class="number">5</span>, scoring=make_scorer(mean_absolute_error))</span><br><span class="line">print(<span class="string">'AVG:'</span>, np.mean(scores))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出五次的验证结果：</span></span><br><span class="line">scores = pd.DataFrame(scores.reshape(<span class="number">1</span>,<span class="number">-1</span>))</span><br><span class="line">scores.columns = [<span class="string">'cv'</span> + str(x) <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line">scores.index = [<span class="string">'MAE'</span>]</span><br><span class="line">scores</span><br></pre></td></tr></table></figure>
+<p>得到的结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>cv1</th>
+<th>cv2</th>
+<th>cv3</th>
+<th>cv4</th>
+<th>cv5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.194979</td>
+<td>0.195399</td>
+<td>0.19679</td>
+<td>0.19257</td>
+<td>0.197563</td>
+</tr>
+</tbody>
+</table>
+<p>k 折交叉验证，并不适合处理时间序列数据，因为时间序列是有先后关系的。就拿这次比赛来说，通过 2018 年的二手车价格预测 2017 年的二手车价格，显然是不合理的，因此可以采用时间顺序对数据集进行分隔。在本例中，我们选用靠前时间的 4/5 样本当作训练集，靠后时间的 1/5 当作验证集，最终结果与五折交叉验证差距不大。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">split_point = len(train_x) // <span class="number">5</span> * <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练集</span></span><br><span class="line">xtrain = train_x[:split_point]</span><br><span class="line">ytrain = train_y[:split_point]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试集</span></span><br><span class="line">xval = train_x[split_point:]</span><br><span class="line">yval = train_y[split_point:]</span><br><span class="line">ytrain_ln = np.log1p(ytrain)</span><br><span class="line">yval_ln = np.log1p(yval)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">model.fit(xtrain, ytrain_ln)</span><br><span class="line">mean_absolute_error(yval_ln, model.predict(xval))</span><br></pre></td></tr></table></figure>
+<h2 id="gou-jian-yi-ge-xian-xia-ce-shi-ji">构建一个线下测试集</h2>
+<p>因为有时候我们发现在本地上训练数据集得到的结果很好，但是放到线上进行测试的时候往往不是那么理想，这就意味着我们线下的训练有些过拟合了，而我们一般并不能发现这种情况，毕竟对于线上的测试，我们没有真实的标签对比不，所以我们可以先构建一个线下的测试集。这个实操起来也很简单，就是我们有 150000 个样本，可以用 100000 个样本来做训练集，后面的 50000 做测试集，因为我们已经知道这 50000 个样本的真实标签，这样训练出来的模型我们就可以直接先测试一下泛化能力，对于后面的调参或者是模型的评估等感觉还是挺好用的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入数据</span></span><br><span class="line">data = pd.read_csv(<span class="string">'./pre_data/pre_data.csv'</span>)</span><br><span class="line"></span><br><span class="line">train = data[:train_data.shape[<span class="number">0</span>]]</span><br><span class="line">test = data[train_data.shape[<span class="number">0</span>]:]    <span class="comment"># 这个先不用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 选数据</span></span><br><span class="line">X = train[:<span class="number">100000</span>]</span><br><span class="line">Y= train_data[<span class="string">'price'</span>][:<span class="number">100000</span>]</span><br><span class="line">Y_ln = np.log1p(Y)</span><br><span class="line"></span><br><span class="line">XTest = train[<span class="number">100000</span>:]   <span class="comment"># 模拟一个线下测试集， 看看模型的泛化能力</span></span><br><span class="line">Ytrue = train_data[<span class="string">'price'</span>][<span class="number">100000</span>:]</span><br></pre></td></tr></table></figure>
+<h1 id="ping-gu-mo-xing-de-kuang-jia">评估模型的框架</h1>
+<p>模型选择的时候，可以根据数据的特征和优化目标先选出很多个模型作为备选，因为我们分析完数据不能立刻得出哪个算法对需要解决的问题更有效</p>
+<p>就拿这个比赛来说，我们直观上认为由于问题是预测价格，所以这是一个回归问题，肯定使用回归模型（Regressor 系列），但是回归模型太多，但我们又知道部分数据呈线性分布，线性回归和正则化的回归算法可能对解决问题比较有效。而由于数据的离散化，通过决策树算法及相应的集成算法也一般会表现出色，所以我们可以锁定几个模型都尝试一下</p>
+<p>一般先建立一个字典，把这些模型放到字典里面，然后分别进行交叉验证，可视化结果来判断哪个模型针对当前问题表现比较好，这样从这里面选出 3-4 个进行下面的环节，也就是模型的调参工作。这里给出一个评估算法模型的一个框架。首先采用 10 交叉验证来分离数据，通过绝对值误差来比较算法的准确度，误差值越小，准确度越高。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">num_folds = <span class="number">10</span></span><br><span class="line">seed = <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把所有模型写到一个字典中</span></span><br><span class="line">models = &#123;&#125;</span><br><span class="line">models[<span class="string">'LR'</span>] = LinearRegression()</span><br><span class="line">models[<span class="string">'Ridge'</span>] = Ridge()</span><br><span class="line">models[<span class="string">'LASSO'</span>] = Lasso()</span><br><span class="line">models[<span class="string">'DecisionTree'</span>] = DecisionTreeRegressor()</span><br><span class="line">models[<span class="string">'RandomForest'</span>] = RandomForestRegressor()</span><br><span class="line">models[<span class="string">'GradientBoosting'</span>] = GradientBoostingRegressor()</span><br><span class="line">models[<span class="string">'XGB'</span>] = XGBRegressor(n_estimators = <span class="number">100</span>, objective=<span class="string">'reg:squarederror'</span>)</span><br><span class="line">models[<span class="string">'LGB'</span>] = LGBMRegressor(n_estimators=<span class="number">100</span>)</span><br><span class="line"><span class="comment">#models['SVR'] = SVR()   # 支持向量机运行不出来</span></span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> models:</span><br><span class="line">    kfold = KFold(n_splits=num_folds, random_state=seed)</span><br><span class="line">    cv_result = cross_val_score(models[key], X, Y_ln, cv=kfold, scoring=make_scorer(mean_absolute_error))</span><br><span class="line">    results.append(cv_result)</span><br><span class="line">    print(<span class="string">'%s: %f (%f)'</span> % (key, cv_result.mean(), cv_result.std()))</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 评估算法 --- 箱线图</span></span><br><span class="line">fig1 = plt.figure(figsize=(<span class="number">15</span>, <span class="number">10</span>))</span><br><span class="line">fig1.suptitle(<span class="string">'Algorithm Comparison'</span>)</span><br><span class="line">ax = fig1.add_subplot(<span class="number">111</span>)</span><br><span class="line">plt.boxplot(results)</span><br><span class="line">ax.set_xticklabels(models.keys())</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line">LR: <span class="number">0.192890</span> (<span class="number">0.001501</span>)</span><br><span class="line">Ridge: <span class="number">0.196279</span> (<span class="number">0.001616</span>)</span><br><span class="line">LASSO: <span class="number">0.515573</span> (<span class="number">0.003923</span>)</span><br><span class="line">DecisionTree: <span class="number">0.190959</span> (<span class="number">0.002524</span>)</span><br><span class="line">RandomForest: <span class="number">0.142333</span> (<span class="number">0.001489</span>)</span><br><span class="line">GradientBoosting: <span class="number">0.178403</span> (<span class="number">0.001903</span>)</span><br><span class="line">XGB: <span class="number">0.178492</span> (<span class="number">0.001441</span>)</span><br><span class="line">LGB: <span class="number">0.147875</span> (<span class="number">0.001397</span>)</span><br></pre></td></tr></table></figure>
+<p>看一下箱线图的结果：</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G80L2n.png" alt></p>
+<p>这样，各个模型的效果就一目了然了，从上图可以看出，随机森林和 LGB 的效果还是好一些的，后面可以基于这两个进行调参，当然 xgboost 的效果可能由于参数的原因表现不是那么理想，这里也作为了调参备选。</p>
+<p>那么调参究竟有没有影响呢？这里做了一个实验，可以先看一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">model2 = LGBMRegressor(n_estimators=<span class="number">100</span>)</span><br><span class="line">model2.fit(X, Y_ln)</span><br><span class="line">pred2 = model2.predict(XTest)</span><br><span class="line">print(<span class="string">"mae: "</span>, mean_absolute_error(Ytrue, np.expm1(pred2)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果：</span></span><br><span class="line">mae:  <span class="number">713.9408513079144</span></span><br></pre></td></tr></table></figure>
+<p>上面这个是没有调参的 LGB，下面再看一下调参的 LGB：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bulid_modl_lgb</span><span class="params">(x_train, y_train)</span>:</span></span><br><span class="line">    estimator = LGBMRegressor(num_leaves=<span class="number">127</span>, n_estimators=<span class="number">150</span>)</span><br><span class="line">    param_grid = &#123;<span class="string">'learning_rage'</span>: [<span class="number">0.01</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.2</span>]&#125;</span><br><span class="line">    gbm = GridSearchCV(estimator, param_grid)</span><br><span class="line">    gbm.fit(x_train, y_train)</span><br><span class="line">    <span class="keyword">return</span> gbm</span><br><span class="line"> </span><br><span class="line">model_lgb = bulid_modl_lgb(X, Y_ln)</span><br><span class="line">val_lgb = model_lgb.predict(XTest)</span><br><span class="line">MAE_lgb = mean_absolute_error(Ytrue, np.expm1(val_lgb))</span><br><span class="line">print(MAE_lgb)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果：</span></span><br><span class="line"><span class="number">591.4221480289154</span></span><br></pre></td></tr></table></figure>
+<p>同样的 LGB，调参误差能降到 591，不调参 713，所以调参还是很重要的。但是在调参之前，先给出一个正态化模板：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"></span><br><span class="line">pipelines = &#123;&#125;</span><br><span class="line">pipelines[<span class="string">'ScalerLR'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'LR'</span>, LinearRegression())])</span><br><span class="line">pipelines[<span class="string">'ScalerRidge'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'Ridge'</span>, Ridge())])</span><br><span class="line">pipelines[<span class="string">'ScalerLasso'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'Lasso'</span>, Lasso())])</span><br><span class="line">pipelines[<span class="string">'ScalerTree'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'Tree'</span>, DecisionTreeRegressor())])</span><br><span class="line">pipelines[<span class="string">'ScalerForest'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'Forest'</span>, RandomForestRegressor())])</span><br><span class="line">pipelines[<span class="string">'ScalerGBDT'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'GBDT'</span>, GradientBoostingRegressor())])</span><br><span class="line">pipelines[<span class="string">'ScalerXGB'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'XGB'</span>, XGBRegressor(n_estimators = <span class="number">100</span>, objective=<span class="string">'reg:squarederror'</span>))])</span><br><span class="line">pipelines[<span class="string">'ScalerLGB'</span>] = Pipeline([(<span class="string">'Scaler'</span>, StandardScaler()), (<span class="string">'LGB'</span>, LGBMRegressor(n_estimators=<span class="number">100</span>))])</span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> pipelines:</span><br><span class="line">    kfold = KFold(n_splits=num_folds, random_state=seed)</span><br><span class="line">    cv_result = cross_val_score(pipelines[key], X, Y_ln, cv=kfold, scoring=make_scorer(mean_absolute_error))</span><br><span class="line">    results.append(cv_result)</span><br><span class="line">    print(<span class="string">'%s: %f (%f)'</span> % (key, cv_result.mean(), cv_result.std()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 评估算法 --- 箱线图</span></span><br><span class="line">fig2 = plt.figure(figsize=(<span class="number">15</span>, <span class="number">10</span>))</span><br><span class="line">fig2.suptitle(<span class="string">'Algorithm Comparison'</span>)</span><br><span class="line">ax = fig2.add_subplot(<span class="number">111</span>)</span><br><span class="line">plt.boxplot(results)</span><br><span class="line">ax.set_xticklabels(models.keys())</span><br></pre></td></tr></table></figure>
+<p>这里不用正态化，因为试验了一下，效果不如之前的好。</p>
+<h1 id="mo-xing-diao-can">模型调参</h1>
+<p>同特征工程一样，模型参数调节也是一项非常繁琐但又非常重要的工作。</p>
+<p>根据模型复杂程度的不同，需要调节的参数数量也不尽相同。简单如逻辑回归，需要调节的通常只有正则项系数 \(C\)；复杂如随机森林，需要调节的变量会多出不少，最核心的如树的数量 n_estimators，树的深度 max_depth 等等。参数越多，调参的难度自然也越来越大，因为参数间排列组合的可能性越来越多。在训练样本比较少的情况下，<code>sklearn</code> 的 <code>GridSearchCV</code> 是个不错的选择，可以帮助我们自动寻找指定范围内的最佳参数组合。但实际情况是，<code>GridSearch</code> 通常需要的运行时间过长，长到我们不太能够忍受的程度。所以更多的时候需要我们自己手动先排除掉一部分数值，然后使用 GridSearch 自动调参。</p>
+<p>模型调参有三种方式：</p>
+<ul>
+<li>贪心调参</li>
+<li>网格搜索调参</li>
+<li>贝叶斯调参</li>
+</ul>
+<p>这里给出一个模型可调参数及范围选取的参考：</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8sgdf.png" alt></p>
+<p>以 LGB 为例，其他的模型也都是这个思路，为了减少篇幅，只对 LGB 做实验：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">objective = [<span class="string">'regression'</span>, <span class="string">'regression_l1'</span>, <span class="string">'mape'</span>, <span class="string">'huber'</span>, <span class="string">'fair'</span>]</span><br><span class="line">num_leaves = [<span class="number">10</span>, <span class="number">55</span>, <span class="number">70</span>, <span class="number">100</span>, <span class="number">200</span>]</span><br><span class="line">max_depth = [ <span class="number">10</span>, <span class="number">55</span>, <span class="number">70</span>, <span class="number">100</span>, <span class="number">200</span>]</span><br><span class="line">n_estimators = [<span class="number">200</span>, <span class="number">400</span>, <span class="number">800</span>, <span class="number">1000</span>]</span><br><span class="line">learning_rate =  [<span class="number">0.01</span>, <span class="number">0.05</span>, <span class="number">0.1</span>, <span class="number">0.2</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="tan-xin-diao-can">贪心调参</h2>
+<p>拿当前对模型影响最大的参数调优，直到最优化；再拿下一个影响最大的参数调优，如此下去，直到所有的参数调整完毕。这个方法的<strong>缺点就是可能会调到局部最优而不是全局最优，但是省时间省力</strong>，巨大的优势面前，可以一试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先建立一个参数字典</span></span><br><span class="line">best_obj = dict()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调objective</span></span><br><span class="line"><span class="keyword">for</span> obj <span class="keyword">in</span> objective:</span><br><span class="line">    model = LGBMRegressor(objective=obj)</span><br><span class="line">    score = np.mean(cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)))</span><br><span class="line">    best_obj[obj] = score</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 上面调好之后，用上面的参数调num_leaves</span></span><br><span class="line">best_leaves = dict()</span><br><span class="line"><span class="keyword">for</span> leaves <span class="keyword">in</span> num_leaves:</span><br><span class="line">    model = LGBMRegressor(objective=min(best_obj.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>], num_leaves=leaves)</span><br><span class="line">    score = np.mean(cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)))</span><br><span class="line">    best_leaves[leaves] = score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用上面两个最优参数调max_depth</span></span><br><span class="line">best_depth = dict()</span><br><span class="line"><span class="keyword">for</span> depth <span class="keyword">in</span> max_depth:</span><br><span class="line">    model = LGBMRegressor(objective=min(best_obj.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          num_leaves=min(best_leaves.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          max_depth=depth)</span><br><span class="line">    score = np.mean(cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)))</span><br><span class="line">    best_depth[depth] = score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调n_estimators</span></span><br><span class="line">best_nstimators = dict()</span><br><span class="line"><span class="keyword">for</span> nstimator <span class="keyword">in</span> n_estimators:</span><br><span class="line">    model = LGBMRegressor(objective=min(best_obj.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          num_leaves=min(best_leaves.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          max_depth=min(best_depth.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          n_estimators=nstimator)</span><br><span class="line">    </span><br><span class="line">    score = np.mean(cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)))</span><br><span class="line">    best_nstimators[nstimator] = score</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 调learning_rate</span></span><br><span class="line">best_lr = dict()</span><br><span class="line"><span class="keyword">for</span> lr <span class="keyword">in</span> learning_rate:</span><br><span class="line">    model = LGBMRegressor(objective=min(best_obj.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          num_leaves=min(best_leaves.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          max_depth=min(best_depth.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          n_estimators=min(best_nstimators.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])[<span class="number">0</span>],</span><br><span class="line">                          learning_rate=lr)</span><br><span class="line">    score = np.mean(cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)))</span><br><span class="line">    best_lr[lr] = score</span><br></pre></td></tr></table></figure>
+<p>上面的过程建议放在不同的 cell 里面运行，之后可视化这个过程的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=[<span class="string">'0_initial'</span>,<span class="string">'1_turning_obj'</span>,<span class="string">'2_turning_leaves'</span>,</span><br><span class="line">               <span class="string">'3_turning_depth'</span>,<span class="string">'4_turning_estimators'</span>, <span class="string">'5_turning_lr'</span>],</span><br><span class="line">            y=[<span class="number">0.143</span> ,min(best_obj.values()), min(best_leaves.values()), min(best_depth.values()),</span><br><span class="line">              min(best_nstimators.values()), min(best_lr.values())])</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8yDtU.png" alt></p>
+<p>贪心的调参策略还是不错的，可以打印最后调参的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"best_obj:"</span>, min(best_obj.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">"best_leaves:"</span>, min(best_leaves.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]) )</span><br><span class="line">print(<span class="string">'best_depth:'</span>, min(best_depth.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">'best_nstimators: '</span>, min(best_nstimators.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">'best_lr:'</span>, min(best_lr.items(), key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果如下：</span></span><br><span class="line">best_obj: (<span class="string">'regression_l1'</span>, <span class="number">0.1457016215267976</span>)</span><br><span class="line">best_leaves: (<span class="number">100</span>, <span class="number">0.132929241004274</span>)</span><br><span class="line">best_depth: (<span class="number">20</span>, <span class="number">0.13275966837758682</span>)</span><br><span class="line">best_nstimators:  (<span class="number">1000</span>, <span class="number">0.11861541074643345</span>)</span><br><span class="line">best_lr: (<span class="number">0.05</span>, <span class="number">0.11728267187328578</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="grid-search-cv-diao-can">GridSearchCV 调参</h2>
+<p>GridSearchCV，它存在的意义就是自动调参，只要把参数输进去，就能给出最优化的结果和参数。但是这个方法适合于小数据集，一旦数据的量级上去了，很难得出结果。这个在这里面优势不大， 因为数据集很大，不太能跑出结果，但是有时候还是很好用的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个我这边电脑运行时间太长，先不跑了</span></span><br><span class="line">parameters = &#123;<span class="string">'objective'</span>:objective, <span class="string">'num_leaves'</span>:num_leaves, <span class="string">'max_depth'</span>:max_depth,</span><br><span class="line">             <span class="string">'n_estimators'</span>: n_estimators, <span class="string">'learning_rate'</span>:learning_rate&#125;</span><br><span class="line"></span><br><span class="line">model = LGBMRegressor()</span><br><span class="line">clf = GridSearchCV(model, parameters, cv=<span class="number">5</span>)</span><br><span class="line">clf = clf.fit(X, Y_ln)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出最优参数</span></span><br><span class="line">clf.best_params_</span><br></pre></td></tr></table></figure>
+<h2 id="bei-xie-si-diao-can">贝叶斯调参</h2>
+<p>首先需要安装包<code>pip install bayesian-optimization</code>。</p>
+<p>贝叶斯优化用于机器学习调参，主要思想是，给定优化的目标函数 (广义的函数，只需指定输入和输出即可，无需知道内部结构以及数学性质)，通过不断地添加样本点来更新目标函数的后验分布 (高斯过程, 直到后验分布基本贴合于真实分布。简单的说，就是考虑了上一次参数的信息，从而更好的调整当前的参数。</p>
+<p>它与常规的网格搜索或者随机搜索的区别是：</p>
+<ul>
+<li>贝叶斯调参采用高斯过程，考虑之前的参数信息，不断地更新先验；网格搜索未考虑之前的参数信息</li>
+<li>贝叶斯调参迭代次数少，速度快；网格搜索速度慢，参数多时易导致维度爆炸</li>
+<li>贝叶斯调参针对非凸问题依然稳健；网格搜索针对非凸问题易得到局部最优</li>
+</ul>
+<p>使用方法：</p>
+<ul>
+<li>定义优化函数 (rf_cv，在里面把优化的参数传入，然后建立模型，返回要优化的分数指标)</li>
+<li>定义优化参数</li>
+<li>开始优化（最大化分数还是最小化分数等）</li>
+<li>得到优化结果</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span>  bayes_opt <span class="keyword">import</span> BayesianOptimization</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义优化函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rf_cv</span><span class="params">(num_leaves, max_depth, subsample, min_child_samples)</span>:</span></span><br><span class="line">    model = LGBMRegressor(objective=<span class="string">'regression_l1'</span>, num_leaves=int(num_leaves),</span><br><span class="line">                         max_depth=int(max_depth), subsample=subsample,</span><br><span class="line">                         min_child_samples = int(min_child_samples))</span><br><span class="line">    val = cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)).mean()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>-val</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义优化参数</span></span><br><span class="line">rf_bo = BayesianOptimization(</span><br><span class="line">    rf_cv, </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'num_leaves'</span>:(<span class="number">2</span>, <span class="number">100</span>),</span><br><span class="line">        <span class="string">'max_depth'</span>:(<span class="number">2</span>, <span class="number">100</span>),</span><br><span class="line">        <span class="string">'subsample'</span>:(<span class="number">0.1</span>, <span class="number">1</span>),</span><br><span class="line">        <span class="string">'min_child_samples'</span>:(<span class="number">2</span>, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#开始优化</span></span><br><span class="line">num_iter = <span class="number">25</span></span><br><span class="line">init_points = <span class="number">5</span></span><br><span class="line">rf_bo.maximize(init_points=init_points,n_iter=num_iter)</span><br><span class="line"></span><br><span class="line"><span class="comment">#显示优化结果</span></span><br><span class="line">rf_bo.res[<span class="string">"max"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#附近搜索（已经有不错的参数值的时候）</span></span><br><span class="line">rf_bo.explore(</span><br><span class="line">     &#123;<span class="string">'n_estimators'</span>: [<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>],</span><br><span class="line">      <span class="string">'min_samples_split'</span>: [<span class="number">2</span>, <span class="number">10</span>, <span class="number">20</span>],</span><br><span class="line">      <span class="string">'max_features'</span>: [<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.9</span>],</span><br><span class="line">      <span class="string">'max_depth'</span>: [<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>]</span><br><span class="line">     &#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G86agH.png" alt></p>
+<p>基于上面的思路，也可以对随机森林进行调参：</p>
+<blockquote>
+<p>对 Random Forest 来说，增加 “子模型数”（n_estimators）可以明显降低整体模型的方差，且不会对子模型的偏差和方差有任何影响。模型的准确度会随着“子模型数” 的增加而提高。由于减少的是整体模型方差公式的第二项，故准确度的提高有一个上限。在不同的场景下，“分裂条件”（criterion）对模型的准确度的影响也不一样，该参数需要在实际运用时灵活调整。调整“最大叶节点数”（max_leaf_nodes）以及“最大树深度”（max_depth）之一，可以粗粒度地调整树的结构：叶节点越多或者树越深，意味着子模型的偏差越低，方差越高；同时，调整“分裂所需最小样本数”（min_samples_split）、“叶节点最小样本数”（min_samples_leaf）及“叶节点最小权重总值”（min_weight_fraction_leaf），可以更细粒度地调整树的结构：分裂所需样本数越少或者叶节点所需样本越少，也意味着子模型越复杂。一般来说，我们总采用 bootstrap 对样本进行子采样来降低子模型之间的关联度，从而降低整体模型的方差。适当地减少“分裂时考虑的最大特征数”（max_features），给子模型注入了另外的随机性，同样也达到了降低子模型之间关联度的效果。详细的可以参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/geduo_feng/article/details/79558572" target="_blank" rel="noopener">随机森林 sklearn FandomForest，及其调参</a></li>
+<li><a href="https://www.zhihu.com/question/34470160/answer/114305935" target="_blank" rel="noopener">机器学习各种算法怎么调参？</a></li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义优化函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rf_cv</span><span class="params">(n_estimators,  max_depth)</span>:</span></span><br><span class="line">    model = RandomForestRegressor(n_estimators=int(n_estimators), </span><br><span class="line">                         max_depth=int(max_depth))</span><br><span class="line">    val = cross_val_score(model, X, Y_ln, verbose=<span class="number">0</span>, cv=<span class="number">5</span>, scoring=make_scorer(mean_absolute_error)).mean()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>-val</span><br><span class="line"></span><br><span class="line">rf_bo = BayesianOptimization(</span><br><span class="line">    rf_cv, </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'n_estimators'</span>:(<span class="number">100</span>, <span class="number">200</span>),</span><br><span class="line">        <span class="string">'max_depth'</span>:(<span class="number">2</span>, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">rf_bo.maximize()</span><br></pre></td></tr></table></figure>
+<h1 id="hui-zhi-xun-lian-ji-qu-xian-yu-yan-zheng-ji-qu-xian">绘制训练集曲线与验证集曲线</h1>
+<p>从上面的步骤中，我们通过算法模型的评估框架选择出了合适的几个模型，又通过模型的调参步骤确定了模型的合适参数，这样我们基本上就得到了一个我们认为的比较好的模型了，但是这个模型真的就是好的模型了吗？ 我们还不能确定是否存在过拟合或者欠拟合问题，在实际中究竟应该怎么判断？ 学习曲线的绘制就是一个非常好的方式，可以帮助我们看一下我们调试好的模型还有没有过拟合或者欠拟合的问题。</p>
+<p>关于学习曲线：</p>
+<ul>
+<li>学习曲线是不同训练集大小，模型在训练集和验证集上的得分变化曲线</li>
+<li>学习曲线图的横坐标是 x_train 的数据量，纵坐标是对应的 train_score，test_score。随着训练样本的逐渐增加，算法练出的模型的表现能力；</li>
+</ul>
+<p>绘制学习曲线非常简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_sizes，train_scores，test_score = learning_curve(estimator, X, y, groups=<span class="literal">None</span>, train_sizes=array([<span class="number">0.1</span>, <span class="number">0.33</span>, <span class="number">0.55</span>, <span class="number">0.78</span>, <span class="number">1.</span> ]), cv=’warn’, scoring=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p>主要的参数说明如下：</p>
+<blockquote>
+<p>通过 cv 设置交叉验证，取几次 (组) 数据，train_sizes 设置每一次取值，在不同训练集大小上计算得分</p>
+<ul>
+<li>estimator：估计器，用什么模型进行学习；</li>
+<li>cv：交叉验证生成器，确定交叉验证拆分策略；</li>
+</ul>
+<p>画训练集的曲线时，横轴为 train_sizes, 纵轴为 train_scores_mean; train_scores 为二维数组, 行代表 train_sizes 不同时的得分，列表示取 cv 组数据。</p>
+<p>画测试集的曲线时：横轴为 train_sizes, 纵轴为 test_scores_mean; test_scores 为二维数组</p>
+<p>learning_curve 为什么运行时间那么长：模型要进行 train_sizes * cv 次运行</p>
+</blockquote>
+<p>基于一个训练好的模型，画一下学习曲线，看看这个学习曲线究竟怎么观察：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> learning_curve, validation_curve</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_learning_curve</span><span class="params">(estimator, title, X, y, ylim=None, cv=None, n_jobs=<span class="number">1</span>, train_size=np.linspace<span class="params">(<span class="number">.1</span>, <span class="number">1.0</span>, <span class="number">5</span>)</span>)</span>:</span></span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.title(title)</span><br><span class="line">    <span class="keyword">if</span> ylim <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        plt.ylim(*ylim)</span><br><span class="line">    plt.xlabel(<span class="string">'Training example'</span>)  </span><br><span class="line">    plt.ylabel(<span class="string">'score'</span>)  </span><br><span class="line">    train_sizes, train_scores, test_scores = learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_size, scoring = make_scorer(mean_absolute_error))  </span><br><span class="line">    train_scores_mean = np.mean(train_scores, axis=<span class="number">1</span>)  </span><br><span class="line">    train_scores_std = np.std(train_scores, axis=<span class="number">1</span>)  </span><br><span class="line">    test_scores_mean = np.mean(test_scores, axis=<span class="number">1</span>)  </span><br><span class="line">    test_scores_std = np.std(test_scores, axis=<span class="number">1</span>)  </span><br><span class="line">    plt.grid()<span class="comment">#区域  </span></span><br><span class="line">    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,  </span><br><span class="line">                     train_scores_mean + train_scores_std, alpha=<span class="number">0.1</span>,  </span><br><span class="line">                     color=<span class="string">"r"</span>)  </span><br><span class="line">    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,  </span><br><span class="line">                     test_scores_mean + test_scores_std, alpha=<span class="number">0.1</span>,  </span><br><span class="line">                     color=<span class="string">"g"</span>)  </span><br><span class="line">    plt.plot(train_sizes, train_scores_mean, <span class="string">'o-'</span>, color=<span class="string">'r'</span>,  </span><br><span class="line">             label=<span class="string">"Training score"</span>)  </span><br><span class="line">    plt.plot(train_sizes, test_scores_mean,<span class="string">'o-'</span>,color=<span class="string">"g"</span>,  </span><br><span class="line">             label=<span class="string">"Cross-validation score"</span>)  </span><br><span class="line">    plt.legend(loc=<span class="string">"best"</span>)  </span><br><span class="line">    <span class="keyword">return</span> plt  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设已经调好了LGB的参数，我们可以绘制一下曲线看看这个模型有没有什么问题</span></span><br><span class="line">model = LGBMRegressor(n_estimators=<span class="number">1000</span>, leaves=<span class="number">200</span>, learning_rate=<span class="number">0.05</span>, objective=<span class="string">'regression_l1'</span>)</span><br><span class="line">model.fit(X, Y_ln)</span><br><span class="line">pred2 = model.predict(XTest)</span><br><span class="line">print(<span class="string">"mae: "</span>, mean_absolute_error(Ytrue, np.expm1(pred2)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出学习曲线</span></span><br><span class="line">plot_learning_curve(model, <span class="string">'LGB'</span>, X[:<span class="number">10000</span>], Y_ln[:<span class="number">10000</span>], ylim=(<span class="number">0.0</span>, <span class="number">1</span>), cv=<span class="number">5</span>, n_jobs=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G8g3tK.png" alt></p>
+<p>learning_curve 里面有个 scoring 参数可以设置你想求的值，分类可以设置<code>accuracy</code>，回归问题可以设置<code>neg_mean_squared_error</code>，总体来说，值都是越大越好，但是注意如果模型设置的是<code>mae erro</code>，那就是越低越好。</p>
+<p>高偏差和高方差应该怎么看呢？</p>
+<p><img src="/2020/04/02/machine_learning/modeling_modify_parameters/G82PjH.png" alt></p>
+<p><strong>什么情况欠拟合</strong>：模型在训练集和验证集上准确率相差不大，却都很差，说明模型对已知数据和未知数据都不能准确预测，属于高偏差。左上角那个图</p>
+<p><strong>什么情况过拟合</strong>：模型在训练集和验证集上的准确率差距很大，说明模型能够很好的拟合已知数据，但是泛化能力很差，属于高方差。右上角那个图</p>
+<p>右下角那个图是比较合适的。所以上面 lgb 的那个模型效果还是不错的</p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://wmathor.com/index.php/archives/1427/" target="_blank" rel="noopener">模型建立与调参</a></li>
+<li><a href="https://blog.csdn.net/Noob_daniel/article/details/76087829" target="_blank" rel="noopener">回归分析的五个基本假设</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%BB%BA%E6%A8%A1%E8%B0%83%E5%8F%82/" rel="tag"><i class="fa fa-tag"></i> 建模调参</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/02/machine_learning/feature_engineering/" rel="prev" title="特征工程">
+      <i class="fa fa-chevron-left"></i> 特征工程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/03/machine_learning/model_fusion/" rel="next" title="模型融合">
+      模型融合 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cong-jian-dan-de-xian-xing-mo-xing-kai-shi"><span class="nav-number">1.</span> <span class="nav-text">从简单的线性模型开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jiao-cha-yan-zheng"><span class="nav-number">1.1.</span> <span class="nav-text">交叉验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gou-jian-yi-ge-xian-xia-ce-shi-ji"><span class="nav-number">1.2.</span> <span class="nav-text">构建一个线下测试集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ping-gu-mo-xing-de-kuang-jia"><span class="nav-number">2.</span> <span class="nav-text">评估模型的框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mo-xing-diao-can"><span class="nav-number">3.</span> <span class="nav-text">模型调参</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tan-xin-diao-can"><span class="nav-number">3.1.</span> <span class="nav-text">贪心调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grid-search-cv-diao-can"><span class="nav-number">3.2.</span> <span class="nav-text">GridSearchCV 调参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bei-xie-si-diao-can"><span class="nav-number">3.3.</span> <span class="nav-text">贝叶斯调参</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hui-zhi-xun-lian-ji-qu-xian-yu-yan-zheng-ji-qu-xian"><span class="nav-number">4.</span> <span class="nav-text">绘制训练集曲线与验证集曲线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">869k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
