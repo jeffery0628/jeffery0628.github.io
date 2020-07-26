@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="评价指标">
+<meta property="og:url" content="https://jeffery.ink/2020/03/13/evaluation/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-de51547b4b0ab69983515d2f97c45f22_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-18db5822a9accd275adf89ca3fa2d3cf_1440w.jpg">
+<meta property="article:published_time" content="2020-03-13T11:39:32.000Z">
+<meta property="article:modified_time" content="2020-07-13T14:53:44.456Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/03/13/evaluation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>评价指标 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/13/evaluation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          评价指标
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-13 22:53:44" itemprop="dateModified" datetime="2020-07-13T22:53:44+08:00">2020-07-13</time>
+              </span>
+
+          
+            <span id="/2020/03/13/evaluation/" class="post-meta-item leancloud_visitors" data-flag-title="评价指标" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/03/13/evaluation/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/13/evaluation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg" alt></p>
+<a id="more"></a>
+<h1 id="fen-lei-ping-jie-zhi-biao">分类评价指标</h1>
+<blockquote>
+<p>类别：</p>
+<p>​    实际：A  A  A  A  B  B  B  C  C</p>
+<p>​    预测：A  A  B  C  B  B  C  B  C</p>
+<p>​    Index:  1   2  3  4  5  6  7  8  9</p>
+</blockquote>
+<h2 id="accuracy">Accuracy</h2>
+<p>预测正确的样本的占总样本的比例，取值范围为[0,1]，取值越大，模型预测能力越好。</p>
+<p>\[
+acc = \frac{true}{all}
+\]</p>
+<blockquote>
+<p>Accuracy的缺陷</p>
+<ul>
+<li>
+<p>对于有倾向性的问题，往往不能用精度指标来衡量。</p>
+<p>比如，判断空中的飞行物是导弹还是其他飞行物，很显然为了减少损失，我们更倾向于相信是导弹而采用相应的防护措施。此时判断为导弹实际上是其他飞行物与判断为其他飞行物实际上是导弹这两种情况的重要性是不一样的；</p>
+</li>
+<li>
+<p>对于样本类别数量严重不均衡的情况，也不能用精度指标来衡量。</p>
+<p>比如银行客户样本中好客户990个，坏客户10个。如果一个模型直接把所有客户都判断为好客户，得到精度为99%，但这显然是没有意义的。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="precison-recall-f">Precison、Recall、F</h2>
+<p>首先看真阳性(TP)：真阳性的定义是“预测为正，实际也是正”，就是指预测正确，是哪个类就被分到哪个类。对类A而言，TP的个位数为2，对类B而言，TP的个数为2，对类C而言，TP的个数为1。</p>
+<p>然后看假阳性(FP)，假阳性的定义是“预测为正，实际为负”，就是预测为某个类，但是实际不是。对类A而言，FP个数为0，我们预测之后，把1和2分给了A，这两个都是正确的，并不存在把不是A类的值分给A的情况。类B的FP是2，&quot;3&quot;和&quot;8&quot;都不是B类，但却分给了B，所以为假阳性。类C的假阳性个数为2。</p>
+<blockquote>
+<p>假阳性 = 该类别下的样本总数 - 真阳性</p>
+</blockquote>
+<p>最后看一下假阴性(FN)，假阴性的定义是“预测为负，实际为正”，对类A而言，FN为2，&quot;3&quot;和&quot;4&quot;分别预测为B和C，但是实际是A，也就是预测为负，实际为正。对类B而言，FN为1，对类C而言，FN为1。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>总计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>FP</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>\[
+P = \frac{TP}{TP+FP}\\
+R = \frac{TP}{TP+FN}\\
+F_1 = \frac{2 * P * R}{P + R}\\
+F_\beta = \frac{(1+\beta^2)*P*R}{(\beta^2*P+R)}
+\]</p>
+<blockquote>
+<p>除了F1分数之外，F0.5分数和F2分数，在统计学中也得到了大量应用。</p>
+<p>其中，F2分数中，召回率的权重高于精确率，而F0.5分数中，精确率的权重高于召回率。</p>
+</blockquote>
+<h2 id="micro-f-1-he-macro-f-1">Micro-F1和Macro-F1</h2>
+<p>在第一个多标签分类任务中，可以对每个“类”，计算F1，显然我们需要把所有类的F1合并起来考虑。</p>
+<h3 id="micro-f-1">Micro-F1</h3>
+<p>计算出所有类别总的Precision和Recall，然后计算F1。</p>
+<p>依照上面的表格来计算:</p>
+<blockquote>
+<p>\(Precison=\frac{5}{5+4}=0.556\)</p>
+<p>\(Recall=\frac{5}{5+4}=0.556\)</p>
+<p>\(F_1 = \frac{2 * 0.556 * 0.556}{0.556+0.556}=0.556\)</p>
+<p>求出F1，这种方式被称为Micro-F1(微平均)。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_true = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">y_pred = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>]</span><br><span class="line">print(f1_score(y_true,y_pred,labels=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],average=<span class="string">'micro'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="macro-f-1">Macro-F1</h3>
+<p>计算出每一个类的Precison和Recall后计算F1，最后将F1平均。</p>
+<p>例如上式</p>
+<blockquote>
+<p>A类：</p>
+<p>\(P=\frac{2}{2+0}=1.0\)</p>
+<p>\(R=\frac{2}{2+2}=0.5\)</p>
+<p>\(F1=\frac{2*1*0.5}{1+0.5}=0.667\)</p>
+<p>B类：</p>
+<p>\(P=\frac{2}{2+2}=0.5\)</p>
+<p>\(R=\frac{2}{2+1}=0.667\)</p>
+<p>\(F1=\frac{2*0.5*0.667}{0.5+0.667}=0.571\)</p>
+<p>C类：</p>
+<p>\(P=\frac{1}{1+2}=0.333\)</p>
+<p>\(R=\frac{1}{1+1}=0.5\)</p>
+<p>\(F1=\frac{2*0.333*0.5}{0.333+0.5}=0.399\)</p>
+<p>\(F_{macro} = \frac{0.667+0.571+0.399}{3} = 0.545\)<br>
+最后求平均值，这种范式叫做Macro-F1宏平均。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#average=None,取出每一类的P,R,F1值</span></span><br><span class="line">p_class, r_class, f_class, support_micro=precision_recall_fscore_support(y_true=y_true, y_pred=y_pred, labels=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], average=<span class="literal">None</span>)</span><br><span class="line">print(<span class="string">'各类单独F1:'</span>,f_class)</span><br><span class="line">print(<span class="string">'各类F1取平均：'</span>,f_class.mean())</span><br><span class="line">print(f1_score(y_true,y_pred,labels=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],average=<span class="string">'macro'</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="roc-he-auc">ROC 和 AUC</h2>
+<p>AUC是一种模型分类指标，且仅仅是二分类模型的评价指标。AUC是Area Under Curve的简称，那么Curve就是 ROC。也就是说ROC是一条曲线，AUC是 一个面积值。</p>
+<h3 id="roc">ROC</h3>
+<p>ROC曲线为 FPR 与 TPR 之间的关系曲线，这个组合以 FPR 对 TPR，即是以代价对收益，显然收益越高，代价越低，模型的性能就越好。</p>
+<blockquote>
+<p>x 轴为假阳性率（FPR）：\(F P R=\frac{F P}{F P+T N}\)，在所有的负样本中，分类器<strong>预测错误的比例</strong></p>
+<p>y 轴为真阳性率（TPR）：\(T P R=\frac{T P}{T P+F N}\)，在所有的正样本中，分类器<strong>预测正确的比例</strong>（等于Recall）</p>
+</blockquote>
+<p>以FPR为横轴，TPR为纵轴，得到如下ROC空间</p>
+<p><img src="/2020/03/13/evaluation/v2-de51547b4b0ab69983515d2f97c45f22_1440w.jpg" alt></p>
+<p>可以看出，左上角的点(TPR=1，FPR=0)，为完美分类，全对。点A(TPR&gt;FPR),判断大体是正确的。中线上的点B(TPR=FPR),全都是蒙的，蒙对一半，蒙错一半；下半平面的点C(TPR&lt;FPR)和上半平面的点C相同，把类别换一下即可。上图中一个阈值，得到一个点，遍历所有的阈值,得到 ROC 曲线。</p>
+<p>上图(蓝色)为负例，下图(红色)为正例模型输出概率分布图（横坐标表示模型输出概率，纵坐标表示概率对应的样本数量），显然正例样本概率值普遍低于负例样本的输出概率值。</p>
+<p>竖线代表阈值，显然，图中给出了某个阈值对应的混淆矩阵，通过改变不同的阈值 ，得到一系列的混淆矩阵，进而得到一系列的TPR和FPR，绘制出ROC曲线。</p>
+<p><img src="/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg" alt></p>
+<h4 id="micro">micro</h4>
+<p>\[
+\begin{array}{l}
+T P R=\frac{TP_1+TP_2+TP_3}{TP_1+FN_1+TP_2+FN_2+TP_3+FN_3} \\
+F P R=\frac{FP_1+FP_2+FP_3}{FP_1+TN_1+FP_2+TN_2+FP_3+TN_3}
+\end{array}
+\]</p>
+<h4 id="macro">macro</h4>
+<p>\[
+\begin{array}{l}
+T P R=\frac{1}{3}\left(\frac{TP_1}{TP_1+FN_1}+\frac{TP_2}{TP_2+FN_2}+\frac{TP_3}{TP_3+FN_3}\right) \\
+F P R=\frac{1}{3}\left(\frac{FP_1}{FP_1+TN_1}+\frac{FP_2}{FP_2+TN_2}+\frac{FP_3}{FP_3+TN_3}\right)
+\end{array}
+\]</p>
+<h4 id="weight">weight</h4>
+<p>\[
+\begin{array}{l}
+T P R=\frac{TP_1}{TP_1+FN_1} w_{1}+\frac{TP_2}{TP_2+FN_2} w_{2}+\frac{TP_3}{TP_3+FN_3} w_{3} \\
+F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3+TN_3} w_{3}
+\end{array}
+\]</p>
+<h4 id="sample">sample</h4>
+<p>对于样本很不均匀的类，可以采用该方法。</p>
+<h3 id="auc">AUC</h3>
+<p>定义：AUC 值为 ROC 曲线所覆盖的<strong>区域面积</strong>，显然，AUC越大，分类器分类效果越好。</p>
+<blockquote>
+<ul>
+<li>AUC = 1，是完美分类器。</li>
+<li>0.5 &lt; AUC &lt; 1，优于随机猜测。有预测价值。</li>
+<li>AUC = 0.5，跟随机猜测一样（例：丢铜板），没有预测价值。</li>
+<li>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</li>
+</ul>
+</blockquote>
+<p>以下为ROC曲线和AUC值的实例：</p>
+<p><img src="/2020/03/13/evaluation/v2-18db5822a9accd275adf89ca3fa2d3cf_1440w.jpg" alt></p>
+<p><strong>AUC的物理意义</strong></p>
+<p>AUC的物理意义正样本的预测结果大于负样本的预测结果的概率。所以AUC反映的是分类器对样本的排序能力。值得注意的是，AUC对样本类别是否均衡并不敏感，这也是不均衡样本通常用AUC评价分类器性能的一个原因。</p>
+<p>AUC只与概率的相对大小（概率排序）有关，和绝对大小没关系。</p>
+<blockquote>
+<p><strong>为什么说 ROC 和AUC都能应用于非均衡的分类问题？</strong></p>
+<p>ROC曲线只与横坐标 (FPR) 和 纵坐标 (TPR) 有关系 。我们可以发现TPR只是正样本中预测正确的概率，而FPR只是负样本中预测错误的概率，和正负样本的比例没有关系。因此 ROC 的值与实际的正负样本比例无关，因此既可以用于均衡问题，也可以用于非均衡问题。而 AUC 的几何意义为ROC曲线下的面积，因此也和实际的正负样本比例无关。</p>
+</blockquote>
+<h3 id="dai-ma">代码</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="comment"># 二分类</span></span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">scores = np.array([<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.35</span>, <span class="number">0.8</span>])</span><br><span class="line">fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># fpr</span></span><br><span class="line">array([ <span class="number">0.</span> ,  <span class="number">0.5</span>,  <span class="number">0.5</span>,  <span class="number">1.</span> ])</span><br><span class="line"><span class="comment"># tpr</span></span><br><span class="line">array([ <span class="number">0.5</span>,  <span class="number">0.5</span>,  <span class="number">1.</span> ,  <span class="number">1.</span> ])</span><br><span class="line"><span class="comment"># thresholds</span></span><br><span class="line">array([ <span class="number">0.8</span> ,  <span class="number">0.4</span> ,  <span class="number">0.35</span>,  <span class="number">0.1</span> ])</span><br><span class="line"></span><br><span class="line">auc = metrics.auc(fpr, tpr) <span class="comment">#0.75</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多分类</span></span><br><span class="line">fpr, tpr, thresholds = metrics.roc_auc_score(y_true, y_scores, multi_class=<span class="string">'ovo'</span>,labels=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>],average=<span class="string">'macro'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://blog.csdn.net/sinat_28576553/article/details/80258619" target="_blank" rel="noopener">分类问题的几个评价指标（Precision、Recall、F1-Score、Micro-F1、Macro-F1）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/36305931" target="_blank" rel="noopener">机器学习评估指标</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/" rel="prev" title="机器学习大总结">
+      <i class="fa fa-chevron-left"></i> 机器学习大总结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/16/deeplearning/backprop/" rel="next" title="反向传播">
+      反向传播 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fen-lei-ping-jie-zhi-biao"><span class="nav-number">1.</span> <span class="nav-text">分类评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#accuracy"><span class="nav-number">1.1.</span> <span class="nav-text">Accuracy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#precison-recall-f"><span class="nav-number">1.2.</span> <span class="nav-text">Precison、Recall、F</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#micro-f-1-he-macro-f-1"><span class="nav-number">1.3.</span> <span class="nav-text">Micro-F1和Macro-F1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#micro-f-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">Micro-F1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macro-f-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Macro-F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roc-he-auc"><span class="nav-number">1.4.</span> <span class="nav-text">ROC 和 AUC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#roc"><span class="nav-number">1.4.1.</span> <span class="nav-text">ROC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#micro"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">micro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#macro"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">macro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weight"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">weight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sample"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">sample</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auc"><span class="nav-number">1.4.2.</span> <span class="nav-text">AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dai-ma"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">994k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

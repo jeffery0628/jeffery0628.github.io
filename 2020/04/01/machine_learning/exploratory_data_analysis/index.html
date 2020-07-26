@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/04/01/machine_learning/exploratory_data_analysis/8L2Xv9.png">
 <meta property="og:image" content="https://jeffery.ink/2020/04/01/machine_learning/exploratory_data_analysis/8LRgVx.png">
 <meta property="article:published_time" content="2020-04-01T13:36:07.000Z">
-<meta property="article:modified_time" content="2020-07-05T06:47:35.051Z">
+<meta property="article:modified_time" content="2020-07-12T09:39:27.664Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="EDA">
 <meta name="twitter:card" content="summary">
@@ -259,7 +259,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-05 14:47:35" itemprop="dateModified" datetime="2020-07-05T14:47:35+08:00">2020-07-05</time>
+                <time title="修改时间：2020-07-12 17:39:27" itemprop="dateModified" datetime="2020-07-12T17:39:27+08:00">2020-07-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -414,7 +414,7 @@
 <p>前面的工作已经分析了预测值的分布，从分布中可以看到，如果把预测值进行对数变化一下，效果可能更好。然后把特征字段拆分为数值型和类别型。接下来我们主要对数值特征和类别特征进一步挖掘信息，包括类别偏斜，类别分布可视化，数值可视化等。</p>
 <h2 id="lei-bie-te-zheng-de-tan-suo">类别特征的探索</h2>
 <p>类别特征主要是看一下每个类别字段的取值和分布，会用到箱型图、小提琴图、柱状图等各种可视化技巧。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""类别偏斜处理"""</span></span><br><span class="line"><span class="keyword">for</span> cat_fea <span class="keyword">in</span> categorical_features:</span><br><span class="line">    print(cate_fea + <span class="string">'特征分布如下：'</span>)</span><br><span class="line">    print(<span class="string">'&#123;&#125;特征有&#123;&#125;不同的值'</span>.format(cate_fea, len(train_data[cat_fea].unique())))</span><br><span class="line">    print(train_data[cat_fea].value_counts())</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""类别偏斜处理"""</span></span><br><span class="line"><span class="keyword">for</span> cate_fea <span class="keyword">in</span> category_features:</span><br><span class="line">    print(cate_fea + <span class="string">'特征分布如下：'</span>)</span><br><span class="line">    print(<span class="string">'&#123;&#125;特征有&#123;&#125;不同的值'</span>.format(cate_fea, len(train_data[cate_fea].unique())))</span><br><span class="line">    print(train_data[cate_fea].value_counts())</span><br><span class="line">    print()</span><br></pre></td></tr></table></figure>
 <p>这里主要是重点查看一下类别特征有没有数量严重偏斜的情况（由于太多，不在这里显示），这样的情况一般对预测没有什么帮助</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'seller'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>    <span class="number">149999</span></span><br><span class="line"><span class="number">1</span>         <span class="number">1</span></span><br><span class="line">Name: seller, dtype: int64</span><br><span class="line"></span><br><span class="line">train_data[<span class="string">'offerType'</span>].value_counts()</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>    <span class="number">150000</span></span><br><span class="line">Name: offerType, dtype: int64</span><br></pre></td></tr></table></figure>
 <p>像<code>seller</code>、<code>offerType</code>字段偏斜就比较严重，直接删除这些字段:</p>
@@ -652,20 +652,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -711,7 +711,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">823k</span>
+    <span title="站点总字数">994k</span>
 </div>
 
         

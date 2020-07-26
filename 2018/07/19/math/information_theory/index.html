@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="信息论">
+<meta property="og:url" content="https://jeffery.ink/2018/07/19/math/information_theory/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2018/07/19/math/information_theory/timg.jpeg">
+<meta property="og:image" content="https://jeffery.ink/2018/07/19/math/information_theory/image-20200719225308164.png">
+<meta property="og:image" content="https://jeffery.ink/2018/07/19/math/information_theory/20160718112932230.png">
+<meta property="article:published_time" content="2018-07-19T12:53:39.000Z">
+<meta property="article:modified_time" content="2020-07-20T13:25:41.686Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2018/07/19/math/information_theory/timg.jpeg">
+
+<link rel="canonical" href="https://jeffery.ink/2018/07/19/math/information_theory/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>信息论 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/07/19/math/information_theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          信息论
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-20 21:25:41" itemprop="dateModified" datetime="2020-07-20T21:25:41+08:00">2020-07-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6-%E4%BF%A1%E6%81%AF%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">数学/信息论</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/07/19/math/information_theory/" class="post-meta-item leancloud_visitors" data-flag-title="信息论" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2018/07/19/math/information_theory/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/07/19/math/information_theory/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2018/07/19/math/information_theory/timg.jpeg" alt></p>
+<a id="more"></a>
+<h1 id="xin-xi-shang">信息熵</h1>
+<h2 id="xin-xi">信息</h2>
+<p>信息量可以被看成在学习 <code>x</code> 的值的时候的“惊讶程度”。如果有人告诉我们一个相当不可能的时间发生了，我们收到的信息要多于我们被告知某个很可能发生的事件发生时收到的信息，如果我们知道某件事情一定会发生,那么我们就不会接收到信息。于是，我们对于信息内容的度量将依赖于概率分布 <code>p(x)</code> ，因此我们想要寻找一个函数 <code>h(x)</code> ，它是概率 <code>p(x)</code> 的单调递减函数，表达了信息的内容。 <code>h(·)</code> 的形式可以这样寻找：如果我们有两个不相关的事件 <code>x</code> 和 <code>y</code> ,那么我们观察到两个事件同时发生时获得的信息应该等于观察到事件各自发生时获得的信息之和，即 \(h(x, y) = h(x) + h(y)\) {采用概率分布的对数作为信息的量度的原因是其可加性。}。两个不相关事件是统计独立的，因此 p(x, y) = p(x)p(y) 。根据这两个关系，很容易看出 h(x) 一定与 p(x) 的对数有关，满足这两个条件的函数肯定是负对数形式。因此，我们有<br>
+\[
+h(x) = -log_2 p(x) \tag{1.1}
+\]</p>
+<blockquote>
+<p>负号确保了信息一定是正数或者是零。注意，低概率事件 x 对应于高的信息量。</p>
+</blockquote>
+<p>假设一个发送者想传输一个随机变量的值给接收者。这个过程中,他们传输的平均信息量通可以通过求公式<code>1.1</code>关于概率分布 <code>p(x)</code> 的期望得到。即事件的概率分布和每个事件的信息量构成了一个随机变量，这个随机变量的均值（即期望）就是这个分布产生的信息量的平均值（即<strong>熵</strong>）。</p>
+<p>\[
+H[x]=-\sum_{x} p(x) \ln p(x)
+\]</p>
+<h2 id="shang-de-ding-yi">熵的定义</h2>
+<p>如果\(X\)是一个离散型随机变量，其概率分布为:\(p(x) = P(X=x), x \in X.\) \(X\)的熵\(H(X)\)为:<br>
+\[
+H(X) = -\sum_{x \in X} {p(x)log_2 p(x)} \tag{1}
+\]<br>
+其中，约定\(0log0=0.\) \(H(X)\)也可以写为\(H(p)\).通常熵的单位为二进制，比特(bit)。</p>
+<p>依据<code>Boltzmann's H-theorem</code>，香农把随机变量 <code>X</code> 的熵值 \(\Eta\)（希腊字母<code>Eta</code>）定义如下，其值域为 \({x_1, ...,x_n}\)：<br>
+\[
+\mathrm{H}(X)=\mathrm{E}[\mathrm{I}(X)]=\mathrm{E}[-\ln (\mathrm{P}(X))]
+\]<br>
+其中， <code>P</code> 为 <code>X</code> 的概率质量函数，<code>E</code> 为期望函数，而 <code>I(X)</code> 是<code>X</code> 的信息量（又称为自信息）。<code>I(X)</code> 本身是个随机变数。当取自有限的样本时，熵的公式可以表示为：</p>
+<p>\[
+\mathrm{H}(X)=\sum_{i} \mathrm{P}\left(x_{i}\right) \mathrm{I}\left(x_{i}\right)=-\sum_{i} \mathrm{P}\left(x_{i}\right) \log _{b} \mathrm{P}\left(x_{i}\right)
+\]<br>
+熵又称为自信息,表示信源 <code>X</code> 每发一个符号(不论发什么符号)所提供的平均信息量。</p>
+<p>熵可以理解为不确定性的量度(或者说是多样性diversity的度量)，因为越随机的信源的熵越大。熵可以被视为描述一个随机变量的不确定性的数量。一个随机变量的熵越大,它的不确定性越大。那么,正确估计其值的可能性就越小。越不确定的随机变量越需要大的信息量用以确定其值。</p>
+<h3 id="shang-de-dan-wei">熵的单位</h3>
+<p>单位取决于定义用到对数的底。当<em>b</em> = 2，熵的单位是bit；当<em>b</em> = e，熵的单位是nat；而当<em>b</em> = 10,熵的单位是 Hart。</p>
+<h3 id="shang-de-qu-zhi-fan-wei">熵的取值范围</h3>
+<p>从定义式,可以看出,虽然信息熵经常被称为负熵,但是其取值恒为正,这是因为概率\(p(i)\)恒小于1。不过，由于信息的接受就是不肯定性的消除，即熵的消除，所以信息熵才常被人称作负熵。</p>
+<p>熵的取值范围：\(0 \leq \Eta(P) \leq log |X|\),其中\(|X|\)是<code>X</code>的取值个数。由于\(0\leq p(i) \leq 1\),因此上非负。当\(p(i)=1\)且其他的\(p(j \ne i)=0\)时，熵取最小值0。在概率归一化的限制下，使用拉格朗日乘数法可以找到熵的最大值。因此，需要最大化：<br>
+\[
+\tilde{H}=-\sum_{i} p\left(x_{i}\right) \ln p\left(x_{i}\right)+\lambda\left(\sum_{i} p\left(x_{i}\right)-1\right)
+\]<br>
+可以证明,当所有的 \(p(x_i)\)都相等,且值为 \(p(x_i) = \frac{1}{M}\) 时,熵取得最大值（当且仅当X的分布是均匀分布时右边的等号成立。即当X服从均匀分布时，熵最大）。其中, M 是状态\(x_i\)的总数。此时对应的熵值为 \(\Eta = ln M\)。这个结果也可以通过 Jensen 不等式推导出来。</p>
+<h2 id="shang-de-te-xing">熵的特性</h2>
+<p>任何满足这些假设的熵的定义均正比以下形式：<br>
+\[
+-K \sum_{i=1}^{n} p_{i} \log \left(p_{i}\right)
+\]<br>
+其中，<code>K</code>是与选择的度量单位相对应的一个正比常数。下文中，\(p_i = Pr(X= x_i)\)且\(\mathrm{H}_{n}\left(p_{1}, \ldots, p_{n}\right)=\mathrm{H}(X)\)</p>
+<p>###连续性</p>
+<p>该量度应连续，概率值小幅变化只能引起熵的微小变化。</p>
+<h3 id="dui-cheng-xing">对称性</h3>
+<p>符号\(x_i\)重新排序后，该量度应不变:\(\mathrm{H}_{n}\left(p_{1}, p_{2}, \ldots\right)=\mathrm{H}_{n}\left(p_{2}, p_{1}, \ldots\right)\).</p>
+<h3 id="ji-zhi-xing">极值性</h3>
+<p>当所有符号等可能出现的情况下，熵达到最大值（所有可能的事件等概率时不确定性最高）.</p>
+<p>\[
+\mathrm{H}_{n}\left(p_{1}, \ldots, p_{n}\right) \leq \mathrm{H}_{n}\left(\frac{1}{n}, \ldots, \frac{1}{n}\right)=\log _{b}(n)
+\]</p>
+<p>等概率事件的熵应随符号的数量增加:<br>
+\[
+\mathrm{H}_{n}(\underbrace{\frac{1}{n}, \ldots, \frac{1}{n}}_{n})=\log _{b}(n)&lt;\log _{b}(n+1)=\mathrm{H}_{n+1}(\underbrace{\frac{1}{n+1}, \ldots, \frac{1}{n+1}}_{n+1})
+\]</p>
+<h3 id="ke-jia-xing">可加性</h3>
+<p>熵的量与该过程如何被划分无关。</p>
+<p>最后给出的这个函数关系刻画了一个系统与其子系统的熵的关系。如果子系统之间的相互作用是已知的，则可以通过子系统的熵来计算一个系统的熵。</p>
+<p>给定<code>n</code>个均匀分布元素的集合，分为<code>k</code>个箱（子系统），每个里面有 \(b_1, \ldots, b_k\) 个元素，合起来的熵应等于系统的熵与各个箱子的熵的和，每个箱子的权重为在该箱中的概率。</p>
+<p>对于正整数\(b_i\),其中,\(b_1 + \dots + b_k = n\)来说:<br>
+\[
+\mathrm{H}_{n}\left(\frac{1}{n}, \ldots, \frac{1}{n}\right)=\mathrm{H}_{k}\left(\frac{b_{1}}{n}, \ldots, \frac{b_{k}}{n}\right)+\sum_{i=1}^{k} \frac{b_{i}}{n} \mathrm{H}_{b_{i}}\left(\frac{1}{b_{i}}, \ldots, \frac{1}{b_{i}}\right)
+\]</p>
+<h3 id="jin-yi-bu-xing-zhi">进一步性质</h3>
+<ol>
+<li>
+<p>增减概率为零的事件不改变熵<br>
+\[
+\mathrm{H}_{n+1}\left(p_{1}, \ldots, p_{n}, 0\right)=\mathrm{H}_{n}\left(p_{1}, \ldots, p_{n}\right)
+\]</p>
+</li>
+<li>
+<p>计算 (<em>X</em>,<em>Y</em>)得到的熵或信息量等于通过进行两个连续实验得到的信息：先计算<em>Y</em>的值，然后在知道<em>Y</em>的值条件下得出<em>X</em>的值：<br>
+\[
+\mathrm{H}(X, Y)=\mathrm{H}(X \mid Y)+\mathrm{H}(Y)=\mathrm{H}(Y \mid X)+\mathrm{H}(X)
+\]</p>
+</li>
+<li>
+<p>如果<code>X</code>和<code>Y</code>是两个独立实验，那么知道<code>Y</code>的值不影响我们对<code>X</code>值的认知（因为两者独立，所以互不影响）<br>
+\[
+\mathrm{H}(X \mid Y)=\mathrm{H}(X)
+\]</p>
+</li>
+<li>
+<p>两个事件同时发生的熵不大于每个事件单独发生的熵的总和，且仅当两个事件是独立的情况下相等。<br>
+\[
+\mathrm{H}(X, Y) \leq \mathrm{H}(X)+\mathrm{H}(Y)
+\]</p>
+</li>
+</ol>
+<h2 id="wei-fen-shang">微分熵</h2>
+<h1 id="xiang-nong-shang-de-bian-xing">香农熵的变形</h1>
+<h2 id="lian-he-shang">联合熵</h2>
+<h2 id="tiao-jian-shang">条件熵</h2>
+<h2 id="xiang-dui-shang-kl-ju-chi">相对熵( KL 距离)</h2>
+<p>两个概率分布\(p(x)\)和\(q(x)\)的相对熵定义为：<br>
+\[
+D(p \| q)=\sum_{x \in X} p(x) \log \frac{p(x)}{q(x)}
+\]<br>
+约定\(0log(0/q)=0,plog(p/0)=\infty\).</p>
+<p>可以把 <code>Kullback-Leibler</code> 散度（KL 散度之所以不说距离，是因为不满足对称性和三角形法则）。看做两个分布 <code>p(x)</code> 和 <code>q(x)</code> 之间不相似程度的度量。相对熵常被用以衡量两个随机分布的差距。当两个随机分布相同时,其相对熵为0。当两个随机分布的差别增加时,其相对熵也增加。当<code>q=p</code>时，该度量的结果是0，而其它度量的结果为正值。直观上，它度量了使用q而不是p的压缩损失（以二进制）的程度。</p>
+<p><img src="/2018/07/19/math/information_theory/image-20200719225308164.png" alt></p>
+<p>假设数据通过未知分布 <code>p(x)</code> 生成,我们想要对 <code>p(x)</code> 建模。可以试着使用一些参数分布 \(q(x|\theta)\) 来近似这个分布。 \(q(x|\theta)\) 由可调节的参数 \(\theta\) 控制(例如一个多元高斯分布)。一种确定 θ 的方式是最小化 \(p(x)\) 和 \(q(x|\theta)\) 之间关于 \(\theta\) 的 Kullback-Leibler 散度。我们不能直接这么做,因为我们不知道 <code>p(x)</code> 。但是,假设我们已经观察到了服从分布 <code>p(x)</code> 的有限数量的训练点 \(x_n\) ,其中 \(n = 1,\ldots , N\) 。那么,关于 \(p(x)\) 的期望就可以通过这些点的有限加和,使用下面公式来近似,即：<br>
+\[
+\mathrm{KL}(p \| q) \simeq \frac{1}{N} \sum_{n=1}^{N}\left\{-\ln q\left(\boldsymbol{x}_{n} \mid \boldsymbol{\theta}\right)+\ln p\left(\boldsymbol{x}_{n}\right)\right\}
+\]<br>
+公式右侧的第二项与\(\theta\)无关,第一项是使用训练集估计的分布 \(q(x|\theta)\)下的 \(\theta\) 的负对数似然函数。因此我们看到,最小化 <code>Kullback-Leibler</code> 散度等价于最大化似然函数。</p>
+<h2 id="jiao-cha-shang">交叉熵</h2>
+<p>如果一个随机变量 \(X \sim p(x)\),\(q(x)\)为用于近似\(p(x)\)的概率分布,那么,随机变量 <code>X</code> 和模型 <code>q</code> 之间的交叉熵定义为:<br>
+\[
+\begin{aligned}
+H(X, q) &amp;=H(X)+D(p \| q) \\
+&amp;=-\sum_{x} p(x) \log q(x)
+\end{aligned}
+\]<br>
+交叉熵的概念用以衡量估计模型与真实概率分布之间的差异。</p>
+<h3 id="kun-huo-du">困惑度</h3>
+<p>在设计语言模型时,通常用困惑度来代替交叉熵衡量语言模型的好坏。困惑度是用在自然语言处理领域（NLP）中，衡量语言模型好坏的指标。它主要是根据每个词来估计一句话出现的概率，并用句子长度作normalize。</p>
+<p>困惑度是交叉熵的指数形式。具体的：</p>
+<p>将一个sentence看做一个随机变量，\(W=\left\{w_{0}, w_{1}, \ldots, w_{n}\right\}\),这里假定是有限长度n，那么它对应的熵为：<br>
+\[
+H\left(w_{1}, w_{2}, \ldots, w_{n}\right)=-\log _{w_{1}^{n} \in L} p\left(w_{1}^{n}\right) \log p\left(w_{1}^{n}\right)
+\]<br>
+对应的per-word 熵，也就是entroy rate为：<br>
+\[
+\frac{1}{n} H\left(w_{1}, w_{2}, \ldots, w_{n}\right)=-\frac{1}{n} \log _{w_{1}^{n} \in L} p\left(w_{1}^{n}\right) \log p\left(w_{1}^{n}\right)
+\]<br>
+引入交叉熵，真实分布<code>p</code>，通过语言模型生成的<code>sentence</code>，可以看作预测得到分布为<code>m</code>，那么交叉熵：<br>
+\[
+H(p, m)=-\frac{1}{n} \sum_{W \in L} p\left(w_{1}, w_{2}, \ldots, w_{n}\right) \log m\left(w_{1}, w_{2}, \ldots, w_{n}\right)
+\]<br>
+交叉熵的值越小，我们预测得到的分布也就越接近真实分布。因为训练样本已经给出，也就是p是定值，故 \(H(p,m)\) 可写成：<br>
+\[
+H(W)=-\frac{1}{N} \log P\left(w_{1} w_{2} \cdots w_{N}\right)
+\]<br>
+基于语言模型 \(M=P\left(w_{i} \mid w_{i-N+1} \cdots w_{i-1}\right)\)的困惑度perplexity可定义为交叉熵的指数形式：<br>
+\[
+\begin{aligned}
+\operatorname{Perplexity}(W) &amp;=2^{H(W)} \\
+&amp;=P\left(w_{1} w_{2} \ldots w_{N}\right)^{-\frac{1}{N}} \\
+&amp;=\sqrt[N]{\frac{1}{P\left(w_{1} w_{2} \ldots w_{N}\right)}} \\
+&amp;=\sqrt[N]{\prod_{i=1}^{N} \frac{1}{P\left(w_{i} \mid w_{1} \ldots w_{i-1}\right)}}
+\end{aligned}
+\]</p>
+<p>由公式可知，**句子概率越大，语言模型越好，困惑度越小。**说模型的困惑度下降到90，可以直观地理解为，在模型生成一句话时下一个词有90个合理选择，可选词数越少，大致认为模型越准确。</p>
+<p>通常使用困惑度来评价语言模型的好坏。特别地，</p>
+<ul>
+<li>最佳情况下，模型总是把标签类别的概率预测为1，此时困惑度为1；</li>
+<li>最坏情况下，模型总是把标签类别的概率预测为0，此时困惑度为正无穷；</li>
+<li>基线情况下，模型总是预测所有类别的概率都相同，此时困惑度为类别个数。</li>
+</ul>
+<p>显然，任何一个有效模型的困惑度必须小于类别个数。</p>
+<h2 id="hu-xin-xi">互信息</h2>
+<p>如果 \((X, Y) \sim p(x, y)\), <code>X</code>, <code>Y</code> 之间的互信息 <code>I(X;Y)</code>定义为:<br>
+\[
+I(X;Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log \frac{p(x, y)}{p(x) p(y)}
+\]<br>
+互信息<code>I (X;Y)</code>取值为非负。当<code>X,Y</code>相互独立时，<code>I(X,Y)</code>最小为0。</p>
+<blockquote>
+<p>互信息实际上是更广泛的相对熵的特殊情形</p>
+</blockquote>
+<p>如果变量不是独立的,那么我们可以通过考察联合概率分布与边缘概率分布乘积之间的 <code>Kullback-Leibler</code> 散度来判断它们是否“接近”于相互独立。此时, Kullback-Leibler 散度为:<br>
+\[
+\begin{aligned}
+I[\boldsymbol{x}, \boldsymbol{y}] &amp; \equiv \operatorname{KL}(p(\boldsymbol{x}, \boldsymbol{y}) \| p(\boldsymbol{x}) p(\boldsymbol{y})) \\
+&amp;=-\iint p(\boldsymbol{x}, \boldsymbol{y}) \ln \left(\frac{p(\boldsymbol{x}) p(\boldsymbol{y})}{p(\boldsymbol{x}, \boldsymbol{y})}\right) \mathrm{d} \boldsymbol{x} \mathrm{d} \boldsymbol{y}
+\end{aligned}
+\]<br>
+这被称为变量 x 和变量 y 之间的互信息。根据 <code>Kullback-Leibler</code> 散度的性质,我们看到 I[x, y] ≥ 0 ,当且仅当 x 和 y 相互独立时等号成立。</p>
+<p>使用概率的加和规则和乘积规则,我们看到互信息和条件熵之间的关系为:<br>
+\[
+I[\boldsymbol{x}, \boldsymbol{y}]=H[\boldsymbol{x}]-H[\boldsymbol{x} \mid \boldsymbol{y}]=H[\boldsymbol{y}]-H[\boldsymbol{y} \mid \boldsymbol{x}]
+\]<br>
+可以把互信息看成由于知道 y 值而造成的 x 的不确定性的减小(反之亦然).</p>
+<p>易知：<br>
+\[
+H(X)=-\sum_{x \in X} p(x) \log _{2} p(x) \\
+H(X \mid Y)=-\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(x \mid y)
+\]<br>
+可知：<br>
+\[
+\begin{array}{l}
+I(X ; Y)&amp;=H(X)-H(X \mid Y) \\
+&amp;=-\sum_{x \in X} p(x) \log _{2} p(x)+\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} p(x \mid y) \\
+&amp;=\sum_{x \in X} \sum_{y \in Y} p(x, y)\left(\log _{2} p(x \mid y)-\log _{2} p(x)\right) \\
+&amp;=\sum_{x \in X} \sum_{y \in Y} p(x, y)\left(\log _{2} \frac{p(x \mid y)}{p(x)}\right) 
+\end{array}
+\]<br>
+即：<br>
+\[
+I(X ; Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} \frac{p(x, y)}{p(x) p(y)}
+\]</p>
+<h3 id="dian-hu-xin-xi-pmi">点互信息PMI</h3>
+<p>PMI这个指标来衡量两个事物之间的相关性（比如两个词）。其原理很简单，公式如下：<br>
+\[
+\operatorname{PMI}(x ; y)=\log \frac{p(x, y)}{p(x) p(y)}=\log \frac{p(x \mid y)}{p(x)}=\log \frac{p(y \mid x)}{p(y)}
+\]<br>
+在概率论中，如果x跟y不相关，则\(p(x,y)=p(x)p(y)\)。二者相关性越大，则\(p(x,y)\)就相比于\(p(x)p(y)\)越大。用后面的式子可能更好理解，在<code>y</code>出现的情况下<code>x</code>出现的条件概率\(p(x|y)\)除以\(x\)本身出现的概率\(p(x)\)，自然就表示<code>x</code>跟<code>y</code>的相关程度。 这里的<code>log</code>来自于信息论的理论，可以简单理解为，当对\(p(x)\)取<code>log</code>之后就将一个概率转换为了信息量（要再乘以-1将其变为正数），以2为底时可以简单理解为用多少个bits可以表示这个变量。</p>
+<p>点互信息PMI其实就是从信息论里面的互信息这个概念里面衍生出来的。其衡量的是两个随机变量之间的相关性，即<strong>一个随机变量中包含的关于另一个随机变量的信息量</strong>。</p>
+<blockquote>
+<p>所谓的随机变量，即随机试验结果的量的表示，可以简单理解为按照一个概率分布进行取值的变量，比如随机抽查的一个人的身高就是一个随机变量。</p>
+</blockquote>
+<p>可以看出，互信息其实就是对<code>X</code>和<code>Y</code>的所有可能的取值情况的点互信息PMI的加权和，而点互信息只是对其中两个点进行相关性判断。因此，点互信息这个名字还是很形象的。</p>
+<h3 id="hu-xin-xi-tiao-jian-shang-yu-lian-he-shang-de-qu-bie-yu-lian-xi">互信息、条件熵与联合熵的区别与联系</h3>
+<p><img src="/2018/07/19/math/information_theory/20160718112932230.png" alt></p>
+<p>由于 H(X|X) = 0, 所以, H(X) = H(X) – H(X|X) = I(X; X)</p>
+<p>这一方面说明了为什么熵又称自信息,另一方面说明了两个完全相互依赖的变量之间的互信息并不是一个常量,而是取决于它们的熵。</p>
+<p>从图中可以看出，条件熵可以通过联合熵 - 熵（ H(X|Y) = H(X, Y) - H(Y) ）表示，也可以通过熵 - 互信息（ H(X|Y) = H(X) - I(X; Y) ）表示。</p>
+<h2 id="jia-quan-shang">加权熵</h2>
+<h2 id="renyi-shang">Renyi熵</h2>
+<h1 id="shang-qiu-jie">熵求解</h1>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://blog.csdn.net/pipisorry/article/details/51695283" target="_blank" rel="noopener">信息论：熵与互信息</a></li>
+<li><a href="%5Bhttps://p1htmlkernalweb.mybluemix.net/articles/%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%9F%BA%E7%A1%80%E7%86%B5_2708340_csdn.html%5D(https://p1htmlkernalweb.mybluemix.net/articles/%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%9F%BA%E7%A1%80%E7%86%B5_2708340_csdn.html)">信息论基础–熵</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 信息论</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/07/19/math/probability/" rel="prev" title="概率论">
+      <i class="fa fa-chevron-left"></i> 概率论
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="next" title="激活函数">
+      激活函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xin-xi-shang"><span class="nav-number">1.</span> <span class="nav-text">信息熵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xin-xi"><span class="nav-number">1.1.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-de-ding-yi"><span class="nav-number">1.2.</span> <span class="nav-text">熵的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-de-dan-wei"><span class="nav-number">1.2.1.</span> <span class="nav-text">熵的单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-de-qu-zhi-fan-wei"><span class="nav-number">1.2.2.</span> <span class="nav-text">熵的取值范围</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-de-te-xing"><span class="nav-number">1.3.</span> <span class="nav-text">熵的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dui-cheng-xing"><span class="nav-number">1.3.1.</span> <span class="nav-text">对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ji-zhi-xing"><span class="nav-number">1.3.2.</span> <span class="nav-text">极值性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ke-jia-xing"><span class="nav-number">1.3.3.</span> <span class="nav-text">可加性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jin-yi-bu-xing-zhi"><span class="nav-number">1.3.4.</span> <span class="nav-text">进一步性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-fen-shang"><span class="nav-number">1.4.</span> <span class="nav-text">微分熵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xiang-nong-shang-de-bian-xing"><span class="nav-number">2.</span> <span class="nav-text">香农熵的变形</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lian-he-shang"><span class="nav-number">2.1.</span> <span class="nav-text">联合熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-shang"><span class="nav-number">2.2.</span> <span class="nav-text">条件熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-dui-shang-kl-ju-chi"><span class="nav-number">2.3.</span> <span class="nav-text">相对熵( KL 距离)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jiao-cha-shang"><span class="nav-number">2.4.</span> <span class="nav-text">交叉熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kun-huo-du"><span class="nav-number">2.4.1.</span> <span class="nav-text">困惑度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hu-xin-xi"><span class="nav-number">2.5.</span> <span class="nav-text">互信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dian-hu-xin-xi-pmi"><span class="nav-number">2.5.1.</span> <span class="nav-text">点互信息PMI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hu-xin-xi-tiao-jian-shang-yu-lian-he-shang-de-qu-bie-yu-lian-xi"><span class="nav-number">2.5.2.</span> <span class="nav-text">互信息、条件熵与联合熵的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jia-quan-shang"><span class="nav-number">2.6.</span> <span class="nav-text">加权熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#renyi-shang"><span class="nav-number">2.7.</span> <span class="nav-text">Renyi熵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shang-qiu-jie"><span class="nav-number">3.</span> <span class="nav-text">熵求解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">994k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

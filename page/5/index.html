@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/28/BatchNormalization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">激活函数</a>
+            <a href="/2020/03/28/BatchNormalization/" class="post-title-link" itemprop="url">BatchNormalization</a>
         </h2>
 
         <div class="post-meta">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-14 21:14:39" itemprop="dateModified" datetime="2020-04-14T21:14:39+08:00">2020-04-14</time>
+                <time title="修改时间：2020-07-25 23:11:03" itemprop="dateModified" datetime="2020-07-25T23:11:03+08:00">2020-07-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,12 +238,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" class="post-meta-item leancloud_visitors" data-flag-title="激活函数" title="阅读次数">
+            <span id="/2020/03/28/BatchNormalization/" class="post-meta-item leancloud_visitors" data-flag-title="BatchNormalization" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -257,14 +257,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -276,13 +276,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="sigmoid">sigmoid</h3>
-<h4 id="jian-jie">简介</h4>
-<p>sigmoid函数也叫Logistic函数，用于隐层神经元输出，取值范围为(0,1)，它可以将一个实数映射到(0,1)的区间，可以用来做二分类。</p>
-<p><img src="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/sigmoid.png" alt="avatat"></p>
+          <p>机器学习领域有个很重要的假设：<strong>IID独立同分布假设</strong>，就是假设训练数据和测试数据是满足相同分布的，这是通过训练数据获得的模型能够在测试集获得好的效果的一个基本保障。</p>
+<p>那BatchNorm的作用是什么呢？<strong>BatchNorm就是在深度神经网络训练过程中使得每一层神经网络的输入保持相同分布的。</strong></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2020/03/28/BatchNormalization/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -306,7 +304,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/28/data_preprocessing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -320,7 +318,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">优化算法</a>
+            <a href="/2020/03/28/data_preprocessing/" class="post-title-link" itemprop="url">数据预处理</a>
         </h2>
 
         <div class="post-meta">
@@ -330,7 +328,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-31 11:26:57" itemprop="dateModified" datetime="2020-03-31T11:26:57+08:00">2020-03-31</time>
+                <time title="修改时间：2020-05-28 15:21:42" itemprop="dateModified" datetime="2020-05-28T15:21:42+08:00">2020-05-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -338,12 +336,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="优化算法" title="阅读次数">
+            <span id="/2020/03/28/data_preprocessing/" class="post-meta-item leancloud_visitors" data-flag-title="数据预处理" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -357,7 +355,104 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2020/03/28/data_preprocessing/image-20200528110918927.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/28/data_preprocessing/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/20/deeplearning/attention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/20/deeplearning/attention/" class="post-title-link" itemprop="url">注意力机制</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-20 23:05:44" itemprop="dateModified" datetime="2020-07-20T23:05:44+08:00">2020-07-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/03/20/deeplearning/attention/" class="post-meta-item leancloud_visitors" data-flag-title="注意力机制" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -376,25 +471,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="ti-du-xia-jiang-suan-fa">梯度下降算法</h2>
-<p>梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。<br>
-假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解<br>
-\[
-   min_{x \in R^n}f(x)
-\]<br>
-无约束最优化问题。 \(f^\ast\)表示目标函数\(f(x)\)的极小点。<br>
-梯度下降法是一种迭代算法，选取适当的初值\(x^0\),不断迭代，更新x的值，进行目标函数的极小化，直到收敛。由于负梯度的方向是使函数下降最快的方向，在迭代的每一步，以负梯度方向更新x的值，从而达到减少函数值的目的。<br>
-第k+1次迭代值：<br>
-\[
-x^{(k+1)} \leftarrow x^{(k)}+\lambda_{k} p_{k}
-\]<br>
-其中，\(p_k\)是搜索方向，取负梯度方向\(p_k = - \nabla f(x^k)\),\(\lambda_k\)使得<br>
-\[
-f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\lambda p_{k}\right)
-\]</p>
+          <p><img src="/2020/03/20/deeplearning/attention/10.11_attention.svg" alt></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/2020/03/20/deeplearning/attention/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -418,7 +498,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/06/25/linux_quickcheck/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/16/deeplearning/backprop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -432,7 +512,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/25/linux_quickcheck/" class="post-title-link" itemprop="url">linux命令速查</a>
+            <a href="/2020/03/16/deeplearning/backprop/" class="post-title-link" itemprop="url">反向传播</a>
         </h2>
 
         <div class="post-meta">
@@ -442,7 +522,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 10:37:06" itemprop="dateModified" datetime="2020-06-14T10:37:06+08:00">2020-06-14</time>
+                <time title="修改时间：2020-07-16 23:41:26" itemprop="dateModified" datetime="2020-07-16T23:41:26+08:00">2020-07-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -450,322 +530,12 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF-linux/" itemprop="url" rel="index"><span itemprop="name">技术/linux</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/06/25/linux_quickcheck/" class="post-meta-item leancloud_visitors" data-flag-title="linux命令速查" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>18k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>17 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/2018/06/25/linux_quickcheck/terminal_command.jpg" alt></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/25/linux_quickcheck/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/05/29/Vim%E9%80%9F%E6%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/" class="post-title-link" itemprop="url">Vim速查</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-31 11:25:52" itemprop="dateModified" datetime="2020-03-31T11:25:52+08:00">2020-03-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/soft-skill/" itemprop="url" rel="index"><span itemprop="name">soft skill</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/" class="post-meta-item leancloud_visitors" data-flag-title="Vim速查" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="vim-visual-interface">vim（Visual Interface）</h2>
-<p><img src="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/NSFileHandle.png" alt="avatar"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/29/Vim%E9%80%9F%E6%9F%A5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/05/10/latex%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/10/latex%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5/" class="post-title-link" itemprop="url">latex公式速查</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-10 02:35:12" itemprop="dateModified" datetime="2020-05-10T02:35:12+08:00">2020-05-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/soft-skill/" itemprop="url" rel="index"><span itemprop="name">soft skill</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/05/10/latex%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5/" class="post-meta-item leancloud_visitors" data-flag-title="latex公式速查" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="shang-xia-biao">上下标</h3>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>显示</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>x_{2}</td>
-<td>\(x_{2}\)</td>
-</tr>
-<tr>
-<td>x^2</td>
-<td>\(x^{2}\)</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/10/latex%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/21/%E5%9B%BE%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/21/%E5%9B%BE%E8%AE%BA/" class="post-title-link" itemprop="url">图论</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 21:50:51" itemprop="dateModified" datetime="2020-03-23T21:50:51+08:00">2020-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/03/21/%E5%9B%BE%E8%AE%BA/" class="post-meta-item leancloud_visitors" data-flag-title="图论" title="阅读次数">
+            <span id="/2020/03/16/deeplearning/backprop/" class="post-meta-item leancloud_visitors" data-flag-title="反向传播" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -798,12 +568,10 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="wu-xiang-tu">无向图</h3>
-<h4 id="ding-yi-wu-xiang-tu-shu-ju-jie-gou">定义无向图数据结构</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        self.n = n</span><br><span class="line">        self.e = <span class="number">0</span></span><br><span class="line">        self.adj = [[] <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_edge</span><span class="params">(self, v, w)</span>:</span></span><br><span class="line">        self.adj[v].append(w)</span><br><span class="line">        self.adj[w].append(v)</span><br><span class="line">        self.e += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+          <p><img src="/2020/03/16/deeplearning/backprop/3.14_forward.svg" alt></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/03/21/%E5%9B%BE%E8%AE%BA/#more" rel="contents">
+              <a class="btn" href="/2020/03/16/deeplearning/backprop/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -827,7 +595,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/03/13/evaluation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -841,7 +609,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">字符串匹配问题</a>
+            <a href="/2020/03/13/evaluation/" class="post-title-link" itemprop="url">评价指标</a>
         </h2>
 
         <div class="post-meta">
@@ -851,20 +619,11 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-22 21:53:16" itemprop="dateModified" datetime="2020-03-22T21:53:16+08:00">2020-03-22</time>
+                <time title="修改时间：2020-07-13 22:53:44" itemprop="dateModified" datetime="2020-07-13T22:53:44+08:00">2020-07-13</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-                </span>
-            </span>
 
           
-            <span id="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="字符串匹配问题" title="阅读次数">
+            <span id="/2020/03/13/evaluation/" class="post-meta-item leancloud_visitors" data-flag-title="评价指标" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -878,206 +637,7 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="zi-fu-chuan-pi-pei-wen-ti">字符串匹配问题</h2>
-<p>给定两个字符串<code>S,P</code>,其中<code>S</code>串长度为<code>n</code>，<code>P</code>串长度为<code>m</code>, <code>(m&lt;=n)</code>，判断字符串<code>P</code>是否是<code>S</code>的子串</p>
-<h4 id="fu-za-du">复杂度</h4>
-<p>容易计算复杂度：<code>O(m*n)</code></p>
-<h3 id="brute-force-jian-dan-pi-pei">Brute-Force(简单匹配)</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_match</span><span class="params">(s, p)</span>:</span></span><br><span class="line">    m, n = len(s), len(p)</span><br><span class="line">    <span class="keyword">if</span> m-n &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m-n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> s[i:i+n] == p:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">动态规划</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-22 21:24:08" itemprop="dateModified" datetime="2020-03-22T21:24:08+08:00">2020-03-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-meta-item leancloud_visitors" data-flag-title="动态规划" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/2018/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/dynamic_programming.png" alt="avatar"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/03/09/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/snoppy.jpeg">
-      <meta itemprop="name" content="Li Zhen">
-      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="火种2号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">背包问题</a>
-        </h2>
-
-        <div class="post-meta">
-          
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-21 20:17:44" itemprop="dateModified" datetime="2020-03-21T20:17:44+08:00">2020-03-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="背包问题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1096,24 +656,10 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="ti-mu">题目</h3>
-<p>有N件物品和一个容量为<code>v</code>的背包，放入第i件物品耗费空间<code>c[i]</code>得到价值为<code>W[i]</code>,求哪些物品装入背包可使得总价值最大？</p>
-<h4 id="dong-tai-gui-hua-qiu-jie">动态规划求解：</h4>
-<p>状态：问题所求最大价值，设状态即为背包中物品的价值</p>
-<p>状态转移方程：</p>
-<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为<br>
-\[
-\mathrm{dp}[\mathrm{i}][\mathrm{v}]=\max \left\{\begin{array}{l}
-dp[i-1][v](\text {not select}) \\
-dp[i-1][v-C[i]]+W[i](\text {select})
-\end{array}\right.
-\]<br>
-其中<code>dp[i-1][v-C[i]]</code>表示前<code>i-1</code>件物品放入容量为<code>v-C[i]</code>的背包中。</p>
-<h4 id="dai-ma">代码</h4>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># F[0, 0...V] = 0</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>):</span><br><span class="line">    dp[<span class="number">0</span>][v] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 容量装不下当前物品时，保留原值</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">0</span>, C[i]):</span><br><span class="line">        dp[i][v] = dp[i<span class="number">-1</span>][v]</span><br><span class="line">    <span class="comment"># 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
+          <p><img src="/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg" alt></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/2020/03/13/evaluation/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1137,7 +683,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -1151,7 +697,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">排序算法</a>
+            <a href="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">机器学习大总结</a>
         </h2>
 
         <div class="post-meta">
@@ -1161,7 +707,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-22 21:24:26" itemprop="dateModified" datetime="2020-03-22T21:24:26+08:00">2020-03-22</time>
+                <time title="修改时间：2020-07-05 14:59:06" itemprop="dateModified" datetime="2020-07-05T14:59:06+08:00">2020-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1169,12 +715,12 @@ dp[i-1][v-C[i]]+W[i](\text {select})
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="排序算法" title="阅读次数">
+            <span id="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="机器学习大总结" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1188,14 +734,14 @@ dp[i-1][v-C[i]]+W[i](\text {select})
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.9k</span>
+              <span>38k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>35 分钟</span>
             </span>
 
         </div>
@@ -1207,11 +753,415 @@ dp[i-1][v-C[i]]+W[i](\text {select})
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="pai-xu-suan-fa">排序算法</h2>
-<p><img src="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F.png" alt="avatar"></p>
+          <h2 id="ji-qi-xue-xi-da-zong-jie">机器学习大总结</h2>
+<h3 id="zhi-shi-dian">知识点</h3>
+<h4 id="strong-jin-cheng-he-xian-cheng-strong"><strong>进程和线程</strong></h4>
+<p>进程和线程都是一个时间段的描述，是CPU工作时间段的描述，不过是颗粒大小不同.进程就是包换上下文切换的程序执行时间总和 = CPU加载上下文+CPU执行+CPU保存上下文.线程是共享了进程的上下文环境的更为细小的CPU时间段。</p>
+<h4 id="strong-pan-bie-shi-mo-xing-he-sheng-cheng-shi-mo-xing-strong"><strong>判别式模型和生成式模型</strong>:</h4>
+<ol>
+<li>判别式模型直接学习决策函数\(f(X)\)或条件概率分布\(P(Y|X)\)作为预测的模型.往往准确率更高,并且可以简化学习问题.
+<ol>
+<li>k近邻法、感知机、决策树、最大熵模型、Logistic回归、线性判别分析(LDA)、支持向量机(SVM)、Boosting、CRF、线性回归、神经网络</li>
+</ol>
+</li>
+<li>生成式模型由数据学习<strong>联合概率分布P(X,Y)</strong>,然后由P(Y|X)=P(X,Y)/P(X)求出条件概率分布作为预测的模型,即生成模型.当存在隐变量时只能用生成方法学习.
+<ol>
+<li>混合高斯模型和其他混合模型、隐马尔可夫模型(HMM)、朴素贝叶斯、依赖贝叶斯(AODE)、LDA文档主题生成模型</li>
+</ol>
+</li>
+</ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/2020/01/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%A4%A7%E6%80%BB%E7%BB%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/01/12/basic_skills/quick_check_list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/basic_skills/quick_check_list/" class="post-title-link" itemprop="url">python速查表</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-12 12:37:15" itemprop="dateModified" datetime="2020-07-12T12:37:15+08:00">2020-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-API/" itemprop="url" rel="index"><span itemprop="name">技术/API</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/12/basic_skills/quick_check_list/" class="post-meta-item leancloud_visitors" data-flag-title="python速查表" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>103</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2020/01/12/basic_skills/quick_check_list/sousuoying.jpg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/12/basic_skills/quick_check_list/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2019/08/31/scrapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/31/scrapy/" class="post-title-link" itemprop="url">scrapy</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 14:57:38" itemprop="dateModified" datetime="2020-07-05T14:57:38+08:00">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">技术/爬虫</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/31/scrapy/" class="post-meta-item leancloud_visitors" data-flag-title="scrapy" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id></h3>
+<p><img src="/2019/08/31/scrapy/scrapy_framework.png" alt="avatar"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/31/scrapy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2019/08/09/selenium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/09/selenium/" class="post-title-link" itemprop="url">selenium</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 14:57:51" itemprop="dateModified" datetime="2020-07-05T14:57:51+08:00">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">技术/爬虫</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/09/selenium/" class="post-meta-item leancloud_visitors" data-flag-title="selenium" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2019/08/09/selenium/1_hdbXQfve5Yfuo0qEnS8K9Q.jpg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/09/selenium/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2019/07/20/research/seq2seq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/20/research/seq2seq/" class="post-title-link" itemprop="url">seq2seq</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-20 21:54:54" itemprop="dateModified" datetime="2020-07-20T21:54:54+08:00">2020-07-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">技术/自然语言处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/07/20/research/seq2seq/" class="post-meta-item leancloud_visitors" data-flag-title="seq2seq" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="/2019/07/20/research/seq2seq/10.9_seq2seq.svg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/20/research/seq2seq/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1234,7 +1184,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1304,20 +1254,20 @@ dp[i-1][v-C[i]]+W[i](\text {select})
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1363,7 +1313,7 @@ dp[i-1][v-C[i]]+W[i](\text {select})
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">823k</span>
+    <span title="站点总字数">994k</span>
 </div>
 
         

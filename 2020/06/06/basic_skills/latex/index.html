@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
@@ -55,7 +55,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/06/06/basic_skills/latex/image-20200609134020824.png">
 <meta property="og:image" content="https://jeffery.ink/2020/06/06/basic_skills/latex/image-20200609134518050.png">
 <meta property="article:published_time" content="2020-06-06T14:23:55.000Z">
-<meta property="article:modified_time" content="2020-06-20T00:51:47.504Z">
+<meta property="article:modified_time" content="2020-07-19T04:55:55.745Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="latex">
 <meta name="twitter:card" content="summary">
@@ -258,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-20 08:51:47" itemprop="dateModified" datetime="2020-06-20T08:51:47+08:00">2020-06-20</time>
+                <time title="修改时间：2020-07-19 12:55:55" itemprop="dateModified" datetime="2020-07-19T12:55:55+08:00">2020-07-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,14 +297,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
+              <span>16k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>14 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -524,6 +524,54 @@
 <p>可以通过修改长度 <code>\parskip</code> 的值来调整段间距。例如在导言区添加以下内容</p>
 <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">addtolength</span><span class="string">&#123;\parskip&#125;</span><span class="string">&#123;.4em&#125;</span></span></span><br></pre></td></tr></table></figure>
 <p>可以在原有的基础上，增加段间距 0.4em。如果需要减小段间距，只需将该数值改为负值即可。</p>
+<h1 id="zhu-yao-fu-hao-yi-lan">主要符号一览</h1>
+<h2 id="shu">数</h2>
+<ul>
+<li>\(x\)：标量</li>
+<li>\(\boldsymbol{x}\)：向量</li>
+<li>\(\boldsymbol{X}\)：矩阵</li>
+<li>\(\mathsf{X}\)：张量</li>
+</ul>
+<h2 id="ji-he">集合</h2>
+<ul>
+<li>\(\mathcal{X}\)：集合</li>
+<li>\(\mathbb{R}\)：实数集合</li>
+<li>\(\mathbb{R}^n\)：\(n\)维的实数向量集合</li>
+<li>\(\mathbb{R}^{x\times y}\)：\(x\)行\(y\)列的实数矩阵集合</li>
+</ul>
+<h2 id="cao-zuo-fu">操作符</h2>
+<ul>
+<li>\(\boldsymbol{(\cdot)}^\top\)：向量或矩阵的转置</li>
+<li>\(\odot\)：按元素相乘，即阿达马（Hadamard）积</li>
+<li>\(\lvert\mathcal{X}\rvert\)：集合\(\mathcal{X}\)中元素个数</li>
+<li>\(\|\cdot\|_p\)：\(L_p\)范数</li>
+<li>\(\|\cdot\|\)：\(L_2\)范数</li>
+<li>\(\sum\)：连加</li>
+<li>\(\prod\)：连乘</li>
+</ul>
+<h2 id="han-shu">函数</h2>
+<ul>
+<li>\(f(\cdot)\)：函数</li>
+<li>\(\log(\cdot)\)：自然对数函数</li>
+<li>\(\exp(\cdot)\)：指数函数</li>
+</ul>
+<h2 id="dao-shu-he-ti-du">导数和梯度</h2>
+<ul>
+<li>\(\frac{dy}{dx}\)：\(y\)关于\(x\)的导数</li>
+<li>\(\frac{\partial y}{\partial x}\)：\(y\)关于\(x\)的偏导数</li>
+<li>\(\nabla_{\cdot} y\)：\(y\)关于\(\cdot\)的梯度</li>
+</ul>
+<h2 id="gai-lu-he-tong-ji">概率和统计</h2>
+<ul>
+<li>\(P(\cdot)\)：概率分布</li>
+<li>\(\cdot\sim P\)：随机变量\(\cdot\)的概率分布是\(P\)</li>
+<li>\(P(\cdot \mid\cdot)\)：条件概率分布</li>
+<li>\(E_{\cdot}\left(f(\cdot)\right)\)：函数\(f(\cdot)\)对\(\cdot\)的数学期望</li>
+</ul>
+<h2 id="fu-za-du">复杂度</h2>
+<ul>
+<li>\(\mathcal{O}\)：大O符号（渐进符号）</li>
+</ul>
 <h1 id="can-kao">参考</h1>
 <ol>
 <li><a href="https://liam.page/2014/09/08/latex-introduction/" target="_blank" rel="noopener">一份其实很短的 LaTeX 入门文档</a></li>
@@ -641,7 +689,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#an-zhuang-ji-pei-zhi-mac"><span class="nav-number">1.</span> <span class="nav-text">安装及配置（mac）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pei-zhi"><span class="nav-number">1.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-yu-fa"><span class="nav-number">2.</span> <span class="nav-text">latex 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">2.1.</span> <span class="nav-text">Hello world</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhong-ying-wen-hun-pai"><span class="nav-number">2.2.</span> <span class="nav-text">中英文混排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zuo-zhe-biao-ti-ri-qi"><span class="nav-number">2.3.</span> <span class="nav-text">作者、标题、日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhang-jie-he-duan-luo"><span class="nav-number">2.4.</span> <span class="nav-text">章节和段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-mu-lu"><span class="nav-number">2.5.</span> <span class="nav-text">插入目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-shu-xue-gong-shi"><span class="nav-number">2.6.</span> <span class="nav-text">插入数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-mo-shi"><span class="nav-number">2.6.1.</span> <span class="nav-text">数学模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-xia-biao"><span class="nav-number">2.6.2.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gen-shi-yu-fen-shi"><span class="nav-number">2.6.3.</span> <span class="nav-text">根式与分式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">2.6.4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-jie-fu"><span class="nav-number">2.6.5.</span> <span class="nav-text">定界符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sheng-lue-hao"><span class="nav-number">2.6.6.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-zhen"><span class="nav-number">2.6.7.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-xing-gong-shi"><span class="nav-number">2.6.8.</span> <span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chang-gong-shi"><span class="nav-number">2.6.8.1.</span> <span class="nav-text">长公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bu-dui-qi"><span class="nav-number">2.6.8.1.1.</span> <span class="nav-text">不对齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dui-qi"><span class="nav-number">2.6.8.1.2.</span> <span class="nav-text">对齐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gong-shi-zu"><span class="nav-number">2.6.8.2.</span> <span class="nav-text">公式组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fen-duan-han-shu"><span class="nav-number">2.6.9.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-gong-shi-gong-ju"><span class="nav-number">2.6.10.</span> <span class="nav-text">数学公式工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-tu-pian"><span class="nav-number">2.7.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-ge"><span class="nav-number">2.8.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-dong-ti"><span class="nav-number">2.9.</span> <span class="nav-text">浮动体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ban-mian-she-zhi"><span class="nav-number">2.10.</span> <span class="nav-text">版面设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-bian-ju"><span class="nav-number">2.10.1.</span> <span class="nav-text">页边距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-mei-ye-jiao"><span class="nav-number">2.10.2.</span> <span class="nav-text">页眉页脚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shou-xing-suo-jin"><span class="nav-number">2.10.3.</span> <span class="nav-text">首行缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xing-jian-ju"><span class="nav-number">2.10.4.</span> <span class="nav-text">行间距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duan-jian-ju"><span class="nav-number">2.10.5.</span> <span class="nav-text">段间距</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#an-zhuang-ji-pei-zhi-mac"><span class="nav-number">1.</span> <span class="nav-text">安装及配置（mac）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pei-zhi"><span class="nav-number">1.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-yu-fa"><span class="nav-number">2.</span> <span class="nav-text">latex 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">2.1.</span> <span class="nav-text">Hello world</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhong-ying-wen-hun-pai"><span class="nav-number">2.2.</span> <span class="nav-text">中英文混排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zuo-zhe-biao-ti-ri-qi"><span class="nav-number">2.3.</span> <span class="nav-text">作者、标题、日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhang-jie-he-duan-luo"><span class="nav-number">2.4.</span> <span class="nav-text">章节和段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-mu-lu"><span class="nav-number">2.5.</span> <span class="nav-text">插入目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-shu-xue-gong-shi"><span class="nav-number">2.6.</span> <span class="nav-text">插入数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-mo-shi"><span class="nav-number">2.6.1.</span> <span class="nav-text">数学模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-xia-biao"><span class="nav-number">2.6.2.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gen-shi-yu-fen-shi"><span class="nav-number">2.6.3.</span> <span class="nav-text">根式与分式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">2.6.4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-jie-fu"><span class="nav-number">2.6.5.</span> <span class="nav-text">定界符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sheng-lue-hao"><span class="nav-number">2.6.6.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-zhen"><span class="nav-number">2.6.7.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-xing-gong-shi"><span class="nav-number">2.6.8.</span> <span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chang-gong-shi"><span class="nav-number">2.6.8.1.</span> <span class="nav-text">长公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bu-dui-qi"><span class="nav-number">2.6.8.1.1.</span> <span class="nav-text">不对齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dui-qi"><span class="nav-number">2.6.8.1.2.</span> <span class="nav-text">对齐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gong-shi-zu"><span class="nav-number">2.6.8.2.</span> <span class="nav-text">公式组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fen-duan-han-shu"><span class="nav-number">2.6.9.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-gong-shi-gong-ju"><span class="nav-number">2.6.10.</span> <span class="nav-text">数学公式工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-tu-pian"><span class="nav-number">2.7.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-ge"><span class="nav-number">2.8.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-dong-ti"><span class="nav-number">2.9.</span> <span class="nav-text">浮动体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ban-mian-she-zhi"><span class="nav-number">2.10.</span> <span class="nav-text">版面设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-bian-ju"><span class="nav-number">2.10.1.</span> <span class="nav-text">页边距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-mei-ye-jiao"><span class="nav-number">2.10.2.</span> <span class="nav-text">页眉页脚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shou-xing-suo-jin"><span class="nav-number">2.10.3.</span> <span class="nav-text">首行缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xing-jian-ju"><span class="nav-number">2.10.4.</span> <span class="nav-text">行间距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duan-jian-ju"><span class="nav-number">2.10.5.</span> <span class="nav-text">段间距</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-yao-fu-hao-yi-lan"><span class="nav-number">3.</span> <span class="nav-text">主要符号一览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu"><span class="nav-number">3.1.</span> <span class="nav-text">数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he"><span class="nav-number">3.2.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cao-zuo-fu"><span class="nav-number">3.3.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#han-shu"><span class="nav-number">3.4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao-shu-he-ti-du"><span class="nav-number">3.5.</span> <span class="nav-text">导数和梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gai-lu-he-tong-ji"><span class="nav-number">3.6.</span> <span class="nav-text">概率和统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-za-du"><span class="nav-number">3.7.</span> <span class="nav-text">复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -659,20 +707,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -718,7 +766,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">823k</span>
+    <span title="站点总字数">994k</span>
 </div>
 
         

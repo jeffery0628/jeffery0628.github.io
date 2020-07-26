@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
@@ -31,12 +31,13 @@
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/71505f8a532d4d5e9b259634ff1c99c3.jpeg">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/00630Defgy1g4ns9qha1nj308u089aav.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/00630Defgy1g4nse7rf9xj308u089gme.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/3.1_linreg.svg">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343030663535342e706e67.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/image-20200524102417564.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/image-20200524103226890.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343039346539362e706e67.png">
 <meta property="article:published_time" content="2020-05-23T00:43:13.000Z">
-<meta property="article:modified_time" content="2020-05-30T12:28:03.683Z">
+<meta property="article:modified_time" content="2020-07-15T15:39:27.301Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="线性回归">
@@ -240,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-30 20:28:03" itemprop="dateModified" datetime="2020-05-30T20:28:03+08:00">2020-05-30</time>
+                <time title="修改时间：2020-07-15 23:39:27" itemprop="dateModified" datetime="2020-07-15T23:39:27+08:00">2020-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +280,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -306,19 +307,38 @@
 <li>非线性：两个变量之间的关系不是一次函数关系的——图象<strong>不是直线</strong>，叫做非线性。</li>
 <li>回归：人们在测量事物的时候因为客观条件所限，求得的都是测量值，而不是事物真实的值，为了能够得到真实值，无限次的进行测量，最后通过这些测量数据计算<strong>回归到真实值</strong>，这就是回归的由来。</li>
 </ul>
-<p>#能够解决什么样的问题</p>
-<p>对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p>
+<h2 id="neng-gou-jie-jue-shi-yao-yang-de-wen-ti">能够解决什么样的问题</h2>
+<p>线性回归输出是一个连续值，适用于回归问题。通过对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p>
 <h2 id="biao-da-shi-shi-shi-yao">表达式是什么</h2>
 <p>\[
 Y=wx+b
 \]<br>
 \(w\)叫做\(x\)的系数，\(b\)叫做偏置项。</p>
-<h1 id="ru-he-ji-suan">如何计算</h1>
-<h2 id="loss-function-mse">Loss Function–MSE</h2>
+<h2 id="ru-he-ji-suan">如何计算</h2>
+<h3 id="sun-shi-han-shu">损失函数</h3>
+<p>在模型训练中，需要衡量预测值与真实值之间的误差。通常会选取一个非负数作为误差，且数值越小表示误差越小。一个常用的选择是平方函数。它在评估索引为 \(i\) 的样本误差的表达式为</p>
 <p>\[
-J=\frac{1}{2m}\sum^{i=1}_{m}(y^{'}-y)^2
+\ell^{(i)}(W, b) = \frac{1}{2} \left(\hat{y}^{(i)} - y^{(i)}\right)^2
 \]</p>
-<p>利用<strong>梯度下降法</strong>找到最小值点，也就是最小误差，最后把\(w\) 和\(b\) 给求出来。</p>
+<p>其中常数 \(\frac 1 2\) 使对平方项求导后的常数系数为1，这样在形式上稍微简单一些。显然，误差越小表示预测价格与真实价格越相近，且当二者相等时误差为0。给定训练数据集，这个误差只与模型参数相关，因此我们将它记为以模型参数为参数的函数。通常，用训练数据集中所有样本误差的<strong>平均</strong>来衡量模型预测的质量，即</p>
+<p>\[
+\ell(W, b) =\frac{1}{n} \sum_{i=1}^n \ell^{(i)}(W, b) =\frac{1}{n} \sum_{i=1}^n \frac{1}{2}\left(X^{(i)} W +  b - y^{(i)}\right)^2
+\]</p>
+<p>在模型训练中，利用梯度下降法一组模型参数，记为 \(W^*, b^*\)，来使训练样本平均损失最小：</p>
+<p>\[
+W^*, b^* = \underset{W, b}{\arg\min} \ell(W, b)
+\]</p>
+<h3 id="you-hua-suan-fa">优化算法</h3>
+<p>当模型和损失函数形式较为简单时，上面的误差最小化问题的解可以直接用公式表达出来。这类解叫作<strong>解析解</strong>。线性回归和平方误差刚好属于这个范畴。然而，大多数深度学习模型并没有解析解，只能通过优化算法有限次迭代模型参数来尽可能降低损失函数的值。这类解叫作<strong>数值解</strong>。</p>
+<p>在求数值解的优化算法中，小批量随机梯度下降在深度学习中被广泛使用。它的算法很简单：先选取一组模型参数的初始值，如随机选取；接下来对参数进行多次迭代，使每次迭代都可能降低损失函数的值。在每次迭代中，先随机均匀采样一个由固定数目训练数据样本所组成的小批量\(\mathcal{B}\)，然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后用此结果与预先设定的一个正数的乘积作为模型参数在本次迭代的减小量。以\(\hat{y}^{(i)} = x_1^{(i)} w_1 + x_2^{(i)} w_2 + b\)为例在训练的线性回归模型的过程中，模型的每个参数将作如下迭代：<br>
+\[
+\begin{aligned}
+w_1 &amp;\leftarrow w_1 -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_1} = w_1 -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_1^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right),\\
+w_2 &amp;\leftarrow w_2 -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_2} = w_2 -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_2^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right),\\
+b &amp;\leftarrow b -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial b} = b -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}\left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right).
+\end{aligned}
+\]</p>
+<p>在上式中，\(|\mathcal{B}|\) 代表每个小批量中的样本个数<code>(batch size)</code>，\(\eta\) 称作学习率<code>(learning rate)</code>并取正数。需要强调的是，这里的批量大小和学习率的值是人为设定的，并不是通过模型训练学出的，因此叫作超参数。</p>
 <h1 id="guo-ni-he-qian-ni-he-ru-he-jie-jue">过拟合、欠拟合如何解决</h1>
 <p>使用正则化项，也就是给loss function加上一个参数项，正则化项有<strong>L1正则化、L2正则化、ElasticNet</strong>。加入这个正则化项好处：</p>
 <ul>
@@ -362,10 +382,17 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 <h2 id="shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui">什么场景下使用ElasticNet回归</h2>
 <p>ElasticNet在我们发现用Lasso回归太过(太多特征被稀疏为0),而岭回归也正则化的不够(回归系数衰减太慢)的时候，可以考虑使用ElasticNet回归来综合，得到比较好的结果。</p>
 <h1 id="xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu">线性回归要求因变量服从正态分布？</h1>
-<p>我们假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布\(N(0,\delta^2)\)时，因变量则符合正态分布\(N(wx(i)+b,\delta^2)\)，其中预测函数\(y=wx(i)+b\)。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。</p>
-<p><strong>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</strong></p>
+<p>假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布\(N(0,\delta^2)\)时，因变量则符合正态分布\(N(wx(i)+b,\delta^2)\)，其中预测函数\(y=wx(i)+b\)。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。 <strong>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</strong></p>
+<h1 id="yu-shen-jing-wang-luo-zhi-jian-de-guan-xi">与神经网络之间的关系</h1>
+<p>在深度学习中，可以使用神经网络图直观地表现模型结构。为了更清晰地展示线性回归作为神经网络的结构，下图使用神经网络图表示本节中介绍的线性回归模型。神经网络图隐去了模型参数权重和偏差。</p>
+<p><img src="/2020/05/23/machine_learning/linear_regression/3.1_linreg.svg" alt></p>
+<p>在上图所示的神经网络中，输入分别为 \(x_1\) 和 \(x_2\)，也叫特征数或特征向量维度。图中网络的输出为 \(o\)，输出层的输出个数为1。需要注意的是，我们直接将图3.1中神经网络的输出 \(o\) 作为线性回归的输出，即 \(\hat{y} = o\)。由于输入层并不涉及计算，按照惯例，图示的神经网络的层数为1。所以，线性回归是一个单层神经网络。输出层中负责计算 \(o\) 的单元又叫神经元。在线性回归中，\(o\) 的计算依赖于 \(x_1\) 和 \(x_2\)。也就是说，输出层中的神经元和输入层中各个输入完全连接。因此，这里的输出层又叫全连接层或稠密层。</p>
 <h1 id="dai-ma-shi-xian">代码实现</h1>
-<h2 id="shu-ju-jie-shao">数据介绍</h2>
+<p><code><a class="btn" href="kc_data.zip">
+            <i class="fa fa-download"></i>数据下载
+          </a></code></p>
+<h2 id="ji-qi-xue-xi-fang-fa">机器学习方法</h2>
+<h3 id="shu-ju-jie-shao">数据介绍</h3>
 <p>数据主要包括2014年5月至2015年5月美国King County的房屋销售价格以及房屋的基本信息。 数据分为训练数据和测试数据，分别保存在kc_train.csv和kc_test.csv两个文件中。 其中训练数据主要包括10000条记录，14个字段，主要字段说明如下：</p>
 <blockquote>
 <ol>
@@ -386,7 +413,7 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 </ol>
 </blockquote>
 <p>测试数据主要包括3000条记录，13个字段，跟训练数据的不同是测试数据并不包括房屋销售价格，需要通过由训练数据所建立的模型以及所给的测试数据，得出测试数据相应的房屋销售价格预测值。</p>
-<h2 id="bu-zou">步骤</h2>
+<h3 id="bu-zou">步骤</h3>
 <p><img src="/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343030663535342e706e67.png" alt></p>
 <blockquote>
 <ol>
@@ -397,7 +424,7 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 <li>使用测试数据进行目标函数预测输出，观察结果是否符合预期。或者通过画出对比函数进行结果线条对比。</li>
 </ol>
 </blockquote>
-<h2 id="mo-xing-xuan-ze">模型选择</h2>
+<h3 id="mo-xing-xuan-ze">模型选择</h3>
 <p>一元线性回归<br>
 \[
 y:h(x)=wx+b
@@ -407,16 +434,106 @@ n元线性回归<br>
 y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 \]<br>
 这里，y表示要求的销售价格，x表示特征值。需要调用sklearn库来进行训练。</p>
-<h2 id="shu-ju-chu-li">数据处理</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取训练数据</span></span><br><span class="line">housing = pd.read_csv(<span class="string">'kc_train.csv'</span>)</span><br><span class="line"><span class="comment">#销售价格</span></span><br><span class="line">target=pd.read_csv(<span class="string">'kc_train2.csv'</span>)  </span><br><span class="line"><span class="comment">#测试数据</span></span><br><span class="line">t=pd.read_csv(<span class="string">'kc_test.csv'</span>)   </span><br><span class="line"></span><br><span class="line">train_set.info()</span><br></pre></td></tr></table></figure>
+<h3 id="shu-ju-chu-li">数据处理</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读取训练数据</span></span><br><span class="line">train_set = pd.read_csv(<span class="string">'kc_train.csv'</span>)</span><br><span class="line"><span class="comment">#销售价格</span></span><br><span class="line">target=pd.read_csv(<span class="string">'kc_train2.csv'</span>)  </span><br><span class="line"><span class="comment">#测试数据</span></span><br><span class="line">test=pd.read_csv(<span class="string">'kc_test.csv'</span>)   </span><br><span class="line"></span><br><span class="line">train_set.info()</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/05/23/machine_learning/linear_regression/image-20200524102417564.png" alt></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">label = train_set[<span class="number">1</span>]</span><br><span class="line">train_set = train_set.drop([<span class="number">1</span>],axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#特征缩放</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">minmax_scaler=MinMaxScaler()</span><br><span class="line"><span class="comment">#进行拟合，内部参数会发生变化</span></span><br><span class="line">minmax_scaler.fit(train_set)   </span><br><span class="line">scaler_train_set=minmax_scaler.transform(train_set)</span><br><span class="line">scaler_test_set = minmax_scaler.transform(test_set)</span><br><span class="line">scaler_train_set=pd.DataFrame(scaler_train_set,columns=train_set.columns)</span><br><span class="line">scaler_test_set = pd.DataFrame(scaler_test_set,columns=train_set.columns)</span><br><span class="line">scaler_train_set.head()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#特征缩放</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">minmax_scaler=MinMaxScaler()</span><br><span class="line"><span class="comment">#进行拟合，内部参数会发生变化</span></span><br><span class="line">minmax_scaler.fit(train_set)   </span><br><span class="line">scaler_train_set=minmax_scaler.transform(train_set)</span><br><span class="line">scaler_test_set = minmax_scaler.transform(test_set)</span><br><span class="line">scaler_train_set=pd.DataFrame(scaler_train_set,columns=train_set.columns)</span><br><span class="line">scaler_test_set = pd.DataFrame(scaler_test_set,columns=train_set.columns)</span><br><span class="line">scaler_train_set.head()</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/05/23/machine_learning/linear_regression/image-20200524103226890.png" alt></p>
-<h2 id="xun-lian-mo-xing">训练模型</h2>
+<h3 id="xun-lian-mo-xing">训练模型</h3>
 <p>使用sklearn库的线性回归函数进行调用训练。梯度下降法获得误差最小值。最后使用均方误差法来评价模型的好坏程度，并画图进行比较。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选择基于梯度下降的线性回归模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">LR_reg=LinearRegression()</span><br><span class="line"><span class="comment">#进行拟合</span></span><br><span class="line">LR_reg.fit(scaler_housing,target)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用均方误差用于评价模型好坏</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line">preds=LR_reg.predict(scaler_housing)   <span class="comment">#输入数据进行预测得到结果</span></span><br><span class="line">mse=mean_squared_error(preds,target)   <span class="comment">#使用均方误差来评价模型好坏，可以输出mse进行查看评价值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#绘图进行比较</span></span><br><span class="line">plot.figure(figsize=(<span class="number">10</span>,<span class="number">7</span>))       <span class="comment">#画布大小</span></span><br><span class="line">num=<span class="number">100</span></span><br><span class="line">x=np.arange(<span class="number">1</span>,num+<span class="number">1</span>)              <span class="comment">#取100个点进行比较</span></span><br><span class="line">plot.plot(x,target[:num],label=<span class="string">'target'</span>)      <span class="comment">#目标取值</span></span><br><span class="line">plot.plot(x,preds[:num],label=<span class="string">'preds'</span>)        <span class="comment">#预测取值</span></span><br><span class="line">plot.legend(loc=<span class="string">'upper right'</span>)  <span class="comment">#线条显示位置</span></span><br><span class="line">plot.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343039346539362e706e67.png" alt></p>
 <p>这张结果对比图中就可以看出模型是否得到精确的目标函数，是否能够精确预测房价。如果想要预测test文件里的数据，那就把test文件里的数据进行读取，并且进行特征缩放，调用： <strong>LR_reg.predict(test)</strong> 就可以得到预测结果，并进行输出操作。</p>
+<h2 id="shen-jing-wang-luo-de-fang-fa-tensorflow">神经网络的方法(tensorflow)</h2>
+<p>以房价预测问题为例(只为了简便使用其中两个特征，记为\(x_1,x_2\))。如果对训练数据集里的3个房屋样本(记为:\(x^{(1)},x^{(2)},x^{(3)},\))逐一预测价格，将得到:<br>
+\[
+\begin{aligned}
+\hat{y}^{(1)} &amp;= x_1^{(1)} w_1 + x_2^{(1)} w_2 + b,\\
+\hat{y}^{(2)} &amp;= x_1^{(2)} w_1 + x_2^{(2)} w_2 + b,\\
+\hat{y}^{(3)} &amp;= x_1^{(3)} w_1 + x_2^{(3)} w_2 + b.
+\end{aligned}
+\]<br>
+将上面3个等式转化成矢量计算:<br>
+\[
+\boldsymbol{\hat{y}} =
+\begin{bmatrix}
+    \hat{y}^{(1)} \\
+    \hat{y}^{(2)} \\
+    \hat{y}^{(3)}
+\end{bmatrix},\quad
+\boldsymbol{X} =
+\begin{bmatrix}
+    x_1^{(1)} &amp; x_2^{(1)} \\
+    x_1^{(2)} &amp; x_2^{(2)} \\
+    x_1^{(3)} &amp; x_2^{(3)}
+\end{bmatrix},\quad
+\boldsymbol{w} =
+\begin{bmatrix}
+    w_1 \\
+    w_2
+\end{bmatrix}
+\]<br>
+广义上讲，当数据样本数为 \(n\)，特征数为 \(d\) 时，线性回归的矢量计算表达式为\(\boldsymbol{\hat{y}} = \boldsymbol{X} \boldsymbol{w} + b\),其中模型输出 \(\boldsymbol{\hat{y}} \in \mathbb{R}^{n \times 1}\) 批量数据样本特征 \(\boldsymbol{X} \in \mathbb{R}^{n \times d}\)，权重 \(\boldsymbol{w} \in \mathbb{R}^{d \times 1}\)， 偏差 \(b \in \mathbb{R}\)。相应地，批量数据样本标签 \(\boldsymbol{y} \in \mathbb{R}^{n \times 1}\)。假设模型参数 \(\boldsymbol{\theta} = [w_1, w_2,\ldots, b]^\top\)，可以重写损失函数为<br>
+\[
+\ell(\boldsymbol{\theta})=\frac{1}{2n}(\boldsymbol{\hat{y}}-\boldsymbol{y})^\top(\boldsymbol{\hat{y}}-\boldsymbol{y})
+\]</p>
+<p>小批量随机梯度下降的迭代步骤将相应地改写为<br>
+\[
+\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}   \nabla_{\boldsymbol{\theta}} \ell^{(i)}(\boldsymbol{\theta}),
+\]</p>
+<p>其中梯度是损失有关标量模型参数的偏导数组成的向量：<br>
+\[
+\nabla_{\boldsymbol{\theta}} \ell^{(i)}(\boldsymbol{\theta})=
+\begin{bmatrix}
+    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_1} \\
+    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_2} \\
+    \ldots \\
+    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial b}
+\end{bmatrix} =
+\begin{bmatrix}
+    x_1^{(i)} (x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}) \\
+    x_2^{(i)} (x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}) \\
+        \ldots \\
+    x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}
+\end{bmatrix}=
+\begin{bmatrix}
+    x_1^{(i)} \\
+    x_2^{(i)} \\
+        \ldots \\
+    1
+\end{bmatrix}
+(\hat{y}^{(i)} - y^{(i)})
+\]</p>
+<h3 id="du-qu-shu-ju">读取数据</h3>
+<p>在训练模型的时候，需要遍历数据集并不断读取小批量数据样本。这里定义一个函数：它每次返回<code>batch_size</code>个随机样本的特征和标签。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_iter</span><span class="params">(batch_size, features, labels)</span>:</span></span><br><span class="line">    num_examples = len(features)</span><br><span class="line">    indices = list(range(num_examples))</span><br><span class="line">    random.shuffle(indices)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_examples, batch_size):</span><br><span class="line">        j = indices[i: min(i+batch_size, num_examples)]</span><br><span class="line">        <span class="keyword">yield</span> tf.gather(np.array(features,dtype=np.float32), axis=<span class="number">0</span>, indices=j), tf.gather(np.array(labels,dtype=np.float32), axis=<span class="number">0</span>, indices=j)</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">batch_size</span> = <span class="number">10</span></span><br><span class="line"><span class="comment"># 将训练数据的特征和标签组合</span></span><br><span class="line"><span class="attr">dataset</span> = tfdata.Dataset.from_tensor_slices((features, labels))</span><br><span class="line"><span class="comment"># 随机读取小批量</span></span><br><span class="line"><span class="attr">dataset</span> = dataset.shuffle(buffer_size=num_examples) </span><br><span class="line"><span class="attr">dataset</span> = dataset.batch(batch_size)</span><br><span class="line"><span class="attr">data_iter</span> = iter(dataset)</span><br></pre></td></tr></table></figure>
+<h3 id="ding-yi-mo-xing">定义模型</h3>
+<p>初始化模型参数:将权重初始化成均值为0、标准差为0.01的正态随机数，偏差则初始化成0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">num_features = len(train_set.columns)</span><br><span class="line">w = tf.Variable(tf.random.normal((num_features, <span class="number">1</span>), stddev=<span class="number">0.01</span>),dtype=tf.float32)</span><br><span class="line">b = tf.Variable(tf.zeros((<span class="number">1</span>,)),dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<p>下面是线性回归的矢量计算表达式的实现。使用<code>matmul</code>函数做矩阵乘法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linreg</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.matmul(X, w) + b</span><br></pre></td></tr></table></figure>
+<h3 id="ding-yi-sun-shi-han-shu">定义损失函数</h3>
+<p>使用平方损失来定义线性回归的损失函数。在实现中，我们需要把真实值<code>y</code>变形成预测值<code>y_hat</code>的形状。以下函数返回的结果也将和<code>y_hat</code>的形状相同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">squared_loss</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (y_hat - tf.reshape(y, y_hat.shape)) ** <span class="number">2</span> /<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h3 id="ding-yi-you-hua-suan-fa">定义优化算法</h3>
+<p><code>sgd</code>函数实现了小批量随机梯度下降算法。它通过不断迭代模型参数来优化损失函数。这里自动求梯度模块计算得来的梯度是一个批量样本的梯度和，将它除以批量大小来得到平均值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sgd</span><span class="params">(params, lr, batch_size, grads)</span>:</span></span><br><span class="line">    <span class="string">"""Mini-batch stochastic gradient descent."""</span></span><br><span class="line">    <span class="keyword">for</span> i, param <span class="keyword">in</span> enumerate(params):</span><br><span class="line">        param.assign_sub(lr * grads[i] / batch_size)</span><br></pre></td></tr></table></figure>
+<h3 id="xun-lian-mo-xing-1">训练模型</h3>
+<p>在训练中，将多次迭代模型参数。在每次迭代中，根据当前读取的小批量数据样本（特征<code>X</code>和标签<code>y</code>），通过调用反向函数<code>t.gradients</code>计算小批量随机梯度，并调用优化算法<code>sgd</code>迭代模型参数。由于之前设批量大小<code>batch_size</code>为10，每个小批量的损失<code>l</code>的形状为(10, 1)。由于变量<code>l</code>并不是一个标量，所以我们可以调用<code>reduce_sum()</code>将其求和得到一个标量，再运行<code>t.gradients</code>得到该变量有关模型参数的梯度。</p>
+<blockquote>
+<p>注意在每次更新完参数后不要忘了将参数的梯度清零。</p>
+</blockquote>
+<p>在一个epoch中，将完整遍历一遍<code>data_iter</code>函数，并对训练数据集中所有样本都使用一次（假设样本数能够被批量大小整除）。迭代周期个数<code>num_epochs</code>和学习率<code>lr</code>都是超参数，在实践中，大多超参数都需要通过反复试错来不断调节。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">lr = <span class="number">0.1</span></span><br><span class="line">num_epochs = <span class="number">30</span></span><br><span class="line">batch_size = <span class="number">32</span></span><br><span class="line">net = linreg</span><br><span class="line">loss = squared_loss</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">    <span class="keyword">for</span> X, y <span class="keyword">in</span> data_iter(batch_size, train_set, target):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> t:</span><br><span class="line">            t.watch([w,b])</span><br><span class="line">            l = loss(net(X, w, b), y)</span><br><span class="line">        grads = t.gradient(l, [w, b])</span><br><span class="line">        sgd([w, b], lr, batch_size, grads)</span><br><span class="line">    train_l = loss(net(X, w, b), y)</span><br><span class="line">    print(<span class="string">'epoch %d, loss %f'</span> % (epoch + <span class="number">1</span>, tf.reduce_mean(train_l)))</span><br></pre></td></tr></table></figure>
+<h3 id="tensorflow-kuai-su-shi-xian-ban-ben">tensorflow快速实现版本</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> initializers <span class="keyword">as</span> init</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> losses</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> optimizers</span><br><span class="line"><span class="comment"># 模型</span></span><br><span class="line">model = keras.Sequential()</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, kernel_initializer=init.RandomNormal(stddev=<span class="number">0.01</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失</span></span><br><span class="line">loss = losses.MeanSquaredError()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 优化器</span></span><br><span class="line">trainer = optimizers.SGD(learning_rate=<span class="number">0.03</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">num_epochs = <span class="number">30</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, num_epochs + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> (batch, (X, y)) <span class="keyword">in</span> enumerate(dataset):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">            l = loss(model(X, training=<span class="literal">True</span>), y)</span><br><span class="line">        </span><br><span class="line">        grads = tape.gradient(l, model.trainable_variables)</span><br><span class="line">        trainer.apply_gradients(zip(grads, model.trainable_variables))</span><br><span class="line">    </span><br><span class="line">    l = loss(model(features), labels)</span><br><span class="line">    print(<span class="string">'epoch %d, loss: %f'</span> % (epoch, l))</span><br></pre></td></tr></table></figure>
+<h2 id="xiao-jie">小结</h2>
+<ul>
+<li>可以看出，仅使用<code>Variables</code>和<code>GradientTape</code>模块就可以很容易地实现一个模型。</li>
+<li>和大多数深度学习模型一样，对于线性回归这样一种单层神经网络，它的基本要素包括模型、训练数据、损失函数和优化算法。</li>
+<li>既可以用神经网络图表示线性回归，又可以用矢量计算表示该模型。</li>
+</ul>
 
     </div>
 
@@ -465,8 +582,8 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/20/pytorch_bugs/" rel="prev" title="Pytorch Bugs">
-      <i class="fa fa-chevron-left"></i> Pytorch Bugs
+    <a href="/2020/05/22/machine_learning/multi-layer-perceptron/" rel="prev" title="多层感知机">
+      <i class="fa fa-chevron-left"></i> 多层感知机
     </a></div>
       <div class="post-nav-item">
     <a href="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/" rel="next" title="逻辑回归与最大熵模型">
@@ -531,7 +648,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-xian-xing-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">什么是线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-da-shi-shi-shi-yao"><span class="nav-number">1.1.</span> <span class="nav-text">表达式是什么</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ru-he-ji-suan"><span class="nav-number">2.</span> <span class="nav-text">如何计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#loss-function-mse"><span class="nav-number">2.1.</span> <span class="nav-text">Loss Function–MSE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guo-ni-he-qian-ni-he-ru-he-jie-jue"><span class="nav-number">3.</span> <span class="nav-text">过拟合、欠拟合如何解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-2-zheng-ze-hua-ling-hui-gui"><span class="nav-number">3.1.</span> <span class="nav-text">什么是L2正则化(岭回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-yong-l-2-zheng-ze-hua"><span class="nav-number">3.2.</span> <span class="nav-text">什么场景下用L2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-1-zheng-ze-hua-lasso-hui-gui"><span class="nav-number">3.3.</span> <span class="nav-text">什么是L1正则化(Lasso回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-l-1-zheng-ze-hua"><span class="nav-number">3.4.</span> <span class="nav-text">什么场景下使用L1正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-elastic-net-hui-gui"><span class="nav-number">3.5.</span> <span class="nav-text">什么是ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui"><span class="nav-number">3.6.</span> <span class="nav-text">什么场景下使用ElasticNet回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu"><span class="nav-number">4.</span> <span class="nav-text">线性回归要求因变量服从正态分布？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-ju-jie-shao"><span class="nav-number">5.1.</span> <span class="nav-text">数据介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bu-zou"><span class="nav-number">5.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mo-xing-xuan-ze"><span class="nav-number">5.3.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-ju-chu-li"><span class="nav-number">5.4.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xun-lian-mo-xing"><span class="nav-number">5.5.</span> <span class="nav-text">训练模型</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-xian-xing-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">什么是线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#neng-gou-jie-jue-shi-yao-yang-de-wen-ti"><span class="nav-number">1.1.</span> <span class="nav-text">能够解决什么样的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-da-shi-shi-shi-yao"><span class="nav-number">1.2.</span> <span class="nav-text">表达式是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-ji-suan"><span class="nav-number">1.3.</span> <span class="nav-text">如何计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sun-shi-han-shu"><span class="nav-number">1.3.1.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#you-hua-suan-fa"><span class="nav-number">1.3.2.</span> <span class="nav-text">优化算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guo-ni-he-qian-ni-he-ru-he-jie-jue"><span class="nav-number">2.</span> <span class="nav-text">过拟合、欠拟合如何解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-2-zheng-ze-hua-ling-hui-gui"><span class="nav-number">2.1.</span> <span class="nav-text">什么是L2正则化(岭回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-yong-l-2-zheng-ze-hua"><span class="nav-number">2.2.</span> <span class="nav-text">什么场景下用L2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-1-zheng-ze-hua-lasso-hui-gui"><span class="nav-number">2.3.</span> <span class="nav-text">什么是L1正则化(Lasso回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-l-1-zheng-ze-hua"><span class="nav-number">2.4.</span> <span class="nav-text">什么场景下使用L1正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-elastic-net-hui-gui"><span class="nav-number">2.5.</span> <span class="nav-text">什么是ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui"><span class="nav-number">2.6.</span> <span class="nav-text">什么场景下使用ElasticNet回归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu"><span class="nav-number">3.</span> <span class="nav-text">线性回归要求因变量服从正态分布？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yu-shen-jing-wang-luo-zhi-jian-de-guan-xi"><span class="nav-number">4.</span> <span class="nav-text">与神经网络之间的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-qi-xue-xi-fang-fa"><span class="nav-number">5.1.</span> <span class="nav-text">机器学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-ju-jie-shao"><span class="nav-number">5.1.1.</span> <span class="nav-text">数据介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-zou"><span class="nav-number">5.1.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mo-xing-xuan-ze"><span class="nav-number">5.1.3.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-ju-chu-li"><span class="nav-number">5.1.4.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xun-lian-mo-xing"><span class="nav-number">5.1.5.</span> <span class="nav-text">训练模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shen-jing-wang-luo-de-fang-fa-tensorflow"><span class="nav-number">5.2.</span> <span class="nav-text">神经网络的方法(tensorflow)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#du-qu-shu-ju"><span class="nav-number">5.2.1.</span> <span class="nav-text">读取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-yi-mo-xing"><span class="nav-number">5.2.2.</span> <span class="nav-text">定义模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-yi-sun-shi-han-shu"><span class="nav-number">5.2.3.</span> <span class="nav-text">定义损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-yi-you-hua-suan-fa"><span class="nav-number">5.2.4.</span> <span class="nav-text">定义优化算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xun-lian-mo-xing-1"><span class="nav-number">5.2.5.</span> <span class="nav-text">训练模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensorflow-kuai-su-shi-xian-ban-ben"><span class="nav-number">5.2.6.</span> <span class="nav-text">tensorflow快速实现版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiao-jie"><span class="nav-number">5.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -549,20 +666,20 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -608,7 +725,7 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">823k</span>
+    <span title="站点总字数">994k</span>
 </div>
 
         
