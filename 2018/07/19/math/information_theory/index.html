@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://jeffery.ink/2018/07/19/math/information_theory/image-20200719225308164.png">
 <meta property="og:image" content="https://jeffery.ink/2018/07/19/math/information_theory/20160718112932230.png">
 <meta property="article:published_time" content="2018-07-19T12:53:39.000Z">
-<meta property="article:modified_time" content="2020-07-20T13:25:41.686Z">
+<meta property="article:modified_time" content="2020-08-01T02:53:00.652Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="信息论">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-20 21:25:41" itemprop="dateModified" datetime="2020-07-20T21:25:41+08:00">2020-07-20</time>
+                <time title="修改时间：2020-08-01 10:53:00" itemprop="dateModified" datetime="2020-08-01T10:53:00+08:00">2020-08-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -314,7 +314,7 @@ H[x]=-\sum_{x} p(x) \ln p(x)
 H(X) = -\sum_{x \in X} {p(x)log_2 p(x)} \tag{1}
 \]<br>
 其中，约定\(0log0=0.\) \(H(X)\)也可以写为\(H(p)\).通常熵的单位为二进制，比特(bit)。</p>
-<p>依据<code>Boltzmann's H-theorem</code>，香农把随机变量 <code>X</code> 的熵值 \(\Eta\)（希腊字母<code>Eta</code>）定义如下，其值域为 \({x_1, ...,x_n}\)：<br>
+<p>依据<code>Boltzmann's H-theorem</code>，香农把随机变量 <code>X</code> 的熵值 \(H\)（希腊字母<code>Eta</code>）定义如下，其值域为 \({x_1, ...,x_n}\)：<br>
 \[
 \mathrm{H}(X)=\mathrm{E}[\mathrm{I}(X)]=\mathrm{E}[-\ln (\mathrm{P}(X))]
 \]<br>
@@ -328,11 +328,11 @@ H(X) = -\sum_{x \in X} {p(x)log_2 p(x)} \tag{1}
 <p>单位取决于定义用到对数的底。当<em>b</em> = 2，熵的单位是bit；当<em>b</em> = e，熵的单位是nat；而当<em>b</em> = 10,熵的单位是 Hart。</p>
 <h3 id="shang-de-qu-zhi-fan-wei">熵的取值范围</h3>
 <p>从定义式,可以看出,虽然信息熵经常被称为负熵,但是其取值恒为正,这是因为概率\(p(i)\)恒小于1。不过，由于信息的接受就是不肯定性的消除，即熵的消除，所以信息熵才常被人称作负熵。</p>
-<p>熵的取值范围：\(0 \leq \Eta(P) \leq log |X|\),其中\(|X|\)是<code>X</code>的取值个数。由于\(0\leq p(i) \leq 1\),因此上非负。当\(p(i)=1\)且其他的\(p(j \ne i)=0\)时，熵取最小值0。在概率归一化的限制下，使用拉格朗日乘数法可以找到熵的最大值。因此，需要最大化：<br>
+<p>熵的取值范围：\(0 \leq H(P) \leq log |X|\),其中\(|X|\)是<code>X</code>的取值个数。由于\(0\leq p(i) \leq 1\),因此上非负。当\(p(i)=1\)且其他的\(p(j \ne i)=0\)时，熵取最小值0。在概率归一化的限制下，使用拉格朗日乘数法可以找到熵的最大值。因此，需要最大化：<br>
 \[
 \tilde{H}=-\sum_{i} p\left(x_{i}\right) \ln p\left(x_{i}\right)+\lambda\left(\sum_{i} p\left(x_{i}\right)-1\right)
 \]<br>
-可以证明,当所有的 \(p(x_i)\)都相等,且值为 \(p(x_i) = \frac{1}{M}\) 时,熵取得最大值（当且仅当X的分布是均匀分布时右边的等号成立。即当X服从均匀分布时，熵最大）。其中, M 是状态\(x_i\)的总数。此时对应的熵值为 \(\Eta = ln M\)。这个结果也可以通过 Jensen 不等式推导出来。</p>
+可以证明,当所有的 \(p(x_i)\)都相等,且值为 \(p(x_i) = \frac{1}{M}\) 时,熵取得最大值（当且仅当X的分布是均匀分布时右边的等号成立。即当X服从均匀分布时，熵最大）。其中, M 是状态\(x_i\)的总数。此时对应的熵值为 \(H = ln M\)。这个结果也可以通过 Jensen 不等式推导出来。</p>
 <h2 id="shang-de-te-xing">熵的特性</h2>
 <p>任何满足这些假设的熵的定义均正比以下形式：<br>
 \[
@@ -564,8 +564,8 @@ I(X ; Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} \frac{p(x, y)}{p(x) p(y
       <i class="fa fa-chevron-left"></i> 概率论
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/07/31/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" rel="next" title="激活函数">
-      激活函数 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/04/17/deeplearning/cnn/" rel="next" title="卷积神经网络">
+      卷积神经网络 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -644,20 +644,20 @@ I(X ; Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} \frac{p(x, y)}{p(x) p(y
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -703,7 +703,7 @@ I(X ; Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} \frac{p(x, y)}{p(x) p(y
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1m</span>
+    <span title="站点总字数">1.1m</span>
 </div>
 
         
@@ -871,7 +871,7 @@ I(X ; Y)=\sum_{x \in X} \sum_{y \in Y} p(x, y) \log _{2} \frac{p(x, y)}{p(x) p(y
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item => {

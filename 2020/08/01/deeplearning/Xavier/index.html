@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Xavier">
+<meta property="og:url" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200801215301970.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200801222528774.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200801222549174.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802000217651.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802000240030.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802000314255.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200801215301970.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802002132784.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802122004074.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802122705664.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802182707631.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802183205197.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802183552802.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802184026069.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802184159590.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802184607043.png">
+<meta property="article:published_time" content="2020-08-01T13:51:03.000Z">
+<meta property="article:modified_time" content="2020-08-02T10:49:37.685Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="参数初始化">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200801215301970.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/08/01/deeplearning/Xavier/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Xavier | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/08/01/deeplearning/Xavier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xavier
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-02 18:49:37" itemprop="dateModified" datetime="2020-08-02T18:49:37+08:00">2020-08-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/01/deeplearning/Xavier/" class="post-meta-item leancloud_visitors" data-flag-title="Xavier" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/08/01/deeplearning/Xavier/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/01/deeplearning/Xavier/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/08/01/deeplearning/Xavier/image-20200801215301970.png" alt></p>
+<a id="more"></a>
+<h1 id="abstract">Abstract</h1>
+<p>论文研究了不同的非线性激活函数的影响，发现 sigmoid 函数它的均值会导致在隐层中很容易到达函数的饱和区域，因此sigmoid 激活函数在随机初始化的深度网络中并不合适。但同时惊喜的发现，处于饱和的神经元能够自己“逃脱出”饱和状态。</p>
+<p>最后研究了激活值和梯度值如何在训练过程中的各层次里发生变化，其中，当与每个层相关联的雅可比矩阵的奇异值远远大于1时，训练可能会变得更加困难。基于这些考虑，提出了一种新的初始化方法，可以带来更快的收敛速度。</p>
+<blockquote>
+<p>这种初始化权值的方法就是这两年在深度网络中经常使用的 <strong>Xavier 初始化</strong>。</p>
+</blockquote>
+<p><code><a class="btn" href="Understanding the difficulty of training deep feedforward neural networks.pdf">
+            <i class="fa fa-download"></i>论文下载
+          </a></code></p>
+<h1 id="deep-neural-networks">Deep Neural Networks</h1>
+<p>主要是对深度神经网络的大致介绍，讲述了这两年的主要发展状况:</p>
+<p>最近的深层神经网络结构的实验结果大多数都可以用能够转化为深度有监督神经网络的模型来获得，但是使用了与经典的前馈神经网络不同的初始化或是训练方法。为什么这些新的算法能够获得比经典的随机初始化和梯度优化算法好得多的结果呢？一部分的原因可能是由于采取了<strong>无监督预训练</strong>的策略，表明了它作为一个 “调节器”，在优化过程中使初始化后的参数处于一个更好的 “基准位置”，使优化过程能够避开明显的局部最小值。但是早期的工作已经证明了即使是单纯的采用贪心层次学习的有监督学习神经网络也能够取得更好的效果。</p>
+<p>因此本文关注的是<strong>多层神经网络在训练时可能出现的问题</strong>而非关注于无监督的预训练或是半监督标准对深层架构的影响。</p>
+<p>实验分析是通过监测在训练迭代过程中不同层之间的激活值 (隐层的饱和状态)和梯度来完成的。同样研究了<strong>不同的激活函数和初始化方法对最终结果的影响</strong>。</p>
+<h1 id="experimental-setting-and-datasets">Experimental Setting and Datasets</h1>
+<h2 id="online-learning-on-an-infinite-dataset">Online Learning on an Infinite Dataset</h2>
+<p>主要介绍了一个无限数据数据集 Shapeser-3×2，在这个数据集上进行在线学习。因为不断地随机生成图片，它的数据的大小是无穷。在线学习具有优点的：它可以把我们的任务focus在最优化问题上而不是小样本中回归问题。 还应该指出：当面对很大很大的训练集时，从非监督学习预训练中来进行初始化网络仍然使网络的性能有巨大的提升（就是当面对在的训练集时，非监督学习预训练的作用依然没有消失）。</p>
+<p>使用的数据集中随机生成三个图形（平行四边形，椭圆，三角）中的两个，而且允许相互之间存在遮挡关系(不大于 50% 的遮挡)，最后将图形全都 resize 成为 32×32 大小。</p>
+<p>给出示例图像：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200801222528774.png" alt></p>
+<h2 id="finite-datasets">finite datasets</h2>
+<p>MNIST digits ，10个数字的识别，50000个用于训练，10000用于 validation，10000个用于测试。</p>
+<p>CIFAR-10 ：10种物品的识别，40000个用于训练，10000用于 validation，10000个用于测试。</p>
+<p>Small-ImageNet：10个物品的识别，90000个用于训练，10000用于 validation，10000个用于测试。</p>
+<p>给出示例图像：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200801222549174.png" alt></p>
+<h2 id="experimental-setting">Experimental Setting</h2>
+<p>前馈神经网络是一个具有 1-5 层深度的，每层具有1000个神经元节点，输出层使用一个 <code>softmax</code>，代价函数是 \(−logP(y|x)\) ,其中\(x\)表示输入图片，\(y\)表示图片对应类别。网络优化的方法是使用随机梯度的反向传播算法，<code>mini-batches = 10</code>，权值更新过程中的学习率基于验证集误差来确定。</p>
+<p>在隐层选用三种不同的激活函数分别进行试验，分别是 sigmoid 函数，双曲正切函数 (tanh) 与 softsign 函数 ，后面两个函数是相似的，唯一的区别在于，双曲正切函数以指数速率接近渐近线，而 softsign 函数以二次速率接近渐近线。网络权值的初始化使用下面的均匀分布，其中 n 是前一层的神经元：<br>
+\[
+W_{i j} \sim U\left[-\frac{1}{\sqrt{n}}, \frac{1}{\sqrt{n}}\right]
+\]</p>
+<blockquote>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802000217651.png" alt></p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802000240030.png" alt></p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802000314255.png" alt></p>
+</blockquote>
+<h1 id="effect-of-activation-functions-and-saturation-during-training">Effect of Activation Functions and Saturation During Training</h1>
+<p>在选择激活函数时，要避免两点：</p>
+<ol>
+<li>避免激活函数处于过饱和状态，在这种状态，梯度就不能很好的得到传递。</li>
+<li>激活函数过度线性化，因为只有非线性才能拟合更多的函数。</li>
+</ol>
+<h2 id="experiments-with-the-sigmoid">Experiments with the Sigmoid</h2>
+<p>Sigmoid 函数会降低学习速率的（由于它的mean不是0）。这里选择 Sigmoid 函数是为了通过观察它的激活值来反映它的饱和程度。</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200801215301970.png" alt></p>
+<p>竖直方向表示激活值，其中实线表示的是均值，上下的浮动表示上下标准差，水平方向表示迭代的次数。</p>
+<p>可以看到，对于第 1~4 层，其均值都在 <code>0.5</code> 左右，且按照输出到输入方向激活值依次降低，但这个位置处于 Sigmoid 函数的线性区附近，而第 5 层在迭代的过程中很快就到达了饱和区，而且这种饱和状态会持续很长的时间，很可能在整个训练过程中这一层都处于饱和状态。但是，随着迭代次数的增加，第 5 层隐层有 “逃离” 饱和状态的趋势，而前面的 4 层有逐渐趋于饱和的趋势，因此会逐渐趋于稳定。</p>
+<p>对于上面这种情况，文中假设是由于采用<strong>随机初始化</strong>和对于饱和的 <strong>Sigmoid函数输出接近为 0</strong> 共同造成的。同时也应该注意到，对于经过 pre-training 的深度网络并不会出现这种饱和情况。所以，前面几层的输出对于最后输出的各类的预测是基本没有作用的，或者说直到第三层为止，前几层的输出都是随机的，而非像经过了 <em>pre-training</em> 得到的初始化参数，预训练得到的初始化参数是有意义的。第四层的输出加权后的值直接影响到的最后的代价函数的，因为它后面接的是 softmax的输出层的，因此，输出层的 \(softmax(b+Wh)\) 的最终正确性可能更依赖于偏置 <code>b</code> 而非由前几层共同作用得到的 <code>h</code>，因此为了在一开始让 <code>h</code>的值不至于影响到 <code>b+Wh</code> 值，网络自己就在代价函数的作用下学习了，学习的结果就是：反向梯度算法导致 <code>Wh</code> 的结果趋向于0，而这可以通过让 <code>h</code> 趋向于 0 来完成，偏置 <code>b</code>迅速学习，并支撑起了整个预测结果。但是同时，将<code>h</code>推向 0 会导致处于 <code>Sigmoid</code> 函数的饱和区(根据sigmoid图像，其输出为0值的地方，梯度也几乎为0，而tanh不会有这个问题。)，使得反向梯度学习缓慢。最终 ，前面的隐层会向提取更有意义的特征方向移动，而最后层也会逐渐移出饱和区，但是即便是在这样之后，网络最终也无法得到很好的训练效果 (以及泛化能力)。</p>
+<h2 id="experiment-with-the-hyperbolic-tangent">Experiment with the Hyperbolic tangent</h2>
+<p>上面提到了 <code>Sigmoid</code> 函数在 0 附近会到达饱和区域，但是 <code>tanh</code> 函数在 0 附近则不会达到饱和，因为 <code>tanh</code>函数在 0 附近呈现对称线性特征，但是，使用标准权重分布来初始化权重，会发现同样会很快达到饱和状态，正如下图中所示:</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802002132784.png" alt></p>
+<p>上面两张图分别是 <code>tanh</code> 作为激活函数的激活值情况和 <code>softsign</code> 函数作为激活函数的激活值情况。</p>
+<p>其中有实线点表示上下标准差，而没有实线的点则表示 98% 的数据分布。</p>
+<p>首先看上面的图像，可以看出从第一层到第五层，在标准均匀初始化权值的前提下，逐渐每层都慢慢到了饱和区， 对于这个现象，文中也没有给出合理的解释。</p>
+<p>再观察下面的图像，可以看出 <code>softsign</code> 函数的激活值比 <code>tanh</code> 函数的激活值区域饱和区的速度慢，因此效果也就更好。</p>
+<h2 id="experiments-with-the-softsign">Experiments with the Softsign</h2>
+<p>Softsign 函数在形状上与tanh 函数具有一定的相似性，但是在前面也有提到，在趋近渐近线的速度上，tanh 是指数级趋近，而 softsign 则是二次趋近。下图给出的是 <code>tanh</code> 激活函数与 <code>softsign</code> 激活函数在训练完成以后的激活值的分布图。</p>
+<p>可以看到对于 <code>tanh</code> 激活函数，它的激活值大多分布在 -1 和 +1 处，而这两个位置都是出于饱和区的位置，第 5 层还有许多出于 0 附近的激活值，但是对于 <code>tanh</code> 激活函数，0 附近具有良好的线性性质，而不具有良好的非线性性质，因此对于拟合函数来说整体并不理想。</p>
+<p>对于 <code>softsign</code> 函数，我们可以看到处于饱和取得值并不占数据的大多数，除了第 5 层有相当数量的激活值处于0附近，其余隐层的激活值在 (-0.8, -0.6) 和 (0.6, 0.8) 这两个非线性区也有大量的分布，因此具有良好的非线性拟合能力，对于拟合函数来说比较理想。</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802122004074.png" alt></p>
+<p>上面两图示激活值在学习结束时归一化的直方图，分布在同一层上的所有神经元和300个测试示例。</p>
+<p>两幅图中上面的表示的是激活函数为 tanh ，下面表示的是激活函数为 softsign，处在 0 附近的激活值是线性区，而 (-0.8, -0.6) 和 (0.6, 0.8) 区域处于非线性区。</p>
+<h1 id="studying-gradients-and-their-propagation">Studying Gradients and their Propagation</h1>
+<h2 id="effect-of-the-cost-function">Effect of the Cost Function</h2>
+<p>在1986年 Rumelhart 已经发现：logistic function 或者叫 conditional log-likelihood function: \(-log P（y|x)\) 的效果比平方代价函数的效果好很多的，原因在于平方代价函数在训练过程中会出现更多的平坦区域。文章给出了一个两个参数下的图，图中采用的是具有单隐层的神经网络，激活函数使用的是tanh函数，对于输入信号进行随机初始化，可以看到二次代价函数具有更多的平坦区域。</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802122705664.png" alt></p>
+<p>图中上面的曲面表示的是交叉熵代价函数，下面的曲面表示的是二次代价函数，\(w_1\) 和 \(w_2\)分别表示层与层之间的连接权值。</p>
+<h2 id="gradient-at-initialization">Gradient at initialization</h2>
+<h3 id="theoretical-considerations-and-a-new-normalized-initialization">Theoretical Considerations and a New Normalized Initialization</h3>
+<blockquote>
+<p>基于 Bradley 在 2009 年的理论分析 the variance of the back-progated gradients，并提出一种新的权值初始化的方法</p>
+</blockquote>
+<p>研究反向传播的梯度，或是代价函数对于每一层输入偏置的梯度。Bradley 在 2009 年发现在初始化权重后反向<strong>梯度从输出层到输入层逐渐减小</strong>。使用线性的激活函数，发现了<strong>反向传播的梯度的方差随网络的向后而逐渐减小</strong>。</p>
+<p>对于使用在0处导数为1 的对称激活函数的全连接神经网络来说，有：<br>
+\[
+\begin{array}{c}
+\frac{\partial \text {Cost}}{\partial s_{k}^{i}}=f^{\prime}\left(s_{k}^{i}\right) W_{k, \bullet}^{i+1} \frac{\partial \text {Cost}}{\partial \mathbf{s}^{i+1}} \\
+\frac{\partial \text {Cost}}{\partial w_{l, k}^{i}}=z_{l}^{i} \frac{\partial \text {Cost}}{\partial s_{k}^{i}}
+\end{array}
+\]<br>
+其中，\(z^i\)是第 i 层的激活函数的输出向量，\(s^i\)表示第i层隐藏层的输出向量:</p>
+<p>\[
+s^i = z^i W^i + b^i \\
+z^{i+1} = f(s^i)
+\]<br>
+方差可以用输入，输出和随机权重初始化来推导，假设初始化时处于线性状态，权重初始化满足独立性假设，输入的方差相同，然后有：<br>
+\[
+f^\prime(s^i_k) \approx 1\\
+Var[z^i] = Var[x]\prod^{i-1}_{i^\prime=0}(n^\prime_iVar[w^{i^\prime}])
+\]<br>
+设第i层所有权重共享方差：\(Var[w^{i^\prime}]\),因此，对于一个有d层的神经网络：<br>
+\[
+\begin{aligned}
+\operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{i}}\right]=&amp; \operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{d}}\right] \prod_{i^{\prime}=i}^{d} n_{i^{\prime}+1} \operatorname{Var}\left[W^{i^{\prime}}\right] \\
+\operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial w^{i}}\right]=\prod_{i^{\prime}=0}^{i-1} n_{i^{\prime}} \operatorname{Var}\left[W^{i^{\prime}}\right] \prod_{i^{\prime}=i}^{d-1} n_{i^{\prime}+1} \operatorname{Var}\left[W^{i^{\prime}}\right]
+&amp; \times \operatorname{Var}[x] \operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{d}}\right]
+\end{aligned}
+\]<br>
+对于一个前向传播的网络来说，为了保持信息的流动，我们希望有：<br>
+\[
+\forall\left(i, i^{\prime}\right), \operatorname{Var}\left[z^{i}\right]=\operatorname{Var}\left[z^{i^\prime}\right]
+\]<br>
+对于误差反向传播来说，我们希望有：<br>
+\[
+\forall\left(i, i^{\prime}\right), \operatorname{Var}\left[\frac{\cos t}{\partial s^{i}}\right]=\operatorname{Var}\left[\frac{\partial \cos t}{\partial s^{i^\prime}}\right]
+\]<br>
+利用上面两个公式可以推出：<br>
+\[
+\begin{aligned}
+\forall i,  &amp; n_{i} \operatorname{Var}\left[W^{i}\right]=1 \\
+\forall i, &amp; n_{i+1} \operatorname{Var}\left[W^{i}\right]=1
+\end{aligned}
+\]</p>
+<p>进而得到：<br>
+\[
+\forall i, \quad \operatorname{Var}\left[W^{i}\right]=\frac{2}{n_{i}+n_{i+1}}
+\]<br>
+当这两个条件都同时满足时，需要满足所有层的宽度都是相同的，如果使用同样的初始化方法对权重进行初始化，就能够得到下面这两个结论：</p>
+<p>\[
+\begin{array}{c}
+\forall i, V a r\left[\frac{\partial C o s t}{\partial s^{i}}\right]=[n V a r[W]]^{d-i} \operatorname{Var}[x] \\
+\forall i, \operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial w^{i}}\right]=[n \operatorname{Var}[W]]^{d} \operatorname{Var}[x] \operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{d}}\right]
+\end{array}
+\]<br>
+可以看出，对于每一层上的权重的方差都是相等的，但是随着加深网络，反向传播梯度的方差可能会消失或爆炸。 在研究递归神经网络时，在时间上可以看成是非常深入的网络。</p>
+<p>论文使用的标准化初始化方法：<br>
+\[
+n \operatorname{Var}[W]=\frac{1}{3}
+\]<br>
+其中 n 表示的是每一层网络的神经元个数 (假设所有层具有所有相同的神经元数)，而这就会导致 BP 算法的梯度的方差取决于层数。通过层次间的乘法效应来初始化深层网络，建议使用以下初始化过程大致满足维护激活方差和反向传播梯度方差的目标：<br>
+\[
+W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}\right]
+\]</p>
+<blockquote>
+<p>对上面更通俗的解读：</p>
+<p>文章先假设的是线性激活函数，而且满足0点处导数为1，即：<br>
+\[
+f^\prime(0) = 1
+\]<br>
+对于一层卷积：<br>
+\[
+y=w_{1} x_{1}+\cdots+w_{n_{i}} x_{n_{i}}+\mathrm{b}
+\]<br>
+其中\(n_i\)表示输入个数，根据概率统计知识有下面的方差公式：<br>
+\[
+\operatorname{Var}\left(w_{i} x_{i}\right)=E\left[w_{i}\right]^{2} \operatorname{Var}\left(x_{i}\right)+E\left[x_{i}\right]^{2} \operatorname{Var}\left(w_{i}\right)+\operatorname{Var}\left(w_{i}\right) \operatorname{Var}\left(x_{i}\right)
+\]<br>
+特别的，当假设输入和权重都是0均值时（目前有了BN之后，这一点也较容易满足），上式可以简化为：<br>
+\[
+\operatorname{Var}\left(w_{i} x_{i}\right)=\operatorname{Var}\left(w_{i}\right) \operatorname{Var}\left(x_{i}\right)
+\]<br>
+进一步假设输入x和权重w独立同分布，则有：<br>
+\[
+\operatorname{Var}(y)=n_{i} \operatorname{Var}\left(w_{i}\right) \operatorname{Var}\left(x_{i}\right)
+\]<br>
+于是，为了保证输入与输出方差一致，则应该有：<br>
+\[
+\operatorname{Var}\left(w_{i}\right)=\frac{1}{n_{i}}
+\]<br>
+对于一个多层的网络，某一层的方差可以用累积的形式表达：<br>
+\[
+\operatorname{Var}\left[z^{i}\right]=\operatorname{Var}[x] \prod_{i^{\prime}=0}^{i-1} n_{i^{\prime}} \operatorname{Var}\left[W^{i^{\prime}}\right]
+\]<br>
+反向传播计算梯度时同样具有类似的形式：<br>
+\[
+\operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{i}}\right]=\operatorname{Var}\left[\frac{\partial \operatorname{Cost}}{\partial s^{d}}\right] \prod_{i^{\prime}=i}^{d} n_{i^{\prime}+1} \operatorname{Var}\left[W^{i^{\prime}}\right]
+\]</p>
+<p>综上，为了保证前向传播和反向传播时每一层的方差一致，应满足：<br>
+\[
+\begin{aligned}
+\forall i, &amp; n_{i} \operatorname{Var}\left[W^{i}\right]=1 \\
+\forall i, &amp; n_{i+1} \operatorname{Var}\left[W^{i}\right]=1
+\end{aligned}
+\]<br>
+但是，实际当中输入与输出的个数往往不相等，于是为了均衡考量，最终权重方差应满足：<br>
+\[
+\forall i, \quad \operatorname{Var}\left[W^{i}\right]=\frac{2}{n_{i}+n_{i+1}}
+\]<br>
+根据概率统计知道 [a,b] 间的均匀分布的方差为：<br>
+\[
+\operatorname{Var}=\frac{(b-a)^{2}}{12}
+\]</p>
+<p>因此，Xavier初始化的实现就是下面的均匀分布：<br>
+\[
+W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}\right]
+\]</p>
+</blockquote>
+<h3 id="gradient-propagation-study">Gradient Propagation Study</h3>
+<p>为了经验验证上述理论思想，作者使用两种不同的初始化方法在初始化时绘制了激活值，权重和反向传播梯度的归一化直方图。通过观测第 i 层网络的雅可比矩阵(\(J=\frac{\partial z^{i+1}}{\partial z^i}\))的奇异值：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802182707631.png" alt></p>
+<p>上面的图使用的是标准方法初始化，下面的图使用的是作者提出的normalization initialzation 方法。</p>
+<p>可以看出，使用标准的初始化方法激活值从外层向内层逐渐衰减，而使用 normalization initialzation 方法进行初始化各层之间的激活值几乎保持不变。</p>
+<h2 id="back-propagated-gradients-during-learning">Back-propagated Gradients During Learning</h2>
+<p>在训练时，标准初始化\(W_{i j} \sim U\left[-\frac{1}{\sqrt{n}}, \frac{1}{\sqrt{n}}\right]\)之后，反向传播梯度的方差随着向下传播而变小。 然而使用论文提出的归一化初始化，看不到这种降低的反向传播梯度：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802183205197.png" alt></p>
+<p>即使反向传播的梯度变小（标准初始化），权重梯度的方差大体上是恒定的：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802183552802.png" alt></p>
+<p>可以看出即使是使用标准初始化方法的反向梯度也没有发生明显的衰减。</p>
+<p>随着训练的迭代，特别是在标准初始化方面，梯度起始大体上相同，它们彼此分开（下层具有更大的梯度）。 请注意，在不同层次上具有非常不同的幅度的梯度可能会导致病态和较慢的训练。</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802184026069.png" alt></p>
+<p>最后，观察到softsign网络与正态化初始化的tanh网络有类似特性，可以通过比较两种情况下的激活变化来看出：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802184159590.png" alt></p>
+<h1 id="error-curves-and-conlusions">Error Curves and Conlusions</h1>
+<p>通过误差曲线来展示不同设置的优劣：</p>
+<p><img src="/2020/08/01/deeplearning/Xavier/image-20200802184607043.png" alt></p>
+<h1 id="conclusion">conclusion</h1>
+<ol>
+<li>
+<p>使用传统的 sigmoid 或 tanh 激活函数和标准初始化方法效果并不好，它们收敛缓慢而且往往会陷入局部最优。</p>
+</li>
+<li>
+<p>使用 softsign 激活函数看上去比 tanh 网络对初始化方法具有更好的鲁棒性。</p>
+</li>
+<li>
+<p>对于 tanh 网络，使用 normalized initialization 初始化方法对提升性能很有用，可能是因为层与层之间的激活值和梯度值得以保持。</p>
+</li>
+<li>
+<p>通过监测迭代过程中层与层之间的梯度值和激活值对于理解深层网络中的训练困难是一个有力的工具。</p>
+</li>
+<li>
+<p>Sigmoid 激活函数在使用小随机值初始化时应该尽量避免使用（在0附近处于饱和状态）</p>
+</li>
+<li>
+<p>保持层间转换，使得激活和渐变都能够很好地发挥作用似乎是有帮助的，并且允许消除纯监督深层网络与预先使用无监督学习训练的深层网络之间的差异的很大一部分。</p>
+</li>
+</ol>
+<h1 id="reference">reference</h1>
+<ol>
+<li><a href="https://blog.csdn.net/qq_34784753/article/details/78668884" target="_blank" rel="noopener">【Deep Learning】笔记：Understanding the difficulty of training deep feedforward neural networks</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/78857752" target="_blank" rel="noopener">论文阅读-Xavier 初始化</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%8F%82%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 参数初始化</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/01/code_template/" rel="prev" title="代码注释模板">
+      <i class="fa fa-chevron-left"></i> 代码注释模板
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/02/deeplearning/activate_function/" rel="next" title="激活函数">
+      激活函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deep-neural-networks"><span class="nav-number">2.</span> <span class="nav-text">Deep Neural Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experimental-setting-and-datasets"><span class="nav-number">3.</span> <span class="nav-text">Experimental Setting and Datasets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#online-learning-on-an-infinite-dataset"><span class="nav-number">3.1.</span> <span class="nav-text">Online Learning on an Infinite Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finite-datasets"><span class="nav-number">3.2.</span> <span class="nav-text">finite datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-setting"><span class="nav-number">3.3.</span> <span class="nav-text">Experimental Setting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#effect-of-activation-functions-and-saturation-during-training"><span class="nav-number">4.</span> <span class="nav-text">Effect of Activation Functions and Saturation During Training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-sigmoid"><span class="nav-number">4.1.</span> <span class="nav-text">Experiments with the Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-with-the-hyperbolic-tangent"><span class="nav-number">4.2.</span> <span class="nav-text">Experiment with the Hyperbolic tangent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-softsign"><span class="nav-number">4.3.</span> <span class="nav-text">Experiments with the Softsign</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#studying-gradients-and-their-propagation"><span class="nav-number">5.</span> <span class="nav-text">Studying Gradients and their Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-the-cost-function"><span class="nav-number">5.1.</span> <span class="nav-text">Effect of the Cost Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradient-at-initialization"><span class="nav-number">5.2.</span> <span class="nav-text">Gradient at initialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#theoretical-considerations-and-a-new-normalized-initialization"><span class="nav-number">5.2.1.</span> <span class="nav-text">Theoretical Considerations and a New Normalized Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gradient-propagation-study"><span class="nav-number">5.2.2.</span> <span class="nav-text">Gradient Propagation Study</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#back-propagated-gradients-during-learning"><span class="nav-number">5.3.</span> <span class="nav-text">Back-propagated Gradients During Learning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#error-curves-and-conlusions"><span class="nav-number">6.</span> <span class="nav-text">Error Curves and Conlusions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#conclusion"><span class="nav-number">7.</span> <span class="nav-text">conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">8.</span> <span class="nav-text">reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

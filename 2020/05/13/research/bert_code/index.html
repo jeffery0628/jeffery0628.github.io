@@ -420,7 +420,7 @@
 </li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BertEmbeddings</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="string">"""Construct the embeddings from word, position and token_type embeddings.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)</span><br><span class="line">        self.position_embeddings = nn.Embedding(config.max_position_embeddings, config.hidden_size)</span><br><span class="line">        self.token_type_embeddings = nn.Embedding(config.type_vocab_size, config.hidden_size)</span><br><span class="line">        </span><br><span class="line">        self.LayerNorm = BertLayerNorm(config.hidden_size, eps=config.layer_norm_eps)</span><br><span class="line">        self.dropout = nn.Dropout(config.hidden_dropout_prob)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input_ids=None, token_type_ids=None, position_ids=None, inputs_embeds=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> input_ids <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            input_shape = input_ids.size()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            input_shape = inputs_embeds.size()[:<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">        seq_length = input_shape[<span class="number">1</span>]</span><br><span class="line">        device = input_ids.device <span class="keyword">if</span> input_ids <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> inputs_embeds.device</span><br><span class="line">        <span class="keyword">if</span> position_ids <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="comment"># 生成token 的 index 信息。[seq_len]</span></span><br><span class="line">            position_ids = torch.arange(seq_length, dtype=torch.long, device=device)</span><br><span class="line">            position_ids = position_ids.unsqueeze(<span class="number">0</span>).expand(input_shape) <span class="comment">#[bs,seq_len]</span></span><br><span class="line">        <span class="keyword">if</span> token_type_ids <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            token_type_ids = torch.zeros(input_shape, dtype=torch.long, device=device)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> inputs_embeds <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            inputs_embeds = self.word_embeddings(input_ids)</span><br><span class="line">        position_embeddings = self.position_embeddings(position_ids)</span><br><span class="line">        token_type_embeddings = self.token_type_embeddings(token_type_ids)</span><br><span class="line"></span><br><span class="line">        embeddings = inputs_embeds + position_embeddings + token_type_embeddings</span><br><span class="line">        <span class="comment"># BertLayerNorm = torch.nn.LayerNorm</span></span><br><span class="line">        embeddings = self.LayerNorm(embeddings)</span><br><span class="line">        embeddings = self.dropout(embeddings)</span><br><span class="line">        <span class="keyword">return</span> embeddings</span><br></pre></td></tr></table></figure>
-<p>从forward函数开始看，先有一个torch.arange函数。<code>torch.arange(seq_length, dtype=torch.long, device=input_ids.device)</code>来生成token 的index 信息,<span class="label danger">和transformer中的Positional Embedding不同，bert这里的positional embedding 需要通过训练进行学习，transformer中的positional embedding是使用公式计算出来的</span>(可以参考<a href="/2020/05/11/transformer/" title="Transformer">Transformer</a> 的Positional Embedding来进行比较)。此外，LayerNorm的数学表达为：\(y = \frac{x - \mathrm{E}[x]}{ \sqrt{\mathrm{Var}[x] + \epsilon}} * \gamma + \beta\)，\(\gamma,\beta\)可以通过仿射变换来进行学习。</p>
+<p>从forward函数开始看，先有一个torch.arange函数。<code>torch.arange(seq_length, dtype=torch.long, device=input_ids.device)</code>来生成token 的index 信息,<span class="label danger">和transformer中的Positional Embedding不同，bert这里的positional embedding 需要通过训练进行学习，transformer中的positional embedding是使用公式计算出来的</span>(可以参考 的Positional Embedding来进行比较)。此外，LayerNorm的数学表达为：\(y = \frac{x - \mathrm{E}[x]}{ \sqrt{\mathrm{Var}[x] + \epsilon}} * \gamma + \beta\)，\(\gamma,\beta\)可以通过仿射变换来进行学习。</p>
 <h3 id="bert-encoder">BertEncoder</h3>
 <p>下面代码将原有的BertLayer一层一层剥开，如果想要输出每层的状态（output_hidden_states=True），则对hidden_states 进行累加，如果（output_hidden_states=False）则只与最后一层的状态相加。BertEncoder类，其实只是用来输出BertLayer类的状态的一个函数。真正模型内部的东西在BertLayer类中。</p>
 <p>forward：(符号’是可以为None的意思)</p>
@@ -667,7 +667,7 @@ MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, po
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/11/transformer/" rel="prev" title="Transformer">
+    <a href="/2020/05/11/transformers/transformer/" rel="prev" title="Transformer">
       <i class="fa fa-chevron-left"></i> Transformer
     </a></div>
       <div class="post-nav-item">
@@ -751,20 +751,20 @@ MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, po
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -810,7 +810,7 @@ MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, po
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1m</span>
+    <span title="站点总字数">1.1m</span>
 </div>
 
         
@@ -978,7 +978,7 @@ MLM和NSP策略都写在里面，输入的是Encoder的输出sequence_output, po
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item => {

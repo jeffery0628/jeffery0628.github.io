@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="switchable normalization">
+<meta property="og:url" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/1.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/1.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/2.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/3.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/4.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/5.jpg">
+<meta property="article:published_time" content="2020-07-31T23:48:58.000Z">
+<meta property="article:modified_time" content="2020-08-01T01:51:30.587Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="归一化方法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/1.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>switchable normalization | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/08/01/deeplearning/normalization/switchable_normalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          switchable normalization
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-01 09:51:30" itemprop="dateModified" datetime="2020-08-01T09:51:30+08:00">2020-08-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/01/deeplearning/normalization/switchable_normalization/" class="post-meta-item leancloud_visitors" data-flag-title="switchable normalization" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/08/01/deeplearning/normalization/switchable_normalization/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/01/deeplearning/normalization/switchable_normalization/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/1.jpg" alt></p>
+<a id="more"></a>
+<h1 id="yin-ru">引入</h1>
+<p><code>switchable Normalization（SN）</code>统一了实例归一化<code><a href="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/" title="instance normalization">instance normalization</a></code>，层归一化<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>，和批归一化<code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>的各种操作。</p>
+<h1 id="yuan-li">原理</h1>
+<p>假设一个卷积神经网络的一个隐含卷积层的输入数据可表示为具有四个维度的特征图:<code>(N, C, H, W)</code>。这里每个维度分别代表样本数目<code>minibatch size</code>，通道数目<code>number of channels</code>，通道的高<code>height</code>，和通道的宽<code>width</code>。假设每一个像素表示为\(h_{ncij}\)，这里\(n,c,i,j\)为上述四个维度的下标。SN对\(h_{ncij}\)进行归一化操作，并输出归一化后的像素值\(\hat{h}_{ncij}\)。SN的计算公式如下：<br>
+\[
+\hat{h}_{n c i j}=\gamma \frac{h_{n c i j}-\Sigma_{k \in \Omega} w_{k} \mu_{k}}{\sqrt{\Sigma_{k \in \Omega} w_{k}^{\prime} \sigma_{k}^{2}+\epsilon}}+\beta \tag{1}
+\]<br>
+上述定义与<code>BN</code>，<code>IN</code>，和<code>LN</code>的定义相似。他们都学习了缩放系数\(\gamma\)和偏移系数\(\beta\)。主要的区别在于<code>SN</code>的统计信息（即均值\(\mu\)和方差\(\sigma^2\)），不像<code>IN</code>只是在一个通道中计算的，也不像<code>LN</code>只是在一个层中计算，而是在一个集合\(\Omega\)当中选择合适的归一化方法来加权平均的。这个集合定义为\(\Omega=\{\mathrm{bn},\mathrm{in},\mathrm{ln}\}\)。\(w_k\)和\(w_k^\prime\)则为相应统计量对应的权重系数。下图直观的展示了SN的基本原理:</p>
+<p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/1.jpg" alt></p>
+<p>上图为SN的直观图形解释，<code>SN</code>中每个样本每个通道（\(H\times W\)）的均值和方差，由<code>BN</code>,<code>IN</code>,<code>LN</code>三种不同统计方法计算得到的均值和方差共同决定。在<code>SN</code>中，均值的加权系数\(w_k\)的计算方法如下：<br>
+\[
+w_{k}=\frac{e^{\lambda_{k}}}{\Sigma_{z \in\{\mathrm{in}, \ln , \mathrm{bn}\}} e^{\lambda_{Z}}}, \quad k \in\{\mathrm{bn}, \mathrm{in}, \ln \} \tag{2}
+\]<br>
+\(\lambda_k\)为三个维度统计量对应的参数。为了与网络参数区分，这些参数称为控制参数。这些控制参数均初始为1，在反向传播时进行优化学习。该计算公式即利用softmax函数对优化参数\(λ_k\)进行归一化，计算统计量最终的加权系数\(w_k\)。因此，所有加权系数\(w_k\)的和为1，每个加权系数\(w_k\)的值都在0和1之间。类似的，\(w_k^\prime\)可以由另外的三个参数\(\lambda_\mathrm{bn}^\prime\)，\(\lambda_\mathrm{in}^\prime\)，和\(\lambda_\mathrm{ln}^\prime\)计算得出，且\(\Sigma_{k\in\Omega}w_k^\prime=1\)，\(\forall w_k^\prime\in[0,1]\)。因此，相对于BN，SN只额外增加了\(\lambda_\mathrm{bn}\)，\(\lambda_\mathrm{in}\)，\(\lambda_\mathrm{ln}\)和\(\lambda_\mathrm{bn}^\prime\)，\(\lambda_\mathrm{in}^\prime\)，\(\lambda_\mathrm{ln}^\prime\) 6个控制参数。</p>
+<p>下面给出<code>bn,ln,in</code>均值和方差的计算公式<br>
+\[
+\begin{aligned}
+\mu_{\mathrm{in}} &amp;=\frac{1}{H W} \sum_{i, j}^{H, W} h_{n c i j}, \sigma_{\mathrm{in}}^{2}=\frac{1}{H W} \sum_{i, j}^{H, W}\left(h_{n c i j}-\mu_{\mathrm{in}}\right)^{2} \\
+\mu_{\mathrm{ln}} &amp;=\frac{1}{C} \sum_{c=1}^{C} \mu_{\mathrm{in}}, \sigma_{\ln }^{2}=\frac{1}{C} \sum_{c=1}^{C}\left(\sigma_{\mathrm{in}}^{2}+\mu_{\mathrm{in}}^{2}\right)-\mu_{\mathrm{ln}}^{2} \\
+\mu_{\mathrm{bn}} &amp;=\frac{1}{N} \sum_{n=1}^{N} \mu_{\mathrm{in}}, \sigma_{\mathrm{bn}}^{2}=\frac{1}{N} \sum_{n=1}^{N}\left(\sigma_{\mathrm{in}}^{2}+\mu_{\mathrm{in}}^{2}\right)-\mu_{\mathrm{bn}}^{2}
+\end{aligned} \tag{5}
+\]</p>
+<h1 id="sn-yu-minibatch">SN 与minibatch</h1>
+<p><code>minibatch size</code>的变化对<code>BN</code>的影响最大，因为<code>BN</code>使用的均值和方差是在<code>minibatch</code>当中统计的。<code>mini batch</code>越小，这些统计量的估计会带有更大的噪声，对模型训练产生过大的规范化作用或称正则化作用，从而影响模型的泛化性能。而<code>IN</code>，<code>LN</code>和<code>GN</code>在计算统计量时虽然与minibatch无关，却由于缺乏正则化能力在大的<code>minibatch</code>时无法达到<code>BN</code>的精度（这些技术单独使用往往导致较明显的过拟合现象）。<code>SN</code>通过学习不同归一化方法的相互作用（权重系数），克服了上述问题。无论<code>minibatch</code>大还是小，<code>SN</code>都能自适配的学习出合适的归一化方式，保持高精度。总的来说：</p>
+<blockquote>
+<p>minibatch越小，SN中BN的权重系数越小，IN和LN的权重系数则越大；<br>
+minibatch越大，SN中BN的权重系数越大，IN和LN的权重系数越小。</p>
+</blockquote>
+<p>下图为<code>SN</code>在不同<code>minibatch size</code>下自主选择<code>BN</code>，<code>IN</code>，<code>LN</code>的权重系数的展示。括号表示<code>GPU数目，每个GPU样本数即minibatch</code>。在训练中，梯度通过在所有GPU中平均进行估计，而所有归一化方法的统计量只在单独一个GPU当中计算。可以看出，随着<code>minibatch</code>的不断减小，<code>BN</code>的权重越来越低，<code>IN</code>和<code>LN</code>的权重越来越高。当<code>minibatch size</code>等于1时，<code>BN</code>的权重为零，因为此时在训练当中<code>BN</code>等效于<code>IN</code>。</p>
+<p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/2.jpg" alt></p>
+<h1 id="sn-diao-jie-you-bn-de-jun-zhi-he-fang-chai-suo-chan-sheng-de-zheng-ze-hua">SN调节由BN的均值和方差所产生的正则化</h1>
+<p><code>BN</code>在计算统计量过程会引入随机噪声。这些随机噪声为模型带来正则化作用，该作用的强度与<code>minibatch size</code>成反比。直观的说，由<code>BN</code>的均值和方差分别产生的正则化对模型训练会产生不同的影响。具体来说，计算样本均值引入的噪声要弱于估计样本方差引入的噪声（噪声越大，正则化作用越强）。SN通过分别调节它们的权重，来增加或者减少模型的正则化作用。进一步地，SN的自主选择过程旨在抑制噪声。统计量带来的噪声越大抑制越厉害。可以理解为：</p>
+<blockquote>
+<p>minibatch较小时，BN中variance的权重会更小于mean的权重</p>
+</blockquote>
+<p>下图为<code>SN</code>在ResNet50不同的blocks中选择<code>BN</code>，<code>IN</code>和<code>LN</code>权重系数的展示。(a)中<code>minibatch size</code>为32，(b)中<code>minibatch size</code>为2。可以看出对于<code>BN</code>，其均值和方差的加权系数不一样。对比(a)和(b)我们发现，当<code>minibatch size</code>为32时，BN的均值和方差的具有较大的权重；当<code>batch size</code>为2时，BN中variance的权重会被降低，从而降低估计variance时引入的噪声的影响。</p>
+<p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/3.jpg" alt></p>
+<p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/4.jpg" alt></p>
+<h1 id="sn-yu-bn-gn-de-fan-hua-xing-neng">SN与BN,GN的泛化性能</h1>
+<p>基于<code>SN</code>的设计，可以发现SN不仅可以解决因<code>minibatch</code>太小而导致的<code>BN</code>中噪声太大的问题，并且通过引入其他的归一化方法提升了模型的性能。而且在<code>minibatch</code>较大时发挥出<code>BN</code>的优势，弥补其他归一化方法的缺陷。可以理解为：</p>
+<blockquote>
+<p>SN是一种覆盖特征图张量各个维度来计算统计信息的归一化方法，不依赖minibatch size的同时对各个维度统计有很好的鲁棒性。</p>
+</blockquote>
+<p>下图展示出<code>SN</code>，<code>BN</code>，<code>GN</code>在不同<code>minibatch size</code>下的性能，三者都使用ResNet50在ImageNet中训练。纵坐标为ImageNet验证集top-1准确率。可以看出，<code>BN</code>对<code>minibatch size</code>非常敏感，在<code>minibatch</code>较小时性能较差；<code>GN</code>的性能相对稳定，但在<code>minibatch</code>较大时性能不如<code>BN</code>；而<code>SN</code>不仅克服了<code>BN</code>对<code>batchsize</code>较为敏感的问题，在各个<code>minibatch size</code>下都能表现稳定，而且达到较优的模型性能。</p>
+<p><img src="/2020/08/01/deeplearning/normalization/switchable_normalization/5.jpg" alt></p>
+<h1 id="dai-ma">代码</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SwitchableNorm</span><span class="params">(x, gamma, beta, w_mean, w_var)</span>:</span></span><br><span class="line">    <span class="comment"># x_shape:[B, C, H, W]</span></span><br><span class="line">    results = <span class="number">0.</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line"></span><br><span class="line">    mean_in = np.mean(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    var_in = np.var(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    mean_ln = np.mean(x, axis=(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    var_ln = np.var(x, axis=(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    mean_bn = np.mean(x, axis=(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    var_bn = np.var(x, axis=(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    mean = w_mean[<span class="number">0</span>] * mean_in + w_mean[<span class="number">1</span>] * mean_ln + w_mean[<span class="number">2</span>] * mean_bn</span><br><span class="line">    var = w_var[<span class="number">0</span>] * var_in + w_var[<span class="number">1</span>] * var_ln + w_var[<span class="number">2</span>] * var_bn</span><br><span class="line"></span><br><span class="line">    x_normalized = (x - mean) / np.sqrt(var + eps)</span><br><span class="line">    results = gamma * x_normalized + beta</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<h1 id="zong-jie">总结</h1>
+<p>相比于其他归一化方法，SN有以下性质：</p>
+<ul>
+<li><strong>鲁棒性</strong> ：对mini-batch尺寸的不敏感使其精度在各种batch size设置下都保持稳定。特别是在batch size受限的视觉任务中相对有利，例如物体检测、实例分割、视频识别等。</li>
+<li><strong>通用性</strong> ：以往不同的归一化方法依赖不同维度的统计信息，针对不同的视觉任务需要选择不同的网络结构。精细的手动设计和繁琐的实验验证使实际应用中的模型选择变得非常困难。SN适用于各种网络结构包括CNNs和RNNs，并能够解决多种视觉任务。</li>
+<li><strong>多样性</strong> ：SN为神经网络不同归一化层选择不同操作，拓展了归一化技术的边界，具有重要意义。直观而言，现有的方法都是对整个网络的所有层保持相同的归一化操作。然而，神经网络学习得到的高层特征具有高层语义，而低层特征学习底层视觉信息。我们应该为处在神经网络不同位置、不同深度的归一化层选择不同的操作。问题在于一方面很难手动选择整个网络的不同归一化操作，另一方面通过实验选择单一的归一化操作不一定能达到最优性能。</li>
+</ul>
+<p>总的来说，<code>SN</code>是一种任务与数据驱动的归一化方法。它对各种归一化技术对训练所产生的影响进行激励或者抑制，从而取得最优性能。</p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://htmlpreview.github.io/?https://github.com/switchablenorms/Switchable-Normalization/blob/master/blog_cn/blog_cn.html" target="_blank" rel="noopener">深度剖析 | 可微分学习的自适配归一化 (Switchable Normalization)</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%BD%92%E4%B8%80%E5%8C%96%E6%96%B9%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 归一化方法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/" rel="prev" title="instance normalization 和 group normalization">
+      <i class="fa fa-chevron-left"></i> instance normalization 和 group normalization
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/01/deeplearning/loss/focal_loss/" rel="next" title="focal loss">
+      focal loss <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yin-ru"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yuan-li"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sn-yu-minibatch"><span class="nav-number">3.</span> <span class="nav-text">SN 与minibatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sn-diao-jie-you-bn-de-jun-zhi-he-fang-chai-suo-chan-sheng-de-zheng-ze-hua"><span class="nav-number">4.</span> <span class="nav-text">SN调节由BN的均值和方差所产生的正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sn-yu-bn-gn-de-fan-hua-xing-neng"><span class="nav-number">5.</span> <span class="nav-text">SN与BN,GN的泛化性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zong-jie"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

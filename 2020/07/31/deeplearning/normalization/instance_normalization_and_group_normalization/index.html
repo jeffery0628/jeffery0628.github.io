@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="instance normalization 和 group normalization">
+<meta property="og:url" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
+<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731222057465.png">
+<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
+<meta property="article:published_time" content="2020-07-31T12:33:10.000Z">
+<meta property="article:modified_time" content="2020-08-01T01:54:01.586Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>instance normalization 和 group normalization | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          instance normalization 和 group normalization
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-01 09:54:01" itemprop="dateModified" datetime="2020-08-01T09:54:01+08:00">2020-08-01</time>
+              </span>
+
+          
+            <span id="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/" class="post-meta-item leancloud_visitors" data-flag-title="instance normalization 和 group normalization" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
+<a id="more"></a>
+<h1 id="instance-normalization">Instance Normalization</h1>
+<p>对于图像风格迁移这类注重每个像素的任务来说，每个样本的像素点的信息都是非常重要的，对于像<code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>这种每个批量的所有样本都做归一化的算法来说就不太适用了，因为<code>BN</code>计算归一化统计量时考虑了一个批量中所有图片的内容，从而造成了每个样本独特细节的丢失。而对于<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>这类需要考虑一个样本所有通道的算法来说可能忽略了不同通道的差异，也不太适用于图像风格迁移这类应用。<code>Instance Normalization(IN)</code>是一种更适合对单个像素有更高要求的场景的归一化算法。<code>IN</code>算法计算归一化统计量时考虑单个样本，单个通道的所有元素。</p>
+<h2 id="in-he-bn">IN 和 BN</h2>
+<p>关于BN的算法公式：<br>
+\[
+\mu_{i}=\frac{1}{H W T} \sum_{t=1}^{T} \sum_{l=1}^{W} \sum_{m=1}^{H} x_{t i l m} \quad \sigma_{i}^{2}=\frac{1}{H W T} \sum_{t=1}^{T} \sum_{l=1}^{W} \sum_{m=1}^{H}\left(x_{t i l m}-\mu_{i}\right)^{2} \quad y_{t i j k}=\frac{x_{t i j k}-\mu_{i}}{\sqrt{\sigma_{i}^{2}+\epsilon}} \tag{1}
+\]<br>
+而在<code>IN</code>中，由于<code>IN</code>在计算归一化统计量时并没有像<code>BN</code>那样跨样本、单通道，也没有像<code>LN</code>那样单样本、跨通道。它取单通道，单样本上的数据进行计算，如下图最右侧所示，所以对比<code>BN</code>的公式，它只需要去掉<code>batch</code>的维度求和即可：<br>
+\[
+\mu_{t i}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H} x_{t i l m} \quad \sigma_{t i}^{2}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H}\left(x_{t i l m}-\mu_{t i}\right)^{2} \quad y_{t i j k}=\frac{x_{t i j k}-\mu_{t i}}{\sqrt{\sigma_{t i}^{2}+\epsilon}} \tag{2}
+\]</p>
+<p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731222057465.png" alt></p>
+<p>对于<code>BN</code>中的\(\beta\)和\(\gamma\)，<code>IN</code>中也存在这两个参数。</p>
+<h2 id="dai-ma">代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Instancenorm</span><span class="params">(x, gamma, beta)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># x_shape:[B, C, H, W]</span></span><br><span class="line">    results = <span class="number">0.</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line"></span><br><span class="line">    x_mean = np.mean(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    x_var = np.var(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=True0)</span><br><span class="line">    x_normalized = (x - x_mean) / np.sqrt(x_var + eps)</span><br><span class="line">    results = gamma * x_normalized + beta</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<h2 id="zong-jie">总结</h2>
+<p><code>IN</code>是一个非常简单的算法，尤其适用于批量较小且单独考虑每个像素点的场景中，因为其计算归一化统计量时没有混合批量和通道之间的数据，对于这种场景下的应用，可以考虑使用IN。在图像这类应用中，每个通道上的值是比较大的，因此也能够取得比较合适的归一化统计量。但是有两个场景不建议使用<code>IN</code>:</p>
+<ol>
+<li><code>MLP</code>或者<code>RNN</code>中：因为在<code>MLP</code>或者<code>RNN</code>中，每个通道上只有一个数据，这时会自然不能使用<code>IN</code>；</li>
+<li><code>Feature Map</code>比较小时：因为此时<code>IN</code>的采样数据非常少，得到的归一化统计量将不再具有代表性。</li>
+</ol>
+<h1 id="group-normalization">Group Normalization</h1>
+<p><code>Group Normalization(GN)</code>是何恺明提出的一种归一化策略，它是介于<code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>和<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>之间的一种折中方案，如下图最右，它通过将<strong>通道</strong>数据分成几组计算归一化统计量，因此<code>GN</code>也是和批量大小无关的算法，因此可以用在<code>batch size</code>比较小的环境中。作者在论文中指出<code>GN</code>要比<code>LN</code>和<code>IN</code>的效果要好。</p>
+<p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
+<h2 id="gn-suan-fa">GN算法</h2>
+<p>和之前所有归一化算法相同，<code>GN</code>也是根据该层的输入数据计算均值和方差，然后使用这两个值更新输入数据：<br>
+\[
+\mu_{i}=\frac{1}{m} \sum_{k \in \mathcal{S} i} x_{k} \quad \sigma_{i}=\sqrt{\frac{1}{m} \sum_{k \in \mathcal{S}_{i}}\left(x_{k}-\mu_{i}\right)^{2}+\epsilon} \quad \hat{x}_{i}=\frac{1}{\sigma_{i}}\left(x_{i}-\mu_{i}\right) \tag{3}
+\]<br>
+对于归一化方法<code>(BN,LN,IN,GN)</code>均可以使用上面式子进行概括，区别它们的是\(S_i\)的计算方式的不同：</p>
+<p>对于<code>BN</code>来说，它是取不同<code>batch</code>的同一个<code>channel</code>上的所有值：<br>
+\[
+\mathcal{S}_{i}=\left\{k \mid k_{C}=i_{C}\right\} \tag{4}
+\]<br>
+对于<code>LN</code>来说，则是从同一个<code>batch</code>的不同的<code>channel</code>上取所有的值：<br>
+\[
+\mathcal{S}_{i}=\left\{k \mid k_{N}=i_{N}\right\} \tag{5}
+\]<br>
+对于<code>IN</code>来说，它既不跨<code>batch</code>，也不跨<code>channel</code>:<br>
+\[
+\mathcal{S}_{i}=\left\{k \mid k_{N}=i_{N}, k_{C}=i_{C}\right\} \tag{6}
+\]<br>
+对于<code>GN</code>来说，<code>GN</code>将<code>Channel</code>分成若干组，只使用组内的数据计算均值和方差。通常组数<code>G</code>是一个超参数：<br>
+\[
+\mathcal{S}_{i}=\left\{k \mid k_{N}=i_{N},\left\lfloor\frac{k_{C}}{C / G}\right\rfloor=\left\lfloor\frac{i_{C}}{C / G}\right\rfloor\right\} \tag{7}
+\]<br>
+可以看出，当<code>GN</code>的组数为1时，此时<code>GN</code>和<code>LN</code>等价；当<code>GN</code>的组数为通道数时，<code>GN</code>和<code>IN</code>等价。<code>GN</code>和其它算法一样也可以添加参数\(\gamma\)和\(\beta\)来保证网络的容量。</p>
+<h2 id="dai-ma-1">代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GroupNorm</span><span class="params">(x, gamma, beta, G=<span class="number">16</span>)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># x_shape:[B, C, H, W]</span></span><br><span class="line">    results = <span class="number">0.</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line">    x = np.reshape(x, (x.shape[<span class="number">0</span>], G, x.shape[<span class="number">1</span>]/<span class="number">16</span>, x.shape[<span class="number">2</span>], x.shape[<span class="number">3</span>]))</span><br><span class="line"></span><br><span class="line">    x_mean = np.mean(x, axis=(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    x_var = np.var(x, axis=(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>), keepdims=True0)</span><br><span class="line">    x_normalized = (x - x_mean) / np.sqrt(x_var + eps)</span><br><span class="line">    results = gamma * x_normalized + beta</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<h2 id="zong-jie-1">总结</h2>
+<p><code>GN</code>比<code>LN</code>效果好的原因是<code>GN</code>比<code>LN</code>的限制更少，因为<code>LN</code>假设了一个层的所有通道的数据共享一个均值和方差。而<code>IN</code>则丢失了探索通道之间依赖性的能力。</p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/56613508" target="_blank" rel="noopener">模型优化之Group Normalization</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/56542480" target="_blank" rel="noopener">模型优化之Instance Normalization</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/30/deeplearning/normalization/weight_normalization/" rel="prev" title="weight normalization">
+      <i class="fa fa-chevron-left"></i> weight normalization
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/01/deeplearning/normalization/switchable_normalization/" rel="next" title="switchable normalization">
+      switchable normalization <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#instance-normalization"><span class="nav-number">1.</span> <span class="nav-text">Instance Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#in-he-bn"><span class="nav-number">1.1.</span> <span class="nav-text">IN 和 BN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-ma"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zong-jie"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#group-normalization"><span class="nav-number">2.</span> <span class="nav-text">Group Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gn-suan-fa"><span class="nav-number">2.1.</span> <span class="nav-text">GN算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-ma-1"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zong-jie-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

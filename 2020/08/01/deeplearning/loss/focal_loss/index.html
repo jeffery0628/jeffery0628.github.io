@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="focal loss">
+<meta property="og:url" content="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/image-20200801122615585.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/image-20200801122615585.png">
+<meta property="article:published_time" content="2020-08-01T04:08:01.000Z">
+<meta property="article:modified_time" content="2020-08-01T07:32:26.356Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="loss">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/image-20200801122615585.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>focal loss | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/08/01/deeplearning/loss/focal_loss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          focal loss
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-01 15:32:26" itemprop="dateModified" datetime="2020-08-01T15:32:26+08:00">2020-08-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/01/deeplearning/loss/focal_loss/" class="post-meta-item leancloud_visitors" data-flag-title="focal loss" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/08/01/deeplearning/loss/focal_loss/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/01/deeplearning/loss/focal_loss/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/08/01/deeplearning/loss/focal_loss/image-20200801122615585.png" alt></p>
+<a id="more"></a>
+<h1 id="yin-ru">引入</h1>
+<p>object detection的算法主要可以分为两大类：<strong>two-stage detector和one-stage detector</strong>。前者是指类似Faster RCNN，RFCN这类需要region proposal的检测算法，这类算法可以达到很高的准确率，但是速度较慢。虽然可以通过减少proposal的数量或降低输入图像的分辨率等方式达到提速，但是速度并没有质的提升。后者是指类似YOLO，SSD这样不需要region proposal，直接回归的检测算法，这类算法速度很快，但是准确率不如前者。<strong>作者提出focal loss的出发点也是希望one-stage detector可以达到two-stage detector的准确率，同时不影响原有的速度。</strong></p>
+<p>既然有了出发点，<strong>那么就要找one-stage detector的准确率不如two-stage detector的原因，作者认为原因是：样本的类别不均衡导致的</strong>。因为在object detection领域，一张图像可能生成成千上万的candidate locations，但是其中只有很少一部分是包含object的，这就带来了类别不均衡。那么类别不均衡会带来什么后果呢？</p>
+<blockquote>
+<ol>
+<li>
+<p>training is inefficient as most locations are easy negatives that contribute no useful learning signal;</p>
+</li>
+<li>
+<p>enmasse, the easy negatives can overwhelm training and lead to degenerate models.</p>
+</li>
+</ol>
+</blockquote>
+<p>也就是说：负样本数量太大，占总的loss的大部分，而且多是容易分类的，因此使得模型的优化方向并不是我们所希望的那样。针对类别不均衡问题，提出一种新的损失函数：focal loss，这个损失函数是在标准交叉熵损失基础上修改得到的。<strong>这个函数可以通过减少易分类样本的权重，使得模型在训练时更专注于难分类的样本</strong>。</p>
+<p><code><a class="btn" href="focal_loss.pdf">
+            <i class="fa fa-download"></i>focal loss论文下载
+          </a></code></p>
+<h1 id="yuan-li">原理</h1>
+<h2 id="jiao-cha-shang">交叉熵</h2>
+<p>在介绍focal loss之前，先来看看交叉熵损失，这里以二分类为例，<strong>原来的分类loss是各个训练样本交叉熵的直接求和，也就是各个样本的权重是一样的</strong>。公式如下：<br>
+\[
+\mathrm{CE}(p, y)=\left\{\begin{array}{ll}
+-\log (p) &amp; \text { if } y=1 \\
+-\log (1-p) &amp; \text { otherwise }
+\end{array}\right. \tag{1}
+\]<br>
+因为是二分类，p表示预测样本属于1的概率（范围为0-1），y表示label，y的取值为{+1,-1}。这里仅仅以二分类为例，多分类分类以此类推。为了表示简便，用\(p_t\)表示样本属于true class的概率。所以(1)式可以写成:<br>
+\[
+\mathrm{CE}(p, y)=\operatorname{CE}\left(p_{\mathrm{t}}\right)=-\log \left(p_{\mathrm{t}}\right) \tag{2}
+\]<br>
+<strong>其中\(p_t\)表示被分为正/负例的概率</strong>，定义如下：<br>
+\[
+p_{\mathrm{t}}=\left\{\begin{array}{ll}
+p &amp; \text { if } y=1 \\
+1-p &amp; \text { otherwise }
+\end{array}\right. \tag{3}
+\]</p>
+<h2 id="jun-heng-jiao-cha-shang-blanced-ce">均衡交叉熵 Blanced CE</h2>
+<p>既然one-stage detector在训练的时候正负样本的数量差距很大，那么一种常见的做法就是给正负样本加上权重，负样本出现的频次多，那么就降低负样本的权重，正样本数量少，就相对提高正样本的权重。因此可以通过设定\(\alpha\)的值来控制正负样本对总的loss的共享权重。\(\alpha\)取比较小的值来降低负样本（多的那类样本）的权重。<br>
+\[
+\alpha_{t}=\left\{\begin{array}{ll}
+\alpha &amp; \text { if } y=1 \\
+1-\alpha &amp; \text { otherwise }
+\end{array}\right. \tag{4}
+\]</p>
+<p>则，\(\alpha\)-balanced loss 为：<br>
+\[
+C E\left(p_{t}\right)=-\alpha_{t} \log \left(p_{t}\right)
+\]</p>
+<h2 id="focal-loss">Focal Loss</h2>
+<p>虽然\(\alpha\)能够平衡 <code>positive/negative</code> 样本的重要性，但不能区分 <code>easy/had</code> 样本.对此，Focal Loss 提出将损失函数降低 <code>easy</code> 样本的权重，并关注于对 hard negatives 样本的训练.添加调制因子\((1-p_t)^{\gamma}\)到 CE loss，其中 \(\gamma \ge 0\) 为可调的 focusing 参数。Focal Loss 定义为：<br>
+\[
+F L\left(p_{t}\right)=-\left(1-p_{t}\right)^{\gamma} \log \left(p_{t}\right) \tag{5}
+\]<br>
+如下图,给出了\(\gamma \in [0,5]\)中几个值的可视化。</p>
+<p><img src="/2020/08/01/deeplearning/loss/focal_loss/image-20200801122615585.png" alt></p>
+<p>Focal Loss 的两个属性：</p>
+<ol>
+<li>当样本被误分，且 \(p_t\)值很小时，调制因子接近于 1，loss 不受影响。随着 \(p_t \rightarrow 1\)，则调制因子接近于 0，则容易分类的样本的损失函数被降低权重.</li>
+<li>focusing 参数 \(\gamma\) 平滑地调整哪些 <code>easy</code> 样本会被降低权重的比率. 当 \(\gamma=0\)，FL=CE；随着 $\gamma $ 增加，调制因子的影响也会随之增加(实验中发现  效果\(\gamma=2\)最佳.)调制因子能够减少 easy 样本对于损失函数的贡献，并延伸了loss 值比较的样本范围。例如，\(\gamma=2\) 时，被分类为 \(p_t=0.9\) 的样本，与 CE 相比，会减少 100 倍；而当被分类为 $p_t \approx 0.968 $ 时，与 CE 相比，会有小于 1000 倍的 loss 值. 这就自然增加了将难分类样本的重要性(如 \(\gamma=2\) 且 \(p_t \le 0.5\) 时，难分类样本的 loss 值会增加 4 倍。)实际上，</li>
+</ol>
+<p><strong>focal loss的两个性质算是核心，其实就是用一个合适的函数去度量难分类和易分类样本对总的损失的贡献。</strong></p>
+<p>论文采用了 Focal Loss 的  \(\alpha\)-balanced 变形：<br>
+\[
+F L\left(p_{t}\right)=-\alpha_{t}\left(1-p_{t}\right)^{\gamma} \log \left(p_{t}\right) \tag{6}
+\]<br>
+在实验中\(\alpha\)的选择范围也很广，一般而言当\(\gamma\)增加的时候，\(\alpha\)需要减小一点（实验中\(\gamma=2,\alpha=0.25\)的效果最好）</p>
+<h1 id="dai-ma">代码</h1>
+<figure class="highlight python"><figcaption><span>pytorch</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FocalLoss</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, alpha=<span class="number">0.25</span>, gamma=<span class="number">2</span>, size_average=True)</span>:</span></span><br><span class="line">        super(FocalLoss, self).__init__()</span><br><span class="line">        self.alpha = alpha</span><br><span class="line">        self.gamma = torch.Tensor([gamma])</span><br><span class="line">        self.size_average = size_average</span><br><span class="line">        <span class="keyword">if</span> isinstance(alpha, (float, int, long)):</span><br><span class="line">            <span class="keyword">if</span> self.alpha &gt; <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">'Not supported value, alpha should be small than 1.0'</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.alpha = torch.Tensor([alpha, <span class="number">1.0</span> - alpha])</span><br><span class="line">        <span class="keyword">if</span> isinstance(alpha, list): self.alpha = torch.Tensor(alpha)</span><br><span class="line">        self.alpha /= torch.sum(self.alpha)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input, target)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> input.dim() &gt; <span class="number">2</span>:</span><br><span class="line">            input = input.view(input.size(<span class="number">0</span>), input.size(<span class="number">1</span>), <span class="number">-1</span>)  <span class="comment"># [N,C,H,W]-&gt;[N,C,H*W] ([N,C,D,H,W]-&gt;[N,C,D*H*W])</span></span><br><span class="line">        <span class="comment"># target</span></span><br><span class="line">        <span class="comment"># [N,1,D,H,W] -&gt;[N*D*H*W,1]</span></span><br><span class="line">        <span class="keyword">if</span> self.alpha.device != input.device:</span><br><span class="line">            self.alpha = torch.tensor(self.alpha, device=input.device)</span><br><span class="line">        target = target.view(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">        logpt = torch.log(input + <span class="number">1e-10</span>)</span><br><span class="line">        logpt = logpt.gather(<span class="number">1</span>, target)</span><br><span class="line">        logpt = logpt.view(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">        pt = torch.exp(logpt)</span><br><span class="line">        alpha = self.alpha.gather(<span class="number">0</span>, target.view(<span class="number">-1</span>))</span><br><span class="line"></span><br><span class="line">        gamma = self.gamma</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.gamma.device == input.device:</span><br><span class="line">            gamma = torch.tensor(self.gamma, device=input.device)</span><br><span class="line"></span><br><span class="line">        loss = <span class="number">-1</span> * alpha * torch.pow((<span class="number">1</span> - pt), gamma) * logpt</span><br><span class="line">        <span class="keyword">if</span> self.size_average:</span><br><span class="line">            loss = loss.mean()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            loss = loss.sum()</span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>keras</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras.backend <span class="keyword">as</span> K</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">categorical_focal_loss</span><span class="params">(gamma=<span class="number">2.0</span>, alpha=<span class="number">0.25</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implementation of Focal Loss from the paper in multiclass classification</span></span><br><span class="line"><span class="string">    Formula:</span></span><br><span class="line"><span class="string">        loss = -alpha*((1-p)^gamma)*log(p)</span></span><br><span class="line"><span class="string">    Parameters:</span></span><br><span class="line"><span class="string">        alpha -- the same as wighting factor in balanced cross entropy</span></span><br><span class="line"><span class="string">        gamma -- focusing parameter for modulating factor (1-p)</span></span><br><span class="line"><span class="string">    Default value:</span></span><br><span class="line"><span class="string">        gamma -- 2.0 as mentioned in the paper</span></span><br><span class="line"><span class="string">        alpha -- 0.25 as mentioned in the paper</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">focal_loss</span><span class="params">(y_true, y_pred)</span>:</span></span><br><span class="line">        <span class="comment"># Define epsilon so that the backpropagation will not result in NaN</span></span><br><span class="line">        <span class="comment"># for 0 divisor case</span></span><br><span class="line">        epsilon = K.epsilon()</span><br><span class="line">        <span class="comment"># Add the epsilon to prediction value</span></span><br><span class="line">        <span class="comment">#y_pred = y_pred + epsilon</span></span><br><span class="line">        <span class="comment"># Clip the prediction value</span></span><br><span class="line">        y_pred = K.clip(y_pred, epsilon, <span class="number">1.0</span>-epsilon)</span><br><span class="line">        <span class="comment"># Calculate cross entropy</span></span><br><span class="line">        cross_entropy = -y_true*K.log(y_pred)</span><br><span class="line">        <span class="comment"># Calculate weight that consists of  modulating factor and weighting factor</span></span><br><span class="line">        weight = alpha * y_true * K.pow((<span class="number">1</span>-y_pred), gamma)</span><br><span class="line">        <span class="comment"># Calculate focal loss</span></span><br><span class="line">        loss = weight * cross_entropy</span><br><span class="line">        <span class="comment"># Sum the losses in mini_batch</span></span><br><span class="line">        loss = K.sum(loss, axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> focal_loss</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">binary_focal_loss</span><span class="params">(gamma=<span class="number">2.0</span>, alpha=<span class="number">0.25</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Implementation of Focal Loss from the paper in multiclass classification</span></span><br><span class="line"><span class="string">    Formula:</span></span><br><span class="line"><span class="string">        loss = -alpha_t*((1-p_t)^gamma)*log(p_t)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        p_t = y_pred, if y_true = 1</span></span><br><span class="line"><span class="string">        p_t = 1-y_pred, otherwise</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        alpha_t = alpha, if y_true=1</span></span><br><span class="line"><span class="string">        alpha_t = 1-alpha, otherwise</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        cross_entropy = -log(p_t)</span></span><br><span class="line"><span class="string">    Parameters:</span></span><br><span class="line"><span class="string">        alpha -- the same as wighting factor in balanced cross entropy</span></span><br><span class="line"><span class="string">        gamma -- focusing parameter for modulating factor (1-p)</span></span><br><span class="line"><span class="string">    Default value:</span></span><br><span class="line"><span class="string">        gamma -- 2.0 as mentioned in the paper</span></span><br><span class="line"><span class="string">        alpha -- 0.25 as mentioned in the paper</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">focal_loss</span><span class="params">(y_true, y_pred)</span>:</span></span><br><span class="line">        <span class="comment"># Define epsilon so that the backpropagation will not result in NaN</span></span><br><span class="line">        <span class="comment"># for 0 divisor case</span></span><br><span class="line">        epsilon = K.epsilon()</span><br><span class="line">        <span class="comment"># Add the epsilon to prediction value</span></span><br><span class="line">        <span class="comment">#y_pred = y_pred + epsilon</span></span><br><span class="line">        <span class="comment"># Clip the prediciton value</span></span><br><span class="line">        y_pred = K.clip(y_pred, epsilon, <span class="number">1.0</span>-epsilon)</span><br><span class="line">        <span class="comment"># Calculate p_t</span></span><br><span class="line">        p_t = tf.where(K.equal(y_true, <span class="number">1</span>), y_pred, <span class="number">1</span>-y_pred)</span><br><span class="line">        <span class="comment"># Calculate alpha_t</span></span><br><span class="line">        alpha_factor = K.ones_like(y_true)*alpha</span><br><span class="line">        alpha_t = tf.where(K.equal(y_true, <span class="number">1</span>), alpha_factor, <span class="number">1</span>-alpha_factor)</span><br><span class="line">        <span class="comment"># Calculate cross entropy</span></span><br><span class="line">        cross_entropy = -K.log(p_t)</span><br><span class="line">        weight = alpha_t * K.pow((<span class="number">1</span>-p_t), gamma)</span><br><span class="line">        <span class="comment"># Calculate focal loss</span></span><br><span class="line">        loss = weight * cross_entropy</span><br><span class="line">        <span class="comment"># Sum the losses in mini_batch</span></span><br><span class="line">        loss = K.sum(loss, axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> focal_loss    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'adam'</span>, loss=categorical_focal_loss(gamma=<span class="number">2.0</span>, alpha=<span class="number">0.25</span>), metrics=[<span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
+<h1 id="zong-jie">总结</h1>
+<p>作者将类别不平衡作为阻碍one-stage方法超过top-performing的two-stage方法的主要原因。为了解决这个问题，作者提出了focal loss，在交叉熵里面用一个调整项，为了将学习专注于hard examples上面，并且降低大量的easy negatives的权值。简单高效啊！</p>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://blog.csdn.net/u014380165/article/details/77019084" target="_blank" rel="noopener">Focal Loss</a></li>
+<li><a href="https://www.aiuai.cn/aifarm636.html" target="_blank" rel="noopener">Focal Loss 论文理解及公式推导</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/loss/" rel="tag"><i class="fa fa-tag"></i> loss</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/01/deeplearning/normalization/switchable_normalization/" rel="prev" title="switchable normalization">
+      <i class="fa fa-chevron-left"></i> switchable normalization
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/01/code_template/" rel="next" title="代码注释模板">
+      代码注释模板 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yin-ru"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yuan-li"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jiao-cha-shang"><span class="nav-number">2.1.</span> <span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jun-heng-jiao-cha-shang-blanced-ce"><span class="nav-number">2.2.</span> <span class="nav-text">均衡交叉熵 Blanced CE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#focal-loss"><span class="nav-number">2.3.</span> <span class="nav-text">Focal Loss</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zong-jie"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
