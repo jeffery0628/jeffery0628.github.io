@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="马尔科夫模型">
+<meta property="og:url" content="https://jeffery.ink/2020/06/06/machine_learning/markov/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/v2-e9849cb2caed2ef45b5efa22377ba53f_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/00630Defly1g4y8tb8xekj30b602z74n.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/00630Defly1g4y92k2basj306i0220su.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/00630Defly1g4ycb8jrazj30k90ftdi0.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/label_bias-7070222.png">
+<meta property="article:published_time" content="2020-06-06T14:18:04.000Z">
+<meta property="article:modified_time" content="2020-08-10T15:12:46.179Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/06/06/machine_learning/markov/v2-e9849cb2caed2ef45b5efa22377ba53f_1440w.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/06/06/machine_learning/markov/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>马尔科夫模型 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/06/06/machine_learning/markov/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          马尔科夫模型
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-10 23:12:46" itemprop="dateModified" datetime="2020-08-10T23:12:46+08:00">2020-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/06/machine_learning/markov/" class="post-meta-item leancloud_visitors" data-flag-title="马尔科夫模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/06/06/machine_learning/markov/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/06/machine_learning/markov/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/06/06/machine_learning/markov/v2-e9849cb2caed2ef45b5efa22377ba53f_1440w.jpg" alt></p>
+<a id="more"></a>
+<h1 id="ma-er-ke-fu-guo-cheng">马尔可夫过程</h1>
+<p>马尔可夫过程是一类随机过程。该过程具有如下特性：在已知目前状态（现在）的条件下，它未来的演变（将来）不依赖于它以往的演变 (过去 )。在现实世界中，有很多过程都是马尔可夫过程，如液体中微粒所作的布朗运动、传染病受感染的人数、车站的候车人数等，都可视为马尔可夫过程。</p>
+<p>每个状态的转移只依赖于之前的<code>n</code>个状态，这个过程被称为1个<code>n</code>阶的模型，其中<code>n</code>是影响转移状态的数目。最简单的马尔可夫过程就是一阶过程，<strong>每一个状态的转移只依赖于其之前的那一个状态</strong>，这个也叫作<strong>马尔可夫性质</strong>。</p>
+<p>假设这个模型的每个状态都只依赖于之前的状态，这个假设被称为<strong>马尔科夫假设</strong>，这个假设可以大大的简化问题。</p>
+<p>假设天气服从<strong>马尔可夫链</strong>：</p>
+<p><img src="/2020/06/06/machine_learning/markov/00630Defly1g4y8tb8xekj30b602z74n.jpg" alt></p>
+<p>从上面这幅图可以看出：</p>
+<ul>
+<li>假如今天是晴天，明天变成阴天的概率是0.1</li>
+<li>假如今天是晴天，明天任然是晴天的概率是0.9，和上一条概率之和为1，这也符合真实生活的情况。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>晴</th>
+<th>阴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>晴</strong></td>
+<td>0.9</td>
+<td>0,1</td>
+</tr>
+<tr>
+<td><strong>阴</strong></td>
+<td>0.5</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+<p>由上表我们可以得到马尔可夫链的<strong>状态转移矩阵</strong>：</p>
+<p><img src="/2020/06/06/machine_learning/markov/00630Defly1g4y92k2basj306i0220su.jpg" alt></p>
+<p>因此，一阶马尔可夫过程定义了以下三个部分：</p>
+<ul>
+<li><strong>状态</strong>：晴天和阴天</li>
+<li><strong>初始向量</strong>：定义系统在时间为0的时候的状态的概率</li>
+<li><strong>状态转移矩阵</strong>：每种天气转换的概率</li>
+</ul>
+<p>马尔可夫模型是一种统计模型，广泛应用在语音识别，词性自动标注，音字转换，概率文法等各个自然语言处理等应用领域。经过长期发展，尤其是在语音识别中的成功应用，使它成为一种通用的统计工具。到目前为止，它一直被认为是实现快速精确的语音识别系统的最成功的方法。</p>
+<h1 id="yin-ma-er-ke-fu-mo-xing-hmm">隐马尔可夫模型(HMM)</h1>
+<p>隐马尔可夫模型是关于<strong>时序</strong>的概率模型,描述由一个隐藏的马尔可夫链随机生成不可观测的<strong>状态序列</strong>,再由各个状态生成一个观测而产生<strong>观测随机序列</strong>的过程.HMM是一种生成式模型，它的理论基础是朴素贝叶斯，本质上就类似于我们将朴素贝叶斯在单样本分类问题上的应用推广到序列样本分类问题上。</p>
+<p>隐马尔可夫模型是一种统计模型，用来描述一个含有隐含未知参数的马尔可夫过程。<strong>它是结构最简单的动态贝叶斯网，这是一种著名的有向图模型</strong>，主要用于时序数据建模，在语音识别、自然语言处理等领域有广泛应用。</p>
+<h2 id="mo-xing-biao-shi">模型表示</h2>
+<p>设Q是所有可能的状态的集合\(Q=\left\{q_{1}, q_{2}, \cdots, q_{N}\right\}\),V是所有可能的观测的集合\(V=\left\{v_{1}, v_{2}, \cdots, v_{M}\right\}\),I是长度为T的状态序列\(I=\left(i_{1}, i_{2}, \cdots, i_{T}\right)\), O是对应的观测序列\(O=\left(o_{1}, o_{2}, \cdots, o_{T}\right)\),</p>
+<ol>
+<li>A是<strong>状态转移概率矩阵</strong>\(A=\left[a_{i j}\right]_{N \times N}\),\(a_{ij}\)表示在时刻t处于状态\(q_i\)的条件下在时刻t+1转移到状态\(q_j\)的概率.</li>
+<li>.B是<strong>观测概率矩阵</strong> \(B=\left[b_{j}(k)\right]_{N \times M}\),\(b_{ij}\)是在时刻t处于状态\(q_j\)的条件下生成观测\(v_k\)的概率.</li>
+<li>\(\pi\)是<strong>初始状态概率向量</strong>\(\pi=\pi(x)\),\(\pi_i\)表示时刻t=1处于状态qi的概率.</li>
+</ol>
+<p>隐马尔可夫模型由初始状态概率向量\(pi\),状态转移概率矩阵A以及观测概率矩阵B确定.\(\pi\)和A决定即隐藏的<strong>马尔可夫链</strong>,生成不可观测的<strong>状态序列</strong>.B决定如何从状态生成观测,与状态序列综合确定了<strong>观测序列</strong>.因此,隐马尔可夫模型可以用<strong>三元符号</strong>表示\(\lambda = (A,B,\pi)\)</p>
+<h2 id="liang-ge-ji-ben-jia-she">两个基本假设</h2>
+<ol>
+<li><strong>齐次马尔可夫性假设</strong>:假设隐藏的马尔可夫链在任意时刻t的状态只依赖于其前一时刻的状态.</li>
+<li><strong>观测独立性假设</strong>:假设任意时刻的观测只依赖于该时刻的马尔可夫链的状态.</li>
+</ol>
+<h2 id="san-ge-ji-ben-wen-ti">三个基本问题</h2>
+<h3 id="gai-lu-ji-suan-wen-ti">概率计算问题</h3>
+<p>给定模型\(\lambda = (A,B,\pi)\)和观测序列,\(O=\left(o_{1}, o_{2}, \cdots, o_{T}\right)\)计算在模型\(\lambda\)下观测序列O出现的概率\(P(O|λ)\).</p>
+<ol>
+<li>直接计算：列举所有可能长度为T的状态序列,求各个状态序列I与观测序列O的联合概率,但计算量太大,实际操作不可行.</li>
+<li><strong>前向算法</strong>：定义到时刻t部分观测序列为\(o_1\)~\(o_t\)且状态为\(q_i\)的概率为<strong>前向概率</strong>,记作\(\alpha_{t}(i)=P\left(o_{1}, o_{2}, \cdots, o_{t}, i_{t}=q_{i} | \lambda\right)\).初始化前向概率\(\alpha_{1}(i)=\pi_{i} b_{i}\left(o_{1}\right), \quad i=1,2, \cdots, N\)，递推，对\(t=1\) ~ \(T-1\),\(\alpha_{t+1}(i)=\left[\sum_{j=1}^{N} \alpha_{t}(j) a_{j i}\right] b_{i}\left(o_{t+1}\right), \quad i=1,2, \cdots, N\),得到\(P(O | \lambda)=\sum_{i=1}^{N} \alpha_{T}(i)\)减少计算量的原因在于每一次计算直接引用前一个时刻的计算结果,避免重复计算.</li>
+<li><strong>后向算法</strong>:定义在时刻t状态为\(q_i\)的条件下,从t+1到T的部分观测序列为\(o_{i+1}\)~\(o_T\)的概率为<strong>后向概率</strong>,记作\(\beta_{t}(i)=P\left(o_{t+1}, o_{t+2}, \cdots, o_{r} | i_{t}=q_{i}, \lambda\right)\).初始化后向概率\(\beta_{r}(i)=1, \quad i=1,2, \cdots, N\),递推,对\(t=T-1\)~\(1\)\(\beta_{t}(i)=\sum_{j=1}^{N} a_{i j} b_{j}\left(o_{i+1}\right) \beta_{i+1}(j), \quad i=1,2, \cdots, N\),得到\(P(O | \lambda)=\sum_{i=1}^{N} \pi_{i} b_{i}\left(o_{1}\right) \beta_{1}(i)\)</li>
+</ol>
+<h3 id="xue-xi-suan-fa">学习算法</h3>
+<p>已知观测序列\(O=(o_1,o_2, \cdots,o_r)\),估计模型\(\lambda = (A,B,\pi)\),的参数,使得在该模型下观测序列概率\(p(O|\lambda)\)最大.根据训练数据是否包括观察序列对应的状态序列分别由监督学习与非监督学习实现.</p>
+<ol>
+<li>
+<p>监督学习：估计转移概率\(\hat{a}_{i j}=\frac{A_{i j}}{\sum_{j=1}^{N} A_{i j}}, \quad i=1,2, \cdots, N ; \quad j=1,2, \cdots, N\) 和观测概率\(\hat{b}_{j}(k)=\frac{B_{j k}}{\sum_{k=1}^{M} B_{j k}}, \quad j=1,2, \cdots, N, k=1,2, \cdots, M\).初始状态概率\(\pi_i\)的估计为S个样本中初始状态为\(q_i\)的频率.</p>
+</li>
+<li>
+<p><strong>非监督学习(Baum-Welch算法)</strong>:将观测序列数据看作观测数据O,状态序列数据看作不可观测的<strong>隐数据</strong>I.首先确定完全数据的对数似然函数\(log p(O,I|\lambda)\),求Q函数</p>
+</li>
+</ol>
+<p>\[
+   \begin{aligned}
+   Q(\lambda, \bar{\lambda})=&amp; \sum_{t} \log \pi_{i_1} P(O, I | \bar{\lambda}) \\
+   &amp;+\sum_{I}\left(\sum_{i=1}^{I-1} \log a_{i_t,i_{t+1}}\right) P(O, I | \bar{\lambda}) \\
+   &amp;+\sum_{I}\left(\sum_{i=1}^{T} \log b_{i_t}\left(o_{t}\right)\right) P(O, I | \bar{\lambda})
+   \end{aligned}
+\]</p>
+<p>,用拉格朗日乘子法极大化Q函数求模型参数\(\pi_{i}=\frac{P\left(O, i_{1}=i | \bar{\lambda}\right)}{P(O | \bar{\lambda})}\),\(a_{i j}=\frac{\sum_{i=1}^{T-1} P\left(O, i_{t}=i, i_{t+1}=j | \bar{\lambda}\right)}{\sum_{t=1}^{T-1} P\left(O, i_{t}=i | \bar{\lambda}\right)}\),\(b_{j}(k)=\frac{\sum_{i=1}^{T} P\left(O, i_{t}=j | \bar{\lambda}\right) I\left(o_{i}=v_{k}\right)}{\sum_{i=1}^{T} P\left(O, i_{t}=j | \bar{\lambda}\right)}\),</p>
+<h3 id="yu-ce-wen-ti">预测问题</h3>
+<p>也称为解码问题.已知模型\(\lambda = (A,B,\pi)\)和观测序列\(O=(O_1,O_2,\cdots,O_T)\),求对给定观测序列条件概率\(P(I|O)\)最大的状态序列\(I=(i_1,i_2,\cdots,i_T)\)</p>
+<ol>
+<li>
+<p><strong>近似算法</strong>: 在每个时刻t选择在该时刻最有可能出现的状态\(i_t^*\),从而得到一个状态序列作为预测的结果.优点是<strong>计算简单</strong>,缺点是不能保证状态序列整体是最有可能的状态序列</p>
+</li>
+<li>
+<p><strong>维特比算法</strong>:用<strong>动态规划</strong>求概率最大路径,这一条路径对应着一个状态序列.从t=1开始,递推地计算在时刻t状态为i的各条部分路径的最大概率,直至得到时刻t=T状态为i的各条路径的最大概率.时刻t=T的最大概率即为<strong>最优路径</strong>的概率\(P^\star\),最优路径的<strong>终结点</strong>\(i_t^\star\)也同时得到,之后从终结点开始由后向前逐步求得<strong>结点</strong>,得到最优路径.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">viterbi</span><span class="params">(obs, states, Pi, A, B)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param obs:观测序列</span></span><br><span class="line"><span class="string">    :param states:隐状态</span></span><br><span class="line"><span class="string">    :param Pi:初始概率（隐状态）</span></span><br><span class="line"><span class="string">    :param A:转移概率（隐状态）</span></span><br><span class="line"><span class="string">    :param B: 发射概率 （隐状态表现为显状态的概率）</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 路径概率表 V[时间][隐状态] = 概率</span></span><br><span class="line">    V = [&#123;&#125;]</span><br><span class="line">    <span class="comment"># 一个中间变量，代表当前状态是哪个隐状态</span></span><br><span class="line">    path = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化初始状态 (t == 0)</span></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> states:</span><br><span class="line">        V[<span class="number">0</span>][y] = Pi[y] * B[y][obs[<span class="number">0</span>]]</span><br><span class="line">        path[y] = [y]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对 t &gt; 0 跑一遍维特比算法</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">1</span>, len(obs)):</span><br><span class="line">        V.append(&#123;&#125;)</span><br><span class="line">        newpath = &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> states:</span><br><span class="line">            <span class="comment"># 概率 隐状态 =    前状态是y0的概率 * y0转移到y的概率 * y表现为当前状态的概率</span></span><br><span class="line">            (prob, state) = max([(V[t - <span class="number">1</span>][y0] * A[y0][y] * B[y][obs[t]], y0) <span class="keyword">for</span> y0 <span class="keyword">in</span> states])</span><br><span class="line">            <span class="comment"># 记录最大概率</span></span><br><span class="line">            V[t][y] = prob</span><br><span class="line">            <span class="comment"># 记录路径</span></span><br><span class="line">            newpath[y] = path[state] + [y]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 不需要保留旧路径</span></span><br><span class="line">        path = newpath</span><br><span class="line"></span><br><span class="line">    print_dptable(V)</span><br><span class="line">    (prob, state) = max([(V[len(obs) - <span class="number">1</span>][y], y) <span class="keyword">for</span> y <span class="keyword">in</span> states])</span><br><span class="line">    <span class="keyword">return</span> (prob, path[state])</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 打印路径概率表</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_dptable</span><span class="params">(V)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"    "</span>,</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(V)): <span class="keyword">print</span> <span class="string">"%7d"</span> % i,</span><br><span class="line">    <span class="keyword">print</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> V[<span class="number">0</span>].keys():</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%.5s: "</span> % y,</span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> range(len(V)):</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"%.7s"</span> % (<span class="string">"%f"</span> % V[t][y]),</span><br><span class="line">        <span class="keyword">print</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面以一个场景来说明这些问题:</p>
+<p>小明现在有三天的假期，他为了打发时间，可以在每一天中选择三件事情来做，这三件事情分别是散步、购物、打扫卫生(<strong>对应着可观测序列</strong>)，可是在生活中我们所做的决定一般都受到天气的影响，可能晴天的时候想要去购物或者散步，可能下雨天的时候不想出门，留在家里打扫卫生。而天气(晴天、下雨天)就属于隐藏状态，用一幅概率图来表示这一马尔可夫过程：</p>
+<p><img src="/2020/06/06/machine_learning/markov/00630Defly1g4ycb8jrazj30k90ftdi0.jpg" alt></p>
+<p>那么，我们提出三个问题，分别对应马尔可夫的三大问题：</p>
+<ol>
+<li>已知整个模型，我观测到连续三天做的事情是：散步，购物，收拾。那么，根据模型，计算产生这些行为的概率是多少。</li>
+<li>同样知晓这个模型，同样是这三件事，我想猜，这三天的天气是怎么样的。</li>
+<li>最复杂的，我只知道这三天做了这三件事儿，而其他什么信息都没有。我得建立一个模型，晴雨转换概率，第一天天气情况的概率分布，根据天气情况选择做某事的概率分布。</li>
+</ol>
+<h1 id="zui-da-shang-ma-er-ke-fu-mo-xing-memm">最大熵马尔科夫模型(MEMM)</h1>
+<p>最大熵马尔科夫模型利用判别式模型的特点，直接对每一个时刻的状态建立一个分类器，然后将所有的分类器的概率值连乘起来\(P\left(y_{1}^{n} | x_{1}^{n}\right)=\prod_{t=1}^{n} P\left(y_{t} | y_{t-1}, x_{t}\right)\)。为了实现是对整个序列进行的分类，在每个时刻t时，它的特征不仅来自当前观测值\(x_t\)，而且还来自前一状态值\(y_{t-1}\),通过最大熵分类器建模\(P\left(y_{t}=y^{*} | y_{t-1}=y^{\prime}, x_{t}\right)=\frac{1}{Z\left(x_{t}, y^{\prime}\right)} \exp \left(\sum_{a} \lambda_{a} f_{a}\left(x_{t}, y^{\prime}, y^{*}\right)\right)\),其中，\(Z\left(x_{t}, y \prime\right)=\sum_{y} \exp \left(\sum_{a} \lambda_{a} f_{a}\left(x_{t}, y \prime, y\right)\right)\)，</p>
+<p>##标注偏置问题</p>
+<p>使用维特比算法进行解码时，\(v_{t}(j)=\max _{i} v_{t-1}(i) * P\left(y_{j} | y_{i}, x_{t}\right) 1 \leq j \leq n, 1&lt;t&lt;T\)。最大熵模型在每一个时刻，针对不同的前一状态y′进行归一化操作，这是一种局部的归一化操作，会存在标签偏置问题。</p>
+<h3 id="li-zi">例子</h3>
+<p><img src="/2020/06/06/machine_learning/markov/label_bias-7070222.png" alt="avatar"></p>
+<p>状态转换(1→2),(2→3),(4→5),(5→3)的概率值都是1，而无论观测值是什么，换言之有\(P(2|1,i)=P(2|1,o)=1\)</p>
+<p>你可能会很惊讶\(P(2∣1,i)=1,P(2∣1,o)=1\)怎么可能会成立呢？你可以套用上面的公式试一试，由于状态&quot;1&quot;的只能转换为&quot;2&quot;，所以计算归一化项时， 其实只有一个枚举值，就是状态&quot;2&quot;，所以无论你分子为多少，分母都和它一样，所以概率值就是1。在这种情况下，其实观测值并没有任何作用，这就是标签偏置。</p>
+<h3 id="strong-hou-guo-strong"><strong>后果：</strong></h3>
+<p>它会造成什么后果呢？<br>
+他会导致模型进行预测时只依赖数据统计出来的概率值，没有利用到样本的特征。<br>
+假设训练集现在有3个rib和1个rob，当我们在测试阶段，遇到词rob，它会被解码成什么状态序列呢？答案是(0→1→2→3)！你可以套公式试一试，因为\(P(1∣0,r)>P(4∣0,r)\),\(P(2∣1,o)=P(5∣4,0)=1,P(3∣2,b)>P(3∣5,b)\)。</p>
+<h3 id="strong-yuan-yin-strong"><strong>原因</strong></h3>
+<p>那么问题出在哪里呢？因为MEMM中在每一时刻t，都在前一时刻某状态y′下做了局部的归一化操作，如何解决这种标签偏置问题呢？<br>
+在CRF中并不是对每个时刻都进行一次分类，而是直接对整个序列进行分类，做一个全局的归一化操作。</p>
+<h1 id="tiao-jian-sui-ji-chang-crf">条件随机场CRF</h1>
+<h2 id="tuan-yu-zui-da-tuan">团与最大团</h2>
+<p>无向图G中任何两个结点均有边连接的结点子集称为<strong>团</strong>。若C是无向图G的一个团，并且不能再加进任何一个G的结点使其成为一个更大的团，称此C为<strong>最大团</strong>。</p>
+<p>给定概率无向图模型，设其无向图为G，C为G上的最大团，\(Y_C\)表示C对应的随机变量。那么概率无向图模型的联合概率分布\(P(Y)\)可写作图中所有最大团C上的函数\(\phi_C(Y_C)\)的乘积的形式。</p>
+<p><strong>Hammersley-Clifford定理</strong><br>
+概率无向图模型的联合概率分布\(P(Y)\)可以表示为如下形式：<br>
+\[
+P(Y)=\frac{1}{Z}\prod_C{\phi_C(Y_C)}\\
+Z=\sum_Y\prod_C{\phi_C(Y_C)}
+\]</p>
+<h2 id="tiao-jian-sui-ji-chang-crf-1">条件随机场CRF</h2>
+<p>条件随机场基于概率无向图模型，利用最大团理论，对随机变量的联合分布\(P(Y)\)进行建模。</p>
+<p>在序列标注任务中的条件随机场，往往是指<strong>线性链条件随机场</strong></p>
+<h2 id="tiao-jian-sui-ji-chang-de-can-shu-hua-xing-shi">条件随机场的参数化形式</h2>
+<p>\[
+P(y|x)=\frac{1}{Z(x)} \exp \left(\sum_{i, k} \lambda_{k} t_{k}\left(y_{i-1}, y_{i}, x, i\right)+\sum_{i, j} \mu_{l} s_{l}\left(y_{i}, x, i\right)\right) 
+\\
+Z(x)=\sum_{y} \exp \left(\sum_{i, k} \lambda_{k} t_{k}\left(y_{i-1}, y_{i}, x, i\right)+\sum_{i, j} \mu_{l} s_{l}\left(y_{i}, x, i\right)\right)
+\]</p>
+<h2 id="tiao-jian-sui-ji-chang-de-jian-hua-xing-shi">条件随机场的简化形式</h2>
+<p>\[
+\begin{aligned}
+P(y | x) &amp;=\frac{1}{Z(x)} \exp \sum_{k=1}^{K} w_{k} f_{k}(y, x) \\
+Z(x) &amp;=\sum_{y} \exp \sum_{k=1}^{K} w_{k} f_{k}(y, x)
+\end{aligned}
+\]</p>
+<h2 id="tiao-jian-sui-ji-chang-de-ju-zhen-xing-shi">条件随机场的矩阵形式</h2>
+<p>\[
+P_{w}(y | x)=\frac{1}{Z_{w}(x)} \prod_{i=1}^{n+1} M_{i}\left(y_{i-1}, y_{i} | x\right)\\
+Z_{w}(x)=\left(M_{1}(x) M_{2}(x) \cdots M_{n+1}(x)\right)_{\text {start, stop }}
+\]</p>
+<h1 id="em-suan-fa-hmm-crf-de-bi-jiao">EM算法、HMM、CRF的比较</h1>
+<ol>
+<li>
+<p><strong>EM算法</strong>是用于含有隐变量模型的极大似然估计或者极大后验估计，有两步组成：E步，求期望（expectation）；M步，求极大（maxmization）。本质上EM算法还是一个迭代算法，通过不断用上一代参数对隐变量的估计来对当前变量进行计算，直到收敛。注意：EM算法是对初值敏感的，而且EM是不断求解下界的极大化逼近求解对数似然函数的极大化的算法，也就是说<strong>EM算法不能保证找到全局最优值</strong>。对于EM的导出方法也应该掌握。</p>
+</li>
+<li>
+<p><strong>隐马尔可夫模型</strong>是用于标注问题的生成模型。有几个参数（π，A，B）：初始状态概率向量π，状态转移矩阵A，观测概率矩阵B。称为马尔科夫模型的三要素。马尔科夫三个基本问题：</p>
+<p>概率计算问题：给定模型和观测序列，计算模型下观测序列输出的概率。–》前向后向算法</p>
+<p>学习问题：已知观测序列，估计模型参数，即用极大似然估计来估计参数。–》Baum-Welch(也就是EM算法)和极大似然估计。</p>
+<p>预测问题：已知模型和观测序列，求解对应的状态序列。–》近似算法（贪心算法）和维比特算法（动态规划求最优路径）</p>
+</li>
+<li>
+<p><strong>条件随机场CRF</strong>，给定一组输入随机变量的条件下另一组输出随机变量的条件概率分布密度。条件随机场假设输出变量构成马尔科夫随机场，而我们平时看到的大多是线性链条随机场，也就是由输入对输出进行预测的判别模型。求解方法为极大似然估计或正则化的极大似然估计。</p>
+</li>
+<li>
+<p>之所以总把HMM和CRF进行比较，主要是因为CRF和HMM都利用了图的知识，但是CRF利用的是马尔科夫随机场（无向图），而HMM的基础是贝叶斯网络（有向图）。而且CRF也有：概率计算问题、学习问题和预测问题。大致计算方法和HMM类似，只不过不需要EM算法进行学习问题。</p>
+</li>
+<li>
+<p>**HMM和CRF对比：**其根本还是在于基本的理念不同，一个是生成模型，一个是判别模型，这也就导致了求解方式的不同。</p>
+</li>
+</ol>
+<h1 id="ma-er-ke-fu-wang-luo-ma-er-ke-fu-mo-xing-ma-er-ke-fu-guo-cheng-bei-xie-si-wang-luo-de-qu-bie">马尔可夫网络、马尔可夫模型、马尔可夫过程、贝叶斯网络的区别</h1>
+<p>以下共分六点说明这些概念，分成条目只是方便边阅读边思考，这6点是依次递进的，不要跳跃着看。</p>
+<ol>
+<li>将随机变量作为结点，若两个随机变量相关或者不独立，则将二者连接一条边；若给定若干随机变量，则形成一个有向图，即构成一个<strong>网络</strong>。</li>
+<li>如果该网络是<strong>有向无环图</strong>，则这个网络称为<strong>贝叶斯网络。</strong></li>
+<li>如果这个图退化成<strong>线性链</strong>的方式，则得到<strong>马尔可夫模型</strong>；因为每个结点都是随机变量，将其看成各个时刻(或空间)的相关变化，以随机过程的视角，则可以看成是<strong>马尔可夫过程</strong>。</li>
+<li>若上述网络是无向的，则是<strong>无向图模型</strong>，又称<strong>马尔可夫随机场或者马尔可夫网络</strong>。</li>
+<li>如果在给定某些<strong>条件</strong>的前提下，研究这个马尔可夫随机场，则得到<strong>条件随机场</strong>。</li>
+<li>如果使用条件随机场解决标注问题，并且进一步将条件随机场中的网络拓扑变成线性的，则得到<strong>线性链条件随机场</strong>。</li>
+</ol>
+<h1 id="dai-ma">代码</h1>
+<p>假设我们的单词集： \(words = w_1 ... w_N\)</p>
+<p>Tag集：$ tags = t_1 … t_N$</p>
+<p>\(P(tags | words) \text{正比于} P(t_i | t_{i-1}) * P(w_i | t_i)\)</p>
+<p>为了找一个句子的tag，其实就是找的最好的一套tags，让他最能够符合给定的单词(words)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> nltk</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">nltk.download(<span class="string">'brown'</span>)</span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> brown</span><br></pre></td></tr></table></figure>
+<h2 id="yu-chu-li-ci-ku">预处理词库</h2>
+<p>这里需要做的预处理是：给词们加上开始和结束符号。</p>
+<p>Brown里面的句子都是自己标注好了的，长这个样子：<code>(I , NOUN), (LOVE, VERB), (YOU, NOUN)</code>.那么，我们的开始符号也得跟他的格式符合，这里用：<code>(START, START) (END, END)</code>来表示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">brown_tags_words = []</span><br><span class="line"><span class="keyword">for</span> sent <span class="keyword">in</span> brown.tagged_sents():</span><br><span class="line">    <span class="comment"># 先加开头</span></span><br><span class="line">    brown_tags_words.append((<span class="string">"START"</span>, <span class="string">"START"</span>))</span><br><span class="line">    <span class="comment"># 为了省事儿，把tag都省略成前两个字母</span></span><br><span class="line">    brown_tags_words.extend([(tag[:<span class="number">2</span>], word) <span class="keyword">for</span> (word, tag) <span class="keyword">in</span> sent])</span><br><span class="line">    <span class="comment"># 加个结尾</span></span><br><span class="line">    brown_tags_words.append((<span class="string">"END"</span>, <span class="string">"END"</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="ci-tong-ji">词统计</h2>
+<p>把所有的词库中拥有的单词与tag之间的关系，做个简单的统计。也就是：\(P(wi | ti) = \frac{count(w_i, t_i)}{count(t_i)}\)这里NLTK给了做统计的工具.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># conditional frequency distribution</span></span><br><span class="line">cfd_tagwords = nltk.ConditionalFreqDist(brown_tags_words)</span><br><span class="line"><span class="comment"># conditional probability distribution</span></span><br><span class="line">cpd_tagwords = nltk.ConditionalProbDist(cfd_tagwords, nltk.MLEProbDist)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"The probability of an adjective (JJ) being 'new' is"</span>, cpd_tagwords[<span class="string">"JJ"</span>].prob(<span class="string">"new"</span>))</span><br><span class="line">print(<span class="string">"The probability of a verb (VB) being 'duck' is"</span>, cpd_tagwords[<span class="string">"VB"</span>].prob(<span class="string">"duck"</span>))</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">The probability of an adjective (JJ) being <span class="string">'new'</span> <span class="keyword">is</span> <span class="number">0.01472344917632025</span></span><br><span class="line">The probability of a verb (VB) being <span class="string">'duck'</span> <span class="keyword">is</span> <span class="number">6.042713350943527e-05</span></span><br></pre></td></tr></table></figure>
+<p>接下来，计算第二个公式：\(P(t_i | t_{i-1}) = \frac{count(t_{i-1}, t_i)}{count(t_{i-1})}\)这个公式跟words没有什么关系。它是属于隐层的马尔科夫链。所以先取出所有的tag来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">brown_tags = [tag <span class="keyword">for</span> (tag, word) <span class="keyword">in</span> brown_tags_words ]</span><br><span class="line"><span class="comment"># count(t&#123;i-1&#125; ti)</span></span><br><span class="line"><span class="comment"># bigram的意思是 前后两个一组，联在一起</span></span><br><span class="line">cfd_tags= nltk.ConditionalFreqDist(nltk.bigrams(brown_tags))</span><br><span class="line"><span class="comment"># P(ti | t&#123;i-1&#125;)</span></span><br><span class="line">cpd_tags = nltk.ConditionalProbDist(cfd_tags, nltk.MLEProbDist)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"If we have just seen 'DT', the probability of 'NN' is"</span>, cpd_tags[<span class="string">"DT"</span>].prob(<span class="string">"NN"</span>))</span><br><span class="line">print( <span class="string">"If we have just seen 'VB', the probability of 'JJ' is"</span>, cpd_tags[<span class="string">"VB"</span>].prob(<span class="string">"DT"</span>))</span><br><span class="line">print( <span class="string">"If we have just seen 'VB', the probability of 'NN' is"</span>, cpd_tags[<span class="string">"VB"</span>].prob(<span class="string">"NN"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">If we have just seen <span class="string">'DT'</span>, the probability of <span class="string">'NN'</span> <span class="keyword">is</span> <span class="number">0.5057722522030194</span></span><br><span class="line">If we have just seen <span class="string">'VB'</span>, the probability of <span class="string">'JJ'</span> <span class="keyword">is</span> <span class="number">0.016885067592065053</span></span><br><span class="line">If we have just seen <span class="string">'VB'</span>, the probability of <span class="string">'NN'</span> <span class="keyword">is</span> <span class="number">0.10970977711020183</span></span><br></pre></td></tr></table></figure>
+<p>比如， 一句话，<code>I want to race</code>， 一套tag，<code>PP VB TO VB</code>他们之间的匹配度有多高呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prob_tagsequence = cpd_tags[<span class="string">"START"</span>].prob(<span class="string">"PP"</span>) * cpd_tagwords[<span class="string">"PP"</span>].prob(<span class="string">"I"</span>) * \</span><br><span class="line">    cpd_tags[<span class="string">"PP"</span>].prob(<span class="string">"VB"</span>) * cpd_tagwords[<span class="string">"VB"</span>].prob(<span class="string">"want"</span>) * \</span><br><span class="line">    cpd_tags[<span class="string">"VB"</span>].prob(<span class="string">"TO"</span>) * cpd_tagwords[<span class="string">"TO"</span>].prob(<span class="string">"to"</span>) * \</span><br><span class="line">    cpd_tags[<span class="string">"TO"</span>].prob(<span class="string">"VB"</span>) * cpd_tagwords[<span class="string">"VB"</span>].prob(<span class="string">"race"</span>) * \</span><br><span class="line">    cpd_tags[<span class="string">"VB"</span>].prob(<span class="string">"END"</span>)</span><br><span class="line"></span><br><span class="line">print( <span class="string">"The probability of the tag sequence 'START PP VB TO VB END' for 'I want to race' is:"</span>, prob_tagsequence)</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">The probability of the tag sequence <span class="string">'START PP VB TO VB END'</span> <span class="keyword">for</span> <span class="string">'I want to race'</span> <span class="keyword">is</span>: <span class="number">1.0817766461150474e-14</span></span><br></pre></td></tr></table></figure>
+<h2 id="viterbi-de-shi-xian">Viterbi 的实现</h2>
+<p>如果手上有一句话，怎么知道最符合的tag是哪组呢？首先，我们拿出所有独特的tags（也就是tags的全集）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">distinct_tags = set(brown_tags)</span><br><span class="line"><span class="comment"># 找句话</span></span><br><span class="line">sentence = [<span class="string">"I"</span>, <span class="string">"want"</span>, <span class="string">"to"</span>, <span class="string">"race"</span> ]</span><br><span class="line">sentlen = len(sentence)</span><br></pre></td></tr></table></figure>
+<p>接下来，开始维特比：从<code>1</code>循环到句子的总长<code>N</code>，记为<code>i</code>每次都找出以<code>tag X</code>为最终节点，长度为<code>i</code>的<code>tag</code>链。同时，还需要一个回溯器：从<code>1</code>循环到句子的总长<code>N</code>，记为<code>i</code>把所有<code>tag X </code>前一个<code>Tag</code>记下来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">viterbi = [ ]</span><br><span class="line">backpointer = [ ]</span><br><span class="line"></span><br><span class="line">first_viterbi = &#123; &#125;</span><br><span class="line">first_backpointer = &#123; &#125;</span><br><span class="line"><span class="keyword">for</span> tag <span class="keyword">in</span> distinct_tags:</span><br><span class="line">    <span class="comment"># don't record anything for the START tag</span></span><br><span class="line">    <span class="keyword">if</span> tag == <span class="string">"START"</span>: <span class="keyword">continue</span></span><br><span class="line">    first_viterbi[ tag ] = cpd_tags[<span class="string">"START"</span>].prob(tag) * cpd_tagwords[tag].prob( sentence[<span class="number">0</span>] )</span><br><span class="line">    first_backpointer[ tag ] = <span class="string">"START"</span></span><br><span class="line"></span><br><span class="line">print(first_viterbi)</span><br><span class="line">print(first_backpointer)</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">&#123;<span class="string">'WD'</span>: <span class="number">0.0</span>, <span class="string">'AP'</span>: <span class="number">0.0</span>, <span class="string">',-'</span>: <span class="number">0.0</span>, <span class="string">'RP'</span>: <span class="number">0.0</span>, <span class="string">'EX'</span>: <span class="number">0.0</span>, <span class="string">'AT'</span>: <span class="number">0.0</span>, <span class="string">'MD'</span>: <span class="number">0.0</span>, <span class="string">'*'</span>: <span class="number">0.0</span>, <span class="string">'NP'</span>: <span class="number">1.7319067623793952e-06</span>, <span class="string">')'</span>: <span class="number">0.0</span>, <span class="string">'.-'</span>: <span class="number">0.0</span>, <span class="string">'TO'</span>: <span class="number">0.0</span>, <span class="string">':'</span>: <span class="number">0.0</span>, <span class="string">'--'</span>: <span class="number">0.0</span>, <span class="string">'PP'</span>: <span class="number">0.014930900689060006</span>, <span class="string">'(-'</span>: <span class="number">0.0</span>, <span class="string">'WQ'</span>: <span class="number">0.0</span>, <span class="string">'NN'</span>: <span class="number">1.0580313619573935e-06</span>, <span class="string">'CD'</span>: <span class="number">0.0</span>, <span class="string">'FW'</span>: <span class="number">0.0</span>, <span class="string">'QL'</span>: <span class="number">0.0</span>, <span class="string">'('</span>: <span class="number">0.0</span>, <span class="string">'.'</span>: <span class="number">0.0</span>, <span class="string">'``'</span>: <span class="number">0.0</span>, <span class="string">','</span>: <span class="number">0.0</span>, <span class="string">"''"</span>: <span class="number">0.0</span>, <span class="string">'IN'</span>: <span class="number">0.0</span>, <span class="string">'RB'</span>: <span class="number">0.0</span>, <span class="string">'OD'</span>: <span class="number">0.0</span>, <span class="string">'CC'</span>: <span class="number">0.0</span>, <span class="string">'*-'</span>: <span class="number">0.0</span>, <span class="string">'RN'</span>: <span class="number">0.0</span>, <span class="string">'VB'</span>: <span class="number">0.0</span>, <span class="string">'WR'</span>: <span class="number">0.0</span>, <span class="string">'DT'</span>: <span class="number">0.0</span>, <span class="string">'PN'</span>: <span class="number">0.0</span>, <span class="string">'DO'</span>: <span class="number">0.0</span>, <span class="string">'BE'</span>: <span class="number">0.0</span>, <span class="string">"'"</span>: <span class="number">0.0</span>, <span class="string">'END'</span>: <span class="number">0.0</span>, <span class="string">'CS'</span>: <span class="number">0.0</span>, <span class="string">':-'</span>: <span class="number">0.0</span>, <span class="string">'HV'</span>: <span class="number">0.0</span>, <span class="string">'WP'</span>: <span class="number">0.0</span>, <span class="string">')-'</span>: <span class="number">0.0</span>, <span class="string">'NR'</span>: <span class="number">0.0</span>, <span class="string">'NI'</span>: <span class="number">3.3324520848931064e-07</span>, <span class="string">'JJ'</span>: <span class="number">0.0</span>, <span class="string">'AB'</span>: <span class="number">0.0</span>, <span class="string">'UH'</span>: <span class="number">0.0</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">'WD'</span>: <span class="string">'START'</span>, <span class="string">'AP'</span>: <span class="string">'START'</span>, <span class="string">',-'</span>: <span class="string">'START'</span>, <span class="string">'RP'</span>: <span class="string">'START'</span>, <span class="string">'EX'</span>: <span class="string">'START'</span>, <span class="string">'AT'</span>: <span class="string">'START'</span>, <span class="string">'MD'</span>: <span class="string">'START'</span>, <span class="string">'*'</span>: <span class="string">'START'</span>, <span class="string">'NP'</span>: <span class="string">'START'</span>, <span class="string">')'</span>: <span class="string">'START'</span>, <span class="string">'.-'</span>: <span class="string">'START'</span>, <span class="string">'TO'</span>: <span class="string">'START'</span>, <span class="string">':'</span>: <span class="string">'START'</span>, <span class="string">'--'</span>: <span class="string">'START'</span>, <span class="string">'PP'</span>: <span class="string">'START'</span>, <span class="string">'(-'</span>: <span class="string">'START'</span>, <span class="string">'WQ'</span>: <span class="string">'START'</span>, <span class="string">'NN'</span>: <span class="string">'START'</span>, <span class="string">'CD'</span>: <span class="string">'START'</span>, <span class="string">'FW'</span>: <span class="string">'START'</span>, <span class="string">'QL'</span>: <span class="string">'START'</span>, <span class="string">'('</span>: <span class="string">'START'</span>, <span class="string">'.'</span>: <span class="string">'START'</span>, <span class="string">'``'</span>: <span class="string">'START'</span>, <span class="string">','</span>: <span class="string">'START'</span>, <span class="string">"''"</span>: <span class="string">'START'</span>, <span class="string">'IN'</span>: <span class="string">'START'</span>, <span class="string">'RB'</span>: <span class="string">'START'</span>, <span class="string">'OD'</span>: <span class="string">'START'</span>, <span class="string">'CC'</span>: <span class="string">'START'</span>, <span class="string">'*-'</span>: <span class="string">'START'</span>, <span class="string">'RN'</span>: <span class="string">'START'</span>, <span class="string">'VB'</span>: <span class="string">'START'</span>, <span class="string">'WR'</span>: <span class="string">'START'</span>, <span class="string">'DT'</span>: <span class="string">'START'</span>, <span class="string">'PN'</span>: <span class="string">'START'</span>, <span class="string">'DO'</span>: <span class="string">'START'</span>, <span class="string">'BE'</span>: <span class="string">'START'</span>, <span class="string">"'"</span>: <span class="string">'START'</span>, <span class="string">'END'</span>: <span class="string">'START'</span>, <span class="string">'CS'</span>: <span class="string">'START'</span>, <span class="string">':-'</span>: <span class="string">'START'</span>, <span class="string">'HV'</span>: <span class="string">'START'</span>, <span class="string">'WP'</span>: <span class="string">'START'</span>, <span class="string">')-'</span>: <span class="string">'START'</span>, <span class="string">'NR'</span>: <span class="string">'START'</span>, <span class="string">'NI'</span>: <span class="string">'START'</span>, <span class="string">'JJ'</span>: <span class="string">'START'</span>, <span class="string">'AB'</span>: <span class="string">'START'</span>, <span class="string">'UH'</span>: <span class="string">'START'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>以上，是所有的第一个viterbi 和第一个回溯点。接下来，把这些存到Vitterbi和Backpointer两个变量里去:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">viterbi.append(first_viterbi)</span><br><span class="line">backpointer.append(first_backpointer)</span><br></pre></td></tr></table></figure>
+<p>可以先看一眼，目前最好的tag是什么：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">currbest = max(first_viterbi.keys(), key = <span class="keyword">lambda</span> tag: first_viterbi[ tag ])</span><br><span class="line">print( <span class="string">"Word"</span>, <span class="string">"'"</span> + sentence[<span class="number">0</span>] + <span class="string">"'"</span>, <span class="string">"current best two-tag sequence:"</span>, first_backpointer[ currbest], currbest)</span><br><span class="line"><span class="comment"># output </span></span><br><span class="line">Word <span class="string">'I'</span> current best two-tag sequence: START PP</span><br></pre></td></tr></table></figure>
+<p>开始loop：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> wordindex <span class="keyword">in</span> range(<span class="number">1</span>, len(sentence)):</span><br><span class="line">    this_viterbi = &#123; &#125;</span><br><span class="line">    this_backpointer = &#123; &#125;</span><br><span class="line">    prev_viterbi = viterbi[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> tag <span class="keyword">in</span> distinct_tags:</span><br><span class="line">        <span class="comment"># START没有卵用的，我们要忽略</span></span><br><span class="line">        <span class="keyword">if</span> tag == <span class="string">"START"</span>: <span class="keyword">continue</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 如果现在这个tag是X，现在的单词是w，</span></span><br><span class="line">        <span class="comment"># 我们想找前一个tag Y，并且让最好的tag sequence以Y X结尾。</span></span><br><span class="line">        <span class="comment"># 也就是说</span></span><br><span class="line">        <span class="comment"># Y要能最大化：</span></span><br><span class="line">        <span class="comment"># prev_viterbi[ Y ] * P(X | Y) * P( w | X)</span></span><br><span class="line">        </span><br><span class="line">        best_previous = max(prev_viterbi.keys(),</span><br><span class="line">                            key = <span class="keyword">lambda</span> prevtag: \</span><br><span class="line">            prev_viterbi[ prevtag ] * cpd_tags[prevtag].prob(tag) * cpd_tagwords[tag].prob(sentence[wordindex]))</span><br><span class="line"></span><br><span class="line">        this_viterbi[ tag ] = prev_viterbi[ best_previous] * \</span><br><span class="line">            cpd_tags[ best_previous ].prob(tag) * cpd_tagwords[ tag].prob(sentence[wordindex])</span><br><span class="line">        this_backpointer[ tag ] = best_previous</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 每次找完Y 我们把目前最好的 存一下</span></span><br><span class="line">    currbest = max(this_viterbi.keys(), key = <span class="keyword">lambda</span> tag: this_viterbi[ tag ])</span><br><span class="line">    print( <span class="string">"Word"</span>, <span class="string">"'"</span> + sentence[ wordindex] + <span class="string">"'"</span>, <span class="string">"current best two-tag sequence:"</span>, this_backpointer[ currbest], currbest)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 完结</span></span><br><span class="line">    <span class="comment"># 全部存下来</span></span><br><span class="line">    viterbi.append(this_viterbi)</span><br><span class="line">    backpointer.append(this_backpointer)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">Word <span class="string">'want'</span> current best two-tag sequence: PP VB</span><br><span class="line">Word <span class="string">'to'</span> current best two-tag sequence: VB TO</span><br><span class="line">Word <span class="string">'race'</span> current best two-tag sequence: IN NN</span><br></pre></td></tr></table></figure>
+<p>找 end：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找所有以END结尾的tag sequence</span></span><br><span class="line">prev_viterbi = viterbi[<span class="number">-1</span>]</span><br><span class="line">best_previous = max(prev_viterbi.keys(),</span><br><span class="line">                    key = <span class="keyword">lambda</span> prevtag: prev_viterbi[ prevtag ] * cpd_tags[prevtag].prob(<span class="string">"END"</span>))</span><br><span class="line"></span><br><span class="line">prob_tagsequence = prev_viterbi[ best_previous ] * cpd_tags[ best_previous].prob(<span class="string">"END"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我们这会儿是倒着存的。。。。因为。。好的在后面</span></span><br><span class="line">best_tagsequence = [ <span class="string">"END"</span>, best_previous ]</span><br><span class="line"><span class="comment"># 同理 这里也有倒过来</span></span><br><span class="line">backpointer.reverse()</span><br></pre></td></tr></table></figure>
+<p>回溯所有的回溯点，此时，最好的tag就是backpointer里面的current best</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">current_best_tag = best_previous</span><br><span class="line"><span class="keyword">for</span> bp <span class="keyword">in</span> backpointer:</span><br><span class="line">    best_tagsequence.append(bp[current_best_tag])</span><br><span class="line">    current_best_tag = bp[current_best_tag]</span><br></pre></td></tr></table></figure>
+<p>显示结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">best_tagsequence.reverse()</span><br><span class="line">print( <span class="string">"The sentence was:"</span>, end = <span class="string">" "</span>)</span><br><span class="line"><span class="keyword">for</span> w <span class="keyword">in</span> sentence: print( w, end = <span class="string">" "</span>)</span><br><span class="line">print(<span class="string">"\n"</span>)</span><br><span class="line">print( <span class="string">"The best tag sequence is:"</span>, end = <span class="string">" "</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> best_tagsequence: <span class="keyword">print</span> (t, end = <span class="string">" "</span>)</span><br><span class="line">print(<span class="string">"\n"</span>)</span><br><span class="line">print( <span class="string">"The probability of the best tag sequence is:"</span>, prob_tagsequence)</span><br><span class="line"><span class="comment"># output </span></span><br><span class="line">The sentence was: I want to race </span><br><span class="line"></span><br><span class="line">The best tag sequence <span class="keyword">is</span>: START PP VB IN NN END </span><br><span class="line"></span><br><span class="line">The probability of the best tag sequence <span class="keyword">is</span>: <span class="number">5.71772824864617e-14</span></span><br></pre></td></tr></table></figure>
+<h2 id="can-kao-wen-xian">参考文献</h2>
+<ol>
+<li><a href="https://blog.csdn.net/weixin_41911765/article/details/82465697" target="_blank" rel="noopener">条件随机场的简单理解</a></li>
+<li><a href="https://blog.csdn.net/dcx_abc/article/details/78319246" target="_blank" rel="noopener">如何轻松愉快地理解条件随机场（CRF）</a></li>
+<li><a href="https://www.lanzous.com/i3ousch" target="_blank" rel="noopener">《数学之美》</a></li>
+<li><a href="https://blog.csdn.net/qq_37334135/article/details/86302735" target="_blank" rel="noopener">监督学习方法与Baum-Welch算法</a></li>
+<li><a href="https://blog.csdn.net/v_july_v/article/details/40984699" target="_blank" rel="noopener">从贝叶斯方法谈到贝叶斯网络</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/05/machine_learning/bayes_network/" rel="prev" title="贝叶斯网络">
+      <i class="fa fa-chevron-left"></i> 贝叶斯网络
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/06/basic_skills/latex/" rel="next" title="latex">
+      latex <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ma-er-ke-fu-guo-cheng"><span class="nav-number">1.</span> <span class="nav-text">马尔可夫过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yin-ma-er-ke-fu-mo-xing-hmm"><span class="nav-number">2.</span> <span class="nav-text">隐马尔可夫模型(HMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mo-xing-biao-shi"><span class="nav-number">2.1.</span> <span class="nav-text">模型表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#liang-ge-ji-ben-jia-she"><span class="nav-number">2.2.</span> <span class="nav-text">两个基本假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#san-ge-ji-ben-wen-ti"><span class="nav-number">2.3.</span> <span class="nav-text">三个基本问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gai-lu-ji-suan-wen-ti"><span class="nav-number">2.3.1.</span> <span class="nav-text">概率计算问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xue-xi-suan-fa"><span class="nav-number">2.3.2.</span> <span class="nav-text">学习算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yu-ce-wen-ti"><span class="nav-number">2.3.3.</span> <span class="nav-text">预测问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zui-da-shang-ma-er-ke-fu-mo-xing-memm"><span class="nav-number">3.</span> <span class="nav-text">最大熵马尔科夫模型(MEMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#li-zi"><span class="nav-number">3.0.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-hou-guo-strong"><span class="nav-number">3.0.2.</span> <span class="nav-text">后果：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-yuan-yin-strong"><span class="nav-number">3.0.3.</span> <span class="nav-text">原因</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tiao-jian-sui-ji-chang-crf"><span class="nav-number">4.</span> <span class="nav-text">条件随机场CRF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tuan-yu-zui-da-tuan"><span class="nav-number">4.1.</span> <span class="nav-text">团与最大团</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-sui-ji-chang-crf-1"><span class="nav-number">4.2.</span> <span class="nav-text">条件随机场CRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-sui-ji-chang-de-can-shu-hua-xing-shi"><span class="nav-number">4.3.</span> <span class="nav-text">条件随机场的参数化形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-sui-ji-chang-de-jian-hua-xing-shi"><span class="nav-number">4.4.</span> <span class="nav-text">条件随机场的简化形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-sui-ji-chang-de-ju-zhen-xing-shi"><span class="nav-number">4.5.</span> <span class="nav-text">条件随机场的矩阵形式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#em-suan-fa-hmm-crf-de-bi-jiao"><span class="nav-number">5.</span> <span class="nav-text">EM算法、HMM、CRF的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ma-er-ke-fu-wang-luo-ma-er-ke-fu-mo-xing-ma-er-ke-fu-guo-cheng-bei-xie-si-wang-luo-de-qu-bie"><span class="nav-number">6.</span> <span class="nav-text">马尔可夫网络、马尔可夫模型、马尔可夫过程、贝叶斯网络的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">7.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yu-chu-li-ci-ku"><span class="nav-number">7.1.</span> <span class="nav-text">预处理词库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ci-tong-ji"><span class="nav-number">7.2.</span> <span class="nav-text">词统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#viterbi-de-shi-xian"><span class="nav-number">7.3.</span> <span class="nav-text">Viterbi 的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#can-kao-wen-xian"><span class="nav-number">7.4.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
