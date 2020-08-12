@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="k近邻">
+<meta property="og:url" content="https://jeffery.ink/2020/06/09/machine_learning/knn/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155344275027763857.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155368320742672975.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155368335593855374.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377895462114526.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377904784496247.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377912448672600.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377914973991477.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377917753460670.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377920028856740.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase6415537792238505282.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377998951412539.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377966743482553.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155378000183167311.jpg">
+<meta property="article:published_time" content="2020-06-09T14:14:12.000Z">
+<meta property="article:modified_time" content="2020-08-12T14:40:09.437Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/06/09/machine_learning/knn/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>k近邻 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/06/09/machine_learning/knn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k近邻
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-12 22:40:09" itemprop="dateModified" datetime="2020-08-12T22:40:09+08:00">2020-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/09/machine_learning/knn/" class="post-meta-item leancloud_visitors" data-flag-title="k近邻" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/06/09/machine_learning/knn/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/09/machine_learning/knn/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
+<a id="more"></a>
+<h1 id="shi-yao-shi-knn">什么是KNN</h1>
+<h2 id="knn-de-tong-su-jie-shi">KNN的通俗解释</h2>
+<p>何谓K近邻算法，简称KNN算法，单从名字来猜想，可以简单粗暴的认为是：K个最近的邻居，当K=1时，算法便成了最近邻算法，即寻找最近的那个邻居。</p>
+<p>用官方的话来说，所谓K近邻算法，即是给定一个训练数据集，对新的输入实例，<strong>在训练数据集中找到与该实例最邻近的K个实例，这K个实例的多数属于某个类，就把该输入实例分类到这个类中。</strong></p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
+<p>如上图所示，有两类不同的样本数据，分别用蓝色的小正方形和红色的小三角形表示，而图正中间的那个绿色的圆所标示的数据则是待分类的数据。也就是说，现在，我们不知道中间那个绿色的数据是从属于哪一类（蓝色小正方形or红色小三角形），KNN就是解决这个问题的。</p>
+<p>如果K=3，绿色圆点的最近的3个邻居是2个红色小三角形和1个蓝色小正方形，少数从属于多数，基于统计的方法，判定绿色的这个待分类点属于红色的三角形一类。</p>
+<p>如果K=5，绿色圆点的最近的5个邻居是2个红色三角形和3个蓝色的正方形，还是少数从属于多数，基于统计的方法，判定绿色的这个待分类点属于蓝色的正方形一类。</p>
+<p><strong>当无法判定当前待分类点是从属于已知分类中的哪一类时，我们可以依据统计学的理论看它所处的位置特征，衡量它周围邻居的权重，而把它归为(或分配)到权重更大的那一类。这就是K近邻算法的核心思想。</strong></p>
+<h2 id="jin-lin-de-ju-chi-du-liang">近邻的距离度量</h2>
+<p>K近邻算法的核心在于找到实例点的邻居，这个时候，问题就接踵而至了，如何找到邻居，邻居的判定标准是什么，用什么来度量。有哪些距离度量的表示法：</p>
+<h3 id="ou-shi-ju-chi">欧氏距离</h3>
+<p>最常见的两点之间或多点之间的距离表示法，又称之为欧几里得度量，它定义于欧几里得空间中，如点 \(x = (x_1,\ldots,x_n)\) 和 \(y = (y_1,\ldots,y_n)\) 之间的距离为：</p>
+<p>\[
+d(x,y)=\sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}
+\]</p>
+<p>二维平面上两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的欧氏距离：<br>
+\[
+d=\sqrt{\left(x_{1}-x_{2}\right)^{2}+\left(y_{1}-y_{2}\right)^{2}}
+\]<br>
+三维空间两点\(a(x_1,y_1,z_1)\)与\(b(x_2,y_2,z_2)\)间的欧氏距离：<br>
+\[
+d=\sqrt{\left(x_{1}-x_{2}\right)^{2}+\left(y_{1}-y_{2}\right)^{2}+\left(z_{1}-z_{2}\right)^{2}}
+\]<br>
+两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\)间的欧氏距离：<br>
+\[
+d=\sqrt{\sum_{k=1}^{n}\left(x_{1 k}-x_{2 k}\right)^{2}}
+\]<br>
+也可以用表示成向量运算的形式：</p>
+<p>\[
+d=\sqrt{(a-b)(a-b)^{T}}
+\]</p>
+<h3 id="man-ha-dun-ju-chi">曼哈顿距离</h3>
+<p>定义曼哈顿距离的正式意义为L1-距离或城市区块距离，也就是在欧几里得空间的固定直角坐标系上两点所形成的线段对轴产生的投影的距离总和。例如在平面上，坐标\(（x_1, y_1）\)的点\(P_1\)与坐标\(（x_2, y_2）\)的点\(P_2\)的曼哈顿距离为：\(|x_1-x_2|+|y_1-y_2|\)，曼哈顿距离依赖座标系统的转度，而非系统在座标轴上的平移或映射。</p>
+<p>通俗来讲，想象你在曼哈顿要从一个十字路口开车到另外一个十字路口，驾驶距离是两点间的直线距离吗？显然不是，除非你能穿越大楼。而实际驾驶距离就是这个“曼哈顿距离”，此即曼哈顿距离名称的来源， 同时，曼哈顿距离也称为城市街区距离。</p>
+<p>二维平面两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的曼哈顿距离 :<br>
+\[
+d=|x_1-x_2|+|y_1-y_2|
+\]<br>
+两个\(n\)维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\)间的曼哈顿距离:</p>
+<p>\[
+d=\sum_{k=1}^{n}\left|x_{1 k}-x_{2 k}\right|
+\]</p>
+<h3 id="qie-bi-xue-fu-ju-chi">切比雪夫距离</h3>
+<p>若二个向量或二个点\(p\)和\(q\)，其座标分别为\(p_i\)及\(q_i\)，则两者之间的切比雪夫距离定义如下：<br>
+\[
+d = max_{x_i}(|x_2-x_1|,|y_1-y_1|)
+\]<br>
+这也等于以下Lp度量的极值：\(\lim_{x\rightarrow\infty}(\sum_{i=1}^n|p_i-q_i|^k)^{\frac{1}{k}}\) ，因此切比雪夫距离也称为L∞度量。</p>
+<p>以数学的观点来看，切比雪夫距离是由一致范数（或称为上确界范数）所衍生的度量，也是超凸度量的一种。</p>
+<p>在平面几何中，若二点p及q的直角坐标系坐标为\((x_1,y_1)\)及\((x_2,y_2)\)，则切比雪夫距离为：<br>
+\[
+D_{\text {Chess}}=\max \left(\left|x_{2}-x_{1}\right|,\left|y_{2}-y_{1}\right|\right)
+\]</p>
+<blockquote>
+<p>玩过国际象棋的朋友或许知道，国王走一步能够移动到相邻的8个方格中的任意一个。那么国王从格子(x1,y1)走到格子(x2,y2)最少需要多少步？。你会发现最少步数总是max( | x2-x1 | , | y2-y1 | ) 步 。有一种类似的一种距离度量方法叫切比雪夫距离。</p>
+</blockquote>
+<p>二维平面两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的切比雪夫距离 ：<br>
+\[
+d = max_{x_i}(|x_2-x_1|,|y_1-y_1|)
+\]<br>
+两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与\(b(x_{21},x_{22},\ldots,x_{2n})\)间的切比雪夫距离：<br>
+\[
+d=\max _{i}\left(\left|x_{1 i}-x_{2 i}\right|\right)
+\]<br>
+这个公式的另一种等价形式是</p>
+<p>\[
+d=lim_{k\to\infin}(\sum_{i=1}^{n}|x_{1i}-x_{2i}|^k)^{1/k}
+\]</p>
+<h3 id="min-ke-fu-si-ji-ju-chi">闵可夫斯基距离</h3>
+<p>闵氏距离不是一种距离，而是一组距离的定义。两个n维变量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的闵可夫斯基距离定义为：<br>
+\[
+d=\sqrt[p]{\sum_{k=1}^{n}|x_{1k}-x_{2k}|^p}
+\]<br>
+其中p是一个变参数。当p=1时，就是曼哈顿距离当p=2时，就是欧氏距离当p→∞时，就是切比雪夫距离。根据变参数的不同，闵氏距离可以表示一类的距离。</p>
+<h3 id="biao-zhun-hua-ou-shi-ju-chi">标准化欧氏距离</h3>
+<p>标准化欧氏距离是针对简单欧氏距离的缺点而作的一种改进方案。标准欧氏距离的思路：既然数据各维分量的分布不一样，那先将各个分量都“标准化”到均值、方差相等。至于均值和方差标准化到多少，先复习点统计学知识。</p>
+<p>假设样本集X的数学期望或均值为m，标准差为s，那么X的“标准化变量”X*表示为：(X-m）/s，而且标准化变量的数学期望为0，方差为1。即，样本集的标准化过程用公式描述就是：<br>
+\[
+X^*=\frac{X-m}{s}
+\]<br>
+标准化后的值 =  ( 标准化前的值  － 分量的均值 ) /分量的标准差　　<br>
+经过简单的推导就可以得到两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的标准化欧氏距离的公式：<br>
+\[
+d=\sqrt{\sum_{k=1}^{n}(\frac{x_{1k}-x_{2k}}{s_k})^2}
+\]</p>
+<h3 id="ma-shi-ju-chi">马氏距离</h3>
+<p>有M个样本向量\(X_1,\ldots,X_m\)，协方差矩阵记为\(S\)，均值记为向量\(\mu\)，则其中样本向量\(X\)到\(\mu\)的马氏距离表示为：<br>
+\[
+D(X)=\sqrt{(X-u)^TS^{-1}(X_i-X_j)}
+\]<br>
+若协方差矩阵是单位矩阵（各个样本向量之间独立同分布）,则公式就成了欧氏距离：<br>
+\[
+D(X_i,X_j)=\sqrt{(X_i-X_j)^T(X_i-X_j)}
+\]<br>
+若协方差矩阵是对角矩阵，公式变成了标准化欧氏距离。</p>
+<p>马氏距离的优缺点：量纲无关，排除变量之间的相关性的干扰。</p>
+<h3 id="ba-shi-ju-chi">巴氏距离</h3>
+<p>在统计中，巴氏距离距离测量两个离散或连续概率<strong>分布的相似性</strong>。它与衡量两个统计样品或种群之间的重叠量的巴氏距离系数密切相关。同时，Bhattacharyya系数可以被用来确定两个样本被认为相对接近的，它是用来测量中的类分类的可分离性。对于离散概率分布 p和q在同一域 X，它被定义为：<br>
+\[
+D_B(p,q)=-lnBC(p,q)
+\]<br>
+其中：<br>
+\[
+BC(p,q)=\sum_{x\in_{}X}\sqrt{p(x)q(x)}
+\]<br>
+是Bhattacharyya系数。</p>
+<h3 id="yi-ming-ju-chi">汉明距离</h3>
+<p>两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2。应用：信息编码（为了增强容错性，应使得编码间的最小汉明距离尽可能大）。</p>
+<h3 id="jia-jiao-yu-xian">夹角余弦</h3>
+<p>几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。</p>
+<p>在二维空间中向量\(A(x_1,y_1)\)与向量\(B(x_2,y_2)\)的夹角余弦公式：<br>
+\[
+cos\theta=\frac{x_1x_2+y_1y_2}{\sqrt{x_1^2+y_1^2}\sqrt{x_2^2+y_2^2}}
+\]<br>
+两个n维样本点\(a(x_{11},x_{12},\ldots,x_{1n})\)和\(b(x_{21},x_{22},\ldots,x_{2n})\)的夹角余弦：<br>
+\[
+cos\theta=\frac{a*b}{|a||b|}
+\]<br>
+夹角余弦取值范围为[-1,1]。夹角余弦越大表示两个向量的夹角越小，夹角余弦越小表示两向量的夹角越大。当两个向量的方向重合时夹角余弦取最大值1，当两个向量的方向完全相反夹角余弦取最小值-1。</p>
+<h3 id="jie-qia-de-xiang-si-xi-shu">杰卡德相似系数</h3>
+<p><strong>两个集合A和B的交集元素在A，B的并集中所占的比例</strong>，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是<strong>衡量两个集合的相似度</strong>一种指标。<br>
+\[
+J(A,B)=\frac{|A\cap_{}B|}{|A\cup_{}B|}
+\]<br>
+与杰卡德相似系数相反的概念是杰卡德距离：<br>
+\[
+J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
+\]</p>
+<h3 id="pi-er-xun-xi-shu">皮尔逊系数</h3>
+<p>在统计学中，皮尔逊积矩相关系数用于度量两个变量X和Y之间的相关（<strong>线性相关</strong>），其值介于-1与1之间。通常情况下通过以下取值范围判断变量的相关强度：</p>
+<blockquote>
+<p>0.8-1.0     极强相关<br>
+0.6-0.8     强相关<br>
+0.4-0.6     中等程度相关<br>
+0.2-0.4     弱相关<br>
+0.0-0.2     极弱相关或无相关</p>
+</blockquote>
+<h3 id="ju-chi-xiao-jie">距离小结</h3>
+<p>简单说来，各种“距离”的应用场景简单概括为，</p>
+<ul>
+<li>空间：欧氏距离，</li>
+<li>路径：曼哈顿距离，国际象棋国王：切比雪夫距离，</li>
+<li>以上三种的统一形式:闵可夫斯基距离，</li>
+<li>加权：标准化欧氏距离，</li>
+<li>排除量纲和依存：马氏距离，</li>
+<li>向量差距：夹角余弦，</li>
+<li>编码差别：汉明距离，</li>
+<li>集合近似度：杰卡德类似系数与距离，</li>
+<li>相关：相关系数与相关距离。</li>
+</ul>
+<h1 id="k-zhi-xuan-ze">K值选择</h1>
+<ol>
+<li>如果选择较小的K值，就相当于用较小的领域中的训练实例进行预测，“学习”近似误差会减小，只有与输入实例较近或相似的训练实例才会对预测结果起作用，与此同时带来的问题是“学习”的估计误差会增大，换句话说，<strong>K值的减小就意味着整体模型变得复杂，容易发生过拟合；</strong></li>
+<li>如果选择较大的K值，就相当于用较大领域中的训练实例进行预测，其优点是可以减少学习的估计误差，但缺点是学习的近似误差会增大。这时候，与输入实例较远（不相似的）训练实例也会对预测器作用，使预测发生错误，且<strong>K值的增大就意味着整体的模型变得简单。</strong></li>
+<li>K=N，则完全不足取，因为此时无论输入实例是什么，都只是简单的预测它属于在训练实例中最多的累，模型过于简单，忽略了训练实例中大量有用信息。</li>
+</ol>
+<p>在实际应用中，K值一般取一个比较小的数值，<strong>例如采用交叉验证法（简单来说，就是一部分样本做训练集，一部分做测试集）来选择最优的K值。</strong></p>
+<h1 id="knn-zui-jin-lin-fen-lei-suan-fa-de-guo-cheng">KNN最近邻分类算法的过程</h1>
+<ol>
+<li>计算测试样本和训练样本中每个样本点的距离（常见的距离度量有欧式距离，马氏距离等）；</li>
+<li>对上面所有的距离值进行排序；</li>
+<li>选前 k 个最小距离的样本；</li>
+<li>根据这 k 个样本的标签进行投票，得到最后的分类类别；</li>
+</ol>
+<h1 id="kdd-de-shi-xian-kd-shu">KDD的实现：KD树</h1>
+<p>Kd-树是K-dimension tree的缩写，是对数据点在k维空间（如二维(x，y)，三维(x，y，z)，k维(x，y，z…)）中划分的一种数据结构，主要应用于多维空间关键数据的搜索（如：范围搜索和最近邻搜索）。本质上说，Kd-树就是一种<strong>平衡二叉树</strong>。</p>
+<p>首先必须搞清楚的是，k-d树是一种空间划分树，说白了，就是把整个空间划分为特定的几个部分，然后在特定空间的部分内进行相关搜索操作。想像一个三维空间，kd树按照一定的划分规则把这个三维空间划分了多个空间，如下图所示：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155344275027763857.png" alt></p>
+<h2 id="gou-jian-kd-shu">构建KD树</h2>
+<p>kd树构建的伪代码如下所示：</p>
+<p>算法：构建k-d树（createKDTree）</p>
+<p>输入：数据点集Data-set和其所在的空间Range<br>
+输出：Kd，类型为k-d tree</p>
+<ol>
+<li>
+<p>If Data-set为空，则返回空的k-d tree</p>
+</li>
+<li>
+<p>调用节点生成程序：</p>
+<ol>
+<li>确定split域：对于所有描述子数据（特征矢量），统计它们在每个维上的数据方差。以SURF特征为例，描述子为64维，可计算64个方差。挑选出最大值，对应的维就是split域的值。数据方差大表明沿该坐标轴方向上的数据分散得比较开，在这个方向上进行数据分割有较好的分辨率；</li>
+<li>确定Node-data域：数据点集Data-set按其第split域的值排序。位于正中间的那个数据点被选为Node-data。此时新的Data-set’ = Data-set\Node-data（除去其中Node-data这一点）。</li>
+</ol>
+</li>
+<li>
+<p>dataleft = {d属于Data-set’ &amp;&amp; d[split] ≤ Node-data[split]}</p>
+<p>Left_Range = {Range &amp;&amp; dataleft}</p>
+<p>dataright = {d属于Data-set’ &amp;&amp; d[split] &gt; Node-data[split]}</p>
+<p>Right_Range = {Range &amp;&amp; dataright}</p>
+</li>
+<li>
+<p>left = 由（dataleft，Left_Range）建立的k-d tree，即递归调用createKDTree（dataleft，Left_  Range）。并设置left的parent域为Kd；</p>
+<p>right = 由（dataright，Right_Range）建立的k-d tree，即调用createKDTree（dataleft，Left_  Range）。并设置right的parent域为Kd。</p>
+</li>
+</ol>
+<p>再举一个简单直观的实例来介绍k-d树构建算法。假设有6个二维数据点\({(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)}\)，数据点位于二维空间内，如下图所示。为了能有效的找到最近邻，k-d树采用分而治之的思想，即将整个空间划分为几个小部分，首先，粗黑线将空间一分为二，然后在两个子空间中，细黑直线又将整个空间划分为四部分，最后虚黑直线将这四部分进一步划分。</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155368320742672975.png" alt></p>
+<p>6个二维数据点\({(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)}\)构建kd树的具体步骤为：</p>
+<ol>
+<li>确定：split域=x。具体是：6个数据点在x，y维度上的数据方差分别为39，28.63，所以<strong>在x轴上方差更大</strong>，故split域值为x；</li>
+<li>确定：\(Node-data =(7,2)\)。具体是：根据x维上的值将数据排序，6个数据的中值(所谓中值，即中间大小的值)为7，所以Node-data域位数据点\((7,2)\)。这样，该节点的分割超平面就是通过$ (7,2) $并垂直于：split=x轴的直线x=7；</li>
+<li>确定：左子空间和右子空间。具体是：分割超平面\(x=7\)将整个空间分为两部分：\(x&lt;=7\)的部分为左子空间，包含3个节点:\({(2,3),(5,4),(4,7)}\)；另一部分为右子空间，包含2个节点:\({(9,6)，(8,1)}\)；</li>
+<li>如上算法所述，kd树的构建是一个递归过程，我们对左子空间和右子空间内的数据重复根节点的过程就可以得到一级子节点\((5,4)\)和\((9,6)\)，同时将空间和数据集进一步细分，如此往复直到空间中只包含一个数据点。</li>
+</ol>
+<p>与此同时，经过对上面所示的空间划分之后，我们可以看出，点(7,2)可以为根结点，从根结点出发的两条红粗斜线指向的(5,4)和(9,6)则为根结点的左右子结点，而(2,3)，(4,7)则为(5,4)的左右孩子(通过两条细红斜线相连)，最后，(8,1)为(9,6)的左孩子(通过细红斜线相连)。如此，便形成了下面这样一棵k-d树：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155368335593855374.png" alt></p>
+<p><strong>对于n个实例的k维数据来说，建立kd-tree的时间复杂度为<code>O(knlogn)</code>。</strong></p>
+<p>k-d树算法可以分为两大部分，除了上部分有关k-d树本身这种数据结构建立的算法，另一部分是在建立的k-d树上各种诸如插入，删除，查找(最邻近查找)等操作涉及的算法。下面，依次来看kd树的插入、删除、查找操作。</p>
+<h2 id="kd-shu-de-cha-ru">KD树的插入</h2>
+<p>元素插入到一个K-D树的方法和二叉检索树类似。本质上，在偶数层比较x坐标值，而在奇数层比较y坐标值。当我们到达了树的底部，（也就是当一个空指针出现），我们也就找到了结点将要插入的位置。生成的K-D树的形状依赖于结点插入时的顺序。给定N个点，其中一个结点插入和检索的平均代价是O(log2N)。</p>
+<p>插入的过程如下:</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377895462114526.png" alt></p>
+<p>应该清楚，这里描述的插入过程中，每个结点将其所在的平面分割成两部分。因比，Chicago 将平面上所有结点分成两部分，一部分所有的结点x坐标值小于35，另一部分结点的x坐标值大于或等于35。同样Mobile将所有x坐标值大于35的结点以分成两部分，一部分结点的Y坐标值是小于10，另一部分结点的Y坐标值大于或等于10。后面的Toronto、Buffalo也按照一分为二的规则继续划分。</p>
+<h2 id="kd-shu-de-shan-chu">KD树的删除</h2>
+<p>KD树的删除可以用递归程序来实现。假设希望从K-D树中删除结点（a,b）。如果（a,b）的两个子树都为空，则用空树来代替（a,b）。否则，在（a,b）的子树中寻找一个合适的结点来代替它，譬如(c,d)，则递归地从K-D树中删除（c,d）。一旦(c,d)已经被删除，则用（c,d）代替（a,b）。假设(a,b)是一个X识别器，那么，它得替代节点要么是（a,b）左子树中的X坐标最大值的结点，要么是（a,b）右子树中x坐标最小值的结点。</p>
+<p>举一个实际的例子，如下图所示，原始图像及对应的kd树，现在要删除图中的A结点，请看一系列删除步骤：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377904784496247.jpg" alt></p>
+<p>要删除上图中结点A，选择结点A的右子树中X坐标值最小的结点，这里是C，C成为根，如下图：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377912448672600.jpg" alt></p>
+<p>从C的右子树中找出一个结点代替先前C的位置，</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377914973991477.jpg" alt></p>
+<p>这里是D，并将D的左子树转为它的右子树，D代替先前C的位置，如下图：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377917753460670.jpg" alt></p>
+<p>在D的新右子树中，找X坐标最小的结点，这里为H，H代替D的位置，</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377920028856740.jpg" alt></p>
+<p>在D的右子树中找到一个Y坐标最小的值，这里是I，将I代替原先H的位置，从而A结点从图中顺利删除，如下图所示：</p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase6415537792238505282.jpg" alt></p>
+<p>从K-D树中删除一个结点是代价很高的，很清楚删除子树的根受到子树中结点个数的限制。用\(TPL(T)\)表示树\(T\)总的路径长度。可看出树中子树大小的总和为\(TPL(T)+N\)。 以随机方式插入\(N\)个点形成树的TPL是\(O(Nlog_2N)\),这就意味着从一个随机形成的K-D树中删除一个随机选取的结点平均代价的上界是\(O(log_2N)\) 。</p>
+<h2 id="kd-shu-de-zui-jin-lin-sou-suo-suan-fa">KD树的最近邻搜索算法</h2>
+<p>k-d树查询算法的伪代码如下所示：</p>
+<p>输入：Kd，  //k-d tree类型</p>
+<p>​          target //查询数据点</p>
+<p>输出：nearest， //最邻近数据点</p>
+<p>​           dist   //最邻近数据点和查询点间的距离</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> If Kd为<span class="literal">NULL</span>，则设dist为infinite并返回</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="comment">//进行二叉查找，生成搜索路径</span></span><br><span class="line"></span><br><span class="line">   Kd_point = &amp;Kd；                   <span class="comment">//Kd-point中保存k-d tree根节点地址</span></span><br><span class="line"></span><br><span class="line">   nearest = Kd_point -&gt; Node-data；  <span class="comment">//初始化最近邻点</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span>（Kd_point）</span><br><span class="line"></span><br><span class="line">   　　push（Kd_point）到search_path中； <span class="comment">//search_path是一个堆栈结构，存储着搜索路径节点指针</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">/*** If Dist（nearest，target） &gt; Dist（Kd_point -&gt; Node-data，target）</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   　　　　nearest  = Kd_point -&gt; Node-data；    //更新最近邻点</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   　　　　Max_dist = Dist(Kd_point，target）；  //更新最近邻点与查询点间的距离  ***/</span></span><br><span class="line"></span><br><span class="line">   　　s = Kd_point -&gt; split；                       <span class="comment">//确定待分割的方向</span></span><br><span class="line"></span><br><span class="line">   　　If target[s] &lt;= Kd_point -&gt; Node-data[s]     <span class="comment">//进行二叉查找</span></span><br><span class="line"></span><br><span class="line">   　　　　Kd_point = Kd_point -&gt; left；</span><br><span class="line"></span><br><span class="line">   　　<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">   　　　　Kd_point = Kd_point -&gt;right；</span><br><span class="line"></span><br><span class="line">   nearest = search_path中最后一个叶子节点； <span class="comment">//注意：二叉搜索时不比计算选择搜索路径中的最邻近点，这部分已被注释</span></span><br><span class="line"></span><br><span class="line">   Max_dist = Dist（nearest，target）；    <span class="comment">//直接取最后叶子节点作为回溯前的初始最近邻点</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> <span class="comment">//回溯查找</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span>（search_path != <span class="literal">NULL</span>）</span><br><span class="line"></span><br><span class="line">   　　back_point = 从search_path取出一个节点指针；   <span class="comment">//从search_path堆栈弹栈</span></span><br><span class="line"></span><br><span class="line">   　　s = back_point -&gt; split；                   <span class="comment">//确定分割方向</span></span><br><span class="line"></span><br><span class="line">   　　If Dist（target[s]，back_point -&gt; Node-data[s]） &lt; Max_dist   <span class="comment">//判断还需进入的子空间</span></span><br><span class="line"></span><br><span class="line">   　　　　If target[s] &lt;= back_point -&gt; Node-data[s]</span><br><span class="line"></span><br><span class="line">   　　　　　　Kd_point = back_point -&gt; right；  <span class="comment">//如果target位于左子空间，就应进入右子空间</span></span><br><span class="line"></span><br><span class="line">   　　　　<span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">   　　　　　　Kd_point = back_point -&gt; left;    <span class="comment">//如果target位于右子空间，就应进入左子空间</span></span><br><span class="line"></span><br><span class="line">   　　　　将Kd_point压入search_path堆栈；</span><br><span class="line"></span><br><span class="line">   　　If Dist（nearest，target） &gt; Dist（Kd_Point -&gt; Node-data，target）</span><br><span class="line"></span><br><span class="line">   　　　　nearest  = Kd_point -&gt; Node-data；                 <span class="comment">//更新最近邻点</span></span><br><span class="line"></span><br><span class="line">   　　　　Min_dist = Dist（Kd_point -&gt; Node-data,target）；  <span class="comment">//更新最近邻点与查询点间的距离</span></span><br></pre></td></tr></table></figure>
+<p><strong>举例</strong></p>
+<p>星号表示要查询的点查询点\(（2,4.5）\)。通过二叉搜索，顺着搜索路径很快就能找到最邻近的近似点。而找到的叶子节点并不一定就是最邻近的，最邻近肯定距离查询点更近，应该位于以查询点为圆心且通过叶子节点的圆域内。为了找到真正的最近邻，还需要进行相关的<code>回溯</code>操作。也就是说，算法首先沿搜索路径反向查找是否有距离查询点更近的数据点。</p>
+<ol>
+<li><strong>二叉树搜索</strong>：先从\(（7,2）\)查找到\(（5,4）\)节点，在进行查找时是由y = 4为分割超平面的，由于查找点为y值为4.5，因此进入右子空间查找到\(（4,7）\)，形成搜索路径&lt;\((7,2)\)，\((5,4)\)，\((4,7)\)&gt;，但\(（4,7）\)与目标查找点的距离为3.202，而\(（5,4）\)与查找点之间的距离为3.041，所以\(（5,4）\)为查询点的最近点；</li>
+<li><strong>回溯查找</strong>：以\(（2,4.5）\)为圆心，以3.041为半径作圆，如下图所示。可见该圆和y = 4超平面交割，所以需要进入（5,4）左子空间进行查找，也就是将\(（2,3）\)节点加入搜索路径中得&lt;\((7,2)\)，\((2,3)\)&gt;；于是接着搜索至\(（2,3）\)叶子节点，\(（2,3）\)距离\(（2,4.5）\)比\(（5,4）\)要近，所以最近邻点更新为\(（2,3）\)，最近距离更新为1.5；</li>
+<li>回溯查找至\(（5,4）\)，直到最后回溯到根结点\(（7,2）\)的时候，以\(（2,4.5）\)为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如下图所示。至此，搜索路径回溯完，返回最近邻点\(（2,3）\)，最近距离1.5。</li>
+</ol>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377998951412539.jpg" alt></p>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377966743482553.png" alt></p>
+<h2 id="kd-shu-jin-lin-sou-suo-suan-fa-de-gai-jin-bbf-suan-fa">kd树近邻搜索算法的改进：BBF算法</h2>
+<p>实例点是随机分布的，那么kd树搜索的平均计算复杂度是\(O(logN)\)，这里的\(N\)是训练实例树。所以说，kd树更适用于训练实例数远大于空间维数时的k近邻搜索，当空间维数接近训练实例数时，<strong>它的效率会迅速下降，一降降到“解放前”：线性扫描的速度。</strong></p>
+<p>也正因为上述k最近邻搜索算法的第4个步骤中的所述：“回退到根结点时，搜索结束”，每个最近邻点的查询比较完成过程最终都要回退到根结点而结束，而导致了许多不必要回溯访问和比较到的结点，这些多余的损耗在高维度数据查找的时候，搜索效率将变得相当之地下，那有什么办法可以改进这个原始的kd树最近邻搜索算法呢？</p>
+<p>从上述标准的kd树查询过程可以看出其搜索过程中的“回溯”是由“查询路径”决定的，并没有考虑查询路径上一些数据点本身的一些性质。一个简单的改进思路就是将“查询路径”上的结点进行排序，如按各自分割超平面（也称bin）与查询点的距离排序，<strong>也就是说，回溯检查总是从优先级最高（Best Bin）的树结点开始。</strong></p>
+<p>还是以上面的查询（2,4.5）为例，搜索的算法流程为：</p>
+<ol>
+<li>将<code>（7,2）</code>压人优先队列中；</li>
+<li>提取优先队列中的<code>（7,2）</code>，由于<code>（2,4.5）</code>位于<code>（7,2）</code>分割超平面的左侧，所以检索其左子结点<code>（5,4）</code>。</li>
+<li>同时，根据BBF机制”搜索左/右子树，就把对应这一层的兄弟结点即右/左结点存进队列”，将其<code>（5,4）</code>对应的兄弟结点即右子结点<code>（9,6）</code>压人优先队列中</li>
+<li>此时优先队列为{<code>（9,6）</code>}，最佳点为<code>（7,2）</code>；然后一直检索到叶子结点<code>（4,7）</code>，此时优先队列为{<code>（2,3）</code>，<code>（9,6）</code>}，“最佳点”则为<code>（5,4）</code>；</li>
+<li>提取优先级最高的结点<code>（2,3）</code>，重复步骤2，直到优先队列为空。</li>
+</ol>
+<p><img src="/2020/06/09/machine_learning/knn/quesbase64155378000183167311.jpg" alt></p>
+<h1 id="guan-yu-knn-de-yi-xie-wen-ti">关于KNN的一些问题</h1>
+<ol>
+<li>
+<p>k-means或kNN，是用欧氏距离来计算最近的邻居之间的距离。为什么不用曼哈顿距离？</p>
+<p>**答：**不用曼哈顿距离，因为它只计算水平或垂直距离，有维度的限制。另一方面，欧式距离可用于任何空间的距离计算问题。因为，数据点可以存在于任何空间，欧氏距离是更可行的选择。例如：想象一下国际象棋棋盘，象或车所做的移动是由曼哈顿距离计算的，因为它们是在各自的水平和垂直方向的运动。</p>
+</li>
+<li>
+<p>KD-Tree相比KNN来进行快速图像特征比对的好处在哪里?</p>
+<p>答：极大的节约了时间成本．点线距离如果大于最小点，无需回溯上一层，如果小于,则再上一层寻找。</p>
+</li>
+</ol>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="http://blog.csdn.net/v_july_v/article/details/8203674" target="_blank" rel="noopener">从K近邻算法、距离度量谈到KD树、SIFT+BBF算法</a></li>
+<li>[<a href="https://www.cnblogs.com/eyeszjwang/articles/2429382.html" target="_blank" rel="noopener">k-d tree算法</a>](<a href="https://www.cnblogs.com/eyeszjwang/articles/2429382.html" target="_blank" rel="noopener">https://www.cnblogs.com/eyeszjwang/articles/2429382.html</a>)</li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/08/machine_learning/clustering/" rel="prev" title="聚类算法">
+      <i class="fa fa-chevron-left"></i> 聚类算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/10/machine_learning/topic_model/" rel="next" title="主题模型">
+      主题模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-knn"><span class="nav-number">1.</span> <span class="nav-text">什么是KNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#knn-de-tong-su-jie-shi"><span class="nav-number">1.1.</span> <span class="nav-text">KNN的通俗解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jin-lin-de-ju-chi-du-liang"><span class="nav-number">1.2.</span> <span class="nav-text">近邻的距离度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ou-shi-ju-chi"><span class="nav-number">1.2.1.</span> <span class="nav-text">欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man-ha-dun-ju-chi"><span class="nav-number">1.2.2.</span> <span class="nav-text">曼哈顿距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qie-bi-xue-fu-ju-chi"><span class="nav-number">1.2.3.</span> <span class="nav-text">切比雪夫距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-ke-fu-si-ji-ju-chi"><span class="nav-number">1.2.4.</span> <span class="nav-text">闵可夫斯基距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#biao-zhun-hua-ou-shi-ju-chi"><span class="nav-number">1.2.5.</span> <span class="nav-text">标准化欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ma-shi-ju-chi"><span class="nav-number">1.2.6.</span> <span class="nav-text">马氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ba-shi-ju-chi"><span class="nav-number">1.2.7.</span> <span class="nav-text">巴氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-ming-ju-chi"><span class="nav-number">1.2.8.</span> <span class="nav-text">汉明距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jia-jiao-yu-xian"><span class="nav-number">1.2.9.</span> <span class="nav-text">夹角余弦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jie-qia-de-xiang-si-xi-shu"><span class="nav-number">1.2.10.</span> <span class="nav-text">杰卡德相似系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pi-er-xun-xi-shu"><span class="nav-number">1.2.11.</span> <span class="nav-text">皮尔逊系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-chi-xiao-jie"><span class="nav-number">1.2.12.</span> <span class="nav-text">距离小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-zhi-xuan-ze"><span class="nav-number">2.</span> <span class="nav-text">K值选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#knn-zui-jin-lin-fen-lei-suan-fa-de-guo-cheng"><span class="nav-number">3.</span> <span class="nav-text">KNN最近邻分类算法的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kdd-de-shi-xian-kd-shu"><span class="nav-number">4.</span> <span class="nav-text">KDD的实现：KD树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gou-jian-kd-shu"><span class="nav-number">4.1.</span> <span class="nav-text">构建KD树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-cha-ru"><span class="nav-number">4.2.</span> <span class="nav-text">KD树的插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-shan-chu"><span class="nav-number">4.3.</span> <span class="nav-text">KD树的删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-zui-jin-lin-sou-suo-suan-fa"><span class="nav-number">4.4.</span> <span class="nav-text">KD树的最近邻搜索算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-jin-lin-sou-suo-suan-fa-de-gai-jin-bbf-suan-fa"><span class="nav-number">4.5.</span> <span class="nav-text">kd树近邻搜索算法的改进：BBF算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guan-yu-knn-de-yi-xie-wen-ti"><span class="nav-number">5.</span> <span class="nav-text">关于KNN的一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

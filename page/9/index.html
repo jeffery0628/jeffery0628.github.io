@@ -206,6 +206,415 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">字符串匹配问题</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 21:53:16" itemprop="dateModified" datetime="2020-03-22T21:53:16+08:00">2020-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="字符串匹配问题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="zi-fu-chuan-pi-pei-wen-ti">字符串匹配问题</h2>
+<p>给定两个字符串<code>S,P</code>,其中<code>S</code>串长度为<code>n</code>，<code>P</code>串长度为<code>m</code>, <code>(m&lt;=n)</code>，判断字符串<code>P</code>是否是<code>S</code>的子串</p>
+<h4 id="fu-za-du">复杂度</h4>
+<p>容易计算复杂度：<code>O(m*n)</code></p>
+<h3 id="brute-force-jian-dan-pi-pei">Brute-Force(简单匹配)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_match</span><span class="params">(s, p)</span>:</span></span><br><span class="line">    m, n = len(s), len(p)</span><br><span class="line">    <span class="keyword">if</span> m-n &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m-n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> s[i:i+n] == p:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/14/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">背包问题</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-21 20:17:44" itemprop="dateModified" datetime="2020-03-21T20:17:44+08:00">2020-03-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="背包问题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="ti-mu">题目</h3>
+<p>有N件物品和一个容量为<code>v</code>的背包，放入第i件物品耗费空间<code>c[i]</code>得到价值为<code>W[i]</code>,求哪些物品装入背包可使得总价值最大？</p>
+<h4 id="dong-tai-gui-hua-qiu-jie">动态规划求解：</h4>
+<p>状态：问题所求最大价值，设状态即为背包中物品的价值</p>
+<p>状态转移方程：</p>
+<p><code>dp[i][j]</code>表示前i件物品放入一个容量为V的背包获得的最大价值状态转移方程为<br>
+\[
+\mathrm{dp}[\mathrm{i}][\mathrm{v}]=\max \left\{\begin{array}{l}
+dp[i-1][v](\text {not select}) \\
+dp[i-1][v-C[i]]+W[i](\text {select})
+\end{array}\right.
+\]<br>
+其中<code>dp[i-1][v-C[i]]</code>表示前<code>i-1</code>件物品放入容量为<code>v-C[i]</code>的背包中。</p>
+<h4 id="dai-ma">代码</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># F[0, 0...V] = 0</span></span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> range(V+<span class="number">1</span>):</span><br><span class="line">    dp[<span class="number">0</span>][v] = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 容量装不下当前物品时，保留原值</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(<span class="number">0</span>, C[i]):</span><br><span class="line">        dp[i][v] = dp[i<span class="number">-1</span>][v]</span><br><span class="line">    <span class="comment"># 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> range(C[i], V+<span class="number">1</span>):</span><br><span class="line">        dp[i][v] = max(dp[i<span class="number">-1</span>][v], dp[i<span class="number">-1</span>][v-C[i]] + W[i])</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/01/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">排序算法</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 21:24:26" itemprop="dateModified" datetime="2020-03-22T21:24:26+08:00">2020-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="排序算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="pai-xu-suan-fa">排序算法</h2>
+<p><img src="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F.png" alt="avatar"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/25/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/02/10/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/10/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">查找算法</a>
+        </h2>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 21:25:11" itemprop="dateModified" datetime="2020-03-22T21:25:11+08:00">2020-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/02/10/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="查找算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="jian-dan-sou-suo-cha-zhao">简单搜索查找</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute_force_search</span><span class="params">(nums,key)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="keyword">if</span> num == key:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/02/10/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2018/02/10/hexo/hexo-advanced-settings/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -666,7 +1075,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

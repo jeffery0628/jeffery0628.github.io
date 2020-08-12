@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="聚类算法">
+<meta property="og:url" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/v2-99863816ea8d29383c5ff28a8b7a667e_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/00630Defly1g5b746zwjgj30fh0c7gnj.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/00630Defly1g5b7pbaeavj30qo0cwtc9.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/00630Defly1g5b8mu9mjmj30iu0apjuh.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/00630Defly1g5b8ms101aj30id0aswhh.jpg">
+<meta property="article:published_time" content="2020-06-08T12:27:00.000Z">
+<meta property="article:modified_time" content="2020-08-11T14:13:02.083Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/06/08/machine_learning/clustering/v2-99863816ea8d29383c5ff28a8b7a667e_1440w.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/06/08/machine_learning/clustering/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>聚类算法 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/06/08/machine_learning/clustering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聚类算法
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-11 22:13:02" itemprop="dateModified" datetime="2020-08-11T22:13:02+08:00">2020-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/08/machine_learning/clustering/" class="post-meta-item leancloud_visitors" data-flag-title="聚类算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/06/08/machine_learning/clustering/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/08/machine_learning/clustering/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/06/08/machine_learning/clustering/v2-99863816ea8d29383c5ff28a8b7a667e_1440w.jpg" alt></p>
+<a id="more"></a>
+<h1 id="ju-lei-suan-fa-du-shi-wu-jian-du-xue-xi-ma">聚类算法都是无监督学习吗?</h1>
+<p>什么是聚类算法？</p>
+<p>聚类是一种机器学习技术，它涉及到数据点的分组。给定一组数据点，可以使用聚类算法将每个数据点划分为一个特定的组。理论上，同一组中的数据点应该具有相似的属性或特征，而不同组中的数据点应该具有高度不同的属性或特征。<strong>聚类是一种无监督学习的方法</strong>，是许多领域中常用的统计数据分析技术。</p>
+<p>常用的算法包括<strong>K-means、高斯混合模型（GMM）、自组织映射神经网络（SOM）</strong></p>
+<h1 id="k-means-suan-fa">k-means算法</h1>
+<h2 id="suan-fa-guo-cheng">算法过程</h2>
+<p>K-均值是最普遍的聚类算法，算法接受一个未标记的数据集，然后将数据聚类成不同的组。</p>
+<p>K-均值是一个迭代算法，假设我们想要将数据聚类成 n 个组，其方法为:</p>
+<ul>
+<li>首先选择𝐾个随机的点，称为聚类中心（cluster centroids）；</li>
+<li>对于数据集中的每一个数据，按照距离𝐾个中心点的距离，将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一类。</li>
+<li>计算每一个组的平均值，将该组所关联的中心点移动到平均值的位置。</li>
+<li>重复步骤，直至中心点不再变化。</li>
+</ul>
+<p>用  \(u^1,u^2,...,u^k\) 来表示聚类中心，用\(𝑐(1),𝑐(2),...,𝑐(𝑚)\)来存储与第\(𝑖\)个实例数据最近的聚类中心的索引，K-均值算法的伪代码如下：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Repeat &#123;</span><br><span class="line">    <span class="keyword">for</span> i = <span class="number">1</span> <span class="keyword">to</span> m</span><br><span class="line">    c(i) := <span class="keyword">index</span> (form <span class="number">1</span> <span class="keyword">to</span> K) <span class="keyword">of</span> <span class="keyword">cluster</span> centroid closest <span class="keyword">to</span> x(i)</span><br><span class="line">    <span class="keyword">for</span> k = <span class="number">1</span> <span class="keyword">to</span> K</span><br><span class="line">    μk := average (mean) <span class="keyword">of</span> points assigned <span class="keyword">to</span> <span class="keyword">cluster</span> k</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法分为两个步骤，第一个 for 循环是赋值步骤，即：对于每一个样例\(𝑖\)，计算其应该属于的类。第二个 for 循环是聚类中心的移动，即：对于每一个类\(k\)，重新计算该类的质心。</p>
+<p>K-均值算法也可以很便利地用于将数据分为许多不同组，即使在没有非常明显区分的组群的情况下也可以。下图所示的数据集包含身高和体重两项特征构成的，利用 K-均值算法将数据分为三类，用于帮助确定将要生产的 T-恤衫的三种尺寸。</p>
+<p><img src="/2020/06/08/machine_learning/clustering/00630Defly1g5b746zwjgj30fh0c7gnj.jpg" alt></p>
+<h2 id="sun-shi-han-shu">损失函数</h2>
+<p>K-均值最小化问题，是要最小化所有的数据点与其所关联的聚类中心点之间的距离之和，因此 K-均值的代价函数（又称畸变函数）为：<br>
+\[
+J(c^{(1)},c^{(2)},\ldots,c^{(m)},\mu_1,\ldots,\mu_k) = \frac{1}{m}\sum^m_{i=1}\|X^{(i)}-\mu_{c^{(i)}}\|^2
+\]<br>
+其中\(\mu_{c^{(i)}}\) 代表与 \(x^{(i)}\) 最近的聚类中心点。 优化目标便是找出使得代价函数最小的\(c^{(1)},c^{(2)},...,c^{(m)}\) 和 \(u_1,u_2,...,u_k\)。</p>
+<h2 id="k-zhi-de-xuan-ze">k值的选择</h2>
+<p>在运行 K-均值算法的之前，首先要随机初始化所有的聚类中心点：</p>
+<ol>
+<li>选择𝐾 &lt; 𝑚，即聚类中心点的个数要小于所有训练集实例的数量。</li>
+<li>随机选择𝐾个训练实例，然后令𝐾个聚类中心分别与这𝐾个训练实例相等，K-均值的一个问题在于，它有可能会停留在一个局部最小值处，而这取决于初始化的情况。</li>
+</ol>
+<p>为了解决这个问题，通常需要多次运行 K-均值算法，每一次都重新进行随机初始化，最后再比较多次运行 K-均值的结果，选择代价函数最小的结果。这种方法在𝐾较小的时候（2–10）还是可行的，但是如果𝐾较大，这么做也可能不会有明显地改善。</p>
+<p>没有所谓最好的选择聚类数的方法，通常是需要根据不同的问题，人工进行选择的。选择的时候思考我们运用 K-均值算法聚类的动机是什么。有一个可能会谈及的方法叫作<strong>肘部法则</strong>。关于<code>肘部法则</code>，所需要做的是改变𝐾值，也就是聚类类别数目的总数。用一个聚类来运行 K 均值聚类方法。这就意味着，所有的数据都会分到一个聚类里，然后计算成本函数或者计算畸变函数𝐽。𝐾代表聚类数目。</p>
+<p><img src="/2020/06/08/machine_learning/clustering/00630Defly1g5b7pbaeavj30qo0cwtc9.jpg" alt></p>
+<p>我们可能会得到一条类似于这样的曲线。像一个人的肘部。这就是<code>肘部法则</code>所做的，来看这样一个图，看起来就好像有一个很清楚的肘在那儿，它的畸变值会迅速下降，从 1 到 2，从 2 到 3 之后，你会在 3 的时候达到一个肘点。在此之后，畸变值就下降的非常慢，看起来就像使用 3 个聚类来进行聚类是正确的，这是因为那个点是曲线的肘点，畸变值下降得很快，𝐾 = 3之后就下降得很慢，那么就选𝐾 = 3。应用<code>肘部法则</code>得到了一个像上面这样的图，是用来选择聚类个数的合理方法。</p>
+<h2 id="knn-yu-k-means-qu-bie">KNN与K-means区别？</h2>
+<p>K最近邻分类算法，是一个理论上比较成熟的方法，也是最简单的机器学习算法之一。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">KNN</th>
+<th style="text-align:left">K-Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1.KNN是分类算法<br>2.属于监督学习<br>3.训练数据集是带label的数据</td>
+<td style="text-align:left">1.K-Means是聚类算法<br>2.属于非监督学习<br>3.训练数据集是无label的数据，是杂乱无章的，经过聚类后变得有序，先无序，后有序。</td>
+</tr>
+<tr>
+<td style="text-align:left">没有明显的前期训练过程，属于memory based learning</td>
+<td style="text-align:left">有明显的前期训练过程</td>
+</tr>
+<tr>
+<td style="text-align:left">K的含义：一个样本x，对它进行分类，就从训练数据集中，在x附近找离它最近的K个数据点，这K个数据点，类别c占的个数最多，就把x的label设为c。</td>
+<td style="text-align:left">K的含义：K是人工固定好的数字，假设数据集合可以分为K个蔟，那么就利用训练数据来训练出这K个分类。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>相似点</strong></p>
+<p>都包含这样的过程，给定一个点，在数据集中找离它最近的点。即二者都用到了NN(Nears Neighbor)算法思想。</p>
+<h2 id="k-means-you-que-dian-ji-gai-jin">K-Means优缺点及改进</h2>
+<p>k-means：在大数据的条件下，会耗费大量的时间和内存。 优化k-means的建议：</p>
+<ol>
+<li>
+<p>减少聚类的数目K。因为，每个样本都要跟类中心计算距离。</p>
+</li>
+<li>
+<p>减少样本的特征维度。比如说，通过PCA等进行降维。</p>
+</li>
+<li>
+<p>考察其他的聚类算法，通过选取toy数据，去测试不同聚类算法的性能。</p>
+</li>
+<li>
+<p>hadoop集群，K-means算法是很容易进行并行计算的。</p>
+</li>
+<li>
+<p>算法可能找到局部最优的聚类，而不是全局最优的聚类。使用改进的二分k-means算法。</p>
+<p>二分k-means算法：首先将整个数据集看成一个簇，然后进行一次k-means（k=2）算法将该簇一分为二，并计算每个簇的误差平方和，选择平方和最大的簇迭代上述过程再次一分为二，直至簇数达到用户指定的k为止，此时可以达到的全局最优。</p>
+</li>
+</ol>
+<h1 id="gao-si-hun-he-mo-xing-gmm">高斯混合模型(GMM)</h1>
+<h2 id="gmm-de-si-xiang">GMM的思想</h2>
+<p>高斯混合模型也是一种常见的聚类算法，与K均值算法类似，同样使用了EM算法进行迭代计算。高斯混合模型假设每个簇的数据都是符合高斯分布（正态分布）的，当前数据呈现的分布就是各个簇的高斯分布叠加在一起的结果。</p>
+<p>第一张图是一个数据分布的样例，如果只用一个高斯分布来拟合图中的数据，图中所示的椭圆即为高斯分布的二倍标准差所对应的椭圆。直观来说，图中的数据明显分为两簇，因此只用一个高斯分布来拟和是不太合理的，需要推广到用多个高斯分布的叠加来对数据进行拟合。第二张图是用两个高斯分布的叠加来拟合得到的结果。**这就引出了高斯混合模型，即用多个高斯分布函数的线形组合来对数据分布进行拟合。**理论上，<strong>高斯混合模型可以拟合出任意类型的分布</strong>。</p>
+<p><img src="/2020/06/08/machine_learning/clustering/00630Defly1g5b8mu9mjmj30iu0apjuh.jpg" alt></p>
+<p><img src="/2020/06/08/machine_learning/clustering/00630Defly1g5b8ms101aj30id0aswhh.jpg" alt></p>
+<p>高斯混合模型的核心思想是，<strong>假设数据可以看作从多个高斯分布中生成出来的</strong>。在该假设下，每个单独的分模型都是标准高斯模型，其均值 \(u_i\) 和方差 \(\sum_i\) 是待估计的参数。此外，每个分模型都还有一个参数 \(\pi_i\)，可以理解为权重或生成数据的概率。高斯混合模型的公式为：<br>
+\[
+p(x) = \sum_i^k \pi_iN(x|\mu_i,\Sigma)
+\]<br>
+通常我们并不能直接得到高斯混合模型的参数，而是观察到了一系列数据点，给出类别的数量K后，希望求得最佳的K个高斯分模型。因此，高斯混合模型的计算，便成寻找最佳的均值\(\mu\)，方差\(\Sigma\)、权重\(\pi\)，这类问题通常通过最大似然估计来求解。遗憾的是，此问题中直接使用最大似然估计，得到的是一 个复杂的非凸函数，目标函数是和的对数，难以展开和对其求偏导。</p>
+<p>在这种情况下，可以用<strong>EM算法</strong>。 EM算法是在最大化目标函数时，先固定一个变量使整体函数变为凸优化函数，求导得到最值，然后利用最优参数更新被固定的变量，进入下一个循环。具体到高斯混合模型的求解，EM算法的迭代过程如下。</p>
+<p>首先，初始随机选择各参数的值。然后，重复下述两步，直到收敛。</p>
+<ul>
+<li>E步骤。根据当前的参数，计算每个点由某个分模型生成的概率。</li>
+<li>M步骤。使用E步骤估计出的概率，来改进每个分模型的均值，方差和权重。</li>
+</ul>
+<blockquote>
+<p>高斯混合模型是一个<strong>生成式模型</strong>。可以这样理解数据的生成过程，假设一个最简单的情况，即只有两个一维标准高斯分布的分模型<em>N</em>(0,1)和<em>N</em>(5,1)，其权重分别为0.7和0.3。那么，在生成第一个数据点时，先按照权重的比例，随机选择一个分布，比如选择第一个高斯分布，接着从<em>N</em>(0,1)中生成一个点，如−0.5，便是第一个数据点。在生成第二个数据点时，随机选择到第二个高斯分布<em>N</em>(5,1)，生成了第二个点4.7。如此循环执行，便生成出了所有的数据点。</p>
+</blockquote>
+<p>也就是说，我们并不知道最佳的K个高斯分布的各自3个参数，也不知道每个数据点究竟是哪个高斯分布生成的。所以每次循环时，先固定当前的高斯分布不变，获得每个数据点由各个高斯分布生成的概率。然后固定该生成概率不变，根据数据点和生成概率，获得一个组更佳的高斯分布。循环往复，直到参数的不再变化，或者变化非常小时，便得到了比较合理的一组高斯分布。</p>
+<h1 id="gmm-yu-k-means-bi-jiao">GMM与K-Means比较</h1>
+<p>高斯混合模型与K均值算法的相同点是：</p>
+<ul>
+<li>它们都是可用于聚类的算法；</li>
+<li>都需要指定K值；</li>
+<li>都是使用EM算法来求解；</li>
+<li>都往往只能收敛于局部最优。</li>
+</ul>
+<p>而它相比于K 均值算法的优点是，可以给出一个样本属于某类的概率是多少；不仅仅可以用于聚类，还可以用于概率密度的估计；并且可以用于生成新的样本点。</p>
+<h1 id="ju-lei-suan-fa-ru-he-ping-gu">聚类算法如何评估</h1>
+<p>由于数据以及需求的多样性，没有一种算法能够适用于所有的数据类型、数据簇或应用场景，似乎每种情况都可能需要一种不同的评估方法或度量标准。例如，K均值聚类可以用误差平方和来评估，但是基于密度的数据簇可能不是球形， 误差平方和则会失效。在许多情况下，判断聚类算法结果的好坏<strong>强烈依赖于主观解释</strong>。尽管如此，聚类算法的评估还是必需的，它是聚类分析中十分重要的部分之一。</p>
+<p>聚类评估的任务是估计在数据集上进行聚类的可行性，以及聚类方法产生结果的质量。这一过程又分为三个子任务。</p>
+<ol>
+<li>
+<p><strong>估计聚类趋势。</strong></p>
+<p>这一步骤是检测数据分布中是否存在非随机的簇结构。如果数据是基本随机的，那么聚类的结果也是毫无意义的。我们可以观察聚类误差是否随聚类类别数量的增加而单调变化，如果数据是基本随机的，即不存在非随机簇结构，那么聚类误差随聚类类别数量增加而变化的幅度应该较不显著，并且也找不到一个合适的K对应数据的真实簇数。</p>
+</li>
+<li>
+<p><strong>判定数据簇数。</strong></p>
+<p>确定聚类趋势之后，需要找到与真实数据分布最为吻合的簇数，据此判定聚类结果的质量。数据簇数的判定方法有很多，例如手肘法和Gap Statistic方 法。需要说明的是，用于评估的最佳数据簇数可能与程序输出的簇数是不同的。 例如，有些聚类算法可以自动地确定数据的簇数，但可能与我们通过其他方法确定的最优数据簇数有所差别。</p>
+</li>
+<li>
+<p><strong>测定聚类质量。</strong></p>
+<p>在无监督的情况下，我们可以通过考察簇的分离情况和簇的紧凑情况来评估聚类的效果。定义评估指标可以展现面试者实际解决和分析问题的能力。事实上测量指标可以有很多种，以下列出了几种常用的度量指标：</p>
+<p>轮廓系数、均方根标准偏差、R方（R-Square）、改进的Hubert统计。</p>
+</li>
+</ol>
+<h1 id="dai-ma">代码</h1>
+<a class="btn" href="corpus_train.txt">
+            <i class="fa fa-download"></i>训练数据
+          </a>
+<h2 id="k-means">k-means</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys <span class="keyword">as</span> sys</span><br><span class="line"><span class="comment">#reload(sys)</span></span><br><span class="line"><span class="comment">#sys.setdefaultencoding('utf-8')</span></span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> feature_extraction</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfTransformer</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt </span><br><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span> FontProperties </span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans </span><br><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> cdist </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">vectorize the input documents</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tfidf_vector</span><span class="params">(corpus_path)</span>:</span></span><br><span class="line">    corpus_train=[]</span><br><span class="line">    <span class="comment">#利用train-corpus提取特征</span></span><br><span class="line">    target_train=[]</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> open(corpus_path):</span><br><span class="line">        line=line.strip().split(<span class="string">'\t'</span>)</span><br><span class="line">        <span class="keyword">if</span> len(line)==<span class="number">2</span>:</span><br><span class="line">            words=line[<span class="number">1</span>]</span><br><span class="line">            category=line[<span class="number">0</span>]</span><br><span class="line">            target_train.append(category)</span><br><span class="line">            corpus_train.append(words)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"build train-corpus done!!"</span>)</span><br><span class="line">    count_v1= CountVectorizer(max_df=<span class="number">0.4</span>,min_df=<span class="number">0.01</span>)</span><br><span class="line">    counts_train = count_v1.fit_transform(corpus_train)  </span><br><span class="line">    </span><br><span class="line">    word_dict=&#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> index,word <span class="keyword">in</span> enumerate(count_v1.get_feature_names()):</span><br><span class="line">        word_dict[index]=word</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"the shape of train is "</span>)</span><br><span class="line">    <span class="keyword">print</span> (repr(counts_train.shape))</span><br><span class="line">    tfidftransformer = TfidfTransformer()</span><br><span class="line">    tfidf_train = tfidftransformer.fit(counts_train).transform(counts_train)</span><br><span class="line">    <span class="keyword">return</span> tfidf_train,word_dict</span><br><span class="line"></span><br><span class="line"><span class="comment"># topic cluster</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cluster_kmeans</span><span class="params">(tfidf_train,word_dict,cluster_docs,cluster_keywords,num_clusters)</span>:</span><span class="comment">#K均值分类</span></span><br><span class="line">    f_docs=open(cluster_docs,<span class="string">'w+'</span>)</span><br><span class="line">    km = KMeans(n_clusters=num_clusters)</span><br><span class="line">    km.fit(tfidf_train)</span><br><span class="line">    clusters = km.labels_.tolist()</span><br><span class="line">    cluster_dict=&#123;&#125;</span><br><span class="line">    order_centroids = km.cluster_centers_.argsort()[:, ::<span class="number">-1</span>]      </span><br><span class="line">    doc=<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> cluster <span class="keyword">in</span> clusters:</span><br><span class="line">        f_docs.write(str(str(doc))+<span class="string">','</span>+str(cluster)+<span class="string">'\n'</span>)</span><br><span class="line">        doc+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> cluster <span class="keyword">not</span> <span class="keyword">in</span> cluster_dict:</span><br><span class="line">            cluster_dict[cluster]=<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cluster_dict[cluster]+=<span class="number">1</span></span><br><span class="line">    f_docs.close()</span><br><span class="line">    cluster=<span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    f_clusterwords = open(cluster_keywords,<span class="string">'w+'</span>)</span><br><span class="line">    <span class="keyword">for</span> ind <span class="keyword">in</span> order_centroids: <span class="comment"># 每个聚类选 50 个词</span></span><br><span class="line">        words=[]</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> ind[:<span class="number">50</span>]:</span><br><span class="line">            words.append(word_dict[index])</span><br><span class="line">        <span class="keyword">print</span> (cluster),(<span class="string">','</span>.join(words))</span><br><span class="line">        f_clusterwords.write(str(cluster)+<span class="string">'\t'</span>+<span class="string">','</span>.join(words)+<span class="string">'\n'</span>)</span><br><span class="line">        cluster+=<span class="number">1</span></span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'*****'</span>*<span class="number">5</span>)</span><br><span class="line">    f_clusterwords.close()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># select the best cluster num</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">best_kmeans</span><span class="params">(tfidf_matrix,word_dict)</span>:</span>  </span><br><span class="line">    K = range(<span class="number">1</span>, <span class="number">10</span>) </span><br><span class="line">    meandistortions = [] </span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> K: </span><br><span class="line">        <span class="keyword">print</span> (k),(<span class="string">'****'</span>*<span class="number">5</span>)</span><br><span class="line">        kmeans = KMeans(n_clusters=k) </span><br><span class="line">        kmeans.fit(tfidf_matrix)    </span><br><span class="line">        meandistortions.append(sum(np.min(cdist(tfidf_matrix.toarray(), kmeans.cluster_centers_, <span class="string">'euclidean'</span>), axis=<span class="number">1</span>)) / tfidf_matrix.shape[<span class="number">0</span>]) </span><br><span class="line">    plt.plot(K, meandistortions, <span class="string">'bx-'</span>)</span><br><span class="line">    plt.grid(<span class="literal">True</span>) </span><br><span class="line">    plt.xlabel(<span class="string">'Number of clusters'</span>) </span><br><span class="line">    plt.ylabel(<span class="string">'Average within-cluster sum of squares'</span>) </span><br><span class="line">    plt.title(<span class="string">'Elbow for Kmeans clustering'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">corpus_train = <span class="string">"corpus_train.txt"</span></span><br><span class="line">cluster_docs = <span class="string">"cluster_result_document.txt"</span></span><br><span class="line">cluster_keywords = <span class="string">"cluster_result_keyword.txt"</span></span><br><span class="line">num_clusters = <span class="number">7</span></span><br><span class="line">tfidf_train,word_dict=tfidf_vector(corpus_train)</span><br><span class="line">best_kmeans(tfidf_train,word_dict)</span><br><span class="line">cluster_kmeans(tfidf_train,word_dict,cluster_docs,cluster_keywords,num_clusters)</span><br></pre></td></tr></table></figure>
+<h2 id="gmm">GMM</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">EPS = <span class="number">0.0001</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_data</span><span class="params">()</span>:</span>	</span><br><span class="line">  mu1 = <span class="number">2</span></span><br><span class="line">  mu2 = <span class="number">6</span></span><br><span class="line">  sigma1 = <span class="number">0.1</span></span><br><span class="line">  sigma2 = <span class="number">0.5</span></span><br><span class="line">  alpha1 = <span class="number">0.4</span></span><br><span class="line">  alpha2 = <span class="number">0.6</span></span><br><span class="line">  N = <span class="number">5000</span></span><br><span class="line">  N1 = int(alpha1 * N)</span><br><span class="line">  X = mat(zeros((N,<span class="number">1</span>)))</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(N1):</span><br><span class="line">    u1 = random.uniform(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">    X[i] = u1 * sigma1 + mu1</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(N-N1):</span><br><span class="line">    u1 = random.uniform(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">    X[i+N1] = u1 * sigma2 + mu2</span><br><span class="line">  <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
+<p>EM算法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GMM</span><span class="params">(X)</span>:</span></span><br><span class="line">  k = <span class="number">2</span></span><br><span class="line">  N = len(X)</span><br><span class="line">  mu = np.random.rand(k,<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">print</span> (str(<span class="string">'init mu='</span>))</span><br><span class="line">  <span class="keyword">print</span> (mu)</span><br><span class="line">  Posterior = mat(zeros((N,k)))	</span><br><span class="line">  sigma = np.random.rand(k,<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">print</span> (str(<span class="string">'init sigma='</span>))</span><br><span class="line">  <span class="keyword">print</span> (sigma)</span><br><span class="line">  alpha = np.random.rand(k,<span class="number">1</span>)</span><br><span class="line">  dominator = <span class="number">0</span></span><br><span class="line">  numerator = <span class="number">0</span></span><br><span class="line">  <span class="keyword">print</span> (str(<span class="string">'init alpha='</span>))</span><br><span class="line">  <span class="keyword">print</span> (alpha)</span><br><span class="line">  <span class="comment">#先求后验概率</span></span><br><span class="line">  <span class="comment">#print (sigma)</span></span><br><span class="line">  <span class="keyword">for</span> it <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">      dominator = <span class="number">0</span></span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(k):</span><br><span class="line">        dominator = dominator + np.exp(<span class="number">-1.0</span>/(<span class="number">2.0</span>*sigma[j]) * (X[i] - mu[j])**<span class="number">2</span>)</span><br><span class="line">        <span class="comment">#print -1.0/(2.0*sigma[j]),(X[i] - mu[j])**2,-1.0/(2.0*sigma[j]) * (X[i] - mu[j])**2,np.exp(-1.0/(2.0*sigma[j]) * (X[i] - mu[j])**2)</span></span><br><span class="line">        <span class="comment">#return</span></span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(k):</span><br><span class="line">        numerator = np.exp(<span class="number">-1.0</span>/(<span class="number">2.0</span>*sigma[j]) * (X[i] - mu[j])**<span class="number">2</span>)</span><br><span class="line">        Posterior[i,j] = numerator/dominator			</span><br><span class="line">    oldmu = copy.deepcopy(mu)</span><br><span class="line">    oldalpha = copy.deepcopy(alpha)</span><br><span class="line">    oldsigma = copy.deepcopy(sigma)</span><br><span class="line">    <span class="comment">#最大化	</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(k):</span><br><span class="line">      numerator = <span class="number">0</span></span><br><span class="line">      dominator = <span class="number">0</span></span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        numerator = numerator + Posterior[i,j] * X[i]</span><br><span class="line">        dominator = dominator + Posterior[i,j]</span><br><span class="line">      mu[j] = numerator/dominator</span><br><span class="line">      alpha[j] = dominator/N</span><br><span class="line">      tmp = <span class="number">0</span></span><br><span class="line">      <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        tmp = tmp + Posterior[i,j] * (X[i] - mu[j])**<span class="number">2</span></span><br><span class="line">        <span class="comment">#print tmp,Posterior[i,j],(X[i] - mu[j])**2 </span></span><br><span class="line">      sigma[j] = tmp/dominator</span><br><span class="line">      <span class="comment">#print (tmp)</span></span><br><span class="line">      <span class="comment">#print (dominator)</span></span><br><span class="line">      <span class="comment">#print (sigma[j])</span></span><br><span class="line">    <span class="keyword">if</span> ((abs(mu - oldmu)).sum() &lt; EPS) <span class="keyword">and</span> \</span><br><span class="line">      ((abs(alpha - oldalpha)).sum() &lt; EPS) <span class="keyword">and</span> \</span><br><span class="line">      ((abs(sigma - oldsigma)).sum() &lt; EPS):</span><br><span class="line">        <span class="keyword">print</span> (str(<span class="string">'final mu='</span>)) </span><br><span class="line">        <span class="keyword">print</span> (str(mu))</span><br><span class="line">        <span class="keyword">print</span> (str(<span class="string">'final sigma='</span>))</span><br><span class="line">        <span class="keyword">print</span> (str(sigma))</span><br><span class="line">        <span class="keyword">print</span> (str(<span class="string">'final alpha='</span>))</span><br><span class="line">        <span class="keyword">print</span> (str(alpha))</span><br><span class="line">        <span class="keyword">print</span> (it)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X = generate_data()</span><br><span class="line">plt.hist(X, <span class="number">30</span>, normed=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br><span class="line">GMM(X)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/07/deeplearning/loss/circle_loss/" rel="prev" title="Circle Loss">
+      <i class="fa fa-chevron-left"></i> Circle Loss
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/09/machine_learning/knn/" rel="next" title="k近邻">
+      k近邻 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-lei-suan-fa-du-shi-wu-jian-du-xue-xi-ma"><span class="nav-number">1.</span> <span class="nav-text">聚类算法都是无监督学习吗?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-means-suan-fa"><span class="nav-number">2.</span> <span class="nav-text">k-means算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#suan-fa-guo-cheng"><span class="nav-number">2.1.</span> <span class="nav-text">算法过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-zhi-de-xuan-ze"><span class="nav-number">2.3.</span> <span class="nav-text">k值的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#knn-yu-k-means-qu-bie"><span class="nav-number">2.4.</span> <span class="nav-text">KNN与K-means区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means-you-que-dian-ji-gai-jin"><span class="nav-number">2.5.</span> <span class="nav-text">K-Means优缺点及改进</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gao-si-hun-he-mo-xing-gmm"><span class="nav-number">3.</span> <span class="nav-text">高斯混合模型(GMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gmm-de-si-xiang"><span class="nav-number">3.1.</span> <span class="nav-text">GMM的思想</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gmm-yu-k-means-bi-jiao"><span class="nav-number">4.</span> <span class="nav-text">GMM与K-Means比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-lei-suan-fa-ru-he-ping-gu"><span class="nav-number">5.</span> <span class="nav-text">聚类算法如何评估</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means"><span class="nav-number">6.1.</span> <span class="nav-text">k-means</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gmm"><span class="nav-number">6.2.</span> <span class="nav-text">GMM</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

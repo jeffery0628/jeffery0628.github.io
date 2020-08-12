@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/03/16/deeplearning/backprop/3.14_forward.svg">
 <meta property="og:image" content="https://jeffery.ink/2020/03/16/deeplearning/backprop/3.14_forward.svg">
 <meta property="article:published_time" content="2020-03-16T15:25:00.000Z">
-<meta property="article:modified_time" content="2020-07-16T15:41:26.521Z">
+<meta property="article:modified_time" content="2020-08-12T06:54:20.451Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/03/16/deeplearning/backprop/3.14_forward.svg">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 23:41:26" itemprop="dateModified" datetime="2020-07-16T23:41:26+08:00">2020-07-16</time>
+                <time title="修改时间：2020-08-12 14:54:20" itemprop="dateModified" datetime="2020-08-12T14:54:20+08:00">2020-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -328,11 +328,11 @@ J = L + s
 \frac{\partial \mathsf{Z}}{\partial \mathsf{X}} = \text{prod}\left(\frac{\partial \mathsf{Z}}{\partial \mathsf{Y}}, \frac{\partial \mathsf{Y}}{\partial \mathsf{X}}\right)
 \]</p>
 <p>其中\(\text{prod}\)运算符将根据两个输入的形状，在必要的操作（如转置和互换输入位置）后对两个输入做乘法。</p>
-<p>回顾一下样例模型，它的参数是\(\boldsymbol{W}^{(1)}\)和\(\boldsymbol{W}^{(2)}\)，因此反向传播的目标是计算\(\partial J/\partial \boldsymbol{W}^{(1)}\)和\(\partial J/\partial \boldsymbol{W}^{(2)}\)。应用链式法则依次计算各中间变量和参数的梯度，其计算次序与前向传播中相应中间变量的计算次序恰恰相反。首先，分别计算目标函数\(J=L+s\)有关损失项\(L\)和正则项\(s\)的梯度</p>
+<p>回顾一下样例模型，它的参数是\(\boldsymbol{W}^{(1)}\)和\(\boldsymbol{W}^{(2)}\)，因此反向传播的目标是计算\(\frac{\partial J}{\partial \boldsymbol{W}^{(1)}}\)和\(\frac{\partial J}{\partial \boldsymbol{W}^{(2)}}\)。应用链式法则依次计算各中间变量和参数的梯度，其计算次序与前向传播中相应中间变量的计算次序恰恰相反。首先，分别计算目标函数\(J=L+s\)有关损失项\(L\)和正则项\(s\)的梯度</p>
 <p>\[
 \frac{\partial J}{\partial L} = 1, \quad \frac{\partial J}{\partial s} = 1
 \]</p>
-<p>其次，依据链式法则计算目标函数有关输出层变量的梯度\(\partial J/\partial \boldsymbol{o} \in \mathbb{R}^q\)：</p>
+<p>其次，依据链式法则计算目标函数有关输出层变量的梯度\(\frac{\partial J}{\partial \boldsymbol{o}} \in \mathbb{R}^q\)：</p>
 <p>\[
 \frac{\partial J}{\partial \boldsymbol{o}}
 = \text{prod}\left(\frac{\partial J}{\partial L}, \frac{\partial L}{\partial \boldsymbol{o}}\right)
@@ -342,25 +342,25 @@ J = L + s
 <p>\[
 \frac{\partial s}{\partial \boldsymbol{W}^{(1)}} = \lambda \boldsymbol{W}^{(1)},\quad\frac{\partial s}{\partial \boldsymbol{W}^{(2)}} = \lambda \boldsymbol{W}^{(2)}
 \]</p>
-<p>现在，可以计算最靠近输出层的模型参数的梯度\(\partial J/\partial \boldsymbol{W}^{(2)} \in \mathbb{R}^{q \times h}\)。依据链式法则，得到</p>
+<p>现在，可以计算最靠近输出层的模型参数的梯度\(\frac{\partial J}{\partial \boldsymbol{W}^{(2)}} \in \mathbb{R}^{q \times h}\)。依据链式法则，得到</p>
 <p>\[
 \frac{\partial J}{\partial \boldsymbol{W}^{(2)}}
 = \text{prod}\left(\frac{\partial J}{\partial \boldsymbol{o}}, \frac{\partial \boldsymbol{o}}{\partial \boldsymbol{W}^{(2)}}\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \boldsymbol{W}^{(2)}}\right)
 = \frac{\partial J}{\partial \boldsymbol{o}} \boldsymbol{h}^\top + \lambda \boldsymbol{W}^{(2)}.
 \]</p>
-<p>沿着输出层向隐藏层继续反向传播，隐藏层变量的梯度\(\partial J/\partial \boldsymbol{h} \in \mathbb{R}^h\)可以这样计算：</p>
+<p>沿着输出层向隐藏层继续反向传播，隐藏层变量的梯度\(\frac{\partial J}{\partial \boldsymbol{h}} \in \mathbb{R}^h\)可以这样计算：</p>
 <p>\[
 \frac{\partial J}{\partial \boldsymbol{h}}
 = \text{prod}\left(\frac{\partial J}{\partial \boldsymbol{o}}, \frac{\partial \boldsymbol{o}}{\partial \boldsymbol{h}}\right)
 = {\boldsymbol{W}^{(2)}}^\top \frac{\partial J}{\partial \boldsymbol{o}}.
 \]</p>
-<p>由于激活函数\(\phi\)是按元素运算的，中间变量\(\boldsymbol{z}\)的梯度\(\partial J/\partial \boldsymbol{z} \in \mathbb{R}^h\)的计算需要使用按元素乘法符\(\odot\)：</p>
+<p>由于激活函数\(\phi\)是按元素运算的，中间变量\(\boldsymbol{z}\)的梯度\(\frac{\partial J}{\partial \boldsymbol{z}} \in \mathbb{R}^h\)的计算需要使用按元素乘法符\(\odot\)：</p>
 <p>\[
 \frac{\partial J}{\partial \boldsymbol{z}}
 = \text{prod}\left(\frac{\partial J}{\partial \boldsymbol{h}}, \frac{\partial \boldsymbol{h}}{\partial \boldsymbol{z}}\right)
 = \frac{\partial J}{\partial \boldsymbol{h}} \odot \phi'\left(\boldsymbol{z}\right).
 \]</p>
-<p>最终，可以得到最靠近输入层的模型参数的梯度\(\partial J/\partial \boldsymbol{W}^{(1)} \in \mathbb{R}^{h \times d}\)。依据链式法则，得到</p>
+<p>最终，可以得到最靠近输入层的模型参数的梯度\(\frac{\partial J}{\partial \boldsymbol{W}^{(1)}} \in \mathbb{R}^{h \times d}\)。依据链式法则，得到</p>
 <p>\[
 \frac{\partial J}{\partial \boldsymbol{W}^{(1)}}
 = \text{prod}\left(\frac{\partial J}{\partial \boldsymbol{z}}, \frac{\partial \boldsymbol{z}}{\partial \boldsymbol{W}^{(1)}}\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \boldsymbol{W}^{(1)}}\right)
@@ -510,7 +510,7 @@ J = L + s
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

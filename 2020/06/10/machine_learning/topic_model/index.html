@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="主题模型">
+<meta property="og:url" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210125632.latex">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210124525.latex">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210125430.latex">
+<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/quesbase64155351982937840324.png">
+<meta property="article:published_time" content="2020-06-10T12:51:08.000Z">
+<meta property="article:modified_time" content="2020-08-12T14:39:53.064Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/06/10/machine_learning/topic_model/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>主题模型 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/06/10/machine_learning/topic_model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          主题模型
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-12 22:39:53" itemprop="dateModified" datetime="2020-08-12T22:39:53+08:00">2020-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/10/machine_learning/topic_model/" class="post-meta-item leancloud_visitors" data-flag-title="主题模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/06/10/machine_learning/topic_model/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/10/machine_learning/topic_model/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
+<a id="more"></a>
+<h1 id="lda-mo-xing-shi-shi-yao">LDA模型是什么</h1>
+<p>LDA可以分为以下5个步骤：</p>
+<ul>
+<li>一个函数：gamma函数。</li>
+<li>四个分布：二项分布、多项分布、beta分布、Dirichlet分布。</li>
+<li>一个概念和一个理念：共轭先验和贝叶斯框架。</li>
+<li>两个模型：pLSA、LDA。</li>
+<li>一个采样：Gibbs采样</li>
+</ul>
+<p>关于LDA有两种含义，一种是线性判别分析，一种是概率主题模型：隐含狄利克雷分布，本文为后者。</p>
+<p>主题模型可以将文档集中每篇文档的主题以概率分布的形式给出，从而通过分析一些文档抽取出它们的主题出来后，便可以根据主题进行主题聚类或文本分类。同时，它是一种典型的<strong>词袋模型</strong>，即一篇文档是由一组词构成，词与词之间没有先后顺序的关系。此外，一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成。</p>
+<p>人类是怎么生成文档的呢？首先先列出几个主题，然后以一定的概率选择主题，以一定的概率选择这个主题包含的词汇，最终组合成一篇文章。如下图所示(不同颜色的词语分别对应不同主题下的词)。</p>
+<p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg" alt></p>
+<p>那么LDA就是跟这个反过来：<strong>根据给定的一篇文档，反推其主题分布。</strong></p>
+<p>在LDA模型中，一篇文档生成的方式如下：</p>
+<ul>
+<li>从狄利克雷分布 \(\alpha\)中取样生成文档 \(i\) 的主题分布 \(\theta_i\)。</li>
+<li>从主题的多项式分布\(\theta_i\) 中取样生成文档\(i\)第\(j\)个词的主题\(z_{i,j}\)。</li>
+<li>从狄利克雷分布 \(\beta\)中取样生成主题 \(z_{i,j}\) 对应的词语分布\(\phi_{z_{i,j}}\)。</li>
+<li>从词语的多项式分布 \(\phi_{z_{i,j}}\)中采样最终生成词语 \(w_{i,j}\)。</li>
+</ul>
+<p>其中，类似Beta分布是二项式分布的共轭先验概率分布，而狄利克雷分布（Dirichlet分布）是多项式分布的共轭先验概率分布。此外，LDA的图模型结构如下图所示（类似贝叶斯网络结构）：</p>
+<p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
+<h1 id="5-ge-fen-bu-de-li-jie">5个分布的理解</h1>
+<p>先解释一下以上出现的概念。</p>
+<h2 id="er-xiang-fen-bu-binomial-distribution">二项分布（Binomial distribution）</h2>
+<p>二项分布是从伯努利分布推进的。伯努利分布，又称两点分布或0-1分布，是一个离散型的随机分布，其中的随机变量只有两类取值，非正即负。而二项分布即重复n次的伯努利试验，记为\(X \sim b(n,p)\) 。简言之，只做一次实验，是伯努利分布，重复做了n次，是二项分布。</p>
+<h2 id="duo-xiang-fen-bu">多项分布</h2>
+<p>多项分布是二项分布扩展到多维的情况。多项分布是指单次试验中的随机变量的取值不再是0-1的，而是有多种离散值可能\(（1,2,3,\ldots,k）\)。比如投掷6个面的骰子实验，\(N\)次实验结果服从\(K=6\)的多项分布。其中：<br>
+\[
+\sum_{i=1}^k p_i = 1, p_i > 0
+\]</p>
+<h2 id="gong-e-xian-yan-fen-bu">共轭先验分布</h2>
+<p>在贝叶斯统计中，如果后验分布与先验分布属于同类，则先验分布与后验分布被称为<strong>共轭分布</strong>，而先验分布被称为似然函数的<strong>共轭先验</strong>。</p>
+<h2 id="beta-fen-bu">Beta分布</h2>
+<p>Beta分布是二项分布的共轭先验分布。给定参数 \(\alpha > 0\) 和 \(\beta > 0\)，取值范围为[0,1]的随机变量 x 的概率密度函数：</p>
+<p>\[
+f(x;\alpha,\beta)=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}
+\]</p>
+<p>其中：<br>
+\[
+\frac{1}{B(\alpha,\beta)}=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \\
+\Gamma(z)=\int_{0}^{\infty}t^{z-1}e^{-t}dt
+\]</p>
+<p>beta分布是二项式分布的共轭先验概率分布：对于非负实数 \(\alpha\)和 \(\beta\)，有如下关系：<br>
+\[
+Beta(p|\alpha,\beta)+Count(m_1,m_2)=Beta(p|\alpha+m_1,\beta+m_2)
+\]<br>
+其中 \((m_1,m_2)\)对应的是二项分布 \(B(m_1 + m_2,p)\)的记数。针对于这种观测到的数据符合二项分布，参数的先验分布和后验分布都是Beta分布的情况，就是Beta-Binomial 共轭。</p>
+<h2 id="di-li-ke-lei-fen-bu">狄利克雷分布</h2>
+<p>狄利克雷分布是beta分布在高维度上的推广。Dirichlet分布的的密度函数形式跟beta分布的密度函数如出一辙：<br>
+\[
+f(x_1,x_2,...,x_k;\alpha_1,\alpha_2,...,\alpha_k)=\frac{1}{B(\alpha)}\prod_{i=1}^{k}x_i^{\alpha^i-1}
+\]<br>
+其中:<br>
+\[
+B(\alpha)=\frac{\prod_{i=1}^{k} \Gamma\left(\alpha^{i}\right)}{\Gamma\left(\sum_{i=1}^{k} \alpha^{i}\right)}, \sum x_{i}=1
+\]<br>
+至此，可以看到二项分布和多项分布很相似，Beta分布和Dirichlet 分布很相似。</p>
+<p>狄利克雷分布（Dirichlet分布）是多项式分布的共轭先验概率分布，一般表达式如下：<br>
+\[
+Dir(\vec{p}|\vec\alpha)+MultCount(\vec{m})=Dir(p|\vec{\alpha}+\vec{m})
+\]<br>
+针对于这种观测到的数据符合多项分布，参数的先验分布和后验分布都是Dirichlet 分布的情况，就是 Dirichlet-Multinomial 共轭。</p>
+<blockquote>
+<p>贝叶斯派思考问题的固定模式：先验分布 <img src="/2020/06/10/machine_learning/topic_model/gif-20200812210125632.latex" alt>+ 样本信息<img src="/2020/06/10/machine_learning/topic_model/gif-20200812210124525.latex" alt> = 后验分布 <img src="/2020/06/10/machine_learning/topic_model/gif-20200812210125430.latex" alt>。</p>
+</blockquote>
+<h1 id="3-ge-ji-chu-mo-xing-de-li-jie">3个基础模型的理解</h1>
+<p>在讲LDA模型之前，再循序渐进理解基础模型：Unigram model、mixture of unigrams model，以及跟LDA最为接近的pLSA模型。为了方便描述，首先定义一些变量：</p>
+<ul>
+<li>\(w\)表示词，\(V\)示所有单词的个数。</li>
+<li>\(z\) 表示主题，\(k\)主题的个数。</li>
+<li>\(D=(d_1,\ldots,d_M)\)表示语料库，其中的\(M\)是语料库中的文档数（固定值）。</li>
+<li>\(W=(w_1,w_2,\ldots,w_N)\)表示文档，其中的\(N\)表示一个文档中的词数（随机变量）。</li>
+</ul>
+<h2 id="unigram-model">Unigram model</h2>
+<p>对于文档 \(W=(w_1,w_2,\ldots,w_N)\)，用 \(p(w_n)\)表示词 \(w_n\)的先验概率，生成文档\(w\)的概率为：<br>
+\[
+p(W)=\prod_{n=1}^{N}p(w_n)
+\]</p>
+<h2 id="mixture-of-unigrams-model">Mixture of unigrams model</h2>
+<p>该模型的生成过程是：给某个文档先选择一个主题z,再根据该主题生成文档，该文档中的所有词都来自一个主题。假设主题有 \(z_1,\ldots,z_n\)，生成文档\(w\)的概率为：<br>
+\[
+p(W)=p(z_1)\prod_{n=1}^{N}p(w_n|z_1)+...+p(z_k)\prod_{n=1}^{N}p(w_n|z_k)=\sum_{z}p(z)\prod_{n=1}^{N}p(w_n|z)
+\]</p>
+<h2 id="plsa-mo-xing">PLSA模型</h2>
+<p>理解了pLSA模型后，到LDA模型也就一步之遥——给pLSA加上贝叶斯框架，便是LDA。</p>
+<p>在上面的Mixture of unigrams model中，假定一篇文档只有一个主题生成，可实际中，一篇文章往往有多个主题，只是这多个主题各自在文档中出现的概率大小不一样。比如介绍一个国家的文档中，往往会分别从教育、经济、交通等多个主题进行介绍。那么在pLSA中，文档是怎样被生成的呢？</p>
+<p>假定一共有K个可选的主题，有V个可选的词。</p>
+<ol>
+<li>
+<p>假设每写一篇文档会制作一颗K面的“文档-主题”骰子（扔此骰子能得到K个主题中的任意一个），和K个V面的“主题-词项” 骰子（每个骰子对应一个主题，K个骰子对应之前的K个主题，且骰子的每一面对应要选择的词项，V个面对应着V个可选的词）。比如可令K=3，即制作1个含有3个主题的“文档-主题”骰子，这3个主题可以是：教育、经济、交通。然后令V = 3，制作3个有着3面的“主题-词项”骰子，其中，教育主题骰子的3个面上的词可以是：大学、老师、课程，经济主题骰子的3个面上的词可以是：市场、企业、金融，交通主题骰子的3个面上的词可以是：高铁、汽车、飞机。<img src="/2020/06/10/machine_learning/topic_model/quesbase64155351982937840324.png" alt></p>
+</li>
+<li>
+<p>每写一个词，先扔该“文档-主题”骰子选择主题，得到主题的结果后，使用和主题结果对应的那颗“主题-词项”骰子，扔该骰子选择要写的词。先扔“文档-主题”的骰子，假设（以一定的概率）得到的主题是教育，所以下一步便是扔教育主题筛子，（以一定的概率）得到教育主题筛子对应的某个词：大学。上面这个投骰子产生词的过程简化下便是：<strong>“先以一定的概率选取主题，再以一定的概率选取词”。</strong></p>
+</li>
+<li>
+<p>最后，你不停的重复扔“文档-主题”骰子和”主题-词项“骰子，重复N次（产生N个词），完成一篇文档，重复这产生一篇文档的方法M次，则完成M篇文档。</p>
+</li>
+</ol>
+<p><strong>上述过程抽象出来即是PLSA的文档生成模型。在这个过程中，并未关注词和词之间的出现顺序，所以pLSA是一种词袋方法。生成文档的整个过程便是选定文档生成主题，确定主题生成词。</strong></p>
+<p>反过来，既然文档已经产生，那么如何根据已经产生好的文档反推其主题呢？</p>
+<p>这个利用看到的文档推断其隐藏的主题的过程（也就是产生文档的逆过程），便是<strong>主题建模的目的：自动地发现文档集中的主题。</strong></p>
+<p>文档d和词w是我们得到的样本，可观测得到，所以对于任意一篇文档，其 \(P(w_j|d_i)\) 是已知的。从而可以根据大量已知的文档-词项信息 \(P(w_j|d_i)\)，训练出文档-主题 \(P(z_k|d_i)\) 和主题-词项 \(P(w_j|z_k)\)，如下公式所示：<br>
+\[
+P(w_j|d_i)=\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
+\]<br>
+故得到文档中每个词的生成概率为：<br>
+\[
+P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
+\]<br>
+由于 \(P(d_i)\)可事先计算求出，而 \(P(w_j|z_k)\) 和 \(P(z_k|d_i)\)未知，所以 \(\theta=(P(w_j|z_k),P(z_k|d_i))\)就是我们要估计的参数，通俗点说，就是要最大化这个θ。</p>
+<p>用什么方法进行估计呢，常用的参数估计方法有极大似然估计MLE、最大后验证估计MAP、贝叶斯估计等等。因为该待估计的参数中含有隐变量\(z\)，所以可以考虑EM算法。</p>
+<h1 id="lda-mo-xing">LDA模型</h1>
+<p>事实上，理解了pLSA模型，也就差不多快理解了LDA模型，因为LDA就是在pLSA的基础上加层贝叶斯框架，即LDA就是pLSA的贝叶斯版本（正因为LDA被贝叶斯化了，所以才需要考虑历史先验知识，才加的两个先验参数）。</p>
+<p>下面，咱们对比下本文开头所述的LDA模型中一篇文档生成的方式是怎样的：</p>
+<ul>
+<li>按照先验概率 \(P(d_i)\)选择一篇文档 \(d_i\)。</li>
+<li>从狄利克雷分布\(\alpha\)中取样生成文档\(d_i\) 的主题分布 \(\theta_i\)，换言之，主题分布\(\theta_i\)由超参数为 \(\alpha\)的Dirichlet分布生成。</li>
+<li>从主题的多项式分布 \(\theta_i\)中取样生成文档 \(d_i\)第$ j $个词的主题 \(z_{i,j}\)。</li>
+<li>从狄利克雷分布\(\beta\)中取样生成主题 \(z_{i,j}\)对应的词语分布 \(\phi_{z_{i,j}}\)，换言之，词语分布\(\phi_{z_{i,j}}\)  由参数为\(\beta\) 的Dirichlet分布生成。</li>
+<li>从词语的多项式分布\(\phi_{z_{i,j}}\) 中采样最终生成词语 \(w_{i,j}\)。</li>
+</ul>
+<p>LDA中，选主题和选词依然都是两个随机的过程，依然可能是先从主题分布{教育：0.5，经济：0.3，交通：0.2}中抽取出主题：教育，然后再从该主题对应的词分布{大学：0.5，老师：0.3，课程：0.2}中抽取出词：大学。</p>
+<p>那PLSA跟LDA的区别在于什么地方呢？</p>
+<p>区别就在于：PLSA中，主题分布和词分布是唯一确定的，能明确的指出主题分布可能就是{教育：0.5，经济：0.3，交通：0.2}，词分布可能就是{大学：0.5，老师：0.3，课程：0.2}。<br>
+但在LDA中，主题分布和词分布不再唯一确定不变，即无法确切给出。例如主题分布可能是{教育：0.5，经济：0.3，交通：0.2}，也可能是{教育：0.6，经济：0.2，交通：0.2}，到底是哪个我们不再确定（即不知道），因为它是随机的可变化的。但再怎么变化，也依然服从一定的分布，<strong>即主题分布跟词分布由Dirichlet先验随机确定。正因为LDA是PLSA的贝叶斯版本，所以主题分布跟词分布本身由先验知识随机给定。</strong></p>
+<p>换言之，LDA在pLSA的基础上给这两参数\((P(z_k|d_i)、P(w_j|z_k)\) )加了两个先验分布的参数（贝叶斯化）：一个主题分布的先验分布Dirichlet分布 \(\alpha\)，和一个词语分布的先验分布Dirichlet分布\(\beta\) 。</p>
+<p>综上，LDA真的只是pLSA的贝叶斯版本，文档生成后，两者都要根据文档去推断其主题分布和词语分布（即两者本质都是为了估计给定文档生成主题，给定主题生成词语的概率），只是用的参数推断方法不同，在pLSA中用极大似然估计的思想去推断两未知的固定参数，而LDA则把这两参数弄成随机变量，且加入dirichlet先验。</p>
+<p>所以，pLSA跟LDA的本质区别就在于它们去估计未知参数所采用的思想不同，前者用的是频率派思想，后者用的是贝叶斯派思想。</p>
+<h1 id="zen-yao-que-ding-lda-de-topic-ge-shu">怎么确定LDA的topic个数？</h1>
+<ol>
+<li>基于经验主观判断、不断调试、操作性强、最为常用。</li>
+<li>基于困惑度（主要是比较两个模型之间的好坏）。</li>
+<li>使用Log-边际似然函数的方法，这种方法也挺常用的。</li>
+<li>非参数方法：Teh提出的基于狄利克雷过程的HDP法。</li>
+<li>基于主题之间的相似度：计算主题向量之间的余弦距离，KL距离等。</li>
+</ol>
+<h1 id="ru-he-yong-zhu-ti-mo-xing-jie-jue-tui-jian-xi-tong-zhong-de-leng-qi-dong-wen-ti">如何用主题模型解决推荐系统中的冷启动问题？</h1>
+<p>推荐系统中的冷启动问题是指在没有大量用户数据的情况下如何给用户进行个性化推荐，目的是最优化点击率、转化率或用户体验（用户停留时间、留存率等）。冷启动问题一般分为用户冷启动、物品冷启动和系统冷启动三大类。</p>
+<ol>
+<li>用户冷启动是指对一个之前没有行为或行为极少的新用户进行推荐；对于用户冷启动来说，我们希望根据用户的注册信息（如：年龄、性别、爱好等）、搜索关键词或者合法站外得到的其他信息（例如用户使用Facebook账号登录，并得到授权，可以得到Facebook中的朋友关系和评论内容）来推测用户的兴趣主题。 得到用户的兴趣主题之后，我们就可以找到与该用户兴趣主题相同的其他用户， 通过他们的历史行为来预测用户感兴趣的电影是什么。</li>
+</ol>
+<ul>
+<li>物品冷启动是指为一个新上市的商品或电影（这时没有与之相关的评分或用户行为数据）寻找到具有潜在兴趣的用户；可以根据电影的导演、演员、类别、关键词等信息推测该电影所属于的主题，然后基于主题向量找到相似的电影，并将新电影推荐给以往喜欢看这些相似电影的用户。<strong>可以使用主题模型（pLSA、LDA等）得到用户和电影的主题。</strong></li>
+<li>系统冷启动是指如何为一个新开发的网站设计个性化推荐系统。首先可以得到每个用户和电影对应的主题向量，除此之外，还需要知道用户主题和电影主题之间的偏好程度，也就是哪些主题的用户可能喜欢哪些主题的电影。当系统中没有任何数据时，我们需要一些先验知识来指定，并且由于主题的数目通常比较小，随着系统的上线，收集到少量的数据之后我们就可以对主题之间的偏好程度得到一个比较准确的估计。</li>
+</ul>
+<h1 id="dai-ma">代码</h1>
+<a class="btn" href="HillaryEmails.csv">
+            <i class="fa fa-download"></i>希拉里邮件数据.csv
+          </a>
+<p>我们拿到希拉里泄露的邮件，跑一把LDA，看看她平时都在聊什么。</p>
+<h2 id="shu-ju-chu-li">数据处理</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">df = pd.read_csv(<span class="string">"HillaryEmails.csv"</span>)</span><br><span class="line"><span class="comment"># 原邮件数据中有很多Nan的值，直接扔了。</span></span><br><span class="line">df = df[[<span class="string">'Id'</span>,<span class="string">'ExtractedBodyText'</span>]].dropna()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文本预处理：</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_email_text</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = text.replace(<span class="string">'\n'</span>,<span class="string">" "</span>) <span class="comment">#新行，我们是不需要的</span></span><br><span class="line">    text = re.sub(<span class="string">r"-"</span>, <span class="string">" "</span>, text) <span class="comment">#把 "-" 的两个单词，分开。（比如：pre-processing ==&gt; pre processing）</span></span><br><span class="line">    text = re.sub(<span class="string">r"\d+/\d+/\d+"</span>, <span class="string">""</span>, text) <span class="comment">#日期，对主体模型没什么意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"[0-2]?[0-9]:[0-6][0-9]"</span>, <span class="string">""</span>, text) <span class="comment">#时间，没意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"[\w]+@[\.\w]+"</span>, <span class="string">""</span>, text) <span class="comment">#邮件地址，没意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"/[a-zA-Z]*[:\//\]*[A-Za-z0-9\-_]+\.+[A-Za-z0-9\.\/%&amp;=\?\-_]+/i"</span>, <span class="string">""</span>, text) <span class="comment">#网址，没意义</span></span><br><span class="line">    pure_text = <span class="string">''</span></span><br><span class="line">    <span class="comment"># 以防还有其他特殊字符（数字）等等，我们直接把他们loop一遍，过滤掉</span></span><br><span class="line">    <span class="keyword">for</span> letter <span class="keyword">in</span> text:</span><br><span class="line">        <span class="comment"># 只留下字母和空格</span></span><br><span class="line">        <span class="keyword">if</span> letter.isalpha() <span class="keyword">or</span> letter==<span class="string">' '</span>:</span><br><span class="line">            pure_text += letter</span><br><span class="line">    <span class="comment"># 再把那些去除特殊字符后落单的单词，直接排除。</span></span><br><span class="line">    <span class="comment"># 我们就只剩下有意义的单词了。</span></span><br><span class="line">    text = <span class="string">' '</span>.join(word <span class="keyword">for</span> word <span class="keyword">in</span> pure_text.split() <span class="keyword">if</span> len(word)&gt;<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line">docs = df[<span class="string">'ExtractedBodyText'</span>]</span><br><span class="line">docs = docs.apply(<span class="keyword">lambda</span> s: clean_email_text(s))  </span><br><span class="line">doclist = docs.values</span><br></pre></td></tr></table></figure>
+<h2 id="lda-mo-xing-gou-jian">LDA模型构建：</h2>
+<p>用Gensim来做一次模型构建。首先，把刚刚整出来的一大波文本数据转化成Gensim认可的语料库形式：</p>
+<p>停用词</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stoplist</span> = [<span class="string">'very'</span>, <span class="string">'ourselves'</span>, <span class="string">'am'</span>, <span class="string">'doesn'</span>, <span class="string">'through'</span>, <span class="string">'me'</span>, <span class="string">'against'</span>, <span class="string">'up'</span>, <span class="string">'just'</span>, <span class="string">'her'</span>, <span class="string">'ours'</span>, </span><br><span class="line">            <span class="string">'couldn'</span>, <span class="string">'because'</span>, <span class="string">'is'</span>, <span class="string">'isn'</span>, <span class="string">'it'</span>, <span class="string">'only'</span>, <span class="string">'in'</span>, <span class="string">'such'</span>, <span class="string">'too'</span>, <span class="string">'mustn'</span>, <span class="string">'under'</span>, <span class="string">'their'</span>, </span><br><span class="line">            <span class="string">'if'</span>, <span class="string">'to'</span>, <span class="string">'my'</span>, <span class="string">'himself'</span>, <span class="string">'after'</span>, <span class="string">'why'</span>, <span class="string">'while'</span>, <span class="string">'can'</span>, <span class="string">'each'</span>, <span class="string">'itself'</span>, <span class="string">'his'</span>, <span class="string">'all'</span>, <span class="string">'once'</span>, </span><br><span class="line">            <span class="string">'herself'</span>, <span class="string">'more'</span>, <span class="string">'our'</span>, <span class="string">'they'</span>, <span class="string">'hasn'</span>, <span class="string">'on'</span>, <span class="string">'ma'</span>, <span class="string">'them'</span>, <span class="string">'its'</span>, <span class="string">'where'</span>, <span class="string">'did'</span>, <span class="string">'ll'</span>, <span class="string">'you'</span>, </span><br><span class="line">            <span class="string">'didn'</span>, <span class="string">'nor'</span>, <span class="string">'as'</span>, <span class="string">'now'</span>, <span class="string">'before'</span>, <span class="string">'those'</span>, <span class="string">'yours'</span>, <span class="string">'from'</span>, <span class="string">'who'</span>, <span class="string">'was'</span>, <span class="string">'m'</span>, <span class="string">'been'</span>, <span class="string">'will'</span>, </span><br><span class="line">            <span class="string">'into'</span>, <span class="string">'same'</span>, <span class="string">'how'</span>, <span class="string">'some'</span>, <span class="string">'of'</span>, <span class="string">'out'</span>, <span class="string">'with'</span>, <span class="string">'s'</span>, <span class="string">'being'</span>, <span class="string">'t'</span>, <span class="string">'mightn'</span>, <span class="string">'she'</span>, <span class="string">'again'</span>, <span class="string">'be'</span>, </span><br><span class="line">            <span class="string">'by'</span>, <span class="string">'shan'</span>, <span class="string">'have'</span>, <span class="string">'yourselves'</span>, <span class="string">'needn'</span>, <span class="string">'and'</span>, <span class="string">'are'</span>, <span class="string">'o'</span>, <span class="string">'these'</span>, <span class="string">'further'</span>, <span class="string">'most'</span>, <span class="string">'yourself'</span>, </span><br><span class="line">            <span class="string">'having'</span>, <span class="string">'aren'</span>, <span class="string">'here'</span>, <span class="string">'he'</span>, <span class="string">'were'</span>, <span class="string">'but'</span>, <span class="string">'this'</span>, <span class="string">'myself'</span>, <span class="string">'own'</span>, <span class="string">'we'</span>, <span class="string">'so'</span>, <span class="string">'i'</span>, <span class="string">'does'</span>, <span class="string">'both'</span>, </span><br><span class="line">            <span class="string">'when'</span>, <span class="string">'between'</span>, <span class="string">'d'</span>, <span class="string">'had'</span>, <span class="string">'the'</span>, <span class="string">'y'</span>, <span class="string">'has'</span>, <span class="string">'down'</span>, <span class="string">'off'</span>, <span class="string">'than'</span>, <span class="string">'haven'</span>, <span class="string">'whom'</span>, <span class="string">'wouldn'</span>, </span><br><span class="line">            <span class="string">'should'</span>, <span class="string">'ve'</span>, <span class="string">'over'</span>, <span class="string">'themselves'</span>, <span class="string">'few'</span>, <span class="string">'then'</span>, <span class="string">'hadn'</span>, <span class="string">'what'</span>, <span class="string">'until'</span>, <span class="string">'won'</span>, <span class="string">'no'</span>, <span class="string">'about'</span>, </span><br><span class="line">            <span class="string">'any'</span>, <span class="string">'that'</span>, <span class="string">'for'</span>, <span class="string">'shouldn'</span>, <span class="string">'don'</span>, <span class="string">'do'</span>, <span class="string">'there'</span>, <span class="string">'doing'</span>, <span class="string">'an'</span>, <span class="string">'or'</span>, <span class="string">'ain'</span>, <span class="string">'hers'</span>, <span class="string">'wasn'</span>, </span><br><span class="line">            <span class="string">'weren'</span>, <span class="string">'above'</span>, <span class="string">'a'</span>, <span class="string">'at'</span>, <span class="string">'your'</span>, <span class="string">'theirs'</span>, <span class="string">'below'</span>, <span class="string">'other'</span>, <span class="string">'not'</span>, <span class="string">'re'</span>, <span class="string">'him'</span>, <span class="string">'during'</span>, <span class="string">'which'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gensim <span class="keyword">import</span> corpora, models, similarities</span><br><span class="line"><span class="keyword">import</span> gensim</span><br><span class="line"></span><br><span class="line"><span class="comment"># [[一条邮件字符串]，[另一条邮件字符串], ...] --&gt; [[一，条，邮件，在，这里],[第，二，条，邮件，在，这里],[今天，天气，肿么，样],...]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分词：英文的分词，直接就是对着空白处分割就可以了。中文的分词稍微复杂点儿，具体可以百度：CoreNLP, HaNLP, 结巴分词，等等,分词的意义在于，把我们的长长的字符串原文本，转化成有意义的小元素.</span></span><br><span class="line">texts = [[word <span class="keyword">for</span> word <span class="keyword">in</span> doc.lower().split() <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> stoplist] <span class="keyword">for</span> doc <span class="keyword">in</span> doclist]</span><br><span class="line"><span class="comment"># 建立语料库：用词袋的方法，把每个单词用一个数字index指代，并把我们的原文本变成一条长长的数组</span></span><br><span class="line">dictionary = corpora.Dictionary(texts)</span><br><span class="line">corpus = [dictionary.doc2bow(text) <span class="keyword">for</span> text <span class="keyword">in</span> texts]</span><br><span class="line"><span class="comment"># 建立模型</span></span><br><span class="line">lda = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=<span class="number">20</span>)</span><br><span class="line"><span class="comment"># 查看常见单词</span></span><br><span class="line">lda.print_topic(<span class="number">10</span>, topn=<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 打印主题</span></span><br><span class="line">lda.print_topics(num_topics=<span class="number">20</span>, num_words=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="can-kao">参考</h1>
+<p><a href="https://blog.csdn.net/v_july_v/article/details/41209515" target="_blank" rel="noopener">通俗理解LDA主题模型</a></p>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/09/machine_learning/knn/" rel="prev" title="k近邻">
+      <i class="fa fa-chevron-left"></i> k近邻
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/17/word_embedding/" rel="next" title="词向量">
+      词向量 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lda-mo-xing-shi-shi-yao"><span class="nav-number">1.</span> <span class="nav-text">LDA模型是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ge-fen-bu-de-li-jie"><span class="nav-number">2.</span> <span class="nav-text">5个分布的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#er-xiang-fen-bu-binomial-distribution"><span class="nav-number">2.1.</span> <span class="nav-text">二项分布（Binomial distribution）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duo-xiang-fen-bu"><span class="nav-number">2.2.</span> <span class="nav-text">多项分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gong-e-xian-yan-fen-bu"><span class="nav-number">2.3.</span> <span class="nav-text">共轭先验分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#beta-fen-bu"><span class="nav-number">2.4.</span> <span class="nav-text">Beta分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#di-li-ke-lei-fen-bu"><span class="nav-number">2.5.</span> <span class="nav-text">狄利克雷分布</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-ge-ji-chu-mo-xing-de-li-jie"><span class="nav-number">3.</span> <span class="nav-text">3个基础模型的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#unigram-model"><span class="nav-number">3.1.</span> <span class="nav-text">Unigram model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mixture-of-unigrams-model"><span class="nav-number">3.2.</span> <span class="nav-text">Mixture of unigrams model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsa-mo-xing"><span class="nav-number">3.3.</span> <span class="nav-text">PLSA模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lda-mo-xing"><span class="nav-number">4.</span> <span class="nav-text">LDA模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zen-yao-que-ding-lda-de-topic-ge-shu"><span class="nav-number">5.</span> <span class="nav-text">怎么确定LDA的topic个数？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ru-he-yong-zhu-ti-mo-xing-jie-jue-tui-jian-xi-tong-zhong-de-leng-qi-dong-wen-ti"><span class="nav-number">6.</span> <span class="nav-text">如何用主题模型解决推荐系统中的冷启动问题？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">7.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-ju-chu-li"><span class="nav-number">7.1.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lda-mo-xing-gou-jian"><span class="nav-number">7.2.</span> <span class="nav-text">LDA模型构建：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
