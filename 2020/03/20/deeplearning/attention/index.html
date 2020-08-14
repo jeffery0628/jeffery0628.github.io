@@ -28,13 +28,17 @@
 <meta property="og:url" content="https://jeffery.ink/2020/03/20/deeplearning/attention/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-24927f5c33083c1322bc16fa9feb38fd_r.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/10.11_attention.svg">
-<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/10.11_attention.svg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-24927f5c33083c1322bc16fa9feb38fd_r.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-07c4c02a9bdecb23d9664992f142eaa5_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-1b7a38bc0bd8a46b52753ece64f665ad_r.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-c19809fef8cd32115ad69d6946ec6564_r.jpg">
 <meta property="article:published_time" content="2020-03-20T14:54:37.000Z">
-<meta property="article:modified_time" content="2020-07-20T15:05:44.439Z">
+<meta property="article:modified_time" content="2020-08-13T23:39:12.960Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/10.11_attention.svg">
+<meta name="twitter:image" content="https://jeffery.ink/2020/03/20/deeplearning/attention/v2-24927f5c33083c1322bc16fa9feb38fd_r.jpg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/03/20/deeplearning/attention/">
 
@@ -233,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-20 23:05:44" itemprop="dateModified" datetime="2020-07-20T23:05:44+08:00">2020-07-20</time>
+                <time title="修改时间：2020-08-14 07:39:12" itemprop="dateModified" datetime="2020-08-14T07:39:12+08:00">2020-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,14 +276,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -291,23 +295,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/03/20/deeplearning/attention/10.11_attention.svg" alt></p>
+        <p><img src="/2020/03/20/deeplearning/attention/v2-24927f5c33083c1322bc16fa9feb38fd_r.jpg" alt></p>
 <a id="more"></a>
-<h1 id="zhu-yi-li-ji-zhi">注意力机制</h1>
-<p>在seq2seq里，解码器在各个时间步依赖相同的背景变量来获取输入序列信息。当编码器为循环神经网络时，背景变量来自它最终时间步的隐藏状态。</p>
-<p>现在，再次思考那一节提到的翻译例子：输入为英语序列“They”“are”“watching”“.”，输出为法语列“Ils”“regardent”“.”。不难想到，解码器在生成输出序列中的每一个词时可能只需利用输入序列某一部分的信息。例如，在输出序列的时间步1，解码器可以主要依赖“They”“are”的信息来生成“Ils”，在时间步2则主要使用来自“watching”的编码信息生成“regardent”，最后在时间步3则直接映射句号“.”。这看上去就像是在解码器的每一时间步对输入序列中不同时间步的表征或编码信息分配不同的注意力一样。这也是注意力机制的由来。</p>
-<p>仍然以循环神经网络为例，注意力机制通过对编码器所有时间步的隐藏状态做加权平均来得到背景变量。解码器在每一时间步调整这些权重，即注意力权重，从而能够在不同时间步分别关注输入序列中的不同部分并编码进相应时间步的背景变量。</p>
-<p>在seq2seq里区分了输入序列或编码器的索引\(t\)与输出序列或解码器的索引\(t'\)。解码器在时间步\(t'\)的隐藏状态<br>
-\[
+<h1 id="rnn-jie-gou-de-ju-xian">RNN结构的局限</h1>
+<p>机器翻译解决的是输入是一串在某种语言中的一句话，输出是目标语言相对应的话的问题，如将英语中的一段话翻译成合适的法语。以前的Neural Machine Translation模型，通常的配置是encoder-decoder结构，即encoder读取输入的句子将其转换为定长的一个向量，然后decoder再将这个向量翻译成对应的目标语言的文字。通常encoder及decoder均采用RNN结构如LSTM或GRU等（encoder在各个时间步依赖相同的背景变量来获取输入序列信息，decoder在各个时间步依赖相同的背景变量来获取输入序列信息）。但是这个结构有些问题，尤其是RNN机制实际中存在长程梯度消失的问题，对于较长的句子，我们很难寄希望于将输入的序列转化为定长的向量而保存所有的有效信息，所以随着所需翻译句子的长度的增加，这种结构的效果会显著下降。</p>
+<h1 id="attention-ji-zhi-de-yin-ru">Attention机制的引入</h1>
+<p>为了解决这一由长序列到定长向量转化而造成的信息损失的瓶颈，Attention注意力机制被引入了。Attention机制跟人类翻译文章时候的思路有些类似，即将注意力关注于我们翻译部分对应的上下文。在Attention模型中，当我们翻译当前词语时，我们会寻找源语句中相对应的几个词语，并结合之前的已经翻译的部分作出相应的翻译。</p>
+<p>一个翻译例子：输入为英语序列“They”“are”“watching”“.”，输出为法语列“Ils”“regardent”“.”。不难想到，解码器在生成输出序列中的每一个词时可能只需利用输入序列某一部分的信息。例如，在输出序列的时间步1，解码器可以主要依赖“They”“are”的信息来生成“Ils”，在时间步2则主要使用来自“watching”的编码信息生成“regardent”，最后在时间步3则直接映射句号“.”。这看上去就像是在解码器的每一时间步对输入序列中不同时间步的表征或编码信息分配不同的注意力一样。</p>
+<p>仍然以循环神经网络为例，注意力机制通过对编码器所有时间步的隐藏状态做加权平均来得到背景变量。解码器在每一时间步调整这些权重，即注意力权重，从而能够在不同时间步分别关注输入序列中的不同部分并编码进相应时间步的背景变量。在seq2seq里区分了输入序列（编码器）的索引\(t\)与输出序列（解码器）的索引\(t'\)。解码器在时间步\(t'\)的隐藏状态</p>
+<p>\[
 \boldsymbol{s}_{t'} = g(\boldsymbol{y}_{t'-1}, \boldsymbol{c},\boldsymbol{s}_{t'-1})
 \]<br>
-，其中\(\boldsymbol{y}_{t'-1}\)是上一时间步\(t'-1\)的输出\(y_{t'-1}\)的表征，且任一时间步\(t'\)使用相同的背景变量\(\boldsymbol{c}\)。但在注意力机制中，解码器的每一时间步将使用可变的背景变量。记\(\boldsymbol{c}_{t'}\)是解码器在时间步\(t'\)的背景变量，那么解码器在该时间步的隐藏状态可以改写为：</p>
-<p>\[
+其中，\(\boldsymbol{y}_{t'-1}\)是上一时间步\((t'-1)\)的输出\(y_{t'-1}\)的表征，\(s_{t^\prime-1}\)是上一时间步\((t^\prime-1)\)的隐藏状态，且任一时间步\(t'\)使用相同的背景变量\(\boldsymbol{c}\)。</p>
+<p>但在注意力机制中，解码器的每一时间步将使用可变的背景变量。记\(\boldsymbol{c}_{t'}\)是解码器在时间步\(t'\)的背景变量，那么解码器在该时间步的隐藏状态可以改写为：<br>
+\[
 \boldsymbol{s}_{t'} = g(\boldsymbol{y}_{t'-1}, \boldsymbol{c}_{t'}, \boldsymbol{s}_{t'-1})
 \]</p>
 <p>这里的关键是如何计算背景变量\(\boldsymbol{c}_{t'}\)和如何利用它来更新隐藏状态\(\boldsymbol{s}_{t'}\)。下面将分别描述这两个关键点。</p>
-<h2 id="ji-suan-bei-jing-bian-liang">计算背景变量</h2>
-<p>先描述第一个关键点，即计算背景变量。下图描绘了注意力机制如何为解码器在时间步2计算背景变量。首先，函数\(a\)根据解码器在时间步1的隐藏状态和编码器在各个时间步的隐藏状态计算softmax运算的输入。softmax运算输出概率分布并对编码器各个时间步的隐藏状态做加权平均，从而得到背景变量。</p>
+<h2 id="bian-ma-qi-zhong-de-attention">编码器中的attention</h2>
+<p>下图描绘了注意力机制如何为解码器在时间步2计算背景变量。首先，函数\(a\)根据解码器在时间步1的隐藏状态和编码器在各个时间步的隐藏状态计算softmax运算的输入。softmax运算输出概率分布并对编码器各个时间步的隐藏状态做加权平均，从而得到背景变量。</p>
 <p><img src="/2020/03/20/deeplearning/attention/10.11_attention.svg" alt="编码器—解码器上的注意力机制"></p>
 <p>具体来说，令编码器在时间步\(t\)的隐藏状态为\(\boldsymbol{h}_t\)，且总时间步数为\(T\)。那么解码器在时间步\(t'\)的背景变量为所有编码器隐藏状态的加权平均：</p>
 <p>\[
@@ -321,36 +327,94 @@
 <p>\[
 e_{t' t} = a(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t).
 \]</p>
-<p>这里函数\(a\)有多种选择，如果两个输入向量长度相同，一个简单的选择是计算它们的内积\(a(\boldsymbol{s}, \boldsymbol{h})=\boldsymbol{s}^\top \boldsymbol{h}\)。而最早提出注意力机制的论文则将输入连结后通过含单隐藏层的多层感知机变换 [1]：</p>
+<p>这里函数\(a\)有多种选择，如果两个输入向量长度相同，一个简单的选择是计算它们的内积\(a(\boldsymbol{s}, \boldsymbol{h})=\boldsymbol{s}^\top \boldsymbol{h}\)。而最早提出注意力机制的论文则将输入连结后通过含单隐藏层的多层感知机变换：</p>
 <p>\[
 a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \boldsymbol{s} + \boldsymbol{W}_h \boldsymbol{h}),
 \]</p>
 <p>其中\(\boldsymbol{v}\)、\(\boldsymbol{W}_s\)、\(\boldsymbol{W}_h\)都是可以学习的模型参数。</p>
-<h3 id="shi-liang-hua-ji-suan">矢量化计算</h3>
+<h2 id="ji-suan-bei-jing-xiang-liang">计算背景向量</h2>
 <p>还可以对注意力机制采用更高效的矢量化计算。广义上，注意力机制的输入包括查询项以及一一对应的键项和值项，其中值项是需要加权平均的一组项。在加权平均中，值项的权重来自查询项以及与该值项对应的键项的计算。</p>
 <p>在上面的例子中，查询项为解码器的隐藏状态，键项和值项均为编码器的隐藏状态。<br>
 考虑一个常见的简单情形，即编码器和解码器的隐藏单元个数均为\(h\)，且函数\(a(\boldsymbol{s}, \boldsymbol{h})=\boldsymbol{s}^\top \boldsymbol{h}\)。假设我们希望根据解码器单个隐藏状态\(\boldsymbol{s}_{t' - 1} \in \mathbb{R}^{h}\)和编码器所有隐藏状态\(\boldsymbol{h}_t \in \mathbb{R}^{h}, t = 1,\ldots,T\)来计算背景向量\(\boldsymbol{c}_{t'}\in \mathbb{R}^{h}\)。<br>
-我们可以将查询项矩阵\(\boldsymbol{Q} \in \mathbb{R}^{1 \times h}\)设为\(\boldsymbol{s}_{t' - 1}^\top\)，并令键项矩阵\(\boldsymbol{K} \in \mathbb{R}^{T \times h}\)和值项矩阵\(\boldsymbol{V} \in \mathbb{R}^{T \times h}\)相同且第\(t\)行均为\(\boldsymbol{h}_t^\top\)。此时，我们只需要通过矢量化计算</p>
-<p>\[
+我们可以将查询项矩阵\(\boldsymbol{Q} \in \mathbb{R}^{1 \times h}\)设为\(\boldsymbol{s}_{t' - 1}^\top\)，并令键项矩阵\(\boldsymbol{K} \in \mathbb{R}^{T \times h}\)和值项矩阵\(\boldsymbol{V} \in \mathbb{R}^{T \times h}\)相同且第\(t\)行均为\(\boldsymbol{h}_t^\top\)。此时，我们只需要通过矢量化计算<br>
+\[
 \boldsymbol{c}_{t'}^\top =\text{softmax}(\boldsymbol{Q}\boldsymbol{K}^\top)\boldsymbol{V}
 \]</p>
 <p>即可算出转置后的背景向量\(\boldsymbol{c}_{t'}^\top\)。当查询项矩阵\(\boldsymbol{Q}\)的行数为\(n\)时，上式将得到\(n\)行的输出矩阵。输出矩阵与查询项矩阵在相同行上一一对应。</p>
-<h2 id="geng-xin-yin-cang-zhuang-tai">更新隐藏状态</h2>
-<p>现在描述第二个关键点，即更新隐藏状态。以门控循环单元为例，在解码器中我们可以对GRU中门控循环单元的设计稍作修改，从而变换上一时间步\(t'-1\)的输出\(\boldsymbol{y}_{t'-1}\)、隐藏状态\(\boldsymbol{s}_{t' - 1}\)和当前时间步\(t'\)的含注意力机制的背景变量\(\boldsymbol{c}_{t'}\) [1]。解码器在时间步\(t'\)的隐藏状态为</p>
-<p>\[
-\boldsymbol{s}_{t'} = \boldsymbol{z}_{t'} \odot \boldsymbol{s}_{t'-1}  + (1 - \boldsymbol{z}_{t'}) \odot \tilde{\boldsymbol{s}}_{t'}
+<h1 id="attention-ji-zhi-de-ben-zhi-si-xiang">Attention机制的本质思想</h1>
+<p>如果把Attention机制从上文讲述例子中的Encoder-Decoder框架中剥离，并进一步做抽象，可以更容易看懂Attention机制的本质思想。</p>
+<p><img src="/2020/03/20/deeplearning/attention/v2-24927f5c33083c1322bc16fa9feb38fd_r.jpg" alt></p>
+<p>可以这样来看待Attention机制：将Source中的构成元素想象成是由一系列的&lt;Key,Value&gt;数据对构成，此时给定Target中的某个元素Query，通过计算Query和各个Key的相似性或者相关性，得到每个Key对应Value的权重系数，然后对Value进行加权求和，即得到了最终的Attention数值。所以本质上Attention机制是对Source中元素的Value值进行加权求和，而Query和Key用来计算对应Value的权重系数。即可以将其本质思想改写为如下公式：<br>
+\[
+Attention(Query,source) = \sum_{i=1}^{L_x} similarity(query,key)*value_i
+\]<br>
+其中，\(L_x=\|Source\|\)代表Source的长度。上文所举的机器翻译的例子里，因为在计算Attention的过程中，Source中的Key和Value合二为一，指向的是同一个东西，也即输入句子中每个单词对应的隐藏状态，所以可能不容易看出这种能够体现本质思想的结构。</p>
+<p>从概念上理解，把Attention仍然理解为从大量信息中有选择地筛选出少量重要信息并聚焦到这些重要信息上，忽略大多不重要的信息，这种思路仍然成立。聚焦的过程体现在权重系数的计算上，权重越大越聚焦于其对应的Value值上，即权重代表了信息的重要性，而Value是其对应的信息。</p>
+<p>从上图还可以引出另外一种理解，也可以将Attention机制看作一种<strong>软寻址</strong>:Source可以看作存储器内存储的内容，元素由地址Key和值Value组成，当前有个Key=Query的查询，目的是取出存储器中对应的Value值，即Attention数值。通过Query和存储器内元素Key的地址进行相似性比较来寻址，之所以说是软寻址，指的不像一般寻址只从存储内容里面找出一条内容，而是可能从每个Key地址都会取出内容，取出内容的重要性根据Query和Key的相似性来决定，之后对Value进行加权求和，这样就可以取出最终的Value值，也即Attention值。所以不少研究人员将Attention机制看作软寻址的一种特例，这也是非常有道理的。</p>
+<h1 id="attention-ji-zhi-de-ji-suan-guo-cheng">Attention机制的计算过程</h1>
+<p>Attention机制的具体计算过程，如果对目前大多数方法进行抽象的话，可以将其归纳为<strong>两个过程</strong>：</p>
+<ol>
+<li>
+<p>第一个过程是根据Query和Key计算权重系数</p>
+<ol>
+<li>
+<p>第一个阶段：根据Query和Key计算两者的相似性或者相关性</p>
+<ul>
+<li>点积：\(score(h_t,h_s) = h_t^T \cdot h_s\)</li>
+<li>Cosine相似度：\(score(h_t,h_s) = \frac{h_t^T \cdot h_s}{\|h_t\|\cdot\|h_s\|}\)</li>
+<li>MLP:\(score(h_t,h_s) = MLP(h_t , h_s)\)</li>
+<li>Scaled Dot Product : \(score(h_t,h_s) = \frac{h_t^T \cdot h_s}{\sqrt{H}}\) ,其中<code>H</code>是RNN encoder隐藏状态的数量</li>
+<li>Concat：\(v_{a}^{\top} \cdot \tanh \left(W_{a}\left[h_{t}: h_{s}\right]\right)\)</li>
+<li>Location: \(W_a \cdot h_t\)</li>
+<li>General: \(h_t^T\cdot W_a\cdot h_s\)</li>
+</ul>
+</li>
+<li>
+<p>第二个阶段：对第一阶段的原始分值进行归一化处理<br>
+\[
+\alpha_i = softmax(sim_i) = \frac{e^{sim_i}}{\sum_{j=1}^{L_x}{e^{sim_j}}}
 \]</p>
-<p>其中的重置门、更新门和候选隐藏状态分别为</p>
-<p>\[
-\begin{aligned}
-\boldsymbol{r}_{t'} &amp;= \sigma(\boldsymbol{W}_{yr} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{sr} \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_{cr} \boldsymbol{c}_{t'} + \boldsymbol{b}_r),\\
-\boldsymbol{z}_{t'} &amp;= \sigma(\boldsymbol{W}_{yz} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{sz} \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_{cz} \boldsymbol{c}_{t'} + \boldsymbol{b}_z),\\
-\tilde{\boldsymbol{s}}_{t'} &amp;= \text{tanh}(\boldsymbol{W}_{ys} \boldsymbol{y}_{t'-1} + \boldsymbol{W}_{ss} (\boldsymbol{s}_{t' - 1} \odot \boldsymbol{r}_{t'}) + \boldsymbol{W}_{cs} \boldsymbol{c}_{t'} + \boldsymbol{b}_s),
-\end{aligned}
+</li>
+</ol>
+</li>
+<li>
+<p>第二个过程根据权重系数对Value进行加权求和<br>
+\[
+attention(Query,Source) = \sum_{i=1}^{L_x} \alpha_i \cdot Value_i
 \]</p>
-<p>其中含下标的\(\boldsymbol{W}\)和\(\boldsymbol{b}\)分别为门控循环单元的权重参数和偏差参数。</p>
-<h2 id="fa-zhan">发展</h2>
-<p>本质上，注意力机制能够为表征中较有价值的部分分配较多的计算资源。这个有趣的想法自提出后得到了快速发展，特别是启发了依靠注意力机制来编码输入序列并解码出输出序列的变换器（Transformer）模型的设计 [2]。变换器抛弃了卷积神经网络和循环神经网络的架构。它在计算效率上比基于循环神经网络的编码器—解码器模型通常更具明显优势。含注意力机制的变换器的编码结构在后来的BERT预训练模型中得以应用并令后者大放异彩：微调后的模型在多达11项自然语言处理任务中取得了当时最先进的结果 [3]。不久后，同样是基于变换器设计的GPT-2模型于新收集的语料数据集预训练后，在7个未参与训练的语言模型数据集上均取得了当时最先进的结果 [4]。除了自然语言处理领域，注意力机制还被广泛用于图像分类、自动图像描述、唇语解读以及语音识别。</p>
+</li>
+</ol>
+<p><img src="/2020/03/20/deeplearning/attention/v2-07c4c02a9bdecb23d9664992f142eaa5_1440w.jpg" alt></p>
+<h1 id="self-attention">Self Attention</h1>
+<p>Self Attention也经常被称为intra Attention（内部Attention）。在一般任务的Encoder-Decoder框架中，输入Source和输出Target内容是不一样的，比如对于英-中机器翻译来说，Source是英文句子，Target是对应的翻译出的中文句子，Attention机制发生在Target的元素Query和Source中的所有元素之间。而Self Attention是Source内部元素之间或者Target内部元素之间发生的Attention机制，也可以理解为Target=Source这种特殊情况下的注意力计算机制。其具体计算过程是一样的，只是计算对象发生了变化而已。</p>
+<p>##Self Attention学到了哪些规律或者抽取出了哪些特征？</p>
+<p>以机器翻译中的Self Attention来说明，图11和图12是可视化地表示Self Attention在同一个英语句子内单词间产生的联系。以机器翻译中的Self Attention来说明，下面两张图是可视化地表示Self Attention在同一个英语句子内单词间产生的联系。</p>
+<p><img src="/2020/03/20/deeplearning/attention/v2-1b7a38bc0bd8a46b52753ece64f665ad_r.jpg" alt></p>
+<p><img src="/2020/03/20/deeplearning/attention/v2-c19809fef8cd32115ad69d6946ec6564_r.jpg" alt></p>
+<p>从两张图可以看出，Self Attention可以捕获同一个句子中单词之间的一些句法特征（有一定距离的短语结构）或者语义特征（its的指代对象Law）。</p>
+<p>很明显，引入Self Attention后会<strong>更容易捕获句子中长距离的相互依赖的特征</strong>，因为如果是RNN或者LSTM，需要依次序序列计算，对于远距离的相互依赖的特征，要经过若干时间步步骤的信息累积才能将两者联系起来，而距离越远，有效捕获的可能性越小。</p>
+<p>但是Self Attention在计算过程中会直接将句子中任意两个单词的联系通过一个计算步骤直接联系起来，所以远距离依赖特征之间的距离被极大缩短，有利于有效地利用这些特征。除此外，Self Attention对于增加计算的并行性也有直接帮助作用。这是为何Self Attention逐渐被广泛使用的主要原因。</p>
+<h2 id="dai-ma">代码</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SelfAttention</span><span class="params">(Layer)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Layer for implementing self-attention mechanism. Weight variables were preferred over Dense()</span></span><br><span class="line"><span class="string">    layers in implementation because they allow easier identification of shapes. Softmax activation</span></span><br><span class="line"><span class="string">    ensures that all weights sum up to 1.</span></span><br><span class="line"><span class="string">    @param (int) size: a.k.a attention length, number of hidden units to decode the attention before</span></span><br><span class="line"><span class="string">           the softmax activation and becoming annotation weights</span></span><br><span class="line"><span class="string">    @param (int) num_hops: number of hops of attention, or number of distinct components to be</span></span><br><span class="line"><span class="string">           extracted from each sentence.</span></span><br><span class="line"><span class="string">    @param (bool) use_penalization: set True to use penalization, otherwise set False</span></span><br><span class="line"><span class="string">    @param (int) penalty_coefficient: the weight of the extra loss</span></span><br><span class="line"><span class="string">    @param (str) model_api: specify to use TF's Sequential OR Functional API, note that attention</span></span><br><span class="line"><span class="string">           weights are not outputted with the former as it only accepts single-output layers</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, size, num_hops=<span class="number">8</span>, use_penalization=True,</span></span></span><br><span class="line"><span class="function"><span class="params">                 penalty_coefficient=<span class="number">0.1</span>, model_api=<span class="string">'functional'</span>, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> model_api <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">'sequential'</span>, <span class="string">'functional'</span>]:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Argument for param @model_api is not recognized"</span>)</span><br><span class="line">        self.size = size</span><br><span class="line">        self.num_hops = num_hops</span><br><span class="line">        self.use_penalization = use_penalization</span><br><span class="line">        self.penalty_coefficient = penalty_coefficient</span><br><span class="line">        self.model_api = model_api</span><br><span class="line">        super(SelfAttention, self).__init__(**kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_config</span><span class="params">(self)</span>:</span></span><br><span class="line">        base_config = super(SelfAttention, self).get_config()</span><br><span class="line">        base_config[<span class="string">'size'</span>] = self.size</span><br><span class="line">        base_config[<span class="string">'num_hops'</span>] = self.num_hops</span><br><span class="line">        base_config[<span class="string">'use_penalization'</span>] = self.use_penalization</span><br><span class="line">        base_config[<span class="string">'penalty_coefficient'</span>] = self.penalty_coefficient</span><br><span class="line">        base_config[<span class="string">'model_api'</span>] = self.model_api</span><br><span class="line">        <span class="keyword">return</span> base_config</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(self, input_shape)</span>:</span></span><br><span class="line">        self.W1 = self.add_weight(name=<span class="string">'W1'</span>,</span><br><span class="line">                                  shape=(self.size, input_shape[<span class="number">2</span>]),  <span class="comment"># (size, H)</span></span><br><span class="line">                                  initializer=<span class="string">'glorot_uniform'</span>,</span><br><span class="line">                                  trainable=<span class="literal">True</span>)</span><br><span class="line">        self.W2 = self.add_weight(name=<span class="string">'W2'</span>,</span><br><span class="line">                                  shape=(self.num_hops, self.size),  <span class="comment"># (num_hops, size)</span></span><br><span class="line">                                  initializer=<span class="string">'glorot_uniform'</span>,</span><br><span class="line">                                  trainable=<span class="literal">True</span>)</span><br><span class="line">        super(SelfAttention, self).build(input_shape)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, inputs)</span>:</span>  <span class="comment"># (B, S, H)</span></span><br><span class="line">        <span class="comment"># Expand weights to include batch size through implicit broadcasting</span></span><br><span class="line">        W1, W2 = self.W1[<span class="literal">None</span>, :, :], self.W2[<span class="literal">None</span>, :, :]</span><br><span class="line">        hidden_states_transposed = Permute(dims=(<span class="number">2</span>, <span class="number">1</span>))(inputs) <span class="comment"># (B, H, S)</span></span><br><span class="line">        attention_score = tf.matmul(W1, hidden_states_transposed) <span class="comment"># (B, size, S)</span></span><br><span class="line">        attention_score = Activation(<span class="string">'tanh'</span>)(attention_score) <span class="comment"># (B, size, S)</span></span><br><span class="line">        attention_weights = tf.matmul(W2, attention_score)<span class="comment"># (B, num_hops, S)</span></span><br><span class="line">        attention_weights = Activation(<span class="string">'softmax'</span>)(attention_weights)  <span class="comment"># (B, num_hops, S)</span></span><br><span class="line">        embedding_matrix = tf.matmul(attention_weights, inputs)  <span class="comment"># (B, num_hops, H)</span></span><br><span class="line">        embedding_matrix_flattened = Flatten()(embedding_matrix)  <span class="comment"># (B, num_hops*H)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.use_penalization:</span><br><span class="line">            attention_weights_transposed = Permute(dims=(<span class="number">2</span>, <span class="number">1</span>))(attention_weights)  <span class="comment"># (B, S, num_hops)</span></span><br><span class="line">            product = tf.matmul(attention_weights, attention_weights_transposed)  <span class="comment"># (B, num_hops, num_hops)</span></span><br><span class="line">            identity = tf.eye(self.num_hops, batch_shape=(inputs.shape[<span class="number">0</span>],)) <span class="comment"># (B, num_hops, num_hops)</span></span><br><span class="line">            frobenius_norm = tf.sqrt(tf.reduce_sum(tf.square(product - identity)))  <span class="comment"># distance</span></span><br><span class="line">            self.add_loss(self.penalty_coefficient * frobenius_norm)  <span class="comment"># loss</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.model_api == <span class="string">'functional'</span>:</span><br><span class="line">            <span class="keyword">return</span> embedding_matrix_flattened, attention_weights</span><br><span class="line">        <span class="keyword">elif</span> self.model_api == <span class="string">'sequential'</span>:</span><br><span class="line">            <span class="keyword">return</span> embedding_matrix_flattened</span><br></pre></td></tr></table></figure>
+<h1 id="attention-bian-chong">Attention变种</h1>
+<h2 id="ying-xing-zhu-yi-li">硬性注意力</h2>
+<p>之前提到的注意力是软性注意力，其选择的信息是所有输入信息<strong>在注意力分布下的期望</strong>。还有一种注意力是只关注到<strong>某一个位置上的信息</strong>，叫做<strong>hard attention</strong>。硬性注意力有两种实现方式：</p>
+<ol>
+<li>一种是选取<strong>最高概率</strong>的输入信息；</li>
+<li>另一种硬性注意力可以通过在注意力分布式上<strong>随机采样</strong>的方式实现。</li>
+</ol>
+<p>硬性注意力模型的<strong>缺点</strong>：</p>
+<p>硬性注意力的一个缺点是基于最大采样或随机采样的方式来选择信息。<strong>因此最终的损失函数与注意力分布之间的函数关系不可导</strong>，因此<strong>无法使用在反向传播算法进行训练</strong>。为了使用反向传播算法，一般使用软性注意力来代替硬性注意力。硬性注意力需要通过强化学习来进行训练。</p>
+<h2 id="jian-zhi-dui-zhu-yi-li">键值对注意力</h2>
+<p>Key！=Value，注意力函数变成：<br>
+\[
+attention((K,V),Q) = \sum_{i=1}^{N}{\alpha_i v_i} = \sum_{i=1}^{N}{\frac{e^{sim_i}}{\sum_{j=1}^{L_x}{e^{sim_j}}} v_i}
+\]</p>
+<h2 id="duo-tou-zhu-yi-li">多头注意力</h2>
+<p>多头注意力是利用多个查询\(Q = [q_1, \ldots, q_M]\)，来平行地计算从输入信息中选取多个信息。<strong>每个注意力关注输入信息的不同部分</strong>，然后再进行拼接：<br>
+\[
+\operatorname{att}((K, V), Q)=\operatorname{att}\left((K, V), \mathbf{q}_{1}\right) \oplus \cdots \oplus \mathbf{a t t}\left((K, V), \mathbf{q}_{M}\right)
+\]</p>
 <h1 id="zong-jie">总结</h1>
 <ul>
 <li>可以在解码器的每个时间步使用不同的背景变量，并对输入序列中不同时间步编码的信息分配不同的注意力。</li>
@@ -471,7 +535,7 @@ a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-yi-li-ji-zhi"><span class="nav-number">1.</span> <span class="nav-text">注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-bei-jing-bian-liang"><span class="nav-number">1.1.</span> <span class="nav-text">计算背景变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shi-liang-hua-ji-suan"><span class="nav-number">1.1.1.</span> <span class="nav-text">矢量化计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geng-xin-yin-cang-zhuang-tai"><span class="nav-number">1.2.</span> <span class="nav-text">更新隐藏状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fa-zhan"><span class="nav-number">1.3.</span> <span class="nav-text">发展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zong-jie"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao-wen-xian"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rnn-jie-gou-de-ju-xian"><span class="nav-number">1.</span> <span class="nav-text">RNN结构的局限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attention-ji-zhi-de-yin-ru"><span class="nav-number">2.</span> <span class="nav-text">Attention机制的引入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bian-ma-qi-zhong-de-attention"><span class="nav-number">2.1.</span> <span class="nav-text">编码器中的attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-bei-jing-xiang-liang"><span class="nav-number">2.2.</span> <span class="nav-text">计算背景向量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attention-ji-zhi-de-ben-zhi-si-xiang"><span class="nav-number">3.</span> <span class="nav-text">Attention机制的本质思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attention-ji-zhi-de-ji-suan-guo-cheng"><span class="nav-number">4.</span> <span class="nav-text">Attention机制的计算过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#self-attention"><span class="nav-number">5.</span> <span class="nav-text">Self Attention</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-ma"><span class="nav-number">5.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attention-bian-chong"><span class="nav-number">6.</span> <span class="nav-text">Attention变种</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ying-xing-zhu-yi-li"><span class="nav-number">6.1.</span> <span class="nav-text">硬性注意力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-zhi-dui-zhu-yi-li"><span class="nav-number">6.2.</span> <span class="nav-text">键值对注意力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duo-tou-zhu-yi-li"><span class="nav-number">6.3.</span> <span class="nav-text">多头注意力</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zong-jie"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao-wen-xian"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -489,14 +553,14 @@ a(\boldsymbol{s}, \boldsymbol{h}) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20170724210638122">
 <meta property="article:published_time" content="2018-07-19T05:08:15.000Z">
-<meta property="article:modified_time" content="2020-07-19T05:24:38.603Z">
+<meta property="article:modified_time" content="2020-08-14T00:04:20.209Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20170724210638122">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-19 13:24:38" itemprop="dateModified" datetime="2020-07-19T13:24:38+08:00">2020-07-19</time>
+                <time title="修改时间：2020-08-14 08:04:20" itemprop="dateModified" datetime="2020-08-14T08:04:20+08:00">2020-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,14 +271,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.2k</span>
+              <span>5.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -317,8 +317,9 @@
 \]</p>
 <p>其中\(x_{ij}\)是矩阵\(\boldsymbol{X}\)中第\(i\)行第\(j\)列的元素（\(1 \leq i \leq m, 1 \leq j \leq n\)）。我们将各元素均为实数的\(m\)行\(n\)列矩阵\(\boldsymbol{X}\)记作\(\boldsymbol{X} \in \mathbb{R}^{m \times n}\)。不难发现，向量是特殊的矩阵。</p>
 <h1 id="yun-suan">运算</h1>
-<p>设\(n\)维向量\(\boldsymbol{a}\)中的元素为\(a_1, \ldots, a_n\)，\(n\)维向量\(\boldsymbol{b}\)中的元素为\(b_1, \ldots, b_n\)。向量\(\boldsymbol{a}\)与\(\boldsymbol{b}\)的点乘（内积）是一个标量：</p>
-<p>\[
+<h2 id="xiang-liang-dian-cheng">向量点乘</h2>
+<p>设\(n\)维向量\(\boldsymbol{a}\)中的元素为\(a_1, \ldots, a_n\)，\(n\)维向量\(\boldsymbol{b}\)中的元素为\(b_1, \ldots, b_n\)。向量\(\boldsymbol{a}\)与\(\boldsymbol{b}\)的点乘（内积）是一个标量：<br>
+\[
 \boldsymbol{a} \cdot \boldsymbol{b} = a_1 b_1 + \ldots + a_n b_n
 \]</p>
 <p>设两个\(m\)行\(n\)列矩阵</p>
@@ -338,6 +339,7 @@
     b_{m1} &amp; b_{m2} &amp; \dots  &amp; b_{mn}
 \end{bmatrix}.
 \]</p>
+<h2 id="ju-zhen-zhuan-zhi">矩阵转置</h2>
 <p>矩阵\(\boldsymbol{A}\)的转置是一个\(n\)行\(m\)列矩阵，它的每一行其实是原矩阵的每一列：<br>
 \[
 \boldsymbol{A}^\top = 
@@ -348,8 +350,9 @@
     a_{1n} &amp; a_{2n} &amp; \dots  &amp; a_{mn}
 \end{bmatrix}.
 \]</p>
-<p>两个相同形状的矩阵的加法是将两个矩阵按元素做加法：</p>
-<p>\[
+<h2 id="ju-zhen-xiang-jia">矩阵相加</h2>
+<p>两个相同形状的矩阵的加法是将两个矩阵按元素做加法：<br>
+\[
 \boldsymbol{A} + \boldsymbol{B} = 
 \begin{bmatrix}
     a_{11} + b_{11} &amp; a_{12} + b_{12} &amp; \dots  &amp; a_{1n} + b_{1n} \\
@@ -358,8 +361,9 @@
     a_{m1} + b_{m1} &amp; a_{m2} + b_{m2} &amp; \dots  &amp; a_{mn} + b_{mn}
 \end{bmatrix}.
 \]</p>
-<p>我们使用符号\(\odot\)表示两个矩阵按元素乘法的运算，即阿达玛（Hadamard）积：</p>
-<p>\[
+<h2 id="hadamard-ji">Hadamard积</h2>
+<p>我们使用符号\(\odot\)表示两个矩阵按元素乘法的运算，即阿达玛（Hadamard）积：<br>
+\[
 \boldsymbol{A} \odot \boldsymbol{B} = 
 \begin{bmatrix}
     a_{11}  b_{11} &amp; a_{12}  b_{12} &amp; \dots  &amp; a_{1n}  b_{1n} \\
@@ -368,6 +372,7 @@
     a_{m1}  b_{m1} &amp; a_{m2}  b_{m2} &amp; \dots  &amp; a_{mn}  b_{mn}
 \end{bmatrix}.
 \]</p>
+<h2 id="an-yuan-su-cheng">按元素乘</h2>
 <p>定义一个标量\(k\)。标量与矩阵的乘法也是按元素做乘法的运算：</p>
 <p>\[
 k\boldsymbol{A} = 
@@ -379,6 +384,10 @@ k\boldsymbol{A} =
 \end{bmatrix}.
 \]</p>
 <p>其他诸如标量与矩阵按元素相加、相除等运算与上式中的相乘运算类似。矩阵按元素开根号、取对数等运算也就是对矩阵每个元素开根号、取对数等，并得到和原矩阵形状相同的矩阵。</p>
+<h2 id="ju-zhen-xiang-cheng">矩阵相乘</h2>
+<p>\[
+c_{ij} = a_{ik} * b_{kj}
+\]</p>
 <p>矩阵乘法和按元素的乘法不同。设\(\boldsymbol{A}\)为\(m\)行\(p\)列的矩阵，\(\boldsymbol{B}\)为\(p\)行\(n\)列的矩阵。两个矩阵相乘的结果</p>
 <p>\[
 \boldsymbol{A} \boldsymbol{B} = 
@@ -402,30 +411,107 @@ k\boldsymbol{A} =
 a_{i1}b_{1j}  + a_{i2}b_{2j} + \ldots + a_{ip}b_{pj} = \sum_{k=1}^p a_{ik}b_{kj}
 \]</p>
 <h1 id="fan-shu">范数</h1>
+<h2 id="xiang-liang-fan-shu">向量范数</h2>
 <p>设\(n\)维向量\(\boldsymbol{x}\)中的元素为\(x_1, \ldots, x_n\)。向量\(\boldsymbol{x}\)的\(L_p\)范数为</p>
 <p>\[
-\|\boldsymbol{x}\|_p = \left(\sum_{i=1}^n \left|x_i \right|^p \right)^{1/p}
+\|\boldsymbol{\vec{x}}\|_p = \left(\sum_{i=1}^n \left|x_i \right|^p \right)^{1/p}
 \]</p>
 <p>例如，\(\boldsymbol{x}\)的\(L_1\)范数是该向量元素绝对值之和：</p>
 <p>\[
-\|\boldsymbol{x}\|_1 = \sum_{i=1}^n \left|x_i \right|
+\|\boldsymbol{\vec{x}}\|_1 = \sum_{i=1}^n \left|x_i \right|
 \]</p>
 <p>而\(\boldsymbol{x}\)的\(L_2\)范数是该向量元素平方和的平方根：</p>
 <p>\[
-\|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2}
+\|\boldsymbol{\vec{x}}\|_2 = \sqrt{\sum_{i=1}^n x_i^2}
 \]</p>
 <p>通常用\(\|\boldsymbol{x}\|\)指代\(\|\boldsymbol{x}\|_2\)。</p>
+<p>向量的负无穷范数： 向量所有元素的绝对值中最小的:<br>
+\[
+\Vert\vec{x}\Vert_{-\infty}=\min{|{x_i}|}
+\]<br>
+向量的正无穷范数： 向量所有元素的绝对值中最大的:<br>
+\[
+\Vert\vec{x}\Vert_{+\infty}=\max{|{x_i}|}
+\]</p>
+<h2 id="ju-zhen-fan-shu">矩阵范数</h2>
 <p>设\(\boldsymbol{X}\)是一个\(m\)行\(n\)列矩阵。矩阵\(\boldsymbol{X}\)的Frobenius范数为该矩阵元素平方和的平方根：</p>
 <p>\[
 \|\boldsymbol{X}\|_F = \sqrt{\sum_{i=1}^m \sum_{j=1}^n x_{ij}^2}
 \]</p>
 <p>其中\(x_{ij}\)为矩阵\(\boldsymbol{X}\)在第\(i\)行第\(j\)列的元素。</p>
+<p>对于矩阵 \(A_{m \times n}\)， 举例而说：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = [</span><br><span class="line"><span class="number">-1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line"><span class="number">4</span>, <span class="number">-6</span>, <span class="number">6</span>;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>矩阵的1范数（列范数）：矩阵的每一列上的元素绝对值先求和，再从中取个最大值<br>
+\[
+\Vert A\Vert_1=\max_{1\le j\le n}\sum_{i=1}^m|{a_{ij}}| 
+\]</p>
+<p>矩阵的2范数： 矩阵 \(A^TA\) 的最大特征值开平方根：<br>
+\[
+\Vert A\Vert_2=\sqrt{\lambda_{max}(A^T A)}
+\]</p>
 <h1 id="te-zheng-xiang-liang-he-te-zheng-zhi">特征向量和特征值</h1>
+<p>特征值分解可以得到特征值与特征向量</p>
 <p>对于一个\(n\)行\(n\)列的矩阵\(\boldsymbol{A}\)，假设有标量\(\lambda\)和非零的\(n\)维向量\(\boldsymbol{v}\)使</p>
 <p>\[
 \boldsymbol{A} \boldsymbol{v} = \lambda \boldsymbol{v}
 \]</p>
 <p>那么\(\boldsymbol{v}\)是矩阵\(\boldsymbol{A}\)的一个特征向量，标量\(\lambda\)是\(\boldsymbol{v}\)对应的特征值。</p>
+<p>特征值分解是将一个矩阵分解为如下形式：</p>
+<p>\[
+A=Q\sum Q^{-1}
+\]</p>
+<p>Q: 矩阵A的特征向量组成的矩阵 ，\(\sum\): 一个对角矩阵，每一个对角元素是一个特征值里面的特征值是由大到小排列的，这些特征值所对应的特征向量就是描述这个矩阵变化方向（从主要的变化到次要的变化排列）。 特征值分解表示矩阵\(A\)的信息可以由其特征值和特征向量表示。</p>
+<h1 id="lian-he-gai-lu-yu-bian-yuan-gai-lu">联合概率与边缘概率</h1>
+<h2 id="lian-he-gai-lu">联合概率</h2>
+<p>联合概率指类似于\(P(X=a,Y=b)\)这样，包含多个条件，且所有条件同时成立的概率。</p>
+<h2 id="bian-yuan-gai-lu">边缘概率</h2>
+<p>边缘概率指类似于\(P(X=a)\)，\(P(Y=b)\)这样，仅与单个随机变量有关的概率。</p>
+<h2 id="qu-bie-yu-lian-xi">区别于联系</h2>
+<p>区别：联合概率是指在多元的概率分布中多个随机变量分别满足各自条件的概率。而边缘概率是某个事件发生的概率，而与其它事件无关。</p>
+<p>联系： 联合分布可求边缘分布，但若只知道边缘分布，无法求得联合分布。</p>
+<h1 id="du-li-xing-yu-tiao-jian-du-li-xing">独立性与条件独立性</h1>
+<ul>
+<li>独立性：\(P(XY)=P(X)P(Y)\)</li>
+<li>条件独立： 再条件Z发生时， X， Y 条件独立：</li>
+</ul>
+<p>\[
+X\bot Y|Z \iff P(X,Y|Z) = P(X|Z)P(Y|Z)
+\]</p>
+<h1 id="qi-wang-fang-chai-xie-fang-chai-xiang-guan-xi-shu">期望，方差，协方差， 相关系数</h1>
+<h2 id="qi-wang">期望</h2>
+<p>\[
+E(ax+by+c) = aE(x)+bE(y)+c \\
+离散函数期望：E(f(x))=\sum_{k=1}^{n}{f(x_k)P(x_k)} \\
+连续函数期望：E(f(x))=\int_{-\infty}^{+\infty}{f(x)p(x)dx}
+\]</p>
+<p>**如果\(X\)和\(Y\)相互独立，则\(E(xy)=E(x)E(y)\)。  **</p>
+<h2 id="fang-chai">方差</h2>
+<p>\[
+Var(x) = E((x-\overline{x})^2) \\
+Var(x) = E(x^2) -E(x)^2
+\]</p>
+<p><strong>如果\(X\)和\(Y\)相互独立,\(Var(ax+by)=a^2Var(x)+b^2Var(y)\)</strong></p>
+<h2 id="xie-fang-chai">协方差</h2>
+<p><strong>协方差是衡量两个遍历的总体误差。</strong></p>
+<p>\[
+Cov(x,y)=E((x-E(x))(y-E(y))) \\
+Cov(ax,by) = abCov(x,y) \\
+Cov(a+bx, c+dy) = bdCov(x, y)
+\]</p>
+<p><strong>独立变量的协方差为0。</strong></p>
+<h2 id="xiang-guan-xi-shu">相关系数</h2>
+<p>\[
+Corr(x,y) = \frac{Cov(x,y)}{\sqrt{Var(x)Var(y)}}
+\]</p>
+<p><strong>值越接近1，说明两个变量正相关性（线性）越强。越接近-1，说明负相关性越强，当为0时，表示两个变量没有相关性</strong></p>
+<h1 id="ju-zhen-zheng-ding-xing">矩阵正定性</h1>
+<h2 id="ju-zhen-zheng-ding-xing-de-pan-duan">矩阵正定性的判断？</h2>
+<ol>
+<li>矩阵中的特征值均不小于 0 ， 则为半正定。</li>
+<li>矩阵中的特征值都大于 0， 则为正定。</li>
+</ol>
+<h2 id="hessian-ju-zhen-zheng-ding-xing-zai-ti-du-xia-jiang-zhong-de-ying-yong">Hessian矩阵正定性在梯度下降中的应用</h2>
+<p>在判断优化算法的可行性时Hessian矩阵的正定性起到了很大的作用,若Hessian正定,则函数的二阶偏导恒大于0,函数的变化率处于递增状态,在牛顿法等梯度下降的方法中,Hessian矩阵的正定性可以很容易的判断函数是否可收敛到局部或全局最优解。</p>
 
     </div>
 
@@ -535,7 +621,7 @@ a_{i1}b_{1j}  + a_{i2}b_{2j} + \ldots + a_{ip}b_{pj} = \sum_{k=1}^p a_{ik}b_{kj}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xiang-liang"><span class="nav-number">1.</span> <span class="nav-text">向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-zhen"><span class="nav-number">2.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yun-suan"><span class="nav-number">3.</span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fan-shu"><span class="nav-number">4.</span> <span class="nav-text">范数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#te-zheng-xiang-liang-he-te-zheng-zhi"><span class="nav-number">5.</span> <span class="nav-text">特征向量和特征值</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xiang-liang"><span class="nav-number">1.</span> <span class="nav-text">向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-zhen"><span class="nav-number">2.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yun-suan"><span class="nav-number">3.</span> <span class="nav-text">运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-liang-dian-cheng"><span class="nav-number">3.1.</span> <span class="nav-text">向量点乘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen-zhuan-zhi"><span class="nav-number">3.2.</span> <span class="nav-text">矩阵转置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen-xiang-jia"><span class="nav-number">3.3.</span> <span class="nav-text">矩阵相加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadamard-ji"><span class="nav-number">3.4.</span> <span class="nav-text">Hadamard积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-yuan-su-cheng"><span class="nav-number">3.5.</span> <span class="nav-text">按元素乘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen-xiang-cheng"><span class="nav-number">3.6.</span> <span class="nav-text">矩阵相乘</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fan-shu"><span class="nav-number">4.</span> <span class="nav-text">范数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-liang-fan-shu"><span class="nav-number">4.1.</span> <span class="nav-text">向量范数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen-fan-shu"><span class="nav-number">4.2.</span> <span class="nav-text">矩阵范数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#te-zheng-xiang-liang-he-te-zheng-zhi"><span class="nav-number">5.</span> <span class="nav-text">特征向量和特征值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lian-he-gai-lu-yu-bian-yuan-gai-lu"><span class="nav-number">6.</span> <span class="nav-text">联合概率与边缘概率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lian-he-gai-lu"><span class="nav-number">6.1.</span> <span class="nav-text">联合概率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bian-yuan-gai-lu"><span class="nav-number">6.2.</span> <span class="nav-text">边缘概率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qu-bie-yu-lian-xi"><span class="nav-number">6.3.</span> <span class="nav-text">区别于联系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#du-li-xing-yu-tiao-jian-du-li-xing"><span class="nav-number">7.</span> <span class="nav-text">独立性与条件独立性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qi-wang-fang-chai-xie-fang-chai-xiang-guan-xi-shu"><span class="nav-number">8.</span> <span class="nav-text">期望，方差，协方差， 相关系数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qi-wang"><span class="nav-number">8.1.</span> <span class="nav-text">期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-chai"><span class="nav-number">8.2.</span> <span class="nav-text">方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xie-fang-chai"><span class="nav-number">8.3.</span> <span class="nav-text">协方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-guan-xi-shu"><span class="nav-number">8.4.</span> <span class="nav-text">相关系数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-zhen-zheng-ding-xing"><span class="nav-number">9.</span> <span class="nav-text">矩阵正定性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen-zheng-ding-xing-de-pan-duan"><span class="nav-number">9.1.</span> <span class="nav-text">矩阵正定性的判断？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hessian-ju-zhen-zheng-ding-xing-zai-ti-du-xia-jiang-zhong-de-ying-yong"><span class="nav-number">9.2.</span> <span class="nav-text">Hessian矩阵正定性在梯度下降中的应用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -553,14 +639,14 @@ a_{i1}b_{1j}  + a_{i2}b_{2j} + \ldots + a_{ip}b_{pj} = \sum_{k=1}^p a_{ik}b_{kj}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-count">89</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
