@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -30,9 +30,8 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/Logistic-Regression-learning.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/00630Defly1g4pvk2ctatj30cw0b63yq.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/3.4_softmaxreg.svg">
 <meta property="article:published_time" content="2020-05-23T15:05:47.000Z">
-<meta property="article:modified_time" content="2020-07-18T08:56:31.429Z">
+<meta property="article:modified_time" content="2020-08-15T14:38:08.138Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="logistic">
@@ -236,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-18 16:56:31" itemprop="dateModified" datetime="2020-07-18T16:56:31+08:00">2020-07-18</time>
+                <time title="修改时间：2020-08-15 22:38:08" itemprop="dateModified" datetime="2020-08-15T22:38:08+08:00">2020-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>16k</span>
+              <span>8.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -297,19 +296,29 @@
         <p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/Logistic-Regression-learning.png" alt></p>
 <a id="more"></a>
 <h1 id="luo-ji-hui-gui">逻辑回归</h1>
-<h2 id="shi-yao-shi-luo-ji-hui-gui">什么是逻辑回归</h2>
-<p>逻辑回归是用来做分类算法的，线性回归，一般形式是\(y=w \ast x + b\) ，y的取值范围是\([- \infty, +\infty]\)，有这么多取值，把\(y\)的结果带入一个非线性变换的<strong>Sigmoid函数</strong>中，即可得到[0,1]之间取值范围的数\(S\)，\(S\)可以看成是一个概率值，如果设置概率阈值为0.5，那么\(S\)大于0.5可以看成是正样本，小于0.5看成是负样本，这样就可以进行分类了。</p>
-<h2 id="shi-yao-shi-dui-shu-ji-lu">什么是对数几率</h2>
-<p>如果某事件发生的概率是p,则该事件发生的<strong>几率</strong>(此处几率指该事件发生概率与不发生概率之比)是\(\frac{p}{1-p}\), <strong>对数几率</strong> 是\(log(\frac{p}{1-p})\),那么\(\log \frac{P(Y=1 | x)}{1-P(Y=1 | x)}=w \cdot x\)，也就是说在逻辑斯谛回归模型中,输出Y=1的对数几率是输入x的<strong>线性函数</strong>,线性函数值越接近正无穷,概率值就越接近1,反之则越接近0.</p>
-<h2 id="shi-yao-shi-sigmoid-han-shu">什么是Sigmoid函数</h2>
-<p>公式及图像如下：</p>
+<h2 id="jian-jie">简介</h2>
+<p>其基本思想是：根据现有数据对分类边界线建立回归公式,以此进行分类。</p>
+<ul>
+<li>逻辑回归的本质： 极大似然估计</li>
+<li>逻辑回归的激活函数：Sigmoid</li>
+<li>逻辑回归的代价函数：交叉熵</li>
+</ul>
+<h2 id="sigmoid">sigmoid</h2>
+<p>Sigmoid函数公式及图像如下：</p>
 <p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/00630Defly1g4pvk2ctatj30cw0b63yq.jpg" alt></p>
-<p>函数中\(t\)无论取什么值，其结果都在\([0,1]\)的区间内，一个分类问题就有两种答案，一种是“是”，一种是“否”，那0对应着“否”，1对应着“是”，假设分类的<strong>阈值</strong>是0.5，那么超过0.5的归为1分类，低于0.5的归为0分类，阈值是可以自己设定的。把\(w \ast x + b\)带入t中就得到了逻辑回归的一般模型方程：</p>
-<p>\[
+<p>函数中\(t\)无论取什么值，其结果都在\([0,1]\)的区间内。</p>
+<p>逻辑回归是用来做分类算法的，线性回归，一般形式是\(y=w \ast x + b\) ，y的取值范围是\([- \infty, +\infty]\)，有这么多取值，把\(y\)的结果带入一个非线性变换的<strong>Sigmoid函数</strong>中，即可得到[0,1]之间取值范围的数。<br>
+\[
 H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 \]<br>
 结果可以理解为概率，概率大于0.5的属于1分类，概率小于0.5的属于0分类，这样就达到了分类的目的。</p>
-<h2 id="sun-shi-han-shu-shi-shi-yao">损失函数是什么</h2>
+<h2 id="dui-shu-ji-lu">对数几率</h2>
+<p>如果某事件发生的概率是p,则该事件发生的<strong>几率</strong>(此处几率指该事件发生概率与不发生概率之比)是\(\frac{p}{1-p}\), <strong>对数几率</strong> 是\(log(\frac{p}{1-p})\),</p>
+<p>\[
+\log \frac{P(Y=1 | x)}{1-P(Y=1 | x)}=w \cdot x
+\]<br>
+也就是说在逻辑斯谛回归模型中,输出\(Y=1\)的对数几率是输入\(x\)的<strong>线性函数</strong>,线性函数值越接近正无穷,概率值就越接近1,反之则越接近0.</p>
+<h2 id="sun-shi-han-shu">损失函数</h2>
 <p>逻辑回归的损失函数是 <strong>log loss</strong>，也就是<strong>对数似然函数</strong>，函数公式如下：</p>
 <p>\[
 \operatorname{cost}\left(h_{\theta}(x), y\right)=\left\{\begin{aligned}
@@ -323,8 +332,12 @@ H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 \begin{aligned} L(w) &amp;=\sum_{i=1}^{N}\left[y_{i} \log \pi\left(x_{i}\right)+\left(1-y_{i}\right)\log\left(1-\pi\left(x_{i}\right)\right)\right]\\ &amp;=\sum_{i=1}^{N}\left[y_{i} \log \frac{\pi\left(x_{i}\right)}{1-\pi\left(x_{i}\right)}+\log \left(1-\pi\left(x_{i}\right)\right)\right]\\&amp;=\sum_{i=1}^{N}\left[y_{i}\left(w \cdot x_{i}\right)-\log \left(1+\exp \left(w \cdot x_{i}\right)\right]\right.\end{aligned}
 \]</p>
 <p>最后按照梯度下降法一样，求解极小值点，得到想要的模型效果。</p>
-<h2 id="ru-he-jin-xing-duo-xiang-luo-ji-hui-gui">如何进行多项逻辑回归</h2>
-<p>当问题是多分类问题时,可以作如下推广:设Y有K类可能取值,\(P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1 \quad P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}\),实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
+<h2 id="duo-xiang-luo-ji-hui-gui">多项逻辑回归</h2>
+<p>当问题是多分类问题时,可以作如下推广:设\(Y\)有\(K\)类可能取值:</p>
+<p>\[
+P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1\\ P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}
+\]</p>
+<p>实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
 <p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：<br>
 \[
 P(\boldsymbol{W})=\prod_{n=1}^{N}\left(\frac{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}\right)
@@ -337,38 +350,56 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 &amp;=\sum_{n=1}^{N} \ln \left(1+\sum_{k \neq y_{n}} e^{\boldsymbol{w}_{k} \boldsymbol{x}_{n}-\boldsymbol{w}_{y_{n}} \boldsymbol{x}_{n}}\right)
 \end{aligned}
 \]</p>
-<h2 id="luo-ji-hui-gui-you-shi-yao-you-dian">逻辑回归有什么优点</h2>
+<h2 id="jiao-cha-shang-sun-shi">交叉熵损失</h2>
+<p>使用softmax运算后可以更方便地与离散标签计算误差。softmax运算将输出变换成一个合法的类别预测分布。实际上，真实标签也可以用类别分布表达：对于样本\(i\)，构造向量\(\boldsymbol{y}^{(i)}\in \mathbb{R}^{q}\) ，使其第\(y^{(i)}\)个元素为1，其余为0。这样我们的训练目标可以设为使预测概率分布\(\boldsymbol{\hat y}^{(i)}\)尽可能接近真实的标签概率分布\(\boldsymbol{y}^{(i)}\)。可以像线性回归那样使用平方损失函数\(\frac{1}{2}\|\boldsymbol{\hat y}^{(i)}-\boldsymbol{y}^{(i)}\|^2\)。然而，想要预测分类结果正确，并不需要预测概率完全等于标签概率。</p>
+<p>一个分类的例子：如果\(y^{(i)}=3\)，那么我们只需要\(\hat{y}^{(i)}_3\)比其他两个预测值\(\hat{y}^{(i)}_1\)和\(\hat{y}^{(i)}_2\)大就行了。即使\(\hat{y}^{(i)}_3\)值为0.6，不管其他两个预测值为多少，类别预测均正确。而平方损失则过于严格，例如\(\hat y^{(i)}_1=\hat y^{(i)}_2=0.2\)比\(\hat y^{(i)}_1=0, \hat y^{(i)}_2=0.4\)的损失要小很多，虽然两者都有同样正确的分类预测结果。</p>
+<p>改善上述问题的一个方法是使用更适合<strong>衡量两个概率分布差异</strong>的测量函数。其中，交叉熵是一个常用的衡量方法：</p>
+<p>\[
+H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)}
+\]</p>
+<p>其中带下标的\(y_j^{(i)}\)是向量\(\boldsymbol y^{(i)}\)中非0即1的元素。在上式中，假设向量\(\boldsymbol y^{(i)}\)中只有第\(j\)个元素\(y^{(i)}_{j}\)为1，其余全为0，于是\(H(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}) = -\log \hat y_{j}^{(i)}\)。也就是说，交叉熵只关心对正确类别的预测概率，因为只要其值足够大，就可以确保分类结果正确。当然，遇到一个样本有多个标签时，例如图像里含有不止一个物体时，我们并不能做这一步简化。但即便对于这种情况，交叉熵同样只关心对图像中出现的物体类别的预测概率。</p>
+<p>假设训练数据集的样本数为\(n\)，交叉熵损失函数定义为<br>
+\[
+\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right )
+\]</p>
+<p>其中\(\boldsymbol{\Theta}\)代表模型参数。同样地，如果每个样本只有一个标签，那么交叉熵损失可以简写成\(\ell(\boldsymbol{\Theta}) = -(1/n)  \sum_{i=1}^n \log \hat y_{j}^{(i)}\)。从另一个角度来看，我们知道最小化\(\ell(\boldsymbol{\Theta})\)等价于最大化\(\exp(-n\ell(\boldsymbol{\Theta}))=\prod_{i=1}^n \hat y_{j}^{(i)}\)，即最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</p>
+<p>优点：</p>
+<ol>
+<li>它是<strong>非负</strong>的,并且当实际输出接近目标值时它<strong>接近0</strong>,因此可以作为代价函数.</li>
+<li>它关于权重的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w_{j}}=\frac{1}{n} \sum_{x} x_{j}(\sigma(z)-y)\),也就是误差越大,学习速度越快.而<strong>二次代价函数</strong>关于权重和偏置的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w}=(a-y) \sigma^{\prime}(z) x=a \sigma^{\prime}(z)\)和\(\frac{\partial C}{\partial b}=(a-y) \sigma^{\prime}(z)=a \sigma^{\prime}(z)\)，而\(\sigma\)函数容易饱和，梯度小，导致模型难以快速学习参数。</li>
+<li>如果输出层是<strong>线性神经元</strong>,那么<strong>二次代价函数</strong>不再会导致学习速度下降的问题,可以选用.如果输出神经元是<strong>S型神经元</strong>,<strong>交叉熵</strong>一般都是更好的选择.</li>
+<li>对于多分类交叉熵代价函数为：\(C=-\sum_{j=1}^{T} y_{j} \log {p_j}\)</li>
+</ol>
+<blockquote>
+<p>二分类问题<strong>交叉熵代价函数</strong>:\(C=-\frac{1}{n} \sum_{x}[y \ln a+(1-y) \ln (1-a)]\)</p>
+</blockquote>
+<h2 id="you-dian">优点</h2>
 <ul>
 <li>LR能以概率的形式输出结果，而非只是0,1判定。</li>
-<li>LR的可解释性强，可控度高(你要给老板讲的嘛…)。</li>
+<li>LR的可解释性强，可控度高。</li>
 <li>训练快，feature engineering之后效果赞。</li>
 <li>因为结果是概率，可以做ranking model。</li>
 </ul>
-<h2 id="luo-ji-hui-gui-chang-yong-de-you-hua-fang-fa-you-na-xie">逻辑回归常用的优化方法有哪些</h2>
+<h2 id="chang-yong-de-you-hua-fang-fa">常用的优化方法</h2>
 <h3 id="yi-jie-fang-fa-ti-du-xia-jiang">一阶方法：梯度下降</h3>
 <p>梯度下降、随机梯度下降、mini 随机梯度下降降法。随机梯度下降不但速度上比原始梯度下降要快，局部最优化问题时可以一定程度上抑制局部最优解的发生。</p>
 <h3 id="er-jie-fang-fa-niu-dun-fa-ni-niu-dun-fa">二阶方法：牛顿法、拟牛顿法</h3>
 <p>牛顿法其实就是通过切线与x轴的交点不断更新切线的位置，直到达到曲线与x轴的交点得到方程解。在实际应用中我们因为常常要求解凸优化问题，也就是要求解函数一阶导数为0的位置，而牛顿法恰好可以给这种问题提供解决方法。</p>
 <p>实际应用中牛顿法首先选择一个点作为起始点，并进行一次二阶泰勒展开得到导数为0的点进行一个更新，直到达到要求，这时牛顿法也就成了二阶求解问题，比一阶方法更快。我们常常看到的x通常为一个多维向量，这也就引出了Hessian矩阵的概念（就是x的二阶导数矩阵）。</p>
+<blockquote>
+<p>泰勒展开：</p>
+<p>\[
+f(x)=\frac{f\left(x_{0}\right)}{0 !}+\frac{f^{\prime}\left(x_{0}\right)}{1 !}\left(x-x_{0}\right)+\frac{f^{\prime \prime}\left(x_{0}\right)}{2 !}\left(x-x_{0}\right)^{2}+\ldots+\frac{f^{(n)}\left(x_{0}\right)}{n !}\left(x-x_{0}\right)^{n}+R_{n}(x)
+\]</p>
+</blockquote>
 <p>缺点：牛顿法是定长迭代，没有步长因子，所以不能保证函数值稳定的下降，严重时甚至会失败。还有就是牛顿法要求函数一定是二阶可导的。而且计算Hessian矩阵的逆复杂度很大。</p>
 <p>拟牛顿法： 不用二阶偏导而是构造出Hessian矩阵的近似正定对称矩阵的方法称为拟牛顿法。拟牛顿法的思路就是用一个特别的表达形式来模拟Hessian矩阵或者是他的逆使得表达式满足拟牛顿条件。主要有DFP法（逼近Hession的逆）、BFGS（直接逼近Hession矩阵）、 L-BFGS（可以减少BFGS所需的存储空间）。</p>
-<h2 id="luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua">逻辑斯特回归为什么要对特征进行离散化</h2>
-<ol>
-<li>非线性！逻辑回归属于广义线性模型，表达能力受限；单变量离散化为N个后，每个变量有单独的权重，相当于为模型引入了非线性，能够提升模型表达能力，加大拟合； 离散特征的增加和减少都很容易，易于模型的快速迭代；</li>
-<li>速度快！稀疏向量内积乘法运算速度快，计算结果方便存储，容易扩展；</li>
-<li>鲁棒性！离散化后的特征对异常数据有很强的鲁棒性：比如一个特征是年龄&gt;30是1，否则0。如果特征没有离散化，一个异常数据“年龄300岁”会给模型造成很大的干扰；</li>
-<li>方便交叉与特征组合：离散化后可以进行特征交叉，由M+N个变量变为M*N个变量，进一步引入非线性，提升表达能力；</li>
-<li>稳定性：特征离散化后，模型会更稳定，比如如果对用户年龄离散化，20-30作为一个区间，不会因为一个用户年龄长了一岁就变成一个完全不同的人。当然处于区间相邻处的样本会刚好相反，所以怎么划分区间是门学问；</li>
-<li>简化模型：特征离散化以后，起到了简化了逻辑回归模型的作用，降低了模型过拟合的风险。</li>
-</ol>
-<h2 id="luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo">逻辑回归的目标函数中增大L1正则化会是什么结果</h2>
-<p>所有的参数w都会变成0。</p>
 <h1 id="zui-da-shang">最大熵</h1>
 <h2 id="strong-zui-da-shang-yuan-li-strong"><strong>最大熵原理</strong></h2>
 <p>学习概率模型时,在所有可能的概率模型中,<strong>熵最大</strong>的模型是最好的模型.直观地,最大熵原理认为模型首先要满足已有的事实,即<strong>约束条件</strong>.在没有更多信息的情况下,那些不确定的部分都是&quot;<strong>等可能的</strong>&quot;.</p>
 <h2 id="strong-zui-da-shang-mo-xing-strong"><strong>最大熵模型</strong></h2>
-<p>给定训练数据集,可以确定联合分布P(X,Y)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布P(X)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中v表示频数,N表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布P(Y|X)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
-<h2 id="strong-zui-da-shang-mo-xing-de-xue-xi-strong"><strong>最大熵模型的学习</strong></h2>
+<p>给定训练数据集,可以确定联合分布\(P(X,Y)\)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布\(P(X)\)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中\(v\)表示频数,\(N\)表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布\(P(Y|X)\)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
+<h2 id="zui-da-shang-mo-xing-de-xue-xi">最大熵模型的学习</h2>
 <p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
 \[
 \begin{aligned}
@@ -401,148 +432,33 @@ L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w
 \end{aligned}
 \]<br>
 ,并令偏导数等于0,解得\(Z_{w}(x)=\sum_{y} \exp \left(\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)\).可以证明对偶函数等价于对数似然函数,那么对偶函数极大化等价于最大熵模型的<strong>极大似然估计</strong>\(L(w)=\sum_{x, y} \tilde{P}(x, y) \sum_{i=1}^{n} w_{i} f_{i}(x, y)-\sum_{x} \tilde{P}(x) \log Z_{w}(x)\).之后可以用最优化算法求解得到w.</p>
-<h2 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h2>
-<p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>
 <h2 id="you-hua-suan-fa">优化算法</h2>
 <p>似然函数是<strong>光滑的凸函数</strong>,因此多种最优化方法都适用.</p>
 <ol>
 <li><strong>改进的迭代尺度法(IIS)</strong>:假设当前的参数向量是w,如果能找到一种方法<strong>w-&gt;w+δ</strong>使对数似然函数值变大,就可以<strong>重复</strong>使用这一方法,直到找到最大值.</li>
 <li>逻辑斯谛回归常应用梯度下降法,牛顿法或拟牛顿法.</li>
 </ol>
-<h1 id="softmax-duo-fen-lei">softmax多分类</h1>
-<p>softmax回归的输出单元从一个变成了多个，且引入了softmax运算使输出更适合离散值的预测和训练。</p>
-<h2 id="fen-lei-wen-ti">分类问题</h2>
-<p>让我们考虑一个简单的图像分类问题，其输入图像的高和宽均为2像素，且色彩为灰度。这样每个像素值都可以用一个标量表示。我们将图像中的4像素分别记为\(x_1, x_2, x_3, x_4\)。假设训练数据集中图像的真实标签为狗、猫或鸡，这些标签分别对应离散值\(y_1, y_2, y_3\)。使用离散的数值来表示类别，例如\(y_1=1, y_2=2, y_3=3\)。如此，一张图像的标签为1、2和3这3个数值中的一个。虽然我们仍然可以使用回归模型来进行建模，并将预测值就近定点化到1、2和3这3个离散值之一，但这种连续值到离散值的转化通常会影响到分类质量。因此一般使用更加适合离散值输出的模型来解决分类问题。</p>
-<h2 id="softmax-hui-gui-mo-xing">softmax回归模型</h2>
-<p>softmax回归跟线性回归一样将输入特征与权重做线性叠加。与线性回归的一个主要不同在于，softmax回归的输出值个数等于标签里的类别数。因为一共有4种特征和3种输出动物类别，所以权重包含12个标量、偏差包含3个标量，且对每个输入计算\(o_1, o_2, o_3\)这3个输出：</p>
-<p>\[
-\begin{aligned}
-o_1 &amp;= x_1 w_{11} + x_2 w_{21} + x_3 w_{31} + x_4 w_{41} + b_1,\\
-o_2 &amp;= x_1 w_{12} + x_2 w_{22} + x_3 w_{32} + x_4 w_{42} + b_2,\\
-o_3 &amp;= x_1 w_{13} + x_2 w_{23} + x_3 w_{33} + x_4 w_{43} + b_3.
-\end{aligned}
-\]</p>
-<p>下图用神经网络图描绘了上面的计算。softmax回归同线性回归一样，也是一个单层神经网络。由于每个输出\(o_1, o_2, o_3\)的计算都要依赖于所有的输入\(x_1, x_2, x_3, x_4\)，softmax回归的输出层也是一个全连接层。</p>
-<p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/3.4_softmaxreg.svg" alt></p>
-<p>既然分类问题需要得到离散的预测输出，一个简单的办法是将输出值\(o_i\)当作预测类别是\(i\)的置信度，并将值最大的输出所对应的类作为预测输出，即输出 \(\underset{i}{\arg\max} o_i\)。例如，如果\(o_1,o_2,o_3\)分别为\(0.1,10,0.1\)，由于\(o_2\)最大，那么预测类别为2，其代表猫。</p>
-<p>然而，直接使用输出层的输出有两个问题。</p>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="luo-ji-hui-gui-ru-he-shi-xian-duo-fen-lei">逻辑回归如何实现多分类</h2>
+<ul>
+<li><strong>方式1：</strong> 修改逻辑回归的损失函数，使用softmax函数构造模型解决多分类问题，softmax分类模型会有相同于类别数的输出，输出的值为对于样本属于各个类别的概率，最后对于样本进行预测的类型为概率值最高的那个类别。</li>
+<li><strong>方式2：</strong> 根据每个类别都建立一个二分类器，本类别的样本标签定义为0，其它分类样本标签定义为1，则有多少个类别就构造多少个逻辑回归分类器。</li>
+</ul>
+<p>若所有类别之间有明显的互斥则使用softmax分类器，若所有类别不互斥有交叉的情况则构造相应类别个数的逻辑回归分类器。</p>
+<h2 id="luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua">逻辑斯特回归为什么要对特征进行离散化</h2>
 <ol>
-<li>一方面，由于输出层的输出值的范围不确定，难以直观上判断这些值的意义。例如，刚才举的例子中的输出值10表示“很置信”图像类别为猫，因为该输出值是其他两类的输出值的100倍。但如果\(o_1=o_3=10^3\)，那么输出值10却又表示图像类别为猫的概率很低。</li>
-<li>另一方面，由于真实标签是离散值，这些离散值与不确定范围的输出值之间的误差难以衡量。</li>
+<li>非线性,逻辑回归属于广义线性模型，表达能力受限；单变量离散化为N个后，每个变量有单独的权重，相当于为模型引入了非线性，能够提升模型表达能力，加大拟合； 离散特征的增加和减少都很容易，易于模型的快速迭代；</li>
+<li>速度快！稀疏向量内积乘法运算速度快，计算结果方便存储，容易扩展；</li>
+<li>鲁棒性！离散化后的特征对异常数据有很强的鲁棒性：比如一个特征是年龄&gt;30是1，否则0。如果特征没有离散化，一个异常数据“年龄300岁”会给模型造成很大的干扰；</li>
+<li>方便交叉与特征组合：离散化后可以进行特征交叉，由M+N个变量变为M*N个变量，进一步引入非线性，提升表达能力；</li>
+<li>稳定性：特征离散化后，模型会更稳定，比如如果对用户年龄离散化，20-30作为一个区间，不会因为一个用户年龄长了一岁就变成一个完全不同的人。当然处于区间相邻处的样本会刚好相反，所以怎么划分区间是门学问；</li>
+<li>简化模型：特征离散化以后，起到了简化了逻辑回归模型的作用，降低了模型过拟合的风险。</li>
 </ol>
-<p>softmax运算符解决了以上两个问题。它通过下式将输出值变换成值为正且和为1的概率分布：</p>
-<p>\[
-\hat{y}_1, \hat{y}_2, \hat{y}_3 = \text{softmax}(o_1, o_2, o_3)
-\]</p>
-<p>其中</p>
-<p>\[
-\hat{y}_1 = \frac{ \exp(o_1)}{\sum_{i=1}^3 \exp(o_i)},\quad
-\hat{y}_2 = \frac{ \exp(o_2)}{\sum_{i=1}^3 \exp(o_i)},\quad
-\hat{y}_3 = \frac{ \exp(o_3)}{\sum_{i=1}^3 \exp(o_i)}.
-\]</p>
-<p>容易看出\(\hat{y}_1 + \hat{y}_2 + \hat{y}_3 = 1\)且\(0 \leq \hat{y}_1, \hat{y}_2, \hat{y}_3 \leq 1\)，因此\(\hat{y}_1, \hat{y}_2, \hat{y}_3\)是一个合法的概率分布。这时候，如果\(\hat{y}_2=0.8\)，不管\(\hat{y}_1\)和\(\hat{y}_3\)的值是多少，我们都知道图像类别为猫的概率是80%。此外，注意到</p>
-<p>\[
-\underset{i}{\arg\max} o_i = \underset{i}{\arg\max} \hat{y}_i
-\]</p>
-<p>因此softmax运算不改变预测类别输出。</p>
-<h2 id="dan-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi">单样本分类的矢量计算表达式</h2>
-<p>为了提高计算效率，可以将单样本分类通过矢量计算来表达。在上面的图像分类问题中，假设softmax回归的权重和偏差参数分别为</p>
-<p>\[
-\boldsymbol{W} = 
-\begin{bmatrix}
-    w_{11} &amp; w_{12} &amp; w_{13} \\
-    w_{21} &amp; w_{22} &amp; w_{23} \\
-    w_{31} &amp; w_{32} &amp; w_{33} \\
-    w_{41} &amp; w_{42} &amp; w_{43}
-\end{bmatrix},\quad
-\boldsymbol{b} = 
-\begin{bmatrix}
-    b_1 &amp; b_2 &amp; b_3
-\end{bmatrix},
-\]</p>
-<p>设高和宽分别为2个像素的图像样本\(i\)的特征为<br>
-\[
-\boldsymbol{x}^{(i)} = \begin{bmatrix}x_1^{(i)} &amp; x_2^{(i)} &amp; x_3^{(i)} &amp; x_4^{(i)}\end{bmatrix},
-\]</p>
-<p>输出层的输出为<br>
-\[
-\boldsymbol{o}^{(i)} = \begin{bmatrix}o_1^{(i)} &amp; o_2^{(i)} &amp; o_3^{(i)}\end{bmatrix},
-\]</p>
-<p>预测为狗、猫或鸡的概率分布为<br>
-\[
-\boldsymbol{\hat{y}}^{(i)} = \begin{bmatrix}\hat{y}_1^{(i)} &amp; \hat{y}_2^{(i)} &amp; \hat{y}_3^{(i)}\end{bmatrix}.
-\]</p>
-<p>softmax回归对样本\(i\)分类的矢量计算表达式为</p>
-<p>\[
-\begin{aligned}
-\boldsymbol{o}^{(i)} &amp;= \boldsymbol{x}^{(i)} \boldsymbol{W} + \boldsymbol{b},\\
-\boldsymbol{\hat{y}}^{(i)} &amp;= \text{softmax}(\boldsymbol{o}^{(i)}).
-\end{aligned}
-\]</p>
-<h2 id="xiao-pi-liang-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi">小批量样本分类的矢量计算表达式</h2>
-<p>为了进一步提升计算效率，对小批量数据做矢量计算。广义上讲，给定一个小批量样本，其批量大小为\(n\)，输入个数（特征数）为\(d\)，输出个数（类别数）为\(q\)。设批量特征为\(\boldsymbol{X} \in \mathbb{R}^{n \times d}\)。假设softmax回归的权重和偏差参数分别为\(\boldsymbol{W} \in \mathbb{R}^{d \times q}\)和\(\boldsymbol{b} \in \mathbb{R}^{1 \times q}\)。softmax回归的矢量计算表达式为</p>
-<p>\[
-\begin{aligned}
-\boldsymbol{O} &amp;= \boldsymbol{X} \boldsymbol{W} + \boldsymbol{b},\\
-\boldsymbol{\hat{Y}} &amp;= \text{softmax}(\boldsymbol{O}),
-\end{aligned}
-\]</p>
-<p>其中的加法运算使用了广播机制，\(\boldsymbol{O}, \boldsymbol{\hat{Y}} \in \mathbb{R}^{n \times q}\)且这两个矩阵的第\(i\)行分别为样本\(i\)的输出\(\boldsymbol{o}^{(i)}\)和概率分布\(\boldsymbol{\hat{y}}^{(i)}\)。</p>
-<h2 id="jiao-cha-shang-sun-shi-han-shu">交叉熵损失函数</h2>
-<p>使用softmax运算后可以更方便地与离散标签计算误差。softmax运算将输出变换成一个合法的类别预测分布。实际上，真实标签也可以用类别分布表达：对于样本\(i\)，构造向量\(\boldsymbol{y}^{(i)}\in \mathbb{R}^{q}\) ，使其第\(y^{(i)}\)个元素为1，其余为0。这样我们的训练目标可以设为使预测概率分布\(\boldsymbol{\hat y}^{(i)}\)尽可能接近真实的标签概率分布\(\boldsymbol{y}^{(i)}\)。</p>
-<p>可以像线性回归那样使用平方损失函数\(\|\boldsymbol{\hat y}^{(i)}-\boldsymbol{y}^{(i)}\|^2/2\)。然而，想要预测分类结果正确，并不需要预测概率完全等于标签概率。例如，在图像分类的例子里，如果\(y^{(i)}=3\)，那么我们只需要\(\hat{y}^{(i)}_3\)比其他两个预测值\(\hat{y}^{(i)}_1\)和\(\hat{y}^{(i)}_2\)大就行了。即使\(\hat{y}^{(i)}_3\)值为0.6，不管其他两个预测值为多少，类别预测均正确。而平方损失则过于严格，例如\(\hat y^{(i)}_1=\hat y^{(i)}_2=0.2\)比\(\hat y^{(i)}_1=0, \hat y^{(i)}_2=0.4\)的损失要小很多，虽然两者都有同样正确的分类预测结果。</p>
-<p>改善上述问题的一个方法是使用更适合<strong>衡量两个概率分布差异</strong>的测量函数。其中，交叉熵是一个常用的衡量方法：</p>
-<p>\[
-H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)}
-\]</p>
-<p>其中带下标的\(y_j^{(i)}\)是向量\(\boldsymbol y^{(i)}\)中非0即1的元素。在上式中，假设向量\(\boldsymbol y^{(i)}\)中只有第\(j\)个元素\(y^{(i)}_{j}\)为1，其余全为0，于是\(H(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}) = -\log \hat y_{j}^{(i)}\)。也就是说，交叉熵只关心对正确类别的预测概率，因为只要其值足够大，就可以确保分类结果正确。当然，遇到一个样本有多个标签时，例如图像里含有不止一个物体时，我们并不能做这一步简化。但即便对于这种情况，交叉熵同样只关心对图像中出现的物体类别的预测概率。</p>
-<p>假设训练数据集的样本数为\(n\)，交叉熵损失函数定义为<br>
-\[
-\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right )
-\]</p>
-<p>其中\(\boldsymbol{\Theta}\)代表模型参数。同样地，如果每个样本只有一个标签，那么交叉熵损失可以简写成\(\ell(\boldsymbol{\Theta}) = -(1/n)  \sum_{i=1}^n \log \hat y_{j}^{(i)}\)。从另一个角度来看，我们知道最小化\(\ell(\boldsymbol{\Theta})\)等价于最大化\(\exp(-n\ell(\boldsymbol{\Theta}))=\prod_{i=1}^n \hat y_{j}^{(i)}\)，即最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</p>
-<p>优点：</p>
-<ol>
-<li>它是<strong>非负</strong>的,并且当实际输出接近目标值时它<strong>接近0</strong>,因此可以作为代价函数.</li>
-<li>它关于权重的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w_{j}}=\frac{1}{n} \sum_{x} x_{j}(\sigma(z)-y)\),也就是误差越大,学习速度越快.而<strong>二次代价函数</strong>关于权重和偏置的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w}=(a-y) \sigma^{\prime}(z) x=a \sigma^{\prime}(z)\)和\(\frac{\partial C}{\partial b}=(a-y) \sigma^{\prime}(z)=a \sigma^{\prime}(z)\)，而\(\sigma\)函数容易饱和，梯度小，导致模型难以快速学习参数。</li>
-<li>如果输出层是<strong>线性神经元</strong>,那么<strong>二次代价函数</strong>不再会导致学习速度下降的问题,可以选用.如果输出神经元是<strong>S型神经元</strong>,<strong>交叉熵</strong>一般都是更好的选择.</li>
-<li>对于多分类交叉熵代价函数为：\(C=-\sum_{j=1}^{T} y_{j} \log {p_j}\)</li>
-</ol>
-<blockquote>
-<p>二分类问题<strong>交叉熵代价函数</strong>:\(C=-\frac{1}{n} \sum_{x}[y \ln a+(1-y) \ln (1-a)]\)</p>
-</blockquote>
-<h2 id="dai-ma-shi-xian">代码实现</h2>
-<h3 id="shu-ju">数据</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> fashion_mnist</span><br><span class="line"></span><br><span class="line">batch_size=<span class="number">256</span></span><br><span class="line">(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</span><br><span class="line">x_train = tf.cast(x_train, tf.float32) / <span class="number">255</span> <span class="comment">#在进行矩阵相乘时需要float型，故强制类型转换为float型</span></span><br><span class="line">x_test = tf.cast(x_test,tf.float32) / <span class="number">255</span> <span class="comment">#在进行矩阵相乘时需要float型，故强制类型转换为float型</span></span><br><span class="line">train_iter = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(batch_size)</span><br><span class="line">test_iter = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(batch_size)</span><br></pre></td></tr></table></figure>
-<h3 id="chu-shi-hua-mo-xing-can-shu">初始化模型参数</h3>
-<p>使用向量表示每个样本。已知每个样本输入是高和宽均为28像素的图像。模型的输入向量的长度是 \(28 \times 28 = 784\)：该向量的每个元素对应图像中每个像素。由于图像有10个类别，单层神经网络输出层的输出个数为10，因此softmax回归的权重和偏差参数分别为\(784 \times 10\)和\(1 \times 10\)的矩阵。<code>Variable</code>来标注需要记录梯度的向量。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_inputs = <span class="number">784</span></span><br><span class="line">num_outputs = <span class="number">10</span></span><br><span class="line">W = tf.Variable(tf.random.normal(shape=(num_inputs, num_outputs), mean=<span class="number">0</span>, stddev=<span class="number">0.01</span>, dtype=tf.float32))</span><br><span class="line">b = tf.Variable(tf.zeros(num_outputs, dtype=tf.float32))</span><br></pre></td></tr></table></figure>
-<h3 id="shi-xian-softmax-yun-suan">实现 softmax 运算</h3>
-<p>在下面的函数中，矩阵<code>logits</code>的行数是样本数，列数是输出个数。为了表达样本预测各个输出的概率，softmax运算先通过<code>exp</code>函数对每个元素做指数运算，再对<code>exp</code>矩阵同行元素求和，最后令矩阵每行各元素与该行元素之和相除。这样一来，最终得到的矩阵每行元素和为1且非负，该矩阵每行都是合法的概率分布。softmax运算的输出矩阵中的任意一行元素代表了一个样本在各个输出类别上的预测概率。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(logits, axis=<span class="number">-1</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.exp(logits)/tf.reduce_sum(tf.exp(logits), axis, keepdims=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>给定一个<code>Tensor</code>矩阵<code>X</code>。只对其中同一列（<code>axis=0</code>）或同一行（<code>axis=1</code>）的元素求和，并在结果中保留行和列这两个维度（<code>keepdims=True</code>）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X = tf.constant([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line">tf.reduce_sum(X, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">tf.reduce_sum(X, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462401</span>, shape=(<span class="number">1</span>, <span class="number">3</span>), dtype=int32, numpy=array([[<span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]], dtype=int32)&gt;</span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462403</span>, shape=(<span class="number">2</span>, <span class="number">1</span>), dtype=int32, numpy=array([[ <span class="number">6</span>],[<span class="number">15</span>]], dtype=int32)&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="ding-yi-mo-xing-ji-sun-shi-han-shu">定义模型及损失函数</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">net</span><span class="params">(X)</span>:</span></span><br><span class="line">    logits = tf.matmul(tf.reshape(X, shape=(<span class="number">-1</span>, W.shape[<span class="number">0</span>])), W) + b</span><br><span class="line">    <span class="keyword">return</span> softmax(logits)</span><br></pre></td></tr></table></figure>
-<p>下面实现了softmax回归中的交叉熵损失函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    y = tf.cast(tf.reshape(y, shape=[<span class="number">-1</span>, <span class="number">1</span>]),dtype=tf.int32)</span><br><span class="line">    y = tf.one_hot(y, depth=y_hat.shape[<span class="number">-1</span>])</span><br><span class="line">    y = tf.cast(tf.reshape(y, shape=[<span class="number">-1</span>, y_hat.shape[<span class="number">-1</span>]]),dtype=tf.int32)</span><br><span class="line">    <span class="keyword">return</span> -tf.math.log(tf.boolean_mask(y_hat, y)+<span class="number">1e-8</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>为了得到标签的预测概率，可以使用<code>boolean_mask</code>函数和<code>one_hot</code>函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">y_hat = np.array([[<span class="number">0.1</span>, <span class="number">0.3</span>, <span class="number">0.6</span>], [<span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.5</span>]])</span><br><span class="line">y = np.array([<span class="number">0</span>, <span class="number">2</span>], dtype=<span class="string">'int32'</span>)</span><br><span class="line">tf.boolean_mask(y_hat, tf.one_hot(y, depth=<span class="number">3</span>))</span><br><span class="line"><span class="comment">#output</span></span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462449</span>, shape=(<span class="number">2</span>,), dtype=float64, numpy=array([<span class="number">0.1</span>, <span class="number">0.5</span>])&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="ji-suan-fen-lei-zhun-que-lu">计算分类准确率</h3>
-<p>下面定义准确率<code>accuracy</code>函数。其中<code>tf.argmax(y_hat, axis=1)</code>返回矩阵<code>y_hat</code>每行中最大元素的索引，且返回结果与变量<code>y</code>形状相同。相等条件判断式<code>(tf.argmax(y_hat, axis=1) == y)</code>是一个数据类型为<code>bool</code>的<code>Tensor</code>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accuracy</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.mean((tf.argmax(y_hat, axis=<span class="number">1</span>) == y))</span><br></pre></td></tr></table></figure>
-<p>评价模型<code>net</code>在数据集<code>data_iter</code>上的准确率:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 描述,对于tensorflow2中，比较的双方必须类型都是int型，所以要将输出和标签都转为int型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_accuracy</span><span class="params">(data_iter, net)</span>:</span></span><br><span class="line">    acc_sum, n = <span class="number">0.0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, (X, y) <span class="keyword">in</span> enumerate(data_iter):</span><br><span class="line">        y = tf.cast(y,dtype=tf.int64)</span><br><span class="line">        acc_sum += np.sum(tf.cast(tf.argmax(net(X), axis=<span class="number">1</span>), dtype=tf.int64) == y)</span><br><span class="line">        n += y.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> acc_sum / n</span><br></pre></td></tr></table></figure>
-<h3 id="xun-lian-mo-xing-ji-yu-ce">训练模型及预测</h3>
-<p>使用小批量随机梯度下降来优化模型的损失函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练</span></span><br><span class="line">num_epochs, lr = <span class="number">5</span>, <span class="number">0.1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(net, train_iter, test_iter, loss, num_epochs, batch_size, params=None, lr=None, trainer=None)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">        train_l_sum, train_acc_sum, n = <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">            <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">                y_hat = net(X)</span><br><span class="line">                l = tf.reduce_sum(loss(y_hat, y))</span><br><span class="line">            grads = tape.gradient(l, params)</span><br><span class="line">            <span class="keyword">if</span> trainer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="comment"># 如果没有传入优化器，则编写的小批量随机梯度下降</span></span><br><span class="line">                <span class="keyword">for</span> i, param <span class="keyword">in</span> enumerate(params):</span><br><span class="line">                    param.assign_sub(lr * grads[i] / batch_size)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># tf.keras.optimizers.SGD 直接使用是随机梯度下降 theta(t+1) = theta(t) - learning_rate * gradient</span></span><br><span class="line">                <span class="comment"># 这里使用批量梯度下降，需要对梯度除以 batch_size, </span></span><br><span class="line">                trainer.apply_gradients(zip([grad / batch_size <span class="keyword">for</span> grad <span class="keyword">in</span> grads], params))  </span><br><span class="line">                </span><br><span class="line">            y = tf.cast(y, dtype=tf.float32)</span><br><span class="line">            train_l_sum += l.numpy()</span><br><span class="line">            train_acc_sum += tf.reduce_sum(tf.cast(tf.argmax(y_hat, axis=<span class="number">1</span>) == tf.cast(y, dtype=tf.int64), dtype=tf.int64)).numpy()</span><br><span class="line">            n += y.shape[<span class="number">0</span>]</span><br><span class="line">        test_acc = evaluate_accuracy(test_iter, net)</span><br><span class="line">        print(<span class="string">'epoch %d, loss %.4f, train acc %.3f, test acc %.3f'</span>% (epoch + <span class="number">1</span>, train_l_sum / n, train_acc_sum / n, test_acc))</span><br><span class="line"></span><br><span class="line">trainer = tf.keras.optimizers.SGD(lr)</span><br><span class="line">train(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size, [W, b], lr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">epoch <span class="number">1</span>, loss <span class="number">0.8969</span>, train acc <span class="number">0.736</span>, test acc <span class="number">0.813</span></span><br><span class="line">epoch <span class="number">2</span>, loss <span class="number">0.5987</span>, train acc <span class="number">0.806</span>, test acc <span class="number">0.826</span></span><br><span class="line">epoch <span class="number">3</span>, loss <span class="number">0.5524</span>, train acc <span class="number">0.820</span>, test acc <span class="number">0.832</span></span><br><span class="line">epoch <span class="number">4</span>, loss <span class="number">0.5297</span>, train acc <span class="number">0.826</span>, test acc <span class="number">0.834</span></span><br><span class="line">epoch <span class="number">5</span>, loss <span class="number">0.5139</span>, train acc <span class="number">0.830</span>, test acc <span class="number">0.836</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">predict_label = tf.argmax(net(X)</span><br></pre></td></tr></table></figure>
-<h3 id="tensorflow-kuai-su-shi-xian-ban-ben">tensorflow 快速实现版本</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="comment"># 数据</span></span><br><span class="line">fashion_mnist = keras.datasets.fashion_mnist</span><br><span class="line">(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</span><br><span class="line">x_train = x_train / <span class="number">255.0</span></span><br><span class="line">x_test = x_test / <span class="number">255.0</span></span><br><span class="line"><span class="comment"># 模型</span></span><br><span class="line">model = keras.Sequential([</span><br><span class="line">    keras.layers.Flatten(input_shape=(<span class="number">28</span>, <span class="number">28</span>)),</span><br><span class="line">    keras.layers.Dense(<span class="number">10</span>, activation=tf.nn.softmax)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失</span></span><br><span class="line">loss = <span class="string">'sparse_categorical_crossentropy'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 优化器</span></span><br><span class="line">optimizer = tf.keras.optimizers.SGD(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">model.compile(optimizer=tf.keras.optimizers.SGD(<span class="number">0.1</span>),</span><br><span class="line">              loss = <span class="string">'sparse_categorical_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line">model.fit(x_train,y_train,epochs=<span class="number">5</span>,batch_size=<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 评估</span></span><br><span class="line">test_loss, test_acc = model.evaluate(x_test, y_test)</span><br><span class="line">print(<span class="string">'Test Acc:'</span>,test_acc)</span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">predict_labels = tf.argmax(model.predict(x_test),axis=<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="xiao-jie">小结</h2>
+<h2 id="luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo">逻辑回归的目标函数中增大L1正则化会是什么结果</h2>
+<p>所有的参数w都会变成0。</p>
+<h2 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h2>
+<p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>
+<h1 id="zong-jie">总结</h1>
 <ul>
 <li>softmax回归适用于分类问题。它使用softmax运算输出类别的概率分布。</li>
 <li>softmax回归是一个单层神经网络，输出个数等于分类问题中的类别个数。</li>
@@ -662,7 +578,7 @@ H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#luo-ji-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-luo-ji-hui-gui"><span class="nav-number">1.1.</span> <span class="nav-text">什么是逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-dui-shu-ji-lu"><span class="nav-number">1.2.</span> <span class="nav-text">什么是对数几率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-sigmoid-han-shu"><span class="nav-number">1.3.</span> <span class="nav-text">什么是Sigmoid函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu-shi-shi-yao"><span class="nav-number">1.4.</span> <span class="nav-text">损失函数是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-jin-xing-duo-xiang-luo-ji-hui-gui"><span class="nav-number">1.5.</span> <span class="nav-text">如何进行多项逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-you-shi-yao-you-dian"><span class="nav-number">1.6.</span> <span class="nav-text">逻辑回归有什么优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-chang-yong-de-you-hua-fang-fa-you-na-xie"><span class="nav-number">1.7.</span> <span class="nav-text">逻辑回归常用的优化方法有哪些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-jie-fang-fa-ti-du-xia-jiang"><span class="nav-number">1.7.1.</span> <span class="nav-text">一阶方法：梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#er-jie-fang-fa-niu-dun-fa-ni-niu-dun-fa"><span class="nav-number">1.7.2.</span> <span class="nav-text">二阶方法：牛顿法、拟牛顿法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua"><span class="nav-number">1.8.</span> <span class="nav-text">逻辑斯特回归为什么要对特征进行离散化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo"><span class="nav-number">1.9.</span> <span class="nav-text">逻辑回归的目标函数中增大L1正则化会是什么结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zui-da-shang"><span class="nav-number">2.</span> <span class="nav-text">最大熵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-zui-da-shang-yuan-li-strong"><span class="nav-number">2.1.</span> <span class="nav-text">最大熵原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-zui-da-shang-mo-xing-strong"><span class="nav-number">2.2.</span> <span class="nav-text">最大熵模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-zui-da-shang-mo-xing-de-xue-xi-strong"><span class="nav-number">2.3.</span> <span class="nav-text">最大熵模型的学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian"><span class="nav-number">2.4.</span> <span class="nav-text">逻辑回归与最大熵模型的共同点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-hua-suan-fa"><span class="nav-number">2.5.</span> <span class="nav-text">优化算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax-duo-fen-lei"><span class="nav-number">3.</span> <span class="nav-text">softmax多分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fen-lei-wen-ti"><span class="nav-number">3.1.</span> <span class="nav-text">分类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#softmax-hui-gui-mo-xing"><span class="nav-number">3.2.</span> <span class="nav-text">softmax回归模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dan-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi"><span class="nav-number">3.3.</span> <span class="nav-text">单样本分类的矢量计算表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiao-pi-liang-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi"><span class="nav-number">3.4.</span> <span class="nav-text">小批量样本分类的矢量计算表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jiao-cha-shang-sun-shi-han-shu"><span class="nav-number">3.5.</span> <span class="nav-text">交叉熵损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">3.6.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-ju"><span class="nav-number">3.6.1.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chu-shi-hua-mo-xing-can-shu"><span class="nav-number">3.6.2.</span> <span class="nav-text">初始化模型参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shi-xian-softmax-yun-suan"><span class="nav-number">3.6.3.</span> <span class="nav-text">实现 softmax 运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-yi-mo-xing-ji-sun-shi-han-shu"><span class="nav-number">3.6.4.</span> <span class="nav-text">定义模型及损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ji-suan-fen-lei-zhun-que-lu"><span class="nav-number">3.6.5.</span> <span class="nav-text">计算分类准确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xun-lian-mo-xing-ji-yu-ce"><span class="nav-number">3.6.6.</span> <span class="nav-text">训练模型及预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensorflow-kuai-su-shi-xian-ban-ben"><span class="nav-number">3.6.7.</span> <span class="nav-text">tensorflow 快速实现版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiao-jie"><span class="nav-number">3.7.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#luo-ji-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.2.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dui-shu-ji-lu"><span class="nav-number">1.3.</span> <span class="nav-text">对数几率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu"><span class="nav-number">1.4.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duo-xiang-luo-ji-hui-gui"><span class="nav-number">1.5.</span> <span class="nav-text">多项逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jiao-cha-shang-sun-shi"><span class="nav-number">1.6.</span> <span class="nav-text">交叉熵损失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-dian"><span class="nav-number">1.7.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-yong-de-you-hua-fang-fa"><span class="nav-number">1.8.</span> <span class="nav-text">常用的优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-jie-fang-fa-ti-du-xia-jiang"><span class="nav-number">1.8.1.</span> <span class="nav-text">一阶方法：梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#er-jie-fang-fa-niu-dun-fa-ni-niu-dun-fa"><span class="nav-number">1.8.2.</span> <span class="nav-text">二阶方法：牛顿法、拟牛顿法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zui-da-shang"><span class="nav-number">2.</span> <span class="nav-text">最大熵</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-zui-da-shang-yuan-li-strong"><span class="nav-number">2.1.</span> <span class="nav-text">最大熵原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-zui-da-shang-mo-xing-strong"><span class="nav-number">2.2.</span> <span class="nav-text">最大熵模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zui-da-shang-mo-xing-de-xue-xi"><span class="nav-number">2.3.</span> <span class="nav-text">最大熵模型的学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-hua-suan-fa"><span class="nav-number">2.4.</span> <span class="nav-text">优化算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">3.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-ru-he-shi-xian-duo-fen-lei"><span class="nav-number">3.1.</span> <span class="nav-text">逻辑回归如何实现多分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua"><span class="nav-number">3.2.</span> <span class="nav-text">逻辑斯特回归为什么要对特征进行离散化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo"><span class="nav-number">3.3.</span> <span class="nav-text">逻辑回归的目标函数中增大L1正则化会是什么结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian"><span class="nav-number">3.4.</span> <span class="nav-text">逻辑回归与最大熵模型的共同点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zong-jie"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -680,14 +596,14 @@ H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -902,7 +818,8 @@ H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y
 </script>
 
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {

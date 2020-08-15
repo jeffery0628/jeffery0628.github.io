@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197509149646916.png">
 <meta property="og:image" content="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197520844369289.png">
 <meta property="article:published_time" content="2020-06-03T00:10:30.000Z">
-<meta property="article:modified_time" content="2020-06-03T00:50:39.687Z">
+<meta property="article:modified_time" content="2020-08-15T14:05:20.317Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/06/03/machine_learning/LightGBM/img_lightgbm.jpg">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-03 08:50:39" itemprop="dateModified" datetime="2020-06-03T08:50:39+08:00">2020-06-03</time>
+                <time title="修改时间：2020-08-15 22:05:20" itemprop="dateModified" datetime="2020-08-15T22:05:20+08:00">2020-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -295,12 +295,42 @@
       
         <p><img src="/2020/06/03/machine_learning/LightGBM/img_lightgbm.jpg" alt></p>
 <a id="more"></a>
-<h1 id="light-gbm-shi-shi-yao">LightGBM是什么</h1>
+<h1 id="light-gbm">LightGBM</h1>
 <p>不久前微软DMTK(分布式机器学习工具包)团队在GitHub上开源了性能超越其他boosting工具的LightGBM，在三天之内GitHub上被star了1000次，fork了200次。知乎上有近千人关注“如何看待微软开源的LightGBM？”问题，被评价为“速度惊人”，“非常有启发”，“支持分布式”，“代码清晰易懂”，“占用内存小”等。</p>
 <p><a href="%5Bhttps://github.com/Microsoft/LightGBM%5D(https://github.com/Microsoft/LightGBM)">LightGBM （Light Gradient Boosting Machine）</a>是一个实现GBDT算法的框架，支持高效率的并行训练。</p>
 <p>LightGBM在Higgs数据集上LightGBM比XGBoost快将近10倍，内存占用率大约为XGBoost的1/6，并且准确率也有提升。GBDT在每一次迭代的时候，都需要遍历整个训练数据多次。如果把整个训练数据装进内存则会限制训练数据的大小；如果不装进内存，反复地读写训练数据又会消耗非常大的时间。尤其面对工业级海量的数据，普通的GBDT算法是不能满足其需求的。</p>
 <p>LightGBM提出的主要原因就<strong>是为了解决GBDT在海量数据遇到的问题</strong>，让GBDT可以更好更快地用于工业实践。</p>
-<h2 id="light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua-qu-bie-xg-boost">LightGBM在哪些地方进行了优化    (区别XGBoost)？</h2>
+<h2 id="histogram-suan-fa">Histogram算法</h2>
+<p>直方图算法的基本思想是先把连续的浮点特征值离散化成k个整数（其实就是分桶的思想，而这些桶称为bin，比如[0,0.1)→0, [0.1,0.3)→1），同时构造一个宽度为k的直方图。</p>
+<p>在遍历数据的时候，根据离散化后的值作为索引在直方图中累积统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点。</p>
+<p><img src="/2020/06/03/machine_learning/LightGBM/histogram-1.png" alt></p>
+<p>优点：</p>
+<ol>
+<li>最明显就是内存消耗的降低，直方图算法不仅不需要额外存储预排序的结果，而且可以只保存特征离散化后的值，而这个值一般用8位整型存储就足够了，内存消耗可以降低为原来的1/8。</li>
+<li>在计算上的代价也大幅降低，预排序算法每遍历一个特征值就需要计算一次分裂的增益，而直方图算法只需要计算k次（k可以认为是常数），时间复杂度从<code>O(#data*#feature)</code>优化到<code>O(k*#features)</code>。</li>
+</ol>
+<h2 id="dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue">带深度限制的Leaf-wise的叶子生长策略</h2>
+<p>在XGBoost中，树是按层生长的，称为Level-wise tree growth，同一层的所有节点都做分裂，最后剪枝，如下图所示：</p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197509149646916.png" alt></p>
+<p>Level-wise过一次数据可以同时分裂同一层的叶子，容易进行多线程优化，也好控制模型复杂度，不容易过拟合。但实际上Level-wise是一种低效的算法，因为它不加区分的对待同一层的叶子，带来了很多没必要的开销，因为实际上很多叶子的分裂增益较低，没必要进行搜索和分裂。</p>
+<p>在Histogram算法之上，LightGBM进行进一步的优化。首先它抛弃了大多数GBDT工具使用的按层生长 (level-wise)的决策树生长策略，而使用了带有深度限制的按叶子生长 (leaf-wise)算法。</p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197520844369289.png" alt></p>
+<p>Leaf-wise则是一种更为高效的策略，每次从当前所有叶子中，找到分裂增益最大的一个叶子，然后分裂，如此循环。因此同Level-wise相比，在分裂次数相同的情况下，Leaf-wise可以降低更多的误差，得到更好的精度。Leaf-wise的缺点是可能会长出比较深的决策树，产生过拟合。因此LightGBM在Leaf-wise之上增加了一个最大深度的限制，在保证高效率的同时防止过拟合。</p>
+<h2 id="zhi-fang-tu-chai-jia-su">直方图差加速</h2>
+<p>LightGBM另一个优化是Histogram（直方图）做差加速。一个容易观察到的现象：一个叶子的直方图可以由它的父亲节点的直方图与它兄弟的直方图做差得到。通常构造直方图，需要遍历该叶子上的所有数据，但直方图做差仅需遍历直方图的k个桶。</p>
+<p>利用这个方法，LightGBM可以在构造一个叶子的直方图后，可以用非常微小的代价得到它兄弟叶子的直方图，在速度上可以提升一倍。</p>
+<h2 id="zhi-jie-zhi-chi-lei-bie-te-zheng">直接支持类别特征</h2>
+<p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化到多维的0/1特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，LightGBM优化了对类别特征的支持，可以直接输入类别特征，不需要额外的0/1展开。并在决策树算法上增加了类别特征的决策规则。在Expo数据集上的实验，相比0/1展开的方法，训练速度可以加速8倍，并且精度一致。据我们所知，LightGBM是第一个直接支持类别特征的GBDT工具。</p>
+<h1 id="light-gbm-you-dian">LightGBM优点</h1>
+<p>LightGBM （Light Gradient Boosting Machine）是一个实现GBDT算法的框架，支持高效率的并行训练，并且具有以下优点：</p>
+<ul>
+<li>更快的训练速度</li>
+<li>更低的内存消耗</li>
+<li>更好的准确率</li>
+<li>分布式支持，可以快速处理海量数据</li>
+</ul>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua">LightGBM在哪些地方进行了优化？</h2>
 <ul>
 <li>基于Histogram的决策树算法</li>
 <li>带深度限制的Leaf-wise的叶子生长策略</li>
@@ -355,37 +385,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="histogram-suan-fa">Histogram算法</h2>
-<p>直方图算法的基本思想是先把连续的浮点特征值离散化成k个整数（其实又是分桶的思想，而这些桶称为bin，比如[0,0.1)→0, [0.1,0.3)→1），同时构造一个宽度为k的直方图。</p>
-<p>在遍历数据的时候，根据离散化后的值作为索引在直方图中累积统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点。</p>
-<p><img src="/2020/06/03/machine_learning/LightGBM/histogram-1.png" alt></p>
-<p>优点：</p>
-<ol>
-<li>最明显就是内存消耗的降低，直方图算法不仅不需要额外存储预排序的结果，而且可以只保存特征离散化后的值，而这个值一般用8位整型存储就足够了，内存消耗可以降低为原来的1/8。</li>
-<li>在计算上的代价也大幅降低，预排序算法每遍历一个特征值就需要计算一次分裂的增益，而直方图算法只需要计算k次（k可以认为是常数），时间复杂度从<code>O(#data*#feature)</code>优化到<code>O(k*#features)</code>。</li>
-</ol>
-<h2 id="dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue">带深度限制的Leaf-wise的叶子生长策略</h2>
-<p>在XGBoost中，树是按层生长的，称为Level-wise tree growth，同一层的所有节点都做分裂，最后剪枝，如下图所示：</p>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197509149646916.png" alt></p>
-<p>Level-wise过一次数据可以同时分裂同一层的叶子，容易进行多线程优化，也好控制模型复杂度，不容易过拟合。但实际上Level-wise是一种低效的算法，因为它不加区分的对待同一层的叶子，带来了很多没必要的开销，因为实际上很多叶子的分裂增益较低，没必要进行搜索和分裂。</p>
-<p>在Histogram算法之上，LightGBM进行进一步的优化。首先它抛弃了大多数GBDT工具使用的按层生长 (level-wise)<br>
-的决策树生长策略，而使用了带有深度限制的按叶子生长 (leaf-wise)算法。</p>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197520844369289.png" alt></p>
-<p>Leaf-wise则是一种更为高效的策略，每次从当前所有叶子中，找到分裂增益最大的一个叶子，然后分裂，如此循环。因此同Level-wise相比，在分裂次数相同的情况下，Leaf-wise可以降低更多的误差，得到更好的精度。Leaf-wise的缺点是可能会长出比较深的决策树，产生过拟合。因此LightGBM在Leaf-wise之上增加了一个最大深度的限制，在保证高效率的同时防止过拟合。</p>
-<h2 id="zhi-fang-tu-chai-jia-su">直方图差加速</h2>
-<p>LightGBM另一个优化是Histogram（直方图）做差加速。一个容易观察到的现象：一个叶子的直方图可以由它的父亲节点的直方图与它兄弟的直方图做差得到。通常构造直方图，需要遍历该叶子上的所有数据，但直方图做差仅需遍历直方图的k个桶。</p>
-<p>利用这个方法，LightGBM可以在构造一个叶子的直方图后，可以用非常微小的代价得到它兄弟叶子的直方图，在速度上可以提升一倍。</p>
-<h2 id="zhi-jie-zhi-chi-lei-bie-te-zheng">直接支持类别特征</h2>
-<p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化到多维的0/1特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，LightGBM优化了对类别特征的支持，可以直接输入类别特征，不需要额外的0/1展开。并在决策树算法上增加了类别特征的决策规则。在Expo数据集上的实验，相比0/1展开的方法，训练速度可以加速8倍，并且精度一致。据我们所知，LightGBM是第一个直接支持类别特征的GBDT工具。</p>
-<h1 id="light-gbm-you-dian">LightGBM优点</h1>
-<p>LightGBM （Light Gradient Boosting Machine）是一个实现GBDT算法的框架，支持高效率的并行训练，并且具有以下优点：</p>
-<ul>
-<li>更快的训练速度</li>
-<li>更低的内存消耗</li>
-<li>更好的准确率</li>
-<li>分布式支持，可以快速处理海量数据</li>
-</ul>
-<h1 id="dai-ma-shi-xian">代码实现</h1>
+<h2 id></h2>
+<h1 id="dai-ma">代码</h1>
 <p>为了演示LightGBM在Python中的用法，本代码以sklearn包中自带的鸢尾花数据集为例，用lightgbm算法实现鸢尾花种类的分类任务。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> lightgbm <span class="keyword">as</span> lgb</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  make_classification</span><br><span class="line"></span><br><span class="line">iris = load_iris()   <span class="comment"># 载入鸢尾花数据集</span></span><br><span class="line">data=iris.data</span><br><span class="line">target = iris.target</span><br><span class="line">X_train,X_test,y_train,y_test =train_test_split(data,target,test_size=<span class="number">0.2</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加载你的数据</span></span><br><span class="line"><span class="comment"># print('Load data...')</span></span><br><span class="line"><span class="comment"># df_train = pd.read_csv('../regression/regression.train', header=None, sep='\t')</span></span><br><span class="line"><span class="comment"># df_test = pd.read_csv('../regression/regression.test', header=None, sep='\t')</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># y_train = df_train[0].values</span></span><br><span class="line"><span class="comment"># y_test = df_test[0].values</span></span><br><span class="line"><span class="comment"># X_train = df_train.drop(0, axis=1).values</span></span><br><span class="line"><span class="comment"># X_test = df_test.drop(0, axis=1).values</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建成lgb特征的数据集格式</span></span><br><span class="line">lgb_train = lgb.Dataset(X_train, y_train) <span class="comment"># 将数据保存到LightGBM二进制文件将使加载更快</span></span><br><span class="line">lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)  <span class="comment"># 创建验证数据</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 将参数写成字典下形式</span></span><br><span class="line">params = &#123;</span><br><span class="line">    <span class="string">'task'</span>: <span class="string">'train'</span>,</span><br><span class="line">    <span class="string">'boosting_type'</span>: <span class="string">'gbdt'</span>,  <span class="comment"># 设置提升类型</span></span><br><span class="line">    <span class="string">'objective'</span>: <span class="string">'regression'</span>, <span class="comment"># 目标函数</span></span><br><span class="line">    <span class="string">'metric'</span>: &#123;<span class="string">'l2'</span>, <span class="string">'auc'</span>&#125;,  <span class="comment"># 评估函数</span></span><br><span class="line">    <span class="string">'num_leaves'</span>: <span class="number">31</span>,   <span class="comment"># 叶子节点数</span></span><br><span class="line">    <span class="string">'learning_rate'</span>: <span class="number">0.05</span>,  <span class="comment"># 学习速率</span></span><br><span class="line">    <span class="string">'feature_fraction'</span>: <span class="number">0.9</span>, <span class="comment"># 建树的特征选择比例</span></span><br><span class="line">    <span class="string">'bagging_fraction'</span>: <span class="number">0.8</span>, <span class="comment"># 建树的样本采样比例</span></span><br><span class="line">    <span class="string">'bagging_freq'</span>: <span class="number">5</span>,  <span class="comment"># k 意味着每 k 次迭代执行bagging</span></span><br><span class="line">    <span class="string">'verbose'</span>: <span class="number">1</span> <span class="comment"># &lt;0 显示致命的, =0 显示错误 (警告), &gt;0 显示信息</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Start training...'</span>)</span><br><span class="line"><span class="comment"># 训练 cv and train</span></span><br><span class="line">gbm = lgb.train(params,lgb_train,num_boost_round=<span class="number">20</span>,valid_sets=lgb_eval,early_stopping_rounds=<span class="number">5</span>) <span class="comment"># 训练数据需要参数列表和数据集</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Save model...'</span>) </span><br><span class="line"> </span><br><span class="line">gbm.save_model(<span class="string">'model.txt'</span>)   <span class="comment"># 训练后保存模型到文件</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Start predicting...'</span>)</span><br><span class="line"><span class="comment"># 预测数据集</span></span><br><span class="line">y_pred = gbm.predict(X_test, num_iteration=gbm.best_iteration) <span class="comment">#如果在训练期间启用了早期停止，可以通过best_iteration方式从最佳迭代中获得预测</span></span><br><span class="line"><span class="comment"># 评估模型</span></span><br><span class="line">print(<span class="string">'The rmse of prediction is:'</span>, mean_squared_error(y_test, y_pred) ** <span class="number">0.5</span>) <span class="comment"># 计算真实值和预测值之间的均方根误差</span></span><br></pre></td></tr></table></figure>
 
@@ -497,7 +498,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#light-gbm-shi-shi-yao"><span class="nav-number">1.</span> <span class="nav-text">LightGBM是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua-qu-bie-xg-boost"><span class="nav-number">1.1.</span> <span class="nav-text">LightGBM在哪些地方进行了优化    (区别XGBoost)？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#histogram-suan-fa"><span class="nav-number">1.2.</span> <span class="nav-text">Histogram算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue"><span class="nav-number">1.3.</span> <span class="nav-text">带深度限制的Leaf-wise的叶子生长策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhi-fang-tu-chai-jia-su"><span class="nav-number">1.4.</span> <span class="nav-text">直方图差加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhi-jie-zhi-chi-lei-bie-te-zheng"><span class="nav-number">1.5.</span> <span class="nav-text">直接支持类别特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#light-gbm-you-dian"><span class="nav-number">2.</span> <span class="nav-text">LightGBM优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#light-gbm"><span class="nav-number">1.</span> <span class="nav-text">LightGBM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#histogram-suan-fa"><span class="nav-number">1.1.</span> <span class="nav-text">Histogram算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue"><span class="nav-number">1.2.</span> <span class="nav-text">带深度限制的Leaf-wise的叶子生长策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhi-fang-tu-chai-jia-su"><span class="nav-number">1.3.</span> <span class="nav-text">直方图差加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhi-jie-zhi-chi-lei-bie-te-zheng"><span class="nav-number">1.4.</span> <span class="nav-text">直接支持类别特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#light-gbm-you-dian"><span class="nav-number">2.</span> <span class="nav-text">LightGBM优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">3.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua"><span class="nav-number">3.1.</span> <span class="nav-text">LightGBM在哪些地方进行了优化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -515,14 +516,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -737,7 +738,8 @@
 </script>
 
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {

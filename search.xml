@@ -72,6 +72,7 @@ J = L + s
 \]</p>
 <p>将\(J\)称为有关给定数据样本的目标函数，并在以下的讨论中简称目标函数。</p>
 <h2 id="fan-xiang-chuan-bo">反向传播</h2>
+<p>关于反向传播更详细的知识点，可以查看 <code><a href="/2020/03/16/deeplearning/backprop/" title="反向传播">反向传播</a></code></p>
 <p>将上述正向传播进行反向传播，求\(W^{(1)}\)和\(W^{(2)}\)的梯度：<br>
 \[
 \frac{\partial J}{\partial \boldsymbol{W}^{(2)}}
@@ -2862,9 +2863,7 @@ P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
 <li>系统冷启动是指如何为一个新开发的网站设计个性化推荐系统。首先可以得到每个用户和电影对应的主题向量，除此之外，还需要知道用户主题和电影主题之间的偏好程度，也就是哪些主题的用户可能喜欢哪些主题的电影。当系统中没有任何数据时，我们需要一些先验知识来指定，并且由于主题的数目通常比较小，随着系统的上线，收集到少量的数据之后我们就可以对主题之间的偏好程度得到一个比较准确的估计。</li>
 </ul>
 <h1 id="dai-ma">代码</h1>
-<a class="btn" href="HillaryEmails.csv">
-            <i class="fa fa-download"></i>希拉里邮件数据.csv
-          </a>
+<p><a href="https://share.weiyun.com/yY9ePKyX" target="_blank" rel="noopener">数据下载</a></p>
 <p>我们拿到希拉里泄露的邮件，跑一把LDA，看看她平时都在聊什么。</p>
 <h2 id="shu-ju-chu-li">数据处理</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">df = pd.read_csv(<span class="string">"HillaryEmails.csv"</span>)</span><br><span class="line"><span class="comment"># 原邮件数据中有很多Nan的值，直接扔了。</span></span><br><span class="line">df = df[[<span class="string">'Id'</span>,<span class="string">'ExtractedBodyText'</span>]].dropna()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文本预处理：</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_email_text</span><span class="params">(text)</span>:</span></span><br><span class="line">    text = text.replace(<span class="string">'\n'</span>,<span class="string">" "</span>) <span class="comment">#新行，我们是不需要的</span></span><br><span class="line">    text = re.sub(<span class="string">r"-"</span>, <span class="string">" "</span>, text) <span class="comment">#把 "-" 的两个单词，分开。（比如：pre-processing ==&gt; pre processing）</span></span><br><span class="line">    text = re.sub(<span class="string">r"\d+/\d+/\d+"</span>, <span class="string">""</span>, text) <span class="comment">#日期，对主体模型没什么意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"[0-2]?[0-9]:[0-6][0-9]"</span>, <span class="string">""</span>, text) <span class="comment">#时间，没意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"[\w]+@[\.\w]+"</span>, <span class="string">""</span>, text) <span class="comment">#邮件地址，没意义</span></span><br><span class="line">    text = re.sub(<span class="string">r"/[a-zA-Z]*[:\//\]*[A-Za-z0-9\-_]+\.+[A-Za-z0-9\.\/%&amp;=\?\-_]+/i"</span>, <span class="string">""</span>, text) <span class="comment">#网址，没意义</span></span><br><span class="line">    pure_text = <span class="string">''</span></span><br><span class="line">    <span class="comment"># 以防还有其他特殊字符（数字）等等，我们直接把他们loop一遍，过滤掉</span></span><br><span class="line">    <span class="keyword">for</span> letter <span class="keyword">in</span> text:</span><br><span class="line">        <span class="comment"># 只留下字母和空格</span></span><br><span class="line">        <span class="keyword">if</span> letter.isalpha() <span class="keyword">or</span> letter==<span class="string">' '</span>:</span><br><span class="line">            pure_text += letter</span><br><span class="line">    <span class="comment"># 再把那些去除特殊字符后落单的单词，直接排除。</span></span><br><span class="line">    <span class="comment"># 我们就只剩下有意义的单词了。</span></span><br><span class="line">    text = <span class="string">' '</span>.join(word <span class="keyword">for</span> word <span class="keyword">in</span> pure_text.split() <span class="keyword">if</span> len(word)&gt;<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line">docs = df[<span class="string">'ExtractedBodyText'</span>]</span><br><span class="line">docs = docs.apply(<span class="keyword">lambda</span> s: clean_email_text(s))  </span><br><span class="line">doclist = docs.values</span><br></pre></td></tr></table></figure>
@@ -4307,27 +4306,36 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
     <url>/2020/06/03/machine_learning/SVM/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
 <a id="more"></a>
-<h1 id="jiang-jiang-svm">讲讲SVM</h1>
-<h2 id="yi-ge-guan-yu-svm-de-tong-hua-gu-shi">一个关于SVM的童话故事</h2>
-<p>支持向量机（Support Vector Machine，SVM）是众多监督学习方法中十分出色的一种，几乎所有讲述经典机器学习方法的教材都会介绍。关于SVM，流传着一个关于天使与魔鬼的故事。</p>
-<p>传说魔鬼和天使玩了一个游戏，魔鬼在桌上放了两种颜色的球。魔鬼让天使用一根木棍将它们分开。这对天使来说，似乎太容易了。天使不假思索地一摆，便完成了任务。魔鬼又加入了更多的球。随着球的增多，似乎有的球不能再被原来的木棍正确分开，如下图所示。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vn6ow8vtj30i40ddgpt.jpg" alt></p>
-<p>SVM实际上是在为天使找到木棒的最佳放置位置，使得两边的球都离分隔它们的木棒足够远。依照SVM为天使选择的木棒位置，魔鬼即使按刚才的方式继续加入新球，木棒也能很好地将两类不同的球分开。</p>
-<p>看到天使已经很好地解决了用木棒线性分球的问题，魔鬼又给了天使一个新的挑战，如下图所示。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vn9xl3pcj30iy0dswgr.jpg" alt></p>
-<p>按照这种球的摆法，世界上貌似没有一根木棒可以将它们 完美分开。但天使毕竟有法力，他一拍桌子，便让这些球飞到了空中，然后凭借念力抓起一张纸片，插在了两类球的中间。从魔鬼的角度看这些 球，则像是被一条曲线完美的切开了。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/00630Defgy1g4vnbaltf7j30mo0ar77n.jpg" alt></p>
-<p>后来，“无聊”的科学家们把这些球称为“数据”，把木棍称为“分类面”，找到最大间隔的木棒位置的过程称为“优化”，拍桌子让球飞到空中的念力叫“核映射”，在空中分隔球的纸片称为“分类超平面”。这便是SVM的童话故事。</p>
-<h2 id="li-jie-svm-di-yi-ceng">理解SVM：第一层</h2>
-<p>支持向量机，因其英文名为support vector machine，故一般简称SVM，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是<strong>间隔最大化</strong>，最终可转化为一个凸二次规划问题的求解。</p>
-<p>**线性分类器：**给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者0，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面，这个超平面的方程可以表示为：<br>
+<h1 id="svm">SVM</h1>
+<h2 id="jian-jie">简介</h2>
+<p>支持向量机是一种<strong>二类分类模型</strong>.它的基本模型是定义在特征空间上的<strong>间隔最大</strong>的线性分类器。支持向量机包括<strong>核技巧</strong>,使它成为实质上的<strong>非线性分类器</strong>.</p>
+<p>SVM 三宝： <strong>间隔，对偶，核技巧</strong>。它属于<strong>判别模型</strong>。</p>
+<h2 id="ji-ben-gai-nian">基本概念</h2>
+<h3 id="xian-xing-ke-fen">线性可分</h3>
+<p>\(D_0\) 和 \(D_1\) 是 n 维空间中的两个点集， 如果存在 n 维向量 \(w\) 和实数 \(b\) ， 使得：<br>
+\[
+wx_i +b > 0; \quad x_i \in D_0 
+\]<br>
+\[
+wx_j + b &lt; 0; \quad x_j \in D_1
+\]</p>
+<p>则称 \(D_0\) 与 \(D_1\) 线性可分。</p>
+<h3 id="zui-da-jian-ge-chao-ping-mian">最大间隔超平面</h3>
+<p>能够将 \(D_0\) 与 \(D_1\) 完全正确分开的 \(wx+b = 0\) 就成了一个超平面。</p>
+<p>为了使得这个超平面更具鲁棒性，会去找最佳超平面，以最大间隔把两类样本分开的超平面，也称之为<strong>最大间隔超平面</strong>。</p>
+<ul>
+<li>两类样本分别分割在该超平面的两侧</li>
+<li>两侧距离超平面最近的样本点到超平面的距离被最大化了</li>
+</ul>
+<h3 id="fen-chi-chao-ping-mian">分离超平面</h3>
+<p>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用x表示数据点，用y表示类别（y可以取1或者0，分别代表两个不同的类），一个线性分类器的学习目标便是要在n维的数据空间中找到一个超平面，这个超平面的方程可以表示为：<br>
 \[
 w^Tx+b=0
 \]<br>
 这个超平面可以用分类函数  \(f(x)=w^Tx+b\)表示，当\(f(x)\) 等于0的时候，\(x\)便是位于超平面上的点，而\(f(x)\)大于0的点对应 \(y=1\) 的数据点，\(f(x)\)小于0的点对应\(y=-1\)的点，如下图所示：</p>
 <p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
 <h3 id="han-shu-jian-ge-yu-ji-he-jian-ge">函数间隔与几何间隔</h3>
-<p>在分离超平面固定为\(𝑤^T𝑥+𝑏=0\)的时候，\(|wTx+b|\)表示点x到超平面的相对距离。通过观察\(w^Tx+b\)和\(y\)是否同号，我们判断分类是否正确。这里引入函数间隔的概念，定义函数间隔\(\gamma^{\prime}\) 为：<br>
+<p>在分离超平面固定为\(𝑤^T𝑥+𝑏=0\)的时候，\(|w^Tx+b|\)表示点\(x\)到超平面的相对距离。通过观察\(w^Tx+b\)和\(y\)是否同号，我们判断分类是否正确。这里引入函数间隔的概念，定义函数间隔\(\gamma^{\prime}\) 为：<br>
 \[
 \gamma^{\prime}=y(w^Tx+b)
 \]<br>
@@ -4342,20 +4350,20 @@ w^Tx+b=0
 <p>如下图所示，分离超平面为\(w^Tx+b=0\)，如果所有的样本不光可以被超平面分开，还和超平面保持一定的函数距离（下图函数距离为1），那么这样的分类超平面是比感知机的分类超平面优的。可以证明，这样的超平面只有一个。和超平面平行的保持一定的函数距离的这两个超平面对应的向量，我们定义为支持向量，如下图虚线所示。</p>
 <p><img src="/2020/06/03/machine_learning/SVM/1042406-20161124144326487-1331861308.jpg" alt></p>
 <p>支持向量到超平面的距离为\(\frac{1}{||w||_2}\),两个支持向量之间的距离为\(\frac{2}{||w||_2}\)。</p>
-<h3 id="mu-biao-han-shu-yu-you-hua">目标函数与优化</h3>
+<h2 id="mu-biao-han-shu-yu-you-hua">目标函数与优化</h2>
 <p>SVM的模型是让所有点到超平面的距离大于一定的距离，也就是所有的分类点要在各自类别的支持向量两边。用数学式子表示为：<br>
 \[
 \begin{array}{ll}
-\max &amp; \gamma=\frac{y\left(w^{T} x+b\right)}{\|w\|_{2}} \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right)=\gamma^{\prime}_{i} \geq \gamma^{\prime}(i=1,2, \ldots m)
+\max &amp; \gamma=\frac{y\left(w^{T} x+b\right)}{\|w\|_{2}} \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right)=\gamma^{\prime}_{i} \geq \gamma^{\prime} \quad (i=1,2, \ldots m)
 \end{array}
 \]<br>
 一般我们都取函数间隔\(\gamma\)为1，这样我们的优化函数定义为:<br>
 \[
 \begin{array}{ll}
-\max &amp; \frac{1}{\|w\|_{2}}  \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)
+\max &amp; \frac{1}{\|w\|_{2}}  \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1 \quad (i=1,2, \ldots m)
 \end{array}
 \]<br>
-也就是说，我们要在约束条件\(y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)\)下，最大化\(\frac{1}{||w||_2}\)。可以看出，这个感知机的优化方式不同，感知机是固定分母优化分子，而SVM是固定分子优化分母，同时加上了支持向量的限制。</p>
+也就是说，要在约束条件\(y_{i}\left(w^{T} x_{i}+b\right) \geq 1 \quad (i=1,2, \ldots m)\)下，最大化\(\frac{1}{||w||_2}\)。可以看出，这个感知机的优化方式不同，感知机是固定分母优化分子，而SVM是固定分子优化分母，同时加上了支持向量的限制。</p>
 <p>由于\(\frac{1}{||w||_2}\)最大化等价于\(\frac{||w||_2^2}{2}\)最小化。这样SVM的优化函数等价于：<br>
 \[
 \begin{array}{ll}
@@ -4388,32 +4396,14 @@ L(w, b, \alpha)&amp;=\frac{1}{2}\|w\|_{2}^{2}-\sum_{i=1}^{m} \alpha_{i}\left[y_{
 \psi(\alpha)=\underbrace{\min }_{w,b} L(w, b, \alpha)
 \]<br>
 从上面可以看出，通过对\(w,b\)极小化以后，优化函数\(\psi(\alpha)\)仅仅只有\(\alpha\)向量做参数。只要能够(利用SMO算法)极大化\(\psi(\alpha)\)，就可以求出此时对应的\(\alpha\)，进而求出\(w,b\).</p>
-<h3 id="zui-da-jian-ge-sun-shi-han-shu-hinge-loss">最大间隔损失函数Hinge loss</h3>
-<p>SVM 求解使通过建立二次规划原始问题，引入拉格朗日乘子法，然后转换成对偶的形式去求解，这是一种理论非常充实的解法。这里换一种角度来思考，在机器学习领域，一般的做法是经验风险最小化 ，即构建假设函数为输入输出间的映射，然后采用损失函数来衡量模型的优劣。求得使损失最小化的模型即为最优的假设函数，采用不同的损失函数也会得到不同的机器学习算法。SVM采用的就是Hinge Loss，用于“最大间隔”分类。</p>
-<p>Hinge Loss中文名叫合页损失函数，因为它的图像是这样的：</p>
-<p><img src="/2020/06/03/machine_learning/SVM/v2-3c6aa9626ee8e4609b0d7c5712baf624_1440w.jpg" alt></p>
-<p>hinge-loss的公式是：<br>
-\[
-\begin{array}{c}
-\sum_{i=1}^{N}\left[1-y_{i}\left(w \cdot x_{i}+b\right)\right]_{+}+\lambda\|w\|^{2} \\
-{[z]_{+}=\left\{\begin{array}{l}
-z, z>0 \\
-0 . z \leq 0
-\end{array}\right.}
-\end{array}
-\]<br>
-第一项是损失，第二项是正则化项。这个公式就是说 \(y_i(w * x_i+b)\) 大于1时loss为0， 否则loss为 \(1-y_i(w*x_i+b)\) 。对比感知机的损失函数\([-y_i(w*x_i+b)]\)  来说，hinge loss不仅要分类正确，而且置信度足够高的时候，损失才为0，对学习有更高的要求。对比感知机损失和hinge loss的图像，明显Hinge loss更加严格。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/v2-0884e199d2198ec716f3b09536b10213_r.jpg" alt="preview"></p>
-<p>如下图中，点 \(x_4\)被分类正确了，但是它的损失不是0。其实这个道理和SVM中的Margin是一样的，不仅要分类正确，还要使得Margin最大化，所以说hinge loss的另外一种解释。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/v2-a04fdb43f41bd9e4fd06306558ab61f2_1440w.jpg" alt="img"></p>
-<h2 id="shen-ru-svm-di-er-ceng">深入SVM：第二层</h2>
-<h3 id="cong-xian-xing-ke-fen-dao-xian-xing-bu-ke-fen">从线性可分到线性不可分</h3>
+<h2 id="cong-xian-xing-ke-fen-dao-xian-xing-bu-ke-fen">从线性可分到线性不可分</h2>
 <p>有时候本来数据的确是可分的，也就是说可以用 线性分类SVM的学习方法来求解，但是却因为混入了异常点，导致不能线性可分，比如下图，本来数据是可以按下面的实线来做超平面分离的，可由于一个橙色和一个蓝色的异常点导致我们没法用上述方法来分类。</p>
 <p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104106409-1177897648.png" alt="img"></p>
 <p>另外一种情况没有这么糟糕到不可分，但是会严重影响我们模型的泛化预测效果，比如下图，本来如果我们不考虑异常点，SVM的超平面应该是下图中的红色线所示，但是由于有一个蓝色的异常点，导致我们学习到的超平面是下图中的粗虚线所示，这样会严重影响我们的分类模型预测效果。</p>
 <p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104737206-364720074.png" alt="img"></p>
-<p>如何解决这些问题呢？SVM引入了软间隔最大化的方法来解决。回顾硬间隔最大化的条件：</p>
-<p>\[
+<p>如何解决这些问题呢？</p>
+<p>SVM引入了软间隔最大化的方法来解决。回顾硬间隔最大化的条件：<br>
+\[
 \begin{array}{ll}
 \min &amp; \frac{1}{2}\|w\|_{2}^{2} \\ \text { s.t } &amp; y_{i}\left(w^{T} x_{i}+b\right) \geq 1(i=1,2, \ldots m)
 \end{array}
@@ -4431,11 +4421,10 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 &amp;\xi_{i} \geq 0 \quad(i=1,2, \ldots m)
 \end{aligned}
 \]<br>
-这里,\(C > 0\)为惩罚参数，可以理解为我们一般回归和分类问题正则化时候的参数。\(C\)越大，对误分类的惩罚越大，\(C\)越小，对误分类的惩罚越小。也就是说，我们希望\(\frac{||w||_2^2}{2}\)尽量小，误分类的点尽可能的少。\(C\)是协调两者关系的正则化惩罚系数。在实际应用中，需要调参来选择。</p>
-<p><strong>如果数据中出现了离群点outliers，那么就可以使用松弛变量来解决。</strong></p>
-<h3 id="he-han-shu-kernel">核函数Kernel</h3>
+这里,\(C > 0\)为惩罚参数，可以理解为我们一般回归和分类问题正则化时候的参数。\(C\)越大，对误分类的惩罚越大，\(C\)越小，对误分类的惩罚越小。也就是说，我们希望\(\frac{||w||_2^2}{2}\)尽量小，误分类的点尽可能的少。\(C\)是协调两者关系的正则化惩罚系数。在实际应用中，需要调参来选择。<strong>如果数据中出现了离群点outliers，那么就可以使用松弛变量来解决。</strong></p>
+<h2 id="he-han-shu-kernel">核函数Kernel</h2>
 <p>事实上，大部分时候数据并不是线性可分的，这个时候满足这样条件的超平面就根本不存在。对于非线性的情况，SVM 的处理方法是选择一个核函数 κ(⋅,⋅) ，通过将数据映射到高维空间，来解决在原始空间中线性不可分的问题。</p>
-<p>具体来说，**在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。**如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
+<p>具体来说，在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
 <p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg" alt></p>
 <p><img src="/2020/06/03/machine_learning/SVM/quesbase6415311358438441728.gif" alt></p>
 <p>通常人们会从一些常用的核函数中选择（根据问题和数据的不同，选择不同的参数，实际上就是得到了不同的核函数），例如：<strong>多项式核、高斯核、线性核。</strong></p>
@@ -4445,71 +4434,63 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 <li>但进一步，如果凡是遇到线性不可分的样例，一律映射到高维空间，那么这个维度大小是会高到可怕的。那咋办呢？</li>
 <li>此时，核函数就隆重登场了，核函数的价值在于它虽然也是将特征进行从低维到高维的转换，但核函数能够<strong>事先在低维上进行计算</strong>，而将实质上的分类效果表现在了高维上，避免了直接在高维空间中的复杂计算。</li>
 </ol>
-<h3 id="zong-jie">总结</h3>
-<p>SVM它本质上即是一个分类方法，用 \(w^T+b\) 定义分类函数，于是求\(w,b\)，为寻最大间隔，引出\(\frac{||w||^2_2}{2}\),继而引入拉格朗日因子，化为对拉格朗日乘子a的求解（求解过程中会涉及到一系列最优化或凸二次规划等问题），如此，求\(w,b\)与求\(a\)等价，而\(a\)的求解可以用一种快速学习算法SMO，至于核函数，是为处理非线性情况，若直接映射到高维计算恐维度爆炸，故在低维计算，等效高维表现。</p>
-<h2 id="svm-de-ying-yong">SVM的应用</h2>
-<p>SVM在很多诸如<strong>文本分类，图像分类，生物序列分析和生物数据挖掘，手写字符识别等领域有很多的应用</strong>。</p>
-<h1 id="zhi-chi-xiang-liang-ji-yuan-shi-zui-you-hua-wen-ti-he-he-ye-sun-shi">支持向量机原始最优化问题和合页损失</h1>
-<p>线性支持向量机原始最优化问题<br>
-\[
-\begin{array}{ll}
-\min _{w, b, \xi} &amp; \frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}   \\
-\text { s.t. } &amp; y_{i}\left(w \cdot x_{i}+b\right) \geqslant 1-\xi_{i}, \quad i=1,2, \cdots, N \\
-&amp; \xi_{i} \geqslant 0, \quad i=1,2, \cdots, N
-\end{array}
-\]<br>
-等价于(合页损失)最优化问题：<br>
-\[
-\min _{w, b} \sum_{i=1}^{N}\left[1-y_{i}\left(w \cdot x_{i}+b\right)\right]_{+}+\lambda\|w\|^{2}
-\]<br>
-证明，令合页损失中：<br>
-\[
-1-y_{i}\left(w \cdot x_{i}+b\right)=\xi_{i}, \quad \xi_{i} \geqslant 0
-\]<br>
-则：\(y_i(w*x_i+b) \ge 1\).于是\(w,b,\xi\)满足支持向量机原始优化问题的约束条件。由\([1-y_i(w*x_i+b)]_+=[\xi_i]_+=\xi_i\)，所以合页损失可以写成:<br>
-\[
-\min _{w, b} \sum_{i=1}^{N} \xi_{i}+\lambda\|w\|^{2}
-\]<br>
-取：\(\lambda=\frac{1}{2C}\)，则：<br>
-\[
-\min _{w, b} \frac{1}{C}\left(\frac{1}{2}\|w\|^{2}+C \sum_{i=1}^{N} \xi_{i}\right)
-\]<br>
-与原始问题等价。</p>
-<h2 id="svm-de-yi-xie-wen-ti">SVM的一些问题</h2>
+<p><strong>常用核函数</strong></p>
 <ol>
 <li>
-<p>是否存在一组参数使SVM训练误差为0？</p>
+<p><strong>多项式核函数(polynomial kernel function)</strong> :\(K(x, z)=(x \cdot z+1)^{p}\),对应的支持向量机是一个p次多项式分类器,分类决策函数为:<br>
+\[
+f(x)=\operatorname{sign}\left(\sum_{i=1}^{N_{i}} a_{i}^{*} y_{i}\left(x_{i} \cdot x+1\right)^{p}+b^{*}\right)
+\]</p>
+</li>
+<li>
+<p><strong>高斯核函数(Gaussian krenel function)</strong> :<br>
+\[
+K(x, z)=\exp \left(-\frac{\|x-z\|^{2}}{2 \sigma^{2}}\right)
+\]<br>
+对应的支持向量机是高斯径向基函数(RBF)分类器.分类决策函数为:<br>
+\[
+f(x)=\operatorname{sign}\left(\sum_{i=1}^{N_{t}} a_{i}^{*} y_{i} \exp \left(-\frac{\|x-z\|^{2}}{2 \sigma^{2}}\right)+b^{*}\right)
+\]</p>
+</li>
+<li>
+<p><strong>字符串核函数(string kernel function)</strong>:<br>
+核函数不仅可以定义在欧氏空间上,还可以定义在<strong>离散数据的集合</strong>上.字符串核函数给出了字符串中长度等于n的所有子串组成的特征向量的余弦相似度.</p>
+</li>
+</ol>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="shi-yao-shi-svm">什么是SVM ？</h2>
+<p>SVM 是一种二类分类模型。它的基本思想是在特征空间中寻找间隔最大的分离超平面使数据得到高效的二分类， 主要分三种情况：</p>
+<ul>
+<li>当训练样本线性可分时，通过硬间隔最大化，学习一个线性分类器，即线性可分支持向量机；</li>
+<li>当训练数据近似线性可分时，引入松弛变量，通过软间隔最大化，学习一个线性分类器，即线性支持向量机</li>
+<li>当训练数据线性不可分时，通过使用核技巧及软间隔最大化，学习非线性支持向量机。</li>
+</ul>
+<h2 id="svm-zhong-de-zhi-chi-xiang-liang-shi-shi-yao-yi-si">SVM 中的支持向量是什么意思？</h2>
+<p><img src="/2020/06/03/machine_learning/SVM/10.svm.png" alt="10.svm"></p>
+<p>如上图所示，在获得分离超平面时，并非所有的点都对分离超平面的位置起决定作用。</p>
+<p>其实在特别远的区域，哪怕你增加10000个样本点，对于超平面的位置，也是没有作用的，因为分割线是由几个关键点决定的（图上三个），这几个关键点支撑起了一个分离超平面，所以这些关键点，就是<strong>支持向量</strong>。</p>
+<h2 id="shi-fou-cun-zai-yi-zu-can-shu-shi-svm-xun-lian-wu-chai-wei-0">是否存在一组参数使SVM训练误差为0？</h2>
 <p>答：存在</p>
-</li>
-<li>
-<p>训练误差为0的SVM分类器一定存在吗？</p>
+<h2 id="xun-lian-wu-chai-wei-0-de-svm-fen-lei-qi-yi-ding-cun-zai-ma">训练误差为0的SVM分类器一定存在吗？</h2>
 <p>答：一定存在</p>
-</li>
-<li>
-<p>加入松弛变量的SVM的训练误差可以为0吗？</p>
+<h2 id="jia-ru-song-chi-bian-liang-de-svm-de-xun-lian-wu-chai-ke-yi-wei-0-ma">加入松弛变量的SVM的训练误差可以为0吗？</h2>
 <p>答：使用SMO算法训练的线性分类器并不一定能得到训练误差为0的模型。这是由于优化目标改变了，并不再是使训练误差最小。</p>
-</li>
-<li>
-<p><strong>带核的SVM为什么能分类非线性问题?</strong></p>
-<p>答：核函数的本质是两个函数的內积，通过核函数将其隐射到高维空间，在高维空间非线性问题转化为线性问题, SVM得到超平面是高维空间的线性分类平面。其分类结果也视为低维空间的非线性分类结果, 因而带核的SVM就能分类非线性问题。</p>
-</li>
-<li>
-<p><strong>如何选择核函数？</strong></p>
+<h2 id="dai-he-de-svm-wei-shi-yao-neng-fen-lei-fei-xian-xing-wen-ti">带核的SVM为什么能分类非线性问题?</h2>
+<p>答：核函数的本质是两个函数的內积，通过核函数将其映射到高维空间，在高维空间非线性问题转化为线性问题, SVM得到超平面是高维空间的线性分类平面。其分类结果也视为低维空间的非线性分类结果, 因而带核的SVM就能分类非线性问题。</p>
+<h2 id="ru-he-xuan-ze-he-han-shu">如何选择核函数？</h2>
 <ul>
 <li>如果特征的数量大到和样本数量差不多，则选用LR或者线性核的SVM；</li>
 <li>如果特征的数量小，样本的数量正常，则选用SVM+高斯核函数；</li>
 <li>如果特征的数量小，而样本的数量很大，则需要手工添加一些特征从而变成第一种情况。</li>
 </ul>
-</li>
-</ol>
-<h1 id="lr-he-svm-de-lian-xi-yu-qu-bie">LR和SVM的联系与区别</h1>
-<h2 id="xiang-tong-dian">相同点</h2>
+<h2 id="lr-he-svm-de-lian-xi-yu-qu-bie">LR和SVM的联系与区别</h2>
+<p><strong>相同点</strong>：</p>
 <ul>
 <li>都是线性分类器。本质上都是求一个最佳分类超平面。</li>
 <li>都是监督学习算法。</li>
 <li>都是判别模型。判别模型不关心数据是怎么生成的，它只关心信号之间的差别，然后用差别来简单对给定的一个信号进行分类。常见的判别模型有：KNN、SVM、LR，常见的生成模型有：朴素贝叶斯，隐马尔可夫模型。</li>
 </ul>
-<h2 id="bu-tong-dian">不同点</h2>
+<p><strong>不同点</strong>：</p>
 <ul>
 <li>LR是参数模型，svm是<strong>非参数模型</strong>，linear和rbf则是针对数据线性可分和不可分的区别；</li>
 <li>从目标函数来看，区别在于逻辑回归采用的是logistical loss，SVM采用的是hinge loss，这两个损失函数的目的都是增加对分类影响较大的数据点的权重，减少与分类关系较小的数据点的权重。</li>
@@ -4517,7 +4498,7 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 <li>逻辑回归相对来说模型更简单，好理解，特别是大规模线性分类时比较方便。而SVM的理解和优化相对来说复杂一些，SVM转化为对偶问题后,分类只需要计算与少数几个支持向量的距离,这个在进行复杂核函数计算时优势很明显,能够大大简化模型和计算。</li>
 <li>logic 能做的 svm能做，但可能在准确率上有问题，svm能做的logic有的做不了。</li>
 </ul>
-<h1 id="xian-xing-fen-lei-qi-yu-fei-xian-xing-fen-lei-qi-de-qu-bie-yi-ji-you-lie">线性分类器与非线性分类器的区别以及优劣</h1>
+<h2 id="xian-xing-fen-lei-qi-yu-fei-xian-xing-fen-lei-qi-de-qu-bie-yi-ji-you-lie">线性分类器与非线性分类器的区别以及优劣</h2>
 <p>线性和非线性是针对模型参数和输入特征来讲的。比如输入\(x\)，模型\(y=ax+ax^2\) 那么就是非线性模型，如果输入是\(x\)和\(x^2\)则模型是线性的。</p>
 <ul>
 <li>
@@ -4530,6 +4511,70 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 </li>
 </ul>
 <p><strong>SVM两种都有（看线性核还是高斯核）</strong></p>
+<h2 id="svm-wei-he-cai-yong-jian-ge-zui-da-hua">SVM 为何采用间隔最大化？</h2>
+<p>当训练数据线性可分时，存在无穷个分离超平面可以将两类数据正确分开。</p>
+<ul>
+<li>感知机利用误分类最小策略，求得分离超平面，不过此时的解有无穷多个。</li>
+<li>线性可分支持向量机利用间隔最大化求得最优分离超平面，这时，解是唯一的。</li>
+</ul>
+<p>SVM 求得的分隔超平面所产生的分类结果是最鲁棒的，对未知实例的泛化能力最强。</p>
+<h2 id="wei-he-yao-jiang-qiu-jie-svm-de-yuan-shi-wen-ti-zhuan-huan-wei-qi-dui-ou-wen-ti">为何要讲求解 SVM 的原始问题转换为其对偶问题？</h2>
+<ul>
+<li>
+<p>对偶问题往往更易求解</p>
+<p>当我们寻找约束存在时的最优点的时候，约束的存在虽然减小了需要搜寻的范围，但是却使问题变得更加复杂。为了使问题变得易于处理，我们的方法是把目标函数和约束全部融入一个新的函数，即拉格朗日函数，再通过这个函数来寻找最优点。</p>
+</li>
+<li>
+<p>自然引入核函数，进而推广到非线性分类问题</p>
+</li>
+</ul>
+<h2 id="svm-ru-he-chu-li-duo-fen-lei-wen-ti">SVM如何处理多分类问题？</h2>
+<ul>
+<li>直接法：直接在目标函数上修改，将多个分类面的参数求解合并到一个最优化问题里面。看似简单但是计算量却非常的大。</li>
+<li>间接法：对训练器进行组合。其中比较典型的有一对一，和一对多。</li>
+</ul>
+<p>一对多： 对每个类都训练出一个分类器，由svm是二分类，所以将此而分类器的两类设定为目标类为一类，其余类为另外一类。这样针对k个类可以训练出k个分类器，当有一个新的样本来的时候，用这k个分类器来测试，那个分类器的概率高，那么这个样本就属于哪一类。这种方法效果不太好，bias 比较高。</p>
+<p>一对一： 针对任意两个类训练出一个分类器，如果有 k 类，一共训练出 \(C_k^2\) 个分类器，这样当有一个新的样本要来的时候，用这 \(C_k^2\) 个分类器来测试，每当被判定属于某一类的时候，该类就加一，最后票数最多的类别被认定为该样本的类。</p>
+<h2 id="svm-ruan-jian-ge-yu-ying-jian-ge-biao-da-shi">SVM 软间隔与硬间隔表达式</h2>
+<ul>
+<li>
+<p>硬间隔：<br>
+\[
+min_{w,b} \frac{1}{2} ||w||^2 \qquad st. \quad y^{(i)}(w^Tx^{(i)} + b) \geq 1
+\]</p>
+</li>
+<li>
+<p>软间隔：<br>
+\[
+min_{w,b} \frac{1}{2} ||w||^2 + C \sum_{i=1}^m \xi_i  \qquad st. \quad y^{(i)}(w^Tx^{(i)} + b) \geq 1 - \xi_i \quad \xi_i \geq 0
+\]</p>
+</li>
+</ul>
+<h2 id="he-han-shu-de-chong-lei-he-ying-yong-chang-jing">核函数的种类和应用场景</h2>
+<ul>
+<li>线性核函数：主要用于线性可分的情形。参数少，速度快。</li>
+<li>多项式核函数：</li>
+<li>高斯核函数：主要用于线性不可分的情形。参数多，分类结果非常依赖于参数。</li>
+<li>sigmoid 核函数：</li>
+<li>拉普拉斯核函数：</li>
+</ul>
+<p>如果feature数量很大，跟样本数量差不多，建议使用LR或者 Linear kernel 的SVM。<br>
+如果 feature 数量较少，样本数量一般，建议使用 Gaussian Kernel 的SVM。</p>
+<h2 id="svm-sun-shi-han-shu-shi-shi-yao">SVM 损失函数是什么？</h2>
+<p>\[
+J(\theta) = \frac{1}{2} ||\theta||^2 + C \sum_i max(0, 1-y_i(\theta^Tx_i + b))
+\]</p>
+<h2 id="he-han-shu-de-zuo-yong-shi-sha">核函数的作用是啥？</h2>
+<p>核函数能够将特征从低维空间映射到高维空间， 这个映射可以把低维空间中不可分的两类点变成线性可分的。</p>
+<h2 id="svm-wei-he-neng-yong-dui-ou-han-shu-qiu-jie">SVM 为何能用对偶函数求解？</h2>
+<p>对偶将原始问题中的约束转为了对偶问题中的等式约束， 而且更加方便了核函数的引入， 同时也改变了问题的复杂度， 在原始问题下， 求解问题的复杂度只与样本的维度有关， 在对偶问题下， 只与样本的数量有关。</p>
+<h2 id="svm-he-quan-bu-shu-ju-you-guan-huan-shi-he-ju-bu-shu-ju-you-guan">SVM 和全部数据有关还是和局部数据有关?</h2>
+<p>SVM 只和分类界限上的支持向量点有关， 换而言之只和局部数据有关。</p>
+<h2 id="wei-shi-yao-gao-si-he-neng-gou-ni-he-wu-qiong-wei-du">为什么高斯核能够拟合无穷维度？</h2>
+<p>因为将泰勒展开式代入高斯核，将会得到一个无穷维度的映射。</p>
+<h1 id="zong-jie">总结</h1>
+<p>SVM它本质上即是一个分类方法，用 \(w^T+b\) 定义分类函数，于是求\(w,b\)，为寻最大间隔，引出\(\frac{||w||^2_2}{2}\),继而引入拉格朗日因子，化为对拉格朗日乘子a的求解（求解过程中会涉及到一系列最优化或凸二次规划等问题），如此，求\(w,b\)与求\(a\)等价，而\(a\)的求解可以用一种快速学习算法SMO，至于核函数，是为处理非线性情况，若直接映射到高维计算恐维度爆炸，故在低维计算，等效高维表现。</p>
+<p>SVM在很多诸如<strong>文本分类，图像分类，生物序列分析和生物数据挖掘，手写字符识别等领域有很多的应用</strong>。</p>
 ]]></content>
       <categories>
         <category>技术/机器学习</category>
@@ -4543,12 +4588,42 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
     <url>/2020/06/03/machine_learning/LightGBM/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/03/machine_learning/LightGBM/img_lightgbm.jpg" alt></p>
 <a id="more"></a>
-<h1 id="light-gbm-shi-shi-yao">LightGBM是什么</h1>
+<h1 id="light-gbm">LightGBM</h1>
 <p>不久前微软DMTK(分布式机器学习工具包)团队在GitHub上开源了性能超越其他boosting工具的LightGBM，在三天之内GitHub上被star了1000次，fork了200次。知乎上有近千人关注“如何看待微软开源的LightGBM？”问题，被评价为“速度惊人”，“非常有启发”，“支持分布式”，“代码清晰易懂”，“占用内存小”等。</p>
 <p><a href="%5Bhttps://github.com/Microsoft/LightGBM%5D(https://github.com/Microsoft/LightGBM)">LightGBM （Light Gradient Boosting Machine）</a>是一个实现GBDT算法的框架，支持高效率的并行训练。</p>
 <p>LightGBM在Higgs数据集上LightGBM比XGBoost快将近10倍，内存占用率大约为XGBoost的1/6，并且准确率也有提升。GBDT在每一次迭代的时候，都需要遍历整个训练数据多次。如果把整个训练数据装进内存则会限制训练数据的大小；如果不装进内存，反复地读写训练数据又会消耗非常大的时间。尤其面对工业级海量的数据，普通的GBDT算法是不能满足其需求的。</p>
 <p>LightGBM提出的主要原因就<strong>是为了解决GBDT在海量数据遇到的问题</strong>，让GBDT可以更好更快地用于工业实践。</p>
-<h2 id="light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua-qu-bie-xg-boost">LightGBM在哪些地方进行了优化    (区别XGBoost)？</h2>
+<h2 id="histogram-suan-fa">Histogram算法</h2>
+<p>直方图算法的基本思想是先把连续的浮点特征值离散化成k个整数（其实就是分桶的思想，而这些桶称为bin，比如[0,0.1)→0, [0.1,0.3)→1），同时构造一个宽度为k的直方图。</p>
+<p>在遍历数据的时候，根据离散化后的值作为索引在直方图中累积统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点。</p>
+<p><img src="/2020/06/03/machine_learning/LightGBM/histogram-1.png" alt></p>
+<p>优点：</p>
+<ol>
+<li>最明显就是内存消耗的降低，直方图算法不仅不需要额外存储预排序的结果，而且可以只保存特征离散化后的值，而这个值一般用8位整型存储就足够了，内存消耗可以降低为原来的1/8。</li>
+<li>在计算上的代价也大幅降低，预排序算法每遍历一个特征值就需要计算一次分裂的增益，而直方图算法只需要计算k次（k可以认为是常数），时间复杂度从<code>O(#data*#feature)</code>优化到<code>O(k*#features)</code>。</li>
+</ol>
+<h2 id="dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue">带深度限制的Leaf-wise的叶子生长策略</h2>
+<p>在XGBoost中，树是按层生长的，称为Level-wise tree growth，同一层的所有节点都做分裂，最后剪枝，如下图所示：</p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197509149646916.png" alt></p>
+<p>Level-wise过一次数据可以同时分裂同一层的叶子，容易进行多线程优化，也好控制模型复杂度，不容易过拟合。但实际上Level-wise是一种低效的算法，因为它不加区分的对待同一层的叶子，带来了很多没必要的开销，因为实际上很多叶子的分裂增益较低，没必要进行搜索和分裂。</p>
+<p>在Histogram算法之上，LightGBM进行进一步的优化。首先它抛弃了大多数GBDT工具使用的按层生长 (level-wise)的决策树生长策略，而使用了带有深度限制的按叶子生长 (leaf-wise)算法。</p>
+<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197520844369289.png" alt></p>
+<p>Leaf-wise则是一种更为高效的策略，每次从当前所有叶子中，找到分裂增益最大的一个叶子，然后分裂，如此循环。因此同Level-wise相比，在分裂次数相同的情况下，Leaf-wise可以降低更多的误差，得到更好的精度。Leaf-wise的缺点是可能会长出比较深的决策树，产生过拟合。因此LightGBM在Leaf-wise之上增加了一个最大深度的限制，在保证高效率的同时防止过拟合。</p>
+<h2 id="zhi-fang-tu-chai-jia-su">直方图差加速</h2>
+<p>LightGBM另一个优化是Histogram（直方图）做差加速。一个容易观察到的现象：一个叶子的直方图可以由它的父亲节点的直方图与它兄弟的直方图做差得到。通常构造直方图，需要遍历该叶子上的所有数据，但直方图做差仅需遍历直方图的k个桶。</p>
+<p>利用这个方法，LightGBM可以在构造一个叶子的直方图后，可以用非常微小的代价得到它兄弟叶子的直方图，在速度上可以提升一倍。</p>
+<h2 id="zhi-jie-zhi-chi-lei-bie-te-zheng">直接支持类别特征</h2>
+<p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化到多维的0/1特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，LightGBM优化了对类别特征的支持，可以直接输入类别特征，不需要额外的0/1展开。并在决策树算法上增加了类别特征的决策规则。在Expo数据集上的实验，相比0/1展开的方法，训练速度可以加速8倍，并且精度一致。据我们所知，LightGBM是第一个直接支持类别特征的GBDT工具。</p>
+<h1 id="light-gbm-you-dian">LightGBM优点</h1>
+<p>LightGBM （Light Gradient Boosting Machine）是一个实现GBDT算法的框架，支持高效率的并行训练，并且具有以下优点：</p>
+<ul>
+<li>更快的训练速度</li>
+<li>更低的内存消耗</li>
+<li>更好的准确率</li>
+<li>分布式支持，可以快速处理海量数据</li>
+</ul>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="light-gbm-zai-na-xie-di-fang-jin-xing-liao-you-hua">LightGBM在哪些地方进行了优化？</h2>
 <ul>
 <li>基于Histogram的决策树算法</li>
 <li>带深度限制的Leaf-wise的叶子生长策略</li>
@@ -4603,37 +4678,8 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 </tr>
 </tbody>
 </table>
-<h2 id="histogram-suan-fa">Histogram算法</h2>
-<p>直方图算法的基本思想是先把连续的浮点特征值离散化成k个整数（其实又是分桶的思想，而这些桶称为bin，比如[0,0.1)→0, [0.1,0.3)→1），同时构造一个宽度为k的直方图。</p>
-<p>在遍历数据的时候，根据离散化后的值作为索引在直方图中累积统计量，当遍历一次数据后，直方图累积了需要的统计量，然后根据直方图的离散值，遍历寻找最优的分割点。</p>
-<p><img src="/2020/06/03/machine_learning/LightGBM/histogram-1.png" alt></p>
-<p>优点：</p>
-<ol>
-<li>最明显就是内存消耗的降低，直方图算法不仅不需要额外存储预排序的结果，而且可以只保存特征离散化后的值，而这个值一般用8位整型存储就足够了，内存消耗可以降低为原来的1/8。</li>
-<li>在计算上的代价也大幅降低，预排序算法每遍历一个特征值就需要计算一次分裂的增益，而直方图算法只需要计算k次（k可以认为是常数），时间复杂度从<code>O(#data*#feature)</code>优化到<code>O(k*#features)</code>。</li>
-</ol>
-<h2 id="dai-shen-du-xian-zhi-de-leaf-wise-de-xie-zi-sheng-chang-ce-lue">带深度限制的Leaf-wise的叶子生长策略</h2>
-<p>在XGBoost中，树是按层生长的，称为Level-wise tree growth，同一层的所有节点都做分裂，最后剪枝，如下图所示：</p>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197509149646916.png" alt></p>
-<p>Level-wise过一次数据可以同时分裂同一层的叶子，容易进行多线程优化，也好控制模型复杂度，不容易过拟合。但实际上Level-wise是一种低效的算法，因为它不加区分的对待同一层的叶子，带来了很多没必要的开销，因为实际上很多叶子的分裂增益较低，没必要进行搜索和分裂。</p>
-<p>在Histogram算法之上，LightGBM进行进一步的优化。首先它抛弃了大多数GBDT工具使用的按层生长 (level-wise)<br>
-的决策树生长策略，而使用了带有深度限制的按叶子生长 (leaf-wise)算法。</p>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64155197520844369289.png" alt></p>
-<p>Leaf-wise则是一种更为高效的策略，每次从当前所有叶子中，找到分裂增益最大的一个叶子，然后分裂，如此循环。因此同Level-wise相比，在分裂次数相同的情况下，Leaf-wise可以降低更多的误差，得到更好的精度。Leaf-wise的缺点是可能会长出比较深的决策树，产生过拟合。因此LightGBM在Leaf-wise之上增加了一个最大深度的限制，在保证高效率的同时防止过拟合。</p>
-<h2 id="zhi-fang-tu-chai-jia-su">直方图差加速</h2>
-<p>LightGBM另一个优化是Histogram（直方图）做差加速。一个容易观察到的现象：一个叶子的直方图可以由它的父亲节点的直方图与它兄弟的直方图做差得到。通常构造直方图，需要遍历该叶子上的所有数据，但直方图做差仅需遍历直方图的k个桶。</p>
-<p>利用这个方法，LightGBM可以在构造一个叶子的直方图后，可以用非常微小的代价得到它兄弟叶子的直方图，在速度上可以提升一倍。</p>
-<h2 id="zhi-jie-zhi-chi-lei-bie-te-zheng">直接支持类别特征</h2>
-<p>实际上大多数机器学习工具都无法直接支持类别特征，一般需要把类别特征，转化到多维的0/1特征，降低了空间和时间的效率。而类别特征的使用是在实践中很常用的。基于这个考虑，LightGBM优化了对类别特征的支持，可以直接输入类别特征，不需要额外的0/1展开。并在决策树算法上增加了类别特征的决策规则。在Expo数据集上的实验，相比0/1展开的方法，训练速度可以加速8倍，并且精度一致。据我们所知，LightGBM是第一个直接支持类别特征的GBDT工具。</p>
-<h1 id="light-gbm-you-dian">LightGBM优点</h1>
-<p>LightGBM （Light Gradient Boosting Machine）是一个实现GBDT算法的框架，支持高效率的并行训练，并且具有以下优点：</p>
-<ul>
-<li>更快的训练速度</li>
-<li>更低的内存消耗</li>
-<li>更好的准确率</li>
-<li>分布式支持，可以快速处理海量数据</li>
-</ul>
-<h1 id="dai-ma-shi-xian">代码实现</h1>
+<h2 id></h2>
+<h1 id="dai-ma">代码</h1>
 <p>为了演示LightGBM在Python中的用法，本代码以sklearn包中自带的鸢尾花数据集为例，用lightgbm算法实现鸢尾花种类的分类任务。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> lightgbm <span class="keyword">as</span> lgb</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  make_classification</span><br><span class="line"></span><br><span class="line">iris = load_iris()   <span class="comment"># 载入鸢尾花数据集</span></span><br><span class="line">data=iris.data</span><br><span class="line">target = iris.target</span><br><span class="line">X_train,X_test,y_train,y_test =train_test_split(data,target,test_size=<span class="number">0.2</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加载你的数据</span></span><br><span class="line"><span class="comment"># print('Load data...')</span></span><br><span class="line"><span class="comment"># df_train = pd.read_csv('../regression/regression.train', header=None, sep='\t')</span></span><br><span class="line"><span class="comment"># df_test = pd.read_csv('../regression/regression.test', header=None, sep='\t')</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># y_train = df_train[0].values</span></span><br><span class="line"><span class="comment"># y_test = df_test[0].values</span></span><br><span class="line"><span class="comment"># X_train = df_train.drop(0, axis=1).values</span></span><br><span class="line"><span class="comment"># X_test = df_test.drop(0, axis=1).values</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建成lgb特征的数据集格式</span></span><br><span class="line">lgb_train = lgb.Dataset(X_train, y_train) <span class="comment"># 将数据保存到LightGBM二进制文件将使加载更快</span></span><br><span class="line">lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)  <span class="comment"># 创建验证数据</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 将参数写成字典下形式</span></span><br><span class="line">params = &#123;</span><br><span class="line">    <span class="string">'task'</span>: <span class="string">'train'</span>,</span><br><span class="line">    <span class="string">'boosting_type'</span>: <span class="string">'gbdt'</span>,  <span class="comment"># 设置提升类型</span></span><br><span class="line">    <span class="string">'objective'</span>: <span class="string">'regression'</span>, <span class="comment"># 目标函数</span></span><br><span class="line">    <span class="string">'metric'</span>: &#123;<span class="string">'l2'</span>, <span class="string">'auc'</span>&#125;,  <span class="comment"># 评估函数</span></span><br><span class="line">    <span class="string">'num_leaves'</span>: <span class="number">31</span>,   <span class="comment"># 叶子节点数</span></span><br><span class="line">    <span class="string">'learning_rate'</span>: <span class="number">0.05</span>,  <span class="comment"># 学习速率</span></span><br><span class="line">    <span class="string">'feature_fraction'</span>: <span class="number">0.9</span>, <span class="comment"># 建树的特征选择比例</span></span><br><span class="line">    <span class="string">'bagging_fraction'</span>: <span class="number">0.8</span>, <span class="comment"># 建树的样本采样比例</span></span><br><span class="line">    <span class="string">'bagging_freq'</span>: <span class="number">5</span>,  <span class="comment"># k 意味着每 k 次迭代执行bagging</span></span><br><span class="line">    <span class="string">'verbose'</span>: <span class="number">1</span> <span class="comment"># &lt;0 显示致命的, =0 显示错误 (警告), &gt;0 显示信息</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Start training...'</span>)</span><br><span class="line"><span class="comment"># 训练 cv and train</span></span><br><span class="line">gbm = lgb.train(params,lgb_train,num_boost_round=<span class="number">20</span>,valid_sets=lgb_eval,early_stopping_rounds=<span class="number">5</span>) <span class="comment"># 训练数据需要参数列表和数据集</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Save model...'</span>) </span><br><span class="line"> </span><br><span class="line">gbm.save_model(<span class="string">'model.txt'</span>)   <span class="comment"># 训练后保存模型到文件</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">'Start predicting...'</span>)</span><br><span class="line"><span class="comment"># 预测数据集</span></span><br><span class="line">y_pred = gbm.predict(X_test, num_iteration=gbm.best_iteration) <span class="comment">#如果在训练期间启用了早期停止，可以通过best_iteration方式从最佳迭代中获得预测</span></span><br><span class="line"><span class="comment"># 评估模型</span></span><br><span class="line">print(<span class="string">'The rmse of prediction is:'</span>, mean_squared_error(y_test, y_pred) ** <span class="number">0.5</span>) <span class="comment"># 计算真实值和预测值之间的均方根误差</span></span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -4646,22 +4692,28 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
     <url>/2020/06/01/machine_learning/XGBoost/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/06/01/machine_learning/XGBoost/u=2735111756,2432069868&amp;fm=26&amp;gp=0.jpg.png" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-xg-boost">什么是XGBoost</h1>
+<h1 id="xg-boost">XGBoost</h1>
 <p>XGBoost是陈天奇等人开发的一个开源机器学习项目，高效地实现了GBDT算法并进行了算法和工程上的许多改进，被广泛应用在Kaggle竞赛及其他许多机器学习竞赛中并取得了不错的成绩。</p>
 <p>说到XGBoost，不得不提GBDT(Gradient Boosting Decision Tree)。因为XGBoost本质上还是一个GBDT，但是力争<strong>把速度和效率发挥到极致</strong>，所以叫X (Extreme) GBoosted。包括前面说过，两者都是boosting方法。</p>
 <h2 id="xg-boost-shu-de-ding-yi">XGBoost树的定义</h2>
 <p>先来举个<strong>例子</strong>，我们要预测一家人对电子游戏的喜好程度，考虑到年轻和年老相比，年轻更可能喜欢电子游戏，以及男性和女性相比，男性更喜欢电子游戏，故先根据年龄大小区分小孩和大人，然后再通过性别区分开是男是女，逐一给各人在电子游戏喜好程度上打分，就这样，训练出了2棵树tree1和tree2，类似之前GBDT的原理，两棵树的结论累加起来便是最终的结论，所以小孩的预测分数就是两棵树中小孩所落到的结点的分数相加：2 + 0.9 = 2.9。爷爷的预测分数同理：-1 + （-0.9）= -1.9。具体如下图所示：</p>
 <p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438578739198433.png" alt></p>
-<p>惊呼，这不是跟上文介绍的GBDT乃异曲同工么？</p>
-<p>事实上，如果不考虑工程实现、解决问题上的一些差异，XGBoost与GBDT<strong>比较大的不同就是目标函数的定义</strong>。XGBoost的目标函数如下图所示：</p>
-<p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438580139159593.png" alt></p>
-<p>其中：</p>
-<ul>
-<li>红色箭头所指向的L 即为损失函数（比如平方损失函数：\(l(y_i,y^i)=(y_i-y^i)^2\)</li>
-<li>红色方框所框起来的是正则项（包括L1正则、L2正则）</li>
-<li>红色圆圈所圈起来的为常数项</li>
-<li>对于\(f(x)\)，XGBoost利用泰勒展开三项，做一个近似。<strong>\(f(x)\)表示的是其中一颗回归树。</strong></li>
-</ul>
+<p>事实上，如果不考虑工程实现、解决问题上的一些差异，XGBoost与GBDT<strong>比较大的不同就是目标函数的定义</strong>。</p>
+<p>XGBoost的目标函数如下：<br>
+\[
+Obj^{t} = \sum_{i=1}^{n} l(y_i,\hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t)+constant
+\]<br>
+其中，\(l\)为损失函数(比如平方损失函数：\(l(y_i,y^i)=(y_i-y^i)^2\))，\(\Omega(f_t)\)为正则项（包括L1正则、L2正则），\(constant\)为常数项。用泰勒展开来近似原来的目标：<br>
+\[
+Obj^{(t)} \simeq \sum_{i=1}^n[l(y_i,\hat{y}_i^{(t-1)})+g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)] + \Omega(f_t) + constant
+\]<br>
+其中：\(g_i = \partial_{ \hat{y}_i^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\),\(h_i = \partial^2_{ \hat{y}_i^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\)。对于\(f(x)\)，XGBoost利用泰勒展开三项，做一个近似。\(f(x)\)表示的是其中一颗回归树。</p>
+<blockquote>
+<p>泰勒展开：<br>
+\[
+f(x+\Delta x) \simeq f(x) + f^\prime(x)\Delta(x)+\frac{1}{2}f^{\prime \prime}(x)\Delta x^2
+\]</p>
+</blockquote>
 <p>XGBoost的<strong>核心算法思想</strong>，基本就是：</p>
 <ol>
 <li>不断地添加树，不断地进行特征分裂来生长一棵树，每次添加一个树，其实是学习一个新函数**\(f(x)\)**，去拟合上次预测的残差。</li>
@@ -4669,21 +4721,32 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 <li>最后只需要将每棵树对应的分数加起来就是该样本的预测值。</li>
 </ol>
 <p>显然，我们的目标是要使得树群的预测值\(y_i^{\prime}\)尽量接近真实值\(y_i\)，而且有尽量大的泛化能力。类似之前GBDT的套路，XGBoost也是需要将多棵树的得分累加得到最终的预测得分（每一次迭代，都在现有树的基础上，增加一棵树去拟合前面树的预测结果与真实值之间的残差）。</p>
-<p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438657261833493.png" alt></p>
-<p>那接下来，如何选择每一轮加入什么 \(f\) 呢？答案是非常直接的，选取一个 \(f\) 来使得我们的目标函数尽量最大地降低。这里 \(f\) 可以使用泰勒展开公式近似。</p>
+<p>如何选择每一轮加入什么 \(f\) 呢？答案是非常直接的，选取一个 \(f\) 来使得我们的目标函数尽量最大地降低。这里 \(f\) 可以使用泰勒展开公式近似。<br>
+\[
+\begin{array}{ll}
+\hat{y}_{i}^{(0)} &amp; =0 \\
+\hat{y}_{i}^{(1)} &amp; =f_{1}\left(x_{i}\right)=\hat{y}_{i}^{(0)}+f_{1}\left(x_{i}\right) \\
+\hat{y}_{i}^{(2)} &amp; =f_{1}\left(x_{i}\right)+f_{2}\left(x_{i}\right)=\hat{y}_{i}^{(1)}+f_{2}\left(x_{i}\right) \\
+\hat{y}_{i}^{(t)} &amp; =\sum_{k=1}^{t} f_{k}\left(x_{i}\right)=\hat{y}_{i}^{(t-1)}+f_{t}\left(x_{i}\right)
+\end{array}
+\]</p>
 <h2 id="zheng-ze-xiang-shu-de-fu-za-du">正则项：树的复杂度</h2>
+<p>目标函数中,正则化项\(\Omega(f_t)\)定义如下：<br>
+\[
+\Omega(f_t) = \gamma T+\frac{1}{2} \lambda \sum_{j=1}^T w_j^2
+\]</p>
 <p>XGBoost对树的复杂度包含了两个部分：</p>
 <ul>
 <li>一个是树里面叶子节点的个数T</li>
-<li>一个是树上叶子节点的得分w的L2模平方（对w进行L2正则化，相当于针对每个叶结点的得分增加L2平滑，目的是为了避免过拟合）</li>
+<li>一个是树上叶子节点的得分\(w\)的L2模平方（对\(w\)进行L2正则化，相当于针对每个叶结点的得分增加L2平滑，目的是为了避免过拟合）</li>
 </ul>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64153438674199471483.png" alt></p>
+<p><img src="/2020/06/01/machine_learning/XGBoost/image-20200815183230266.png" alt></p>
 <p>再来看一下XGBoost的目标函数（损失函数揭示训练误差 + 正则化定义复杂度）：</p>
 <p>\[
 L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 \]<br>
 正则化公式也就是目标函数的后半部分，对于上式而言，\(y_i^{\prime}\)是整个累加模型的输出，正则化项\(\sum \Omega (f_t)\)是则表示树的复杂度的函数，值越小复杂度越低，泛化能力越强。</p>
-<h2 id="shu-gai-zen-yao-chang">树该怎么长</h2>
+<h2 id="shu-de-sheng-chang">树的生长</h2>
 <p>从头到尾了解了xgboost如何优化、如何计算，但树到底长啥样，我们却一直没看到。很显然，一棵树的生成是由一个节点一分为二，然后不断分裂最终形成为整棵树。那么树怎么分裂的就成为了接下来我们要探讨的关键。对于一个叶子节点如何进行分裂，XGBoost作者在其原始论文中给出了一种分裂节点的方法：<strong>枚举所有不同树结构的贪心法</strong></p>
 <p>不断地枚举不同树的结构，然后利用打分函数来寻找出一个最优结构的树，接着加入到模型中，不断重复这样的操作。这个寻找的过程使用的就是<strong>贪心算法</strong>。选择一个feature分裂，计算loss function最小值，然后再选一个feature分裂，又得到一个loss function最小值，你枚举完，找一个效果最好的，把树给分裂，就得到了小树苗。</p>
 <p>总而言之，XGBoost使用了和CART回归树一样的想法，利用贪婪算法，遍历所有特征的所有特征划分点，不同的是使用的目标函数不一样。具体做法就是分裂后的目标函数值比单子叶子节点的目标函数的增益，同时为了限制树生长过深，还加了个阈值，只有当增益大于该阈值才进行分裂。从而继续分裂，形成一棵树，再形成一棵树，<strong>每次在上一次的预测基础上取最优进一步分裂/建树。</strong></p>
@@ -4694,7 +4757,8 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 <li>当树达到最大深度时则停止建立决策树，设置一个超参数max_depth，避免树太深导致学习局部样本，从而过拟合；</li>
 <li>样本权重和小于设定阈值时则停止建树。什么意思呢，即涉及到一个超参数-最小的样本权重和min_child_weight，和GBM的 min_child_leaf 参数类似，但不完全一样。大意就是一个叶子节点样本太少了，也终止同样是防止过拟合；</li>
 </ol>
-<h1 id="xg-boost-yu-gbdt-you-shi-yao-bu-tong">XGBoost与GBDT有什么不同</h1>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="xg-boost-yu-gbdt-you-shi-yao-bu-tong">XGBoost与GBDT有什么不同</h2>
 <p>除了算法上与传统的GBDT有一些不同外，XGBoost还在工程实现上做了大量的优化。总的来说，两者之间的区别和联系可以总结成以下几个方面。</p>
 <ol>
 <li>GBDT是机器学习算法，XGBoost是该算法的工程实现。</li>
@@ -4704,9 +4768,9 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 <li>传统的GBDT在每轮迭代时使用全部的数据，XGBoost则采用了与随机森林相似的策略，支持对数据进行采样。</li>
 <li>传统的GBDT没有设计对缺失值进行处理，XGBoost能够自动学习出缺失值的处理策略。</li>
 </ol>
-<h1 id="wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li">为什么XGBoost要用泰勒展开，优势在哪里？</h1>
+<h2 id="wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li">为什么XGBoost要用泰勒展开，优势在哪里？</h2>
 <p>XGBoost使用了一阶和二阶偏导, 二阶导数有利于梯度下降的更快更准. 使用泰勒展开取得函数做自变量的二阶导数形式, 可以在不选定损失函数具体形式的情况下, 仅仅依靠输入数据的值就可以进行叶子分裂优化计算, 本质上也就把损失函数的选取和模型算法优化/参数选择分开了. 这种去耦合增加了XGBoost的适用性, 使得它按需选取损失函数, 可以用于分类, 也可以用于回归。</p>
-<h2 id="dai-ma-shi-xian">代码实现</h2>
+<h1 id="dai-ma-shi-xian">代码实现</h1>
 <figure class="highlight nix"><table><tr><td class="code"><pre><span class="line"><span class="built_in">import</span> xgboost</span><br><span class="line"><span class="comment"># First XGBoost model for Pima Indians dataset</span></span><br><span class="line">from numpy <span class="built_in">import</span> loadtxt</span><br><span class="line">from xgboost <span class="built_in">import</span> XGBClassifier </span><br><span class="line">from sklearn.model_selection <span class="built_in">import</span> train_test_split</span><br><span class="line">from sklearn.metrics <span class="built_in">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># load data</span></span><br><span class="line"><span class="attr">dataset</span> = loadtxt('pima-indians-diabetes.csv', <span class="attr">delimiter=",")</span></span><br><span class="line"><span class="comment"># split data into X and y</span></span><br><span class="line"><span class="attr">X</span> = dataset[:,<span class="number">0</span>:<span class="number">8</span>]</span><br><span class="line"><span class="attr">Y</span> = dataset[:,<span class="number">8</span>]</span><br><span class="line"><span class="comment"># split data into train and test sets</span></span><br><span class="line"><span class="attr">seed</span> = <span class="number">7</span></span><br><span class="line"><span class="attr">test_size</span> = <span class="number">0.33</span></span><br><span class="line">X_train, X_test, y_train, <span class="attr">y_test</span> = train_test_split(X, Y, <span class="attr">test_size=test_size,</span> <span class="attr">random_state=seed)</span></span><br><span class="line"><span class="comment"># fit model no training data</span></span><br><span class="line"><span class="attr">model</span> = XGBClassifier()</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line"><span class="comment"># make predictions for test data</span></span><br><span class="line"><span class="attr">y_pred</span> = model.predict(X_test)</span><br><span class="line"><span class="attr">predictions</span> = [round(value) for value <span class="keyword">in</span> y_pred]</span><br><span class="line"><span class="comment"># evaluate predictions</span></span><br><span class="line"><span class="attr">accuracy</span> = accuracy_score(y_test, predictions)</span><br><span class="line">print(<span class="string">"Accuracy: %.2f%%"</span> % (accuracy * <span class="number">100.0</span>))</span><br></pre></td></tr></table></figure>
 <h1 id="can-kao-wen-xian">参考文献</h1>
 <ol>
@@ -4723,7 +4787,82 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
     <url>/2020/05/31/machine_learning/gbdt/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/31/machine_learning/gbdt/v2-e9d180e7afd45c9cee0c094039df4eb7_1200x500.jpg" alt></p>
 <a id="more"></a>
-<h1 id="gbdt-suan-fa-de-guo-cheng">GBDT算法的过程</h1>
+<h1 id="ti-sheng-fang-fa">提升方法</h1>
+<p>boosting是<strong>一种常用的统计学习方法,是集成学习的一种.它通过改变训练样本的权重(概率分布),学习</strong>多个<strong>弱分类器(基本分类器),并将这些分类器</strong>线性组合**来构成一个强分类器提高分类的性能.</p>
+<h2 id="jia-fa-mo-xing-he-qian-xiang-fen-bu-suan-fa">加法模型和前向分步算法</h2>
+<p>加法模型</p>
+<p>\[
+f(x)= \sum_{m=1}^M{\beta_mb(x;\gamma_m)}
+\]</p>
+<p>其中，\(b(x;\gamma_m)\)为基函数，\(\gamma_m\)为基函数参数，\(\beta_m\)为基函数的系数。</p>
+<p>在给定训练数据及损失函数\(L(y,f(x))\)的条件下，学习加法模型\(f(x)\)成为经验风险极小化即损失函数极小化问题：<br>
+\[
+min_{\beta_m,\gamma_m}\sum_{m=1}^{M}{\beta_m b(x_i;\gamma_m)}
+\]<br>
+通常这是一个复杂的优化问题。</p>
+<p>前向分步算法求解这一优化问题的想法是：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数：</p>
+<p>\[
+\left(\beta_{m}, \gamma_{m}\right)=\arg \min _{\beta, y} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+\beta b\left(x_{i} ; \gamma\right)\right)
+\]<br>
+得到参数\(\beta m\)和\(\gamma m\),更新\(f_{m}(x)=f_{m-1}(x)+\beta_{m} b\left(x ; \gamma_{m}\right)\)，逐步逼近优化目标函数式，那么就可以简化优化的复杂度，最终得到加法模型。</p>
+<h1 id="ada-boost">AdaBoost</h1>
+<h2 id="si-xiang">思想：</h2>
+<p>AdaBoost提高那些被前一轮弱分类器错误分类样本的权值,而降低那些被正确分类样本的权值.然后采取<strong>加权多数表决</strong>的方法组合弱分类器.</p>
+<h2 id="suan-fa">算法</h2>
+<p>首先假设训练数据集具有均匀的权值分布\(D_1\),使用具有权值分布\(D_m\)的训练数据集学习得到<strong>基本分类器</strong>\(G_m(x)\),计算<strong>分类误差率</strong>:</p>
+<p>\[
+e_{m}=P\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)=\sum_{i=1}^{N} w_{m i} I\left(G_{m}\left(x_{i}\right) \neq y_{i}\right)
+\]</p>
+<p>和\(G_m(x)\)的<strong>系数</strong>:</p>
+<p>\[
+\alpha_{m}=\frac{1}{2} \log \frac{1-e_{m}}{e_{m}}
+\]</p>
+<p>更新训练数据集的权值分布\(D_{m+1}=\left(w_{m+1,1}, \cdots, w_{m+1, i}, \cdots, w_{m+1, N}\right)\)，其中<br>
+\[
+w_{m+1, i}=\left\{\begin{array}{ll}
+\frac{w_{mi}}{Z_{m}} \mathrm{e}^{-\alpha_{m}}, &amp; G_{m}\left(x_{i}\right)=y_{i} \\
+\frac{w_{m i}}{Z_{m}} \mathrm{e}^{\alpha_{m}}, &amp; G_{m}\left(x_{i}\right) \neq y_{i}
+\end{array}\right.
+\]<br>
+\(Z_m\)是使\(D_{m+1}\)成为概率分布的<strong>规范化因子</strong>\(Z_{m}=\sum_{i=1}^{N} w_{m i} \exp \left(-\alpha_{m} y_{i} G_{m}\left(x_{i}\right)\right)\).重复上述操作\(M\)次后得到\(M\)个弱分类器,构建线性组合得到<strong>最终分类器</strong></p>
+<p>\[
+G(x)=\operatorname{sign}(f(x))=\operatorname{sign}\left(\sum_{m=1}^{M} \alpha_{m} G_{m}(x)\right)
+\]</p>
+<h1 id="ti-sheng-shu-gbt">提升树GBT</h1>
+<p>提升树是模型为加法模型,算法为前向分布算法,基函数为<strong>决策树</strong>的提升方法.第\(m\)步的模型是:</p>
+<p>\[
+f_{m}(x)=f_{m-1}(x)+T\left(x ; \Theta_{m}\right)
+\]</p>
+<p>通过经验风险极小化确定下一棵决策树的参数<br>
+\[
+\hat{\Theta}_{m}=\arg \min _{\theta_{m}} \sum_{i=1}^{N} L\left(y_{i}, f_{m-1}\left(x_{i}\right)+T\left(x_{i} ; \Theta_{m}\right)\right)
+\]<br>
+不同问题的提升树学习算法主要区别在于使用的<strong>损失函数</strong>不同.</p>
+<h2 id="er-lei-fen-lei-wen-ti">二类分类问题</h2>
+<p>只需将AdaBoost算法中的基本分类器限制为二类分类数即可.</p>
+<h2 id="hui-gui-wen-ti">回归问题</h2>
+<p>如果将输入空间划分为J个互不相交的区域,并且在每个区域上确定输出的常量\(C_j\),那么树可表示为\(T(x ; \Theta)=\sum_{j=1}^{J} c_{j} I\left(x \in R_{j}\right)\),其中\(\Theta=\left\{\left(R_{1}, c_{1}\right),\left(R_{2}, c_{2}\right), \cdots,\left(R_{J}, c_{J}\right)\right\}\)提升树采用<strong>前向分步算法</strong>:<br>
+\[
+\begin{aligned}
+&amp;f_{0}(x)=0\\
+&amp;\begin{array}{l}
+f_{m}(x)=f_{m-1}(x)+T\left(x ; \Theta_{m}\right), m=1,2, \cdots, M \\
+f_{M}(x)=\sum_{m=1}^{M} T\left(x ; \Theta_{m}\right)
+\end{array}
+\end{aligned}
+\]<br>
+当采用平方误差损失函数时,损失变为:<br>
+\[
+\begin{array}{l}
+L\left(y, f_{m-1}(x)+T\left(x ; \Theta_{m}\right)\right) \\
+\quad=\left[y-f_{m-1}(x)-T\left(x ; \Theta_{m}\right)\right]^{2} \\
+\quad=\left[r-T\left(x ; \Theta_{m}\right)\right]^{2}
+\end{array}
+\]<br>
+,其中r是当前模型拟合数据的<strong>残差</strong>.每一步都只需<strong>拟合残差</strong>学习一个回归树即可.</p>
+<h2 id="cun-zai-de-que-dian">存在的缺点</h2>
+<p>当损失函数式平方误差损失函数或者交叉熵损失函数的时候，残差即为对应的梯度，这个时候损失函数沿着梯度的方向下降最快。当损失函数式其他损失函数的时候，残差和损失函数的导数并不相等，函数收敛的速度就会没有沿着梯度的方向收敛的快。</p>
+<h1 id="ti-du-ti-sheng-shu-gbdt">梯度提升树GBDT</h1>
 <p>GBDT(Gradient Boosting Decision Tree)，全名叫梯度提升决策树，使用的是<strong>Boosting</strong>的思想。</p>
 <p>GBDT利用最速下降法的近似方法来实现每一步的优化,用损失函数的<strong>负梯度</strong>作为回归问题中提升树算法中的残差的<strong>近似值</strong>,每一步以此来估计回归树叶结点区域以拟合残差的近似值。</p>
 <h2 id="boosting-si-xiang">Boosting思想</h2>
@@ -4739,7 +4878,15 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 <li>最后在第四课树中用1岁拟合剩下的残差，完美。</li>
 <li>最终，四棵树的结论加起来，就是真实年龄30岁（实际工程中，gbdt是计算负梯度，用负梯度近似残差）。</li>
 </ul>
-<h1 id="wei-shi-yao-gbdt-ke-yi-yong-fu-ti-du-jin-si-can-chai">为什么gbdt可以用负梯度近似残差</h1>
+<h2 id="suan-fa-kuang-jia">算法框架</h2>
+<ol>
+<li>先从初始训练集训练一个弱学习器，初始训练集各个样本权重相同</li>
+<li>根据上一个弱学习器的表现，调整样本权重，是的分类错误的样本得到更多关注</li>
+<li>基于调整后的样本分布，训练下一个弱学习器</li>
+<li>测试时，对各基学习器<strong>加权</strong>得到最终结果</li>
+</ol>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="wei-shi-yao-gbdt-ke-yi-yong-fu-ti-du-jin-si-can-chai">为什么gbdt可以用负梯度近似残差</h2>
 <p>回归任务下，GBDT 在每一轮的迭代时对每个样本都会有一个预测值，此时的损失函数为均方差损失函数，<br>
 \[
 l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
@@ -4749,7 +4896,7 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 -[\frac{ \partial l(y_i,y^i)}{\partial y^i}] = (y_i-y^i)
 \]<br>
 所以，当损失函数选用均方损失函数是时，每一次拟合的值就是（真实值 - 当前模型预测的值），即残差。此时的变量是\(y^i\)，即“当前预测模型的值”，也就是对它求负梯度。</p>
-<h1 id="ti-du-ti-sheng-he-ti-du-xia-jiang-de-qu-bie-he-lian-xi-shi-shi-yao">梯度提升和梯度下降的区别和联系是什么？</h1>
+<h2 id="ti-du-ti-sheng-he-ti-du-xia-jiang-de-qu-bie-he-lian-xi-shi-shi-yao">梯度提升和梯度下降的区别和联系是什么？</h2>
 <p>下表是梯度提升算法和梯度下降算法的对比情况。</p>
 <ul>
 <li>相同之处：两者都是在每一轮迭代中，利用损失函数相对于模型的负梯度方向的信息来对当前模型进行更新。</li>
@@ -4779,20 +4926,20 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 </tr>
 </tbody>
 </table>
-<h1 id="strong-gbdt-strong-de-you-dian-he-ju-xian-xing-you-na-xie"><strong>GBDT</strong>的优点和局限性有哪些？</h1>
-<h2 id="you-dian">优点</h2>
+<h2 id="gbdt-de-you-dian-he-ju-xian-xing-you-na-xie">GBDT的优点和局限性有哪些？</h2>
+<h3 id="you-dian">优点</h3>
 <ol>
 <li>预测阶段的计算速度快，树与树之间可并行化计算。</li>
 <li>在分布稠密的数据集上，泛化能力和表达能力都很好，这使得GBDT在Kaggle的众多竞赛中，经常名列榜首。</li>
 <li>采用决策树作为弱分类器使得GBDT模型具有较好的解释性和鲁棒性，能够自动发现特征间的高阶关系。</li>
 </ol>
-<h2 id="ju-xian-xing">局限性</h2>
+<h3 id="ju-xian-xing">局限性</h3>
 <ol>
 <li>GBDT在高维稀疏的数据集上，表现不如支持向量机或者神经网络。</li>
 <li>GBDT在处理文本分类特征问题上，相对其他模型的优势不如它在处理数值特征时明显。</li>
 <li>训练过程需要串行训练，只能在决策树内部采用一些局部并行的手段提高训练速度。</li>
 </ol>
-<h1 id="rf-sui-ji-sen-lin-yu-gbdt-zhi-jian-de-qu-bie-yu-lian-xi">RF(随机森林)与GBDT之间的区别与联系</h1>
+<h2 id="rf-sui-ji-sen-lin-yu-gbdt-zhi-jian-de-qu-bie-yu-lian-xi">RF(随机森林)与GBDT之间的区别与联系</h2>
 <p><strong>相同点</strong>：</p>
 <ul>
 <li>都是由多棵树组成，最终的结果都是由多棵树一起决定。</li>
@@ -4818,13 +4965,12 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
     <url>/2020/05/31/machine_learning/random-forest/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/31/machine_learning/random-forest/v2-88dddf356f60e384e3bae3561e8c19f4_1200x500.jpg" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-sui-ji-sen-lin">什么是随机森林</h1>
-<h2 id="bagging-si-xiang">Bagging思想</h2>
+<h1 id="bagging-si-xiang">Bagging思想</h1>
 <p>Bagging是bootstrap aggregating。思想就是从总体样本当中随机取一部分样本进行训练，通过多次这样的结果，进行投票获取平均值作为结果输出，这就极大可能的避免了不好的样本数据，从而提高准确度。因为有些是不好的样本，相当于噪声，模型学入噪声后会使准确度不高。</p>
 <p><strong>举个例子</strong>：</p>
-<p>假设有1000个样本，如果按照以前的思维，是直接把这1000个样本拿来训练，但现在不一样，先抽取800个样本来进行训练，假如噪声点是这800个样本以外的样本点，就很有效的避开了。重复以上操作，提高模型输出的平均值。</p>
-<h2 id="ji-cheng-fang-fa">集成方法</h2>
-<h3 id="bagging">bagging</h3>
+<p>假设有1000个样本，如果按照以前的思维，是直接把这1000个样本拿来训练，但现在不一样，先抽取800个样本来进行训练，假如噪声点是这800个样本以外的样本点，就很有效的避开了。重复以上操作，最终输出平均值。</p>
+<h1 id="ji-cheng-fang-fa">集成方法</h1>
+<h2 id="bagging">bagging</h2>
 <p>装袋法的核心思想是构建多个相互独立的评估器，然后对其预测进行平均或多数表决原则来决定集成评估器的结果。</p>
 <ol>
 <li>评估器：相互独立，同时运行</li>
@@ -4835,7 +4981,7 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 <li>基学习器学习能力弱：不是很有帮助</li>
 <li>代表算法：随机森林</li>
 </ol>
-<h3 id="boosting">boosting</h3>
+<h2 id="boosting">boosting</h2>
 <p>提升方法中，基评估器是相关的，是按顺序一一构建的。其核心思想是结合弱评估器的力量一次次对难以评估的样本进行预测，从而构成一个强评估器。提升法的代表模型有Adaboost和梯度提升树。</p>
 <ol>
 <li>评估器：相互关联，按顺序依次构建，后建的模型在先建模型预测失败的样本上有更多的权重</li>
@@ -4846,26 +4992,26 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 <li>基学习器学习能力弱：提升模型表现</li>
 <li>代表算法：GBDT,Adaboost</li>
 </ol>
-<h3 id="stacking">stacking</h3>
+<h2 id="stacking">stacking</h2>
 <p>Stacking模型是指将多种分类器组合在一起来取得更好表现的一种集成学习模型。一般情况下，Stacking模型分为两层。第一层中我们训练多个不同的模型，然后再以第一层训练的各个模型的输出作为输入来训练第二层的模型，以得到一个最终的输出。</p>
-<h2 id="sui-ji-sen-lin">随机森林</h2>
+<h1 id="sui-ji-sen-lin">随机森林</h1>
 <p>Random Forest(随机森林)是一种基于树模型的Bagging的优化版本，一棵树的生成肯定还是不如多棵树，因此就有了随机森林，解决决策树泛化能力弱的特点。(可以理解成三个臭皮匠顶过诸葛亮)</p>
-<p>而同一批数据，用同样的算法只能产生一棵树，这时Bagging策略可以帮助我们产生不同的数据集。<strong>Bagging</strong>策略来源于bootstrap aggregation：从样本集（假设样本集\(N\)个数据点）中重采样选出\(n\)个样本（有放回的采样，样本数据点个数仍然不变为N），在所有样本上，对这\(n\)个样本建立分类器（ID3\C4.5\CART\SVM\LOGISTIC），重复以上两步\(m\)次，获得\(m\)个分类器，最后根据这\(m\)个分类器的投票结果，决定数据属于哪一类。</p>
+<p>而同一批数据，用同样的算法只能产生一棵树，这时Bagging策略可以帮助我们产生不同的数据集。<strong>Bagging</strong>策略来源于bootstrap aggregation：从样本集（假设样本集\(N\)个数据点）中重采样选出\(n\)个样本（有放回的采样，样本数据点个数仍然不变为N），在所有样本上，对这\(n\)个样本建立分类器（ID3、C4.5、CART、SVM、logistics），重复以上两步\(m\)次，获得\(m\)个分类器，最后根据这\(m\)个分类器的投票结果，决定数据属于哪一类。</p>
 <p><strong>每棵树的按照如下规则生成：</strong></p>
 <ol>
-<li>如果训练集大小为N，对于每棵树而言，<strong>随机</strong>且有放回地从训练集中的抽取N个训练样本，作为该树的训练集；</li>
-<li>如果每个样本的特征维度为M，指定一个常数m&lt;&lt;M，<strong>随机</strong>地从M个特征中选取m个特征子集，每次树进行分裂时，从这m个特征中选择最优的；</li>
+<li>如果训练集大小为\(N\)，对于每棵树而言，<strong>随机</strong>且有放回地从训练集中的抽取\(N\)个训练样本，作为该树的训练集；</li>
+<li>如果每个样本的特征维度为\(M\)，指定一个常数\(m \ll M\)，<strong>随机</strong>地从M个特征中选取\(m\)个特征子集，每次树进行分裂时，从这m个特征中选择最优的；</li>
 <li>每棵树都尽最大程度的生长，并且没有剪枝过程。</li>
 </ol>
-<p>一开始我们提到的随机森林中的“随机”就是指的这里的两个随机性。两个随机性的引入对随机森林的分类性能至关重要。由于它们的引入，使得随机森林不容易陷入过拟合，并且具有很好得抗噪能力（比如：对缺省值不敏感）。</p>
-<p>总的来说就是随机选择样本数，随机选取特征，随机选择分类器，建立多颗这样的决策树，然后通过这几课决策树来投票，决定数据属于哪一类(<strong>投票机制有一票否决制、少数服从多数、加权多数</strong>)</p>
+<p>随机森林中的“随机”就是指的这里的两个随机性(随机选择样本，随机选择特征)。两个随机性的引入对随机森林的分类性能至关重要。由于它们的引入，使得随机森林不容易陷入过拟合，并且具有很好得抗噪能力（比如：对缺省值不敏感）。</p>
+<p>总的来说就是随机选择样本数，随机选取特征，建立多颗这样的决策树，然后通过这几课决策树来投票，决定数据属于哪一类(<strong>投票机制有一票否决制、少数服从多数、加权多数</strong>)</p>
 <h2 id="sui-ji-sen-lin-fen-lei-xiao-guo-de-ying-xiang-yin-su">随机森林分类效果的影响因素</h2>
 <ul>
 <li>森林中<strong>任意两棵树的相关性</strong>：相关性越大，错误率越大；</li>
 <li>森林中<strong>每棵树的分类能力</strong>：每棵树的分类能力越强，整个森林的错误率越低。</li>
 </ul>
-<p>减小特征选择个数m，树的相关性和分类能力也会相应的降低；增大m，两者也会随之增大。所以关键问题是如何选择最优的m（或者是范围），这也是随机森林唯一的一个参数。</p>
-<h2 id="sui-ji-sen-lin-you-shi-yao-you-que-dian">随机森林有什么优缺点</h2>
+<p>减小特征选择个数\(m\)，树的相关性和分类能力也会相应的降低；增大\(m\)，两者也会随之增大。所以关键问题是如何选择最优的\(m\)（或者是范围），这也是随机森林唯一的一个参数。</p>
+<h2 id="sui-ji-sen-lin-de-you-que-dian">随机森林的优缺点</h2>
 <p><strong>优点：</strong></p>
 <ul>
 <li>在当前的很多数据集上，相对其他算法有着很大的优势，表现良好。</li>
@@ -4881,26 +5027,37 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 <li>随机森林已经被证明在某些<strong>噪音较大</strong>的分类或回归问题上会过拟合。</li>
 <li>对于有不同取值的属性的数据，取值划分较多的属性会对随机森林产生更大的影响，所以随机森林在这种数据上产出的属性权值是不可信的。</li>
 </ul>
-<h2 id="sui-ji-sen-lin-ru-he-chu-li-que-shi-zhi">随机森林如何处理缺失值？</h2>
+<h2 id="sui-ji-sen-lin-chu-li-que-shi-zhi">随机森林处理缺失值</h2>
 <p>根据随机森林创建和训练的特点，随机森林对缺失值的处理还是比较特殊的。</p>
 <ul>
 <li>首先，给缺失值预设一些估计值，比如数值型特征，选择其余数据的中位数或众数作为当前的估计值</li>
 <li>然后，根据估计的数值，建立随机森林，把所有的数据放进随机森林里面跑一遍。记录每一组数据在决策树中一步一步分类的路径.</li>
-<li>判断哪组数据和缺失数据路径最相似，引入一个相似度矩阵，来记录数据之间的相似度，比如有N组数据，相似度矩阵大小就是N*N</li>
+<li>判断哪组数据和缺失数据路径最相似，引入一个相似度矩阵，来记录数据之间的相似度，比如有\(N\)组数据，相似度矩阵大小就是\(N*N\)</li>
 <li>如果缺失值是类别变量，通过权重投票得到新估计值，如果是数值型变量，通过加权平均得到新的估计值，如此迭代，直到得到稳定的估计值。</li>
 </ul>
 <p>其实，该缺失值填补过程类似于推荐系统中采用协同过滤进行评分预测，先计算缺失特征与其他特征的相似度，再加权得到缺失值的估计，而随机森林中计算相似度的方法（数据在决策树中一步一步分类的路径）乃其独特之处。</p>
-<h2 id="shi-yao-shi-oob-sui-ji-sen-lin-zhong-oob-shi-ru-he-ji-suan-de-ta-you-shi-yao-you-que-dian">什么是OOB？随机森林中OOB是如何计算的，它有什么优缺点？</h2>
-<p><strong>OOB</strong>：</p>
-<p>上面我们提到，构建随机森林的关键问题就是如何选择最优的m，要解决这个问题主要依据计算袋外错误率oob error（out-of-bag error）。</p>
+<h2 id="oob">OOB</h2>
+<p>构建随机森林的关键问题就是如何选择最优的m，要解决这个问题主要依据计算袋外错误率oob error（out-of-bag error）。</p>
 <p>bagging方法中Bootstrap每次约有1/3的样本不会出现在Bootstrap所采集的样本集合中，当然也就没有参加决策树的建立，把这1/3的数据称为<strong>袋外数据oob（out of bag）</strong>,它可以用于取代测试集误差估计方法。</p>
 <p><strong>袋外数据(oob)误差的计算方法如下：</strong></p>
 <ul>
-<li>对于已经生成的随机森林,用袋外数据测试其性能,假设袋外数据总数为O,用这O个袋外数据作为输入,带进之前已经生成的随机森林分类器,分类器会给出O个数据相应的分类</li>
-<li>因为这O条数据的类型是已知的,则用正确的分类与随机森林分类器的结果进行比较,统计随机森林分类器分类错误的数目,设为X,则袋外数据误差大小=X/O</li>
+<li>对于已经生成的随机森林,用袋外数据测试其性能,假设袋外数据总数为O,用这O个袋外数据作为输入,带进之前已经生成的随机森林分类器,分类器会给出\(O\)个数据相应的分类</li>
+<li>因为这\(O\)条数据的类型是已知的,则用正确的分类与随机森林分类器的结果进行比较,统计随机森林分类器分类错误的数目,设为X,则袋外数据误差大小=\(\frac{X}{0}\)</li>
 </ul>
 <p><strong>优缺点</strong>：</p>
 <p>这已经经过证明是无偏估计的,所以在随机森林算法中不需要再进行交叉验证或者单独的测试集来获取测试集误差的无偏估计。</p>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="sui-ji-sen-lin-de-guo-ni-he-ru-he-jie-jue">随机森林的过拟合如何解决？</h2>
+<p>通过交叉验证来调整树的数量。</p>
+<h2 id="sui-ji-zen-liao-ru-he-chu-li-que-shi-zhi">随机怎了如何处理缺失值？</h2>
+<ul>
+<li>首先，给缺失值预设一些估计值，比如数值型特征，选择其余数据的中位数或众数作为当前的估计值</li>
+<li>然后，根据估计的数值，建立随机森林，把所有的数据放进随机森林里面跑一遍。记录每一组数据在决策树中一步一步分类的路径.</li>
+<li>判断哪组数据和缺失数据路径最相似，引入一个相似度矩阵，来记录数据之间的相似度，比如有\(N\)组数据，相似度矩阵大小就是\(N*N\)</li>
+<li>如果缺失值是类别变量，通过权重投票得到新估计值，如果是数值型变量，通过加权平均得到新的估计值，如此迭代，直到得到稳定的估计值。</li>
+</ul>
+<h2 id="shi-yao-shi-oob">什么是 OOB</h2>
+<p>OOB 即 out-of-bag ， 又称袋外数据。 这是由于 Bagging 方法会采用 Boostrap 进行抽样， 每次约有 \(\frac{1}{3}\) 的样本不会出现在抽样后的样本集合中，那么就把这 \(\frac{1}{3}\) 的样本称为袋外数据 oob(out-of-bag)。由于 oob 没有用于训练决策树，因此可用于后续对该决策树的泛化能力评估。</p>
 <h2 id="dai-ma">代码</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_boston</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载波士顿房价数据集</span></span><br><span class="line">boston_house = load_boston()</span><br><span class="line"></span><br><span class="line">boston_feature_name = boston_house.feature_names</span><br><span class="line">boston_features = boston_house.data</span><br><span class="line">boston_target = boston_house.target</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看类的用法</span></span><br><span class="line">help(RandomForestRegressor)</span><br><span class="line">rgs = RandomForestRegressor(n_estimators=<span class="number">15</span>)  <span class="comment">##随机森林模型</span></span><br><span class="line">rgs = rgs.fit(boston_features, boston_target)</span><br><span class="line">rgs.predict(boston_features)</span><br></pre></td></tr></table></figure>
 ]]></content>
@@ -4917,7 +5074,7 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
     <url>/2020/05/30/machine_learning/decision-tree/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/30/machine_learning/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-jue-ce-shu">什么是决策树</h1>
+<h1 id="jue-ce-shu">决策树</h1>
 <h2 id="jue-ce-shu-de-ji-ben-si-xiang">决策树的基本思想</h2>
 <p><img src="/2020/05/30/machine_learning/decision-tree/00630Defly1g4q286viibj30pk0pfk09.jpg" alt></p>
 <p>LR模型是一股脑儿的把所有特征塞入学习，决策树更像是编程语言中的if-else一样，去做条件判断，这是两者根本性的区别。主要优点是模型具有可读性，分类速度快。其主要围绕着两个问题：</p>
@@ -4928,21 +5085,28 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 <h2 id="ce-lue">策略</h2>
 <p>决策树学习本质上是从训练数据集中归纳出一组分类规则。我们需要的是一个与训练数据<strong>矛盾较小</strong>,同时具有很好的<strong>泛化能力</strong>的决策树。</p>
 <h2 id="suan-fa">算法</h2>
+<p>决策树是一个分而治之的递归过程，其算法基本框架如下：</p>
+<ul>
+<li>开始，构建根节点，将所有训练数据都放在根节点。</li>
+<li>然后，<strong>选择一个最优特征</strong>，按照这一特征将训练数据集分割成子集，使得各个子集有一个在当前条件下最好的分类。</li>
+<li>如果子集未分类完毕，则在子集中选择一个最优特征，继续进行划分，直到所有训练数据子集都被正确分类或没有合适的特征为止。</li>
+</ul>
 <p>决策树学习算法包含<strong>特征选择</strong>，<strong>决策树的生成</strong>与<strong>决策树的剪枝过程</strong>。生成只考虑局部最优，剪枝则考虑全局最优。</p>
 <h3 id="te-zheng-xuan-ze">特征选择</h3>
 <p>如果利用一个特征进行分类的结果与随机分类的结果没有很大差别,则称这个特征是<strong>没有分类能力</strong>的.扔掉这样的特征对决策树学习的精度影响不大.</p>
 <ol>
 <li><strong>信息熵</strong>：熵是衡量<strong>随机变量不确定性</strong>的度量.熵越大,随机变量的不确定性就越大.信息熵是信息量的期望，\(\left.H(X)=-\sum_{x \in X} P(x) \log P(x)\right)\)</li>
-<li><strong>条件熵</strong>：条件熵表示在已知随机变量X的条件下随机变量Y的不确定性.\(H(Y | X)=\sum_{i=1}^{n} p_{i} H\left(Y | X=x_{i}\right)\)</li>
-<li><strong>信息增益</strong>：表示得知特征X的信息而使得类Y的信息的<strong>不确定性减少</strong>的程度.定义为集合D的经验熵与特征A在给定条件下D的经验条件熵之差\(g(D,A)=H(D)-H(D|A)\),也就是训练数据集中类与特征的<strong>互信息</strong>.</li>
+<li><strong>条件熵</strong>：条件熵表示在已知随机变量\(X\)的条件下随机变量\(Y\)的不确定性.\(H(Y | X)=\sum_{i=1}^{n} p_{i} H\left(Y | X=x_{i}\right)\)</li>
+<li><strong>信息增益</strong>：表示得知特征\(X\)的信息而使得类\(Y\)的信息的<strong>不确定性减少</strong>的程度.定义为集合\(D\)的经验熵与特征\(A\)在给定条件下\(D\)的经验条件熵之差\(g(D,A)=H(D)-H(D|A)\),也就是训练数据集中类与特征的<strong>互信息</strong>.</li>
 <li><strong>信息增益算法</strong>:
 <ol>
-<li>计算数据集D的经验熵\(H(D)=-\sum_{k=1}^{K} \frac{\left|C_{k}\right|_{\mathrm{log}_{2}}\left|C_{k}\right|}{|D|}\)。</li>
+<li>计算数据集D的经验熵\(H(D)=-\sum_{k=1}^{K} \frac{\left|C_{k}\right|{\mathrm{log}_{2}}\left|C_{k}\right|}{|D|}\)。</li>
 <li>计算特征A对数据集D的经验条件熵\(H(D | A)=\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} H\left(D_{i}\right)=-\sum_{i=1}^{n} \frac{\left|D_{i}\right|}{|D|} \sum_{k=1}^{K} \frac{\left|D_{\mu}\right|}{\left|D_{i}\right|} \log _{2} \frac{\left|D_{k}\right|}{\left|D_{i}\right|}\)。</li>
 <li>计算信息增益,选取信息增益最大的特征.</li>
 </ol>
 </li>
 <li><strong>信息增益比</strong>:信息增益值的大小是相对于训练数据集而言的,并无绝对意义.使用信息增益比,\(g_{R}(D, A)=\frac{g(D, A)}{H(D)}\)可以对这一问题进行校正.</li>
+<li><strong>基尼指数</strong>:假设有K个类,样本属于第k类的概率为\(p_k\),则概率分布的基尼指数为:\(\operatorname{Gini}(p)=\sum_{k=1}^{K} p_{k}\left(1-p_{k}\right)=1-\sum_{k=1}^{K} p_{k}^{2}\),表示不确定性.在特征A的条件下集合D的基尼指数定义为\(\operatorname{Gini}(D, A)=\frac{\left|D_{1}\right|}{|D|} \operatorname{Gini}\left(D_{1}\right)+\frac{\left|D_{2}\right|}{|D|} \operatorname{Gini}\left(D_{2}\right)\),表示分割后集合D的不确定性.基尼指数越大,样本集合的<strong>不确定性</strong>也就越大。</li>
 </ol>
 <h3 id="jue-ce-shu-de-sheng-cheng">决策树的生成</h3>
 <h4 id="id-3-suan-fa">ID3 算法</h4>
@@ -4951,7 +5115,7 @@ l(y_i,y^i)=\frac{1}{2}(y_i - y^i)^2
 <p><img src="/2020/05/30/machine_learning/decision-tree/image61cdc.png" alt></p>
 <p><img src="/2020/05/30/machine_learning/decision-tree/image9e194.png" alt></p>
 <p><img src="/2020/05/30/machine_learning/decision-tree/image09288.png" alt></p>
-<p>信息增益存在一个问题：对可取值数目较多的属性有所偏好，例如：考虑将“编号”作为一个属性。为了解决这个问题，引出了另一个 算法C4.5。</p>
+<p>信息增益存在一个问题：对可取值数目较多的属性有所偏好，例如：考虑将“编号”作为一个属性。为了解决这个问题，引出了另一个算法C4.5。</p>
 <h4 id="c-4-5-suan-fa">C4.5算法</h4>
 <p>为了解决信息增益的问题，引入一个信息增益比：</p>
 <p>\[
@@ -4963,13 +5127,9 @@ IV(a)=-\sum_{v=1}^{V}\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}
 \]</p>
 <p>特征a(比如身份id)的可能取值数目越多(即V越大)，则IV(a)的值通常就越大。<strong>信息增益比本质： 是在信息增益的基础之上乘上一个惩罚参数。特征取值个数较多时，惩罚参数较小（也就是除以一个较大的值）；特征个数较少时，惩罚参数较大（除以一个较小的值）</strong>。不过有一个缺点：信息增益率<strong>偏向取值较少的特征</strong>。</p>
 <p>使用信息增益率：基于以上缺点，并不是直接选择信息增益率最大的特征，而是现在候选特征中找出信息增益高于平均水平的特征，然后在这些特征中再选择信息增益率最高的特征。</p>
-<h4 id="strong-cart-suan-fa-strong"><strong>CART算法</strong></h4>
-<ol>
-<li>
+<h4 id="cart-suan-fa">CART算法</h4>
 <p>CART既可以用于<strong>分类也</strong>可以用于<strong>回归</strong>.它假设决策树是<strong>二叉树</strong>,内部结点特征的取值为&quot;是&quot;和&quot;否&quot;.递归地构建二叉树,对回归树用<strong>平方误差</strong>最小化准则,对分类数用<strong>基尼指数</strong>最小化准则.</p>
-</li>
-<li>
-<p><strong>回归树的生成</strong>:</p>
+<h5 id="hui-gui-shu-de-sheng-cheng">回归树的生成</h5>
 <p>CART回归树是假设树为二叉树，通过不断将特征进行分裂。比如当前树结点是基于第j个特征值进行分裂的，设该特征值小于s的样本划分为左子树，大于s的样本划分为右子树。<br>
 \[
 R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left\{x | x^{(l)}>s\right\}
@@ -4978,29 +5138,22 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
 \[
 \sum_{x_i \in R_m}{(y_i - f(x_i))^2}
 \]<br>
-因此，当我们为了求解最优的切分特征j和最优的切分点s，就转化为求解这么一个目标函数：<br>
+因此，为了求解最优的切分特征j和最优的切分点s，就转化为求解目标函数：<br>
 \[
 \min _{j, z}\left[\min _{c_1} \sum_{x \in R_{1}(j, x)}\left(y_{i}-c_{1}\right)^{2}+\min _{c_{2}} \sum_{x \in R_{2}(j, x)}\left(y_{i}-c_{2}\right)^{2}\right]
 \]<br>
-所以我们只要遍历所有特征的的所有切分点，就能找到最优的切分特征和切分点。最终得到一棵回归树。</p>
-</li>
-<li>
+所以只要遍历所有特征的的所有切分点，就能找到最优的切分特征和切分点。最终得到一棵回归树。</p>
+<h5 id="fen-lei-shu-de-sheng-cheng">分类树的生成</h5>
 <p><strong>基尼指数</strong>:假设有K个类,样本属于第k类的概率为\(p_k\),则概率分布的基尼指数为:\(\operatorname{Gini}(p)=\sum_{k=1}^{K} p_{k}\left(1-p_{k}\right)=1-\sum_{k=1}^{K} p_{k}^{2}\),表示不确定性.在特征A的条件下集合D的基尼指数定义为\(\operatorname{Gini}(D, A)=\frac{\left|D_{1}\right|}{|D|} \operatorname{Gini}\left(D_{1}\right)+\frac{\left|D_{2}\right|}{|D|} \operatorname{Gini}\left(D_{2}\right)\),表示分割后集合D的不确定性.基尼指数越大,样本集合的<strong>不确定性</strong>也就越大.</p>
-</li>
-<li>
-<p><strong>分类树的生成</strong></p>
+<p><strong>算法过程</strong>：</p>
 <ol>
 <li>从根结点开始,设结点的训练数据集为D,对每个特征A和其可能取的每个值a,计算A=a时的基尼指数,</li>
 <li>选择<strong>基尼指数最小</strong>的特征及其对应的切分点作为<strong>最优特征</strong>与<strong>最优切分点</strong>,生成两个子结点</li>
 <li>递归进行以上操作,直至满足<strong>停止条件</strong>.停止条件一般是结点中的样本个数小于阈值,或样本集的基尼指数小于阈值,或没有更多特征.</li>
 </ol>
-</li>
-<li>
-<p><strong>CART剪枝</strong></p>
-<p>\(T_t\)表示以t为根结点的子树,\(|T_t|\)是\(T_t\)的叶结点个数.可以证明当\(\alpha=\frac{C(t)-C\left(T_{t}\right)}{\left|T_{t}\right|-1}\)时,\(T_t\)与\(t\)有相同的损失函数值,且\(t\)的结点少,因此\(t\)比\(T_t\)更可取,对\(T_t\)进行剪枝.<strong>自下而上</strong>地对各内部结点t计算\(g(t)=\frac{C(t)-C\left(T_{t}\right)}{\left|T_{t}\right|-1}\),并令\(a=min(g(t))\),<strong>自上而下</strong>地访问内部节点t,如果有\(g(t)=a\),进行剪枝,并对t以<strong>多数表决法</strong>决定其类,得到子树T,如此循环地生成一串<strong>子树序列</strong>,直到新生成的T是由根结点单独构成的树为止.利用<strong>交叉验证法</strong>在子树序列中选取最优子树.</p>
+<p><strong>CART剪枝</strong>：</p>
+<p>\(T_t\)表示以t为根结点的子树,\(|T_t|\)是\(T_t\)的叶结点个数.可以证明当\(\alpha=\frac{C(t)-C\left(T_{t}\right)}{\left|T_{t}\right|-1}\)时,\(T_t\)与\(t\)有相同的损失函数值,且\(t\)的结点少,因此\(t\)比\(T_t\)更可取,对\(T_t\)进行剪枝。<strong>自下而上</strong>地对各内部结点t计算\(g(t)=\frac{C(t)-C\left(T_{t}\right)}{\left|T_{t}\right|-1}\),并令\(a=min(g(t))\),<strong>自上而下</strong>地访问内部节点t,如果有\(g(t)=a\),进行剪枝,并对t以<strong>多数表决法</strong>决定其类,得到子树T,如此循环地生成一串<strong>子树序列</strong>,直到新生成的T是由根结点单独构成的树为止.利用<strong>交叉验证法</strong>在子树序列中选取最优子树.</p>
 <p>如果是<strong>连续值</strong>的情况,一般用<strong>二分法</strong>作为结点来划分.</p>
-</li>
-</ol>
 <h4 id="san-chong-bu-tong-de-jue-ce-shu">三种不同的决策树</h4>
 <ul>
 <li>
@@ -5024,20 +5177,30 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
 <li>在学习时过多考虑如何提高对训练数据的正确分类,从而构建出过于复杂的决策树,产生<strong>过拟合</strong>现象.解决方法是对已生成的决策树进行简化,称为剪枝.</li>
 <li>设树的叶结点个数为\(|T|\),每个叶结点有\(N_t\)个样本点,其中\(k\)类样本点有\(N_{tk}\)个,剪枝往往通过极小化决策树整体的损失函数\(C_{\alpha}(T)=\sum_{i=1}^{\pi} N_{i} H_{i}(T)+\alpha|T|\)来实现,其中经验熵\(H_{t}(T)=-\sum_{k} \frac{N_{a}}{N_{t}} \log \frac{N_{u}}{N_{t}}\).剪枝通过加入\(a|T|\)项来考虑模型复杂度,实际上就是用正则化的极大似然估计进行模型选择.</li>
 <li><strong>剪枝算法</strong>:剪去某一子结点,如果生成的新的整体树的<strong>损失函数值</strong>小于原树,则进行剪枝,直到不能继续为止.具体可以由动态规划实现.</li>
-</ol>
-<h1 id="shu-xing-jie-gou-wei-shi-yao-bu-xu-yao-gui-yi-hua">树形结构为什么不需要归一化?</h1>
-<p>根本原因在于：特征选择依赖于在某个特征值下的样本数量带来的信息增益，和特征值的大小无关。所以数值缩放不影响分裂点位置，对树模型的结构不造成影响。<br>
-按照特征值进行排序的，排序的顺序不变，那么所属的分支以及分裂点就不会有不同。</p>
-<p>树模型是不能进行梯度下降的，因为构建树模型（回归树）寻找最优点时是通过寻找最优分裂点完成的，因此树模型是阶跃的，阶跃点是不可导的，并且求导没意义，也就不需要归一化。</p>
-<p>既然树形结构（如决策树、RF）不需要归一化，那为何非树形结构比如Adaboost、SVM、LR、Knn、KMeans之类则需要归一化。</p>
-<p>对于线性模型，特征值差别很大时，运用梯度下降的时候，损失等高线是椭圆形，需要进行多次迭代才能到达最优点。<br>
-但是如果进行了归一化，那么等高线就是圆形的，促使SGD往原点迭代，从而导致需要的迭代次数较少。</p>
-<h1 id="jue-ce-shu-ru-he-jian-zhi">决策树如何剪枝</h1>
-<p>决策树的剪枝基本策略有 预剪枝 (Pre-Pruning) 和 后剪枝 (Post-Pruning)。</p>
+<li>剪枝策略：决策树的剪枝基本策略有 <strong>预剪枝</strong>和<strong>后剪枝</strong>。
 <ul>
 <li><strong>预剪枝</strong>：其中的核心思想就是，在每一次实际对结点进行进一步划分之前，先采用验证集的数据来验证如果划分是否能提高划分的准确性。如果不能，就把结点标记为叶结点并退出进一步划分；如果可以就继续递归生成节点。</li>
 <li><strong>后剪枝</strong>：后剪枝则是先从训练集生成一颗完整的决策树，然后自底向上地对非叶结点进行考察，若将该结点对应的子树替换为叶结点能带来泛化性能提升，则将该子树替换为叶结点。</li>
 </ul>
+</li>
+</ol>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="id-3-c-4-5-cart-zhe-san-chong-jue-ce-shu-de-qu-bie">ID3, C4.5, CART 这三种决策树的区别</h2>
+<ul>
+<li>ID3 决策树优先选择<strong>信息增益大</strong>的属性来对样本进行划分， 但是这样的划分方法有一个很大的缺点： 当一个<strong>属性可取值数目较多时</strong>， 可能在这个属性对应值下的样本<strong>只有一个或者很少个</strong>， 此时它的信息增益将很高， ID3会认为这个属性很适合划分。</li>
+<li>C4.5树：不采用信息增益作为划分依据，而是采用<strong>信息增益比</strong>作为划分依据。但是仍不能完全解决以上问题,而是有所改善。</li>
+<li>CART树：它使用<strong>gini系数</strong>作为节点的分裂依据。</li>
+</ul>
+<h3 id="wei-he-xin-xi-zeng-yi-hui-pian-xiang-duo-qu-zhi-te-zheng">为何信息增益会偏向多取值特征？</h3>
+<p>从直观的理解上来说，当特征取值较多时， 根据此特征划分得到的子集纯度有更大的可能性会更高（对比取值较少的特征）， 因此划分之后的熵会更低，而又由于划分之前的熵是一定的，因此信息增益更大。</p>
+<h2 id="shu-xing-jie-gou-wei-shi-yao-bu-xu-yao-gui-yi-hua">树形结构为什么不需要归一化?</h2>
+<p>根本原因在于：<strong>特征选择依赖于在某个特征值下的样本数量带来的信息增益</strong>，和特征值的大小无关。所以数值缩放不影响分裂点位置，对树模型的结构不造成影响。<br>
+按照特征值进行排序的，排序的顺序不变，那么所属的分支以及分裂点就不会有不同。</p>
+<h2 id="wei-shi-yao-bu-shi-yong-ti-du-xia-jiang-lai-you-hua-sun-shi">为什么不使用梯度下降来优化损失</h2>
+<p>树模型是不能进行梯度下降的，因为构建树模型（回归树）寻找最优点时是通过寻找最优分裂点完成的，因此树模型是阶跃的，阶跃点是不可导的，并且求导没意义，也就不需要归一化。</p>
+<h2 id="wei-he-fei-shu-xing-jie-gou-bi-ru-adaboost-svm-lr-knn-k-means-zhi-lei-ze-xu-yao-gui-yi-hua">为何非树形结构比如Adaboost、SVM、LR、Knn、KMeans之类则需要归一化。</h2>
+<p>对于线性模型，特征值差别很大时，运用梯度下降的时候，损失等高线是椭圆形，需要进行多次迭代才能到达最优点。<br>
+但是如果进行了归一化，那么等高线就是圆形的，促使SGD往原点迭代，从而导致需要的迭代次数较少。</p>
 <h1 id="dai-ma">代码</h1>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#用于数据处理和分析的工具包</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment">#引入用于数据预处理/特征工程的工具包</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="comment">#import决策树建模包</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">adult_data = pd.read_csv(<span class="string">'./DecisionTree.csv'</span>)</span><br><span class="line">adult_data.info()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">32561</span> entries, <span class="number">0</span> to <span class="number">32560</span></span><br><span class="line">Data columns (total <span class="number">9</span> columns):</span><br><span class="line">workclass         <span class="number">32561</span> non-null object</span><br><span class="line">education         <span class="number">32561</span> non-null object</span><br><span class="line">marital-status    <span class="number">32561</span> non-null object</span><br><span class="line">occupation        <span class="number">32561</span> non-null object</span><br><span class="line">relationship      <span class="number">32561</span> non-null object</span><br><span class="line">race              <span class="number">32561</span> non-null object</span><br><span class="line">gender            <span class="number">32561</span> non-null object</span><br><span class="line">native-country    <span class="number">32561</span> non-null object</span><br><span class="line">income            <span class="number">32561</span> non-null object</span><br><span class="line">dtypes: object(<span class="number">9</span>)</span><br><span class="line">memory usage: <span class="number">2.2</span>+ MB</span><br><span class="line">    </span><br><span class="line">adult_data.shape</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">(<span class="number">32561</span>, <span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列</span></span><br><span class="line">adult_data.columns</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">Index([<span class="string">u'workclass'</span>, <span class="string">u'education'</span>, <span class="string">u'marital-status'</span>, <span class="string">u'occupation'</span>,</span><br><span class="line">       <span class="string">u'relationship'</span>, <span class="string">u'race'</span>, <span class="string">u'gender'</span>, <span class="string">u'native-country'</span>, <span class="string">u'income'</span>],</span><br><span class="line">      dtype=<span class="string">'object'</span>)</span><br><span class="line"><span class="comment"># 特征</span></span><br><span class="line">feature_columns = [<span class="string">u'workclass'</span>, <span class="string">u'education'</span>, <span class="string">u'marital-status'</span>, <span class="string">u'occupation'</span>, <span class="string">u'relationship'</span>, <span class="string">u'race'</span>, <span class="string">u'gender'</span>, <span class="string">u'native-country'</span>]</span><br><span class="line"><span class="comment"># 标签</span></span><br><span class="line">label_column = [<span class="string">'income'</span>]</span><br><span class="line"><span class="comment">#区分特征和目标列</span></span><br><span class="line">features = adult_data[feature_columns]</span><br><span class="line">label = adult_data[label_column]</span><br><span class="line"><span class="comment"># 把每一个离散的类别特征的取值用one-hot 表示（因为数据都是用字符串表示，需要转化成数字）</span></span><br><span class="line">features = pd.get_dummies(features)</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化一个决策树分类器</span></span><br><span class="line">clf = tree.DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">4</span>)</span><br><span class="line"><span class="comment">#用决策树分类器拟合数据</span></span><br><span class="line">clf = clf.fit(features.values, label.values)</span><br><span class="line"><span class="comment"># inference</span></span><br><span class="line">clf.predict(features.values)</span><br></pre></td></tr></table></figure>
 <h2 id="ke-shi-hua-jue-ce-shu">可视化决策树</h2>
@@ -5051,6 +5214,176 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
         <tag>机器学习</tag>
         <tag>决策树</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>朴素贝叶斯</title>
+    <url>/2020/05/26/machine_learning/naive-bayes/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/26/machine_learning/naive-bayes/v2-535ae1780dfe52729c4db435cbad1465_1440w.jpg" alt></p>
+<a id="more"></a>
+<h1 id="po-su-bei-xie-si">朴素贝叶斯</h1>
+<h2 id="jian-jie">简介</h2>
+<p>朴素贝叶斯是基于<strong>贝叶斯定理</strong>和<strong>特征条件独立假设</strong>的分类方法.首先学习输入/输出的联合概率分布,然后基于此模型,对给定的输入x,利用贝叶斯定理求出后验概率最大的输出y.属于生成模型.<br>
+\[
+P(类别\mid特征 )=\frac{P(特征\mid类别) P(类别)}{P(特征)}
+\]</p>
+<h2 id="ji-ben-gai-nian">基本概念</h2>
+<h3 id="tiao-jian-gai-lu">条件概率</h3>
+<p>\[
+P(X|Y) =  \frac{P(X,Y)}{P(Y)}
+\]</p>
+<p>\(P(X|Y)\)含义： 表示 \(y\) 发生的条件下 \(x\) 发生的概率。</p>
+<h3 id="xian-yan-gai-lu">先验概率</h3>
+<p>含义： <strong>表示事件发生前的预判概率</strong>。这个可以是基于历史数据统计，也可以由背景常识得出，也可以是主观观点得出。一般都是单独事件发生的概率，如 \(P(A)\)</p>
+<h3 id="hou-yan-gai-lu">后验概率</h3>
+<p>基于先验概率求得的<strong>反向条件概率</strong>，形式上与条件概率相同（若 <code>P(X|Y)</code> 为正向，则 <code>P(Y|X)</code> 为反向）</p>
+<h2 id="bei-xie-si-gong-shi">贝叶斯公式</h2>
+<p>贝叶斯公式如下：<br>
+\[
+P(Y|X) = \frac{P(X|Y) P(Y)}{P(X)}  \\
+\]</p>
+<blockquote>
+<ul>
+<li>P(Y) 叫做<strong>先验概率</strong>，意思是事件X发生之前，我们对事件Y发生的一个概率的判断</li>
+<li>P(Y|X) 叫做<strong>后验概率</strong>，意思是时间X发生之后，我们对事件Y发生的一个概率的重新评估</li>
+<li>P(Y,X) 叫做<strong>联合概率</strong>， 意思是事件X与事件Y同时发生的概率。</li>
+</ul>
+</blockquote>
+<h2 id="tiao-jian-du-li-jia-she">条件独立假设</h2>
+<p>\[
+P(x|c) = p(x_1, x_2,  \cdots x_n | c) = \prod_{i=1}^Np(x_i | c)
+\]</p>
+<p>朴素贝叶斯采用条件独立假设的动机在于： <strong>简化运算。</strong></p>
+<h2 id="suan-fa-bu-zou">算法步骤</h2>
+<ol>
+<li>
+<p>首先学习先验概率分布<br>
+\[
+p(c_k),k=1,2,3,4,...,k
+\]</p>
+</li>
+<li>
+<p>然后学习条件概率分布:<br>
+\[
+P\left(X=x | Y=c_{k}\right)=P\left(X^{(1)}=x^{(1)}, \cdots, X^{(n)}=x^{(n)} | Y=c_{k}\right)
+\]<br>
+如果估计实际,需要指数级的计算,所以朴素贝叶斯法对条件概率分布作了条件独立性的假设,上式变成:<br>
+\[
+\prod_{j=1}^{n} P\left(X^{(n)}=x^{(n)} | Y=c_{k}\right)
+\]</p>
+</li>
+<li>
+<p>在分类时,通过学习到的模型计算后验概率分布,由贝叶斯定理得到</p>
+<p>\[
+P\left(Y=c_{k} | X=x\right)=\frac{P\left(X=x | Y=c_{k}\right) P\left(Y=c_{k}\right)}{\sum_{k} P\left(X=x | Y=c_{k}\right) P\left(Y=c_{k}\right)}
+\]</p>
+</li>
+<li>
+<p>将条件独立性假设得到的等式代入,并且注意到分母都是相同的,所以得到朴素贝叶斯分类器:<br>
+\[
+y=\arg \max _{a_{k}} P\left(Y=c_{k}\right) \prod_{j} P\left(X^{(l)}=x^{(l)} | Y=c_{k}\right)
+\]</p>
+</li>
+</ol>
+<p>朴素贝叶斯将实例分到<strong>后验概率最大</strong>的类中,这等价于<strong>期望风险最小化</strong>。</p>
+<p><strong>特殊情况处理方法</strong>：</p>
+<ol>
+<li>
+<p>用极大似然估计可能会出现所要估计的概率值为0的情况,在累乘后会影响后验概率的计算结果,使分类产生偏差.可以采用<strong>贝叶斯估计</strong>,在随机变量各个取值的频数上赋予一个正数：</p>
+<p>\[
+P_{\lambda}\left(X^{(1)}=a_{j q} | Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(x_{i}^{(l)}=a_{\beta}, y_{i}=c_{k}\right)+\lambda}{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)+S_{j} \lambda}
+\]<br>
+\(S_j\)为\(j\)属性可能取值数量,当\(\lambda=0\)时就是极大似然估计.常取\(\lambda=1\),称为<strong>拉普拉斯平滑</strong>.</p>
+</li>
+<li>
+<p>如果是连续值的情况,可以假设连续变量服从高斯分布,然后用训练数据估计参数：<br>
+\[
+P\left(X_{i}=x_{i} | Y=y_{i}\right)=\frac{1}{\sqrt{2 \pi} \sigma_{i j}^{2}} e^{\frac{\left(x_{i}-\mu_{j}\right)^{2}}{2 \sigma_{i}^{2}}}
+\]</p>
+</li>
+</ol>
+<h2 id="po-su-bei-xie-si-zhong-de-san-chong-mo-xing">朴素贝叶斯中的三种模型</h2>
+<h3 id="duo-xiang-shi-mo-xing">多项式模型</h3>
+<p>多项式模型适用于离散特征情况，在文本领域应用广泛， 其基本思想是：<strong>我们将重复的词语视为其出现多次</strong>。</p>
+<h3 id="gao-si-mo-xing">高斯模型</h3>
+<p>高斯模型适合<strong>连续特征情况</strong>， 给出高斯公式：<br>
+\[
+P(x_{i}|y_{k}) = \frac{1}{\sqrt{2\pi\sigma_{y_{k}}^{2}}}exp( -\frac{(x_{i}-\mu_{y_{k}})^2}  {2\sigma_{y_{k}}^{2}}   )
+\]</p>
+<h3 id="bo-nu-li-mo-xing">伯努利模型</h3>
+<p>伯努利模型适用于离散特征情况，它将重复的词语都视为只出现一次。</p>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="po-su-bei-xie-si-wei-he-po-su">朴素贝叶斯为何朴素？</h2>
+<p>朴素贝叶斯的朴素性体现在该算法基于一个简单的假设： <strong>所有的变量都是相互独立的</strong>，用贝叶斯公式表达如下：<br>
+\[
+P(Y|X_1, X_2) = \frac{P(X_1|Y) P(X_2|Y) P(Y)}{P(X_1)P(X_2)}
+\]<br>
+<strong>而在很多情况下，所有变量几乎不可能满足两两之间的条件。</strong></p>
+<h2 id="po-su-bei-xie-si-fen-lei-zhong-mou-ge-lei-bie-de-gai-lu-wei-0-zen-yao-ban">朴素贝叶斯分类中某个类别的概率为0怎么办？</h2>
+<p><strong>问题：</strong> 如下，A1,A2,A3是三个特征，Y是分类结果。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">A1</th>
+<th style="text-align:center">A2</th>
+<th style="text-align:center">A3</th>
+<th style="text-align:center">Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">P(Y=<span class="number">0</span>) = <span class="number">3</span>/<span class="number">5</span></span><br><span class="line">P(Y=<span class="number">1</span>) = <span class="number">2</span>/<span class="number">5</span></span><br><span class="line">P(Y=<span class="number">0</span>|A1=<span class="number">1</span>,A2=<span class="number">0</span>,A3=<span class="number">0</span>) = <span class="number">3</span>/<span class="number">5</span> * <span class="number">1</span>/<span class="number">3</span> * <span class="number">2</span>/<span class="number">3</span> * <span class="number">1</span>/<span class="number">3</span> = <span class="number">2</span>/<span class="number">45</span></span><br><span class="line">P(Y=<span class="number">1</span>|A1=<span class="number">1</span>,A2=<span class="number">0</span>,A3=<span class="number">0</span>) = <span class="number">2</span>/<span class="number">5</span> * <span class="number">1</span>/<span class="number">2</span> * <span class="number">1</span>/<span class="number">4</span> * <span class="number">1</span>/<span class="number">2</span> = <span class="number">1</span>/<span class="number">40</span></span><br></pre></td></tr></table></figure>
+<p>答案是<strong>拉普拉斯平滑</strong>。</p>
+<h2 id="po-su-bei-xie-si-de-yao-qiu-shi-shi-yao">朴素贝叶斯的要求是什么？</h2>
+<ul>
+<li>贝叶斯定理</li>
+<li>特征条件独立假设</li>
+</ul>
+<h2 id="po-su-bei-xie-si-de-you-que-dian">朴素贝叶斯的优缺点？</h2>
+<ul>
+<li>优点： 对小规模数据表现很好，适合多分类任务，适合增量式训练。</li>
+<li>缺点：对输入数据的表达形式很敏感（离散、连续，值极大极小之类的）。</li>
+</ul>
+<h2 id="po-su-bei-xie-si-yu-lr-qu-bie">朴素贝叶斯与 LR 区别？</h2>
+<ul>
+<li>朴素贝叶斯是生成模型，根据已有样本进行贝叶斯估计学习出先验概率 P(Y) 和条件概率 P(X|Y)，进而求出联合分布概率 P(XY)，最后利用贝叶斯定理求解P(Y|X)， 而LR是判别模型，根据极大化对数似然函数直接求出条件概率 P(Y|X)</li>
+<li>朴素贝叶斯是基于很强的<strong>条件独立假设</strong>（在已知分类Y的条件下，各个特征变量取值是相互独立的），而 LR 则对此没有要求</li>
+<li>朴素贝叶斯适用于数据集少的情景，而LR适用于大规模数据集。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术/机器学习</category>
+      </categories>
   </entry>
   <entry>
     <title>命名实体识别</title>
@@ -5223,7 +5556,7 @@ w^{*}=\arg \max _{w \in \mathbb{R}^{d}} L\left(w\right)
 <p>在解释上述现象之前，需要区分训练误差和泛化误差。通俗来讲，前者指模型在训练数据集上表现出的误差，后者指模型在任意一个测试数据样本上表现出的误差的期望，并常常通过测试数据集上的误差来近似。计算训练误差和泛化误差可以使用之前介绍过的损失函数，例如线性回归用到的平方损失函数和softmax回归用到的交叉熵损失函数。</p>
 <p>在机器学习里，通常假设训练数据集和测试数据集里的每一个样本都是从同一个概率分布中相互独立地生成的。基于该独立同分布假设，给定任意一个机器学习模型，它的训练误差的期望和泛化误差都是一样的。例如，如果将模型参数设成随机值，那么训练误差和泛化误差会非常相近。但是，模型的参数是通过在训练数据集上训练模型而学习出的，参数的选择依据了最小化训练误差。所以，训练误差的期望小于或等于泛化误差。也就是说，一般情况下，由训练数据集学到的模型参数会使模型在训练数据集上的表现优于或等于在测试数据集上的表现。由于无法从训练误差估计泛化误差，一味地降低训练误差并不意味着泛化误差一定会降低。机器学习模型应关注降低泛化误差。</p>
 <h2 id="qian-ni-he-he-guo-ni-he-1">欠拟合和过拟合</h2>
-<p>接下来，将探究模型训练中经常出现的两类典型问题：一类是模型无法得到较低的训练误差，这一现象被称作欠拟合；另一类是模型的训练误差远小于它在测试数据集上的误差，称该现象为过拟合。在实践中，要尽可能同时应对欠拟合和过拟合。</p>
+<p>模型训练中经常出现的两类典型问题：一类是模型无法得到较低的训练误差，这一现象被称作欠拟合；另一类是模型的训练误差远小于它在测试数据集上的误差，称该现象为过拟合。在实践中，要尽可能同时应对欠拟合和过拟合。</p>
 <h3 id="mo-xing-fu-za-du">模型复杂度</h3>
 <p>为了解释模型复杂度，以多项式函数拟合为例。给定一个由标量数据特征\(x\)和对应的标量标签\(y\)组成的训练数据集，多项式函数拟合的目标是找一个\(K\)阶多项式函数</p>
 <p>\[
@@ -5246,7 +5579,7 @@ w^{*}=\arg \max _{w \in \mathbb{R}^{d}} L\left(w\right)
 <p>\[
 \ell(w_1, w_2, b) + \frac{\lambda}{2n} \|\boldsymbol{w}\|^2
 \]</p>
-<p>其中超参数\(\lambda > 0\)。当权重参数均为0时，惩罚项最小。当\(\lambda\)较大时，惩罚项在损失函数中的比重较大，这通常会使学到的权重参数的元素较接近0。当\(\lambda\)设为0时，惩罚项完全不起作用。上式中\(L_2\)范数平方\(\|\boldsymbol{w}\|^2\)展开后得到\(w_1^2 + w_2^2\)。有了\(L_2\)范数惩罚项后，在小批量随机梯度下降中，我们将线性回归一节中权重\(w_1\)和\(w_2\)的迭代方式更改为</p>
+<p>其中超参数\(\lambda > 0\)。当权重参数均为0时，惩罚项最小。当\(\lambda\)较大时，惩罚项在损失函数中的比重较大，这通常会使学到的权重参数的元素较接近0。当\(\lambda\)设为0时，惩罚项完全不起作用。上式中\(L_2\)范数平方\(\|\boldsymbol{w}\|^2\)展开后得到\(w_1^2 + w_2^2\)。有了\(L_2\)范数惩罚项后，在小批量随机梯度下降中，将权重\(w_1\)和\(w_2\)的迭代方式更改为</p>
 <p>\[
 \begin{aligned}
 w_1 &amp;\leftarrow \left(1- \frac{\eta\lambda}{|\mathcal{B}|} \right)w_1 -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}x_1^{(i)} \left(x_1^{(i)} w_1 + x_2^{(i)} w_2 + b - y^{(i)}\right),\\
@@ -5307,7 +5640,6 @@ E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
 <li>权重衰减可以通过优化器中的<code>weight_decay</code>超参数来指定。</li>
 <li>可以定义多个优化器实例对不同的模型参数使用不同的迭代方法。</li>
 <li>可以通过使用丢弃法应对过拟合。丢弃法只在训练模型时使用。</li>
-<li></li>
 </ul>
 ]]></content>
       <categories>
@@ -5320,19 +5652,29 @@ E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/Logistic-Regression-learning.png" alt></p>
 <a id="more"></a>
 <h1 id="luo-ji-hui-gui">逻辑回归</h1>
-<h2 id="shi-yao-shi-luo-ji-hui-gui">什么是逻辑回归</h2>
-<p>逻辑回归是用来做分类算法的，线性回归，一般形式是\(y=w \ast x + b\) ，y的取值范围是\([- \infty, +\infty]\)，有这么多取值，把\(y\)的结果带入一个非线性变换的<strong>Sigmoid函数</strong>中，即可得到[0,1]之间取值范围的数\(S\)，\(S\)可以看成是一个概率值，如果设置概率阈值为0.5，那么\(S\)大于0.5可以看成是正样本，小于0.5看成是负样本，这样就可以进行分类了。</p>
-<h2 id="shi-yao-shi-dui-shu-ji-lu">什么是对数几率</h2>
-<p>如果某事件发生的概率是p,则该事件发生的<strong>几率</strong>(此处几率指该事件发生概率与不发生概率之比)是\(\frac{p}{1-p}\), <strong>对数几率</strong> 是\(log(\frac{p}{1-p})\),那么\(\log \frac{P(Y=1 | x)}{1-P(Y=1 | x)}=w \cdot x\)，也就是说在逻辑斯谛回归模型中,输出Y=1的对数几率是输入x的<strong>线性函数</strong>,线性函数值越接近正无穷,概率值就越接近1,反之则越接近0.</p>
-<h2 id="shi-yao-shi-sigmoid-han-shu">什么是Sigmoid函数</h2>
-<p>公式及图像如下：</p>
+<h2 id="jian-jie">简介</h2>
+<p>其基本思想是：根据现有数据对分类边界线建立回归公式,以此进行分类。</p>
+<ul>
+<li>逻辑回归的本质： 极大似然估计</li>
+<li>逻辑回归的激活函数：Sigmoid</li>
+<li>逻辑回归的代价函数：交叉熵</li>
+</ul>
+<h2 id="sigmoid">sigmoid</h2>
+<p>Sigmoid函数公式及图像如下：</p>
 <p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/00630Defly1g4pvk2ctatj30cw0b63yq.jpg" alt></p>
-<p>函数中\(t\)无论取什么值，其结果都在\([0,1]\)的区间内，一个分类问题就有两种答案，一种是“是”，一种是“否”，那0对应着“否”，1对应着“是”，假设分类的<strong>阈值</strong>是0.5，那么超过0.5的归为1分类，低于0.5的归为0分类，阈值是可以自己设定的。把\(w \ast x + b\)带入t中就得到了逻辑回归的一般模型方程：</p>
-<p>\[
+<p>函数中\(t\)无论取什么值，其结果都在\([0,1]\)的区间内。</p>
+<p>逻辑回归是用来做分类算法的，线性回归，一般形式是\(y=w \ast x + b\) ，y的取值范围是\([- \infty, +\infty]\)，有这么多取值，把\(y\)的结果带入一个非线性变换的<strong>Sigmoid函数</strong>中，即可得到[0,1]之间取值范围的数。<br>
+\[
 H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 \]<br>
 结果可以理解为概率，概率大于0.5的属于1分类，概率小于0.5的属于0分类，这样就达到了分类的目的。</p>
-<h2 id="sun-shi-han-shu-shi-shi-yao">损失函数是什么</h2>
+<h2 id="dui-shu-ji-lu">对数几率</h2>
+<p>如果某事件发生的概率是p,则该事件发生的<strong>几率</strong>(此处几率指该事件发生概率与不发生概率之比)是\(\frac{p}{1-p}\), <strong>对数几率</strong> 是\(log(\frac{p}{1-p})\),</p>
+<p>\[
+\log \frac{P(Y=1 | x)}{1-P(Y=1 | x)}=w \cdot x
+\]<br>
+也就是说在逻辑斯谛回归模型中,输出\(Y=1\)的对数几率是输入\(x\)的<strong>线性函数</strong>,线性函数值越接近正无穷,概率值就越接近1,反之则越接近0.</p>
+<h2 id="sun-shi-han-shu">损失函数</h2>
 <p>逻辑回归的损失函数是 <strong>log loss</strong>，也就是<strong>对数似然函数</strong>，函数公式如下：</p>
 <p>\[
 \operatorname{cost}\left(h_{\theta}(x), y\right)=\left\{\begin{aligned}
@@ -5346,8 +5688,12 @@ H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 \begin{aligned} L(w) &amp;=\sum_{i=1}^{N}\left[y_{i} \log \pi\left(x_{i}\right)+\left(1-y_{i}\right)\log\left(1-\pi\left(x_{i}\right)\right)\right]\\ &amp;=\sum_{i=1}^{N}\left[y_{i} \log \frac{\pi\left(x_{i}\right)}{1-\pi\left(x_{i}\right)}+\log \left(1-\pi\left(x_{i}\right)\right)\right]\\&amp;=\sum_{i=1}^{N}\left[y_{i}\left(w \cdot x_{i}\right)-\log \left(1+\exp \left(w \cdot x_{i}\right)\right]\right.\end{aligned}
 \]</p>
 <p>最后按照梯度下降法一样，求解极小值点，得到想要的模型效果。</p>
-<h2 id="ru-he-jin-xing-duo-xiang-luo-ji-hui-gui">如何进行多项逻辑回归</h2>
-<p>当问题是多分类问题时,可以作如下推广:设Y有K类可能取值,\(P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1 \quad P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}\),实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
+<h2 id="duo-xiang-luo-ji-hui-gui">多项逻辑回归</h2>
+<p>当问题是多分类问题时,可以作如下推广:设\(Y\)有\(K\)类可能取值:</p>
+<p>\[
+P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1\\ P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}
+\]</p>
+<p>实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
 <p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：<br>
 \[
 P(\boldsymbol{W})=\prod_{n=1}^{N}\left(\frac{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}\right)
@@ -5360,38 +5706,56 @@ F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{
 &amp;=\sum_{n=1}^{N} \ln \left(1+\sum_{k \neq y_{n}} e^{\boldsymbol{w}_{k} \boldsymbol{x}_{n}-\boldsymbol{w}_{y_{n}} \boldsymbol{x}_{n}}\right)
 \end{aligned}
 \]</p>
-<h2 id="luo-ji-hui-gui-you-shi-yao-you-dian">逻辑回归有什么优点</h2>
+<h2 id="jiao-cha-shang-sun-shi">交叉熵损失</h2>
+<p>使用softmax运算后可以更方便地与离散标签计算误差。softmax运算将输出变换成一个合法的类别预测分布。实际上，真实标签也可以用类别分布表达：对于样本\(i\)，构造向量\(\boldsymbol{y}^{(i)}\in \mathbb{R}^{q}\) ，使其第\(y^{(i)}\)个元素为1，其余为0。这样我们的训练目标可以设为使预测概率分布\(\boldsymbol{\hat y}^{(i)}\)尽可能接近真实的标签概率分布\(\boldsymbol{y}^{(i)}\)。可以像线性回归那样使用平方损失函数\(\frac{1}{2}\|\boldsymbol{\hat y}^{(i)}-\boldsymbol{y}^{(i)}\|^2\)。然而，想要预测分类结果正确，并不需要预测概率完全等于标签概率。</p>
+<p>一个分类的例子：如果\(y^{(i)}=3\)，那么我们只需要\(\hat{y}^{(i)}_3\)比其他两个预测值\(\hat{y}^{(i)}_1\)和\(\hat{y}^{(i)}_2\)大就行了。即使\(\hat{y}^{(i)}_3\)值为0.6，不管其他两个预测值为多少，类别预测均正确。而平方损失则过于严格，例如\(\hat y^{(i)}_1=\hat y^{(i)}_2=0.2\)比\(\hat y^{(i)}_1=0, \hat y^{(i)}_2=0.4\)的损失要小很多，虽然两者都有同样正确的分类预测结果。</p>
+<p>改善上述问题的一个方法是使用更适合<strong>衡量两个概率分布差异</strong>的测量函数。其中，交叉熵是一个常用的衡量方法：</p>
+<p>\[
+H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)}
+\]</p>
+<p>其中带下标的\(y_j^{(i)}\)是向量\(\boldsymbol y^{(i)}\)中非0即1的元素。在上式中，假设向量\(\boldsymbol y^{(i)}\)中只有第\(j\)个元素\(y^{(i)}_{j}\)为1，其余全为0，于是\(H(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}) = -\log \hat y_{j}^{(i)}\)。也就是说，交叉熵只关心对正确类别的预测概率，因为只要其值足够大，就可以确保分类结果正确。当然，遇到一个样本有多个标签时，例如图像里含有不止一个物体时，我们并不能做这一步简化。但即便对于这种情况，交叉熵同样只关心对图像中出现的物体类别的预测概率。</p>
+<p>假设训练数据集的样本数为\(n\)，交叉熵损失函数定义为<br>
+\[
+\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right )
+\]</p>
+<p>其中\(\boldsymbol{\Theta}\)代表模型参数。同样地，如果每个样本只有一个标签，那么交叉熵损失可以简写成\(\ell(\boldsymbol{\Theta}) = -(1/n)  \sum_{i=1}^n \log \hat y_{j}^{(i)}\)。从另一个角度来看，我们知道最小化\(\ell(\boldsymbol{\Theta})\)等价于最大化\(\exp(-n\ell(\boldsymbol{\Theta}))=\prod_{i=1}^n \hat y_{j}^{(i)}\)，即最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</p>
+<p>优点：</p>
+<ol>
+<li>它是<strong>非负</strong>的,并且当实际输出接近目标值时它<strong>接近0</strong>,因此可以作为代价函数.</li>
+<li>它关于权重的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w_{j}}=\frac{1}{n} \sum_{x} x_{j}(\sigma(z)-y)\),也就是误差越大,学习速度越快.而<strong>二次代价函数</strong>关于权重和偏置的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w}=(a-y) \sigma^{\prime}(z) x=a \sigma^{\prime}(z)\)和\(\frac{\partial C}{\partial b}=(a-y) \sigma^{\prime}(z)=a \sigma^{\prime}(z)\)，而\(\sigma\)函数容易饱和，梯度小，导致模型难以快速学习参数。</li>
+<li>如果输出层是<strong>线性神经元</strong>,那么<strong>二次代价函数</strong>不再会导致学习速度下降的问题,可以选用.如果输出神经元是<strong>S型神经元</strong>,<strong>交叉熵</strong>一般都是更好的选择.</li>
+<li>对于多分类交叉熵代价函数为：\(C=-\sum_{j=1}^{T} y_{j} \log {p_j}\)</li>
+</ol>
+<blockquote>
+<p>二分类问题<strong>交叉熵代价函数</strong>:\(C=-\frac{1}{n} \sum_{x}[y \ln a+(1-y) \ln (1-a)]\)</p>
+</blockquote>
+<h2 id="you-dian">优点</h2>
 <ul>
 <li>LR能以概率的形式输出结果，而非只是0,1判定。</li>
-<li>LR的可解释性强，可控度高(你要给老板讲的嘛…)。</li>
+<li>LR的可解释性强，可控度高。</li>
 <li>训练快，feature engineering之后效果赞。</li>
 <li>因为结果是概率，可以做ranking model。</li>
 </ul>
-<h2 id="luo-ji-hui-gui-chang-yong-de-you-hua-fang-fa-you-na-xie">逻辑回归常用的优化方法有哪些</h2>
+<h2 id="chang-yong-de-you-hua-fang-fa">常用的优化方法</h2>
 <h3 id="yi-jie-fang-fa-ti-du-xia-jiang">一阶方法：梯度下降</h3>
 <p>梯度下降、随机梯度下降、mini 随机梯度下降降法。随机梯度下降不但速度上比原始梯度下降要快，局部最优化问题时可以一定程度上抑制局部最优解的发生。</p>
 <h3 id="er-jie-fang-fa-niu-dun-fa-ni-niu-dun-fa">二阶方法：牛顿法、拟牛顿法</h3>
 <p>牛顿法其实就是通过切线与x轴的交点不断更新切线的位置，直到达到曲线与x轴的交点得到方程解。在实际应用中我们因为常常要求解凸优化问题，也就是要求解函数一阶导数为0的位置，而牛顿法恰好可以给这种问题提供解决方法。</p>
 <p>实际应用中牛顿法首先选择一个点作为起始点，并进行一次二阶泰勒展开得到导数为0的点进行一个更新，直到达到要求，这时牛顿法也就成了二阶求解问题，比一阶方法更快。我们常常看到的x通常为一个多维向量，这也就引出了Hessian矩阵的概念（就是x的二阶导数矩阵）。</p>
+<blockquote>
+<p>泰勒展开：</p>
+<p>\[
+f(x)=\frac{f\left(x_{0}\right)}{0 !}+\frac{f^{\prime}\left(x_{0}\right)}{1 !}\left(x-x_{0}\right)+\frac{f^{\prime \prime}\left(x_{0}\right)}{2 !}\left(x-x_{0}\right)^{2}+\ldots+\frac{f^{(n)}\left(x_{0}\right)}{n !}\left(x-x_{0}\right)^{n}+R_{n}(x)
+\]</p>
+</blockquote>
 <p>缺点：牛顿法是定长迭代，没有步长因子，所以不能保证函数值稳定的下降，严重时甚至会失败。还有就是牛顿法要求函数一定是二阶可导的。而且计算Hessian矩阵的逆复杂度很大。</p>
 <p>拟牛顿法： 不用二阶偏导而是构造出Hessian矩阵的近似正定对称矩阵的方法称为拟牛顿法。拟牛顿法的思路就是用一个特别的表达形式来模拟Hessian矩阵或者是他的逆使得表达式满足拟牛顿条件。主要有DFP法（逼近Hession的逆）、BFGS（直接逼近Hession矩阵）、 L-BFGS（可以减少BFGS所需的存储空间）。</p>
-<h2 id="luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua">逻辑斯特回归为什么要对特征进行离散化</h2>
-<ol>
-<li>非线性！逻辑回归属于广义线性模型，表达能力受限；单变量离散化为N个后，每个变量有单独的权重，相当于为模型引入了非线性，能够提升模型表达能力，加大拟合； 离散特征的增加和减少都很容易，易于模型的快速迭代；</li>
-<li>速度快！稀疏向量内积乘法运算速度快，计算结果方便存储，容易扩展；</li>
-<li>鲁棒性！离散化后的特征对异常数据有很强的鲁棒性：比如一个特征是年龄&gt;30是1，否则0。如果特征没有离散化，一个异常数据“年龄300岁”会给模型造成很大的干扰；</li>
-<li>方便交叉与特征组合：离散化后可以进行特征交叉，由M+N个变量变为M*N个变量，进一步引入非线性，提升表达能力；</li>
-<li>稳定性：特征离散化后，模型会更稳定，比如如果对用户年龄离散化，20-30作为一个区间，不会因为一个用户年龄长了一岁就变成一个完全不同的人。当然处于区间相邻处的样本会刚好相反，所以怎么划分区间是门学问；</li>
-<li>简化模型：特征离散化以后，起到了简化了逻辑回归模型的作用，降低了模型过拟合的风险。</li>
-</ol>
-<h2 id="luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo">逻辑回归的目标函数中增大L1正则化会是什么结果</h2>
-<p>所有的参数w都会变成0。</p>
 <h1 id="zui-da-shang">最大熵</h1>
 <h2 id="strong-zui-da-shang-yuan-li-strong"><strong>最大熵原理</strong></h2>
 <p>学习概率模型时,在所有可能的概率模型中,<strong>熵最大</strong>的模型是最好的模型.直观地,最大熵原理认为模型首先要满足已有的事实,即<strong>约束条件</strong>.在没有更多信息的情况下,那些不确定的部分都是&quot;<strong>等可能的</strong>&quot;.</p>
 <h2 id="strong-zui-da-shang-mo-xing-strong"><strong>最大熵模型</strong></h2>
-<p>给定训练数据集,可以确定联合分布P(X,Y)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布P(X)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中v表示频数,N表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布P(Y|X)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
-<h2 id="strong-zui-da-shang-mo-xing-de-xue-xi-strong"><strong>最大熵模型的学习</strong></h2>
+<p>给定训练数据集,可以确定联合分布\(P(X,Y)\)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布\(P(X)\)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中\(v\)表示频数,\(N\)表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布\(P(Y|X)\)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
+<h2 id="zui-da-shang-mo-xing-de-xue-xi">最大熵模型的学习</h2>
 <p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
 \[
 \begin{aligned}
@@ -5424,148 +5788,33 @@ L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w
 \end{aligned}
 \]<br>
 ,并令偏导数等于0,解得\(Z_{w}(x)=\sum_{y} \exp \left(\sum_{i=1}^{n} w_{i} f_{i}(x, y)\right)\).可以证明对偶函数等价于对数似然函数,那么对偶函数极大化等价于最大熵模型的<strong>极大似然估计</strong>\(L(w)=\sum_{x, y} \tilde{P}(x, y) \sum_{i=1}^{n} w_{i} f_{i}(x, y)-\sum_{x} \tilde{P}(x) \log Z_{w}(x)\).之后可以用最优化算法求解得到w.</p>
-<h2 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h2>
-<p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>
 <h2 id="you-hua-suan-fa">优化算法</h2>
 <p>似然函数是<strong>光滑的凸函数</strong>,因此多种最优化方法都适用.</p>
 <ol>
 <li><strong>改进的迭代尺度法(IIS)</strong>:假设当前的参数向量是w,如果能找到一种方法<strong>w-&gt;w+δ</strong>使对数似然函数值变大,就可以<strong>重复</strong>使用这一方法,直到找到最大值.</li>
 <li>逻辑斯谛回归常应用梯度下降法,牛顿法或拟牛顿法.</li>
 </ol>
-<h1 id="softmax-duo-fen-lei">softmax多分类</h1>
-<p>softmax回归的输出单元从一个变成了多个，且引入了softmax运算使输出更适合离散值的预测和训练。</p>
-<h2 id="fen-lei-wen-ti">分类问题</h2>
-<p>让我们考虑一个简单的图像分类问题，其输入图像的高和宽均为2像素，且色彩为灰度。这样每个像素值都可以用一个标量表示。我们将图像中的4像素分别记为\(x_1, x_2, x_3, x_4\)。假设训练数据集中图像的真实标签为狗、猫或鸡，这些标签分别对应离散值\(y_1, y_2, y_3\)。使用离散的数值来表示类别，例如\(y_1=1, y_2=2, y_3=3\)。如此，一张图像的标签为1、2和3这3个数值中的一个。虽然我们仍然可以使用回归模型来进行建模，并将预测值就近定点化到1、2和3这3个离散值之一，但这种连续值到离散值的转化通常会影响到分类质量。因此一般使用更加适合离散值输出的模型来解决分类问题。</p>
-<h2 id="softmax-hui-gui-mo-xing">softmax回归模型</h2>
-<p>softmax回归跟线性回归一样将输入特征与权重做线性叠加。与线性回归的一个主要不同在于，softmax回归的输出值个数等于标签里的类别数。因为一共有4种特征和3种输出动物类别，所以权重包含12个标量、偏差包含3个标量，且对每个输入计算\(o_1, o_2, o_3\)这3个输出：</p>
-<p>\[
-\begin{aligned}
-o_1 &amp;= x_1 w_{11} + x_2 w_{21} + x_3 w_{31} + x_4 w_{41} + b_1,\\
-o_2 &amp;= x_1 w_{12} + x_2 w_{22} + x_3 w_{32} + x_4 w_{42} + b_2,\\
-o_3 &amp;= x_1 w_{13} + x_2 w_{23} + x_3 w_{33} + x_4 w_{43} + b_3.
-\end{aligned}
-\]</p>
-<p>下图用神经网络图描绘了上面的计算。softmax回归同线性回归一样，也是一个单层神经网络。由于每个输出\(o_1, o_2, o_3\)的计算都要依赖于所有的输入\(x_1, x_2, x_3, x_4\)，softmax回归的输出层也是一个全连接层。</p>
-<p><img src="/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/3.4_softmaxreg.svg" alt></p>
-<p>既然分类问题需要得到离散的预测输出，一个简单的办法是将输出值\(o_i\)当作预测类别是\(i\)的置信度，并将值最大的输出所对应的类作为预测输出，即输出 \(\underset{i}{\arg\max} o_i\)。例如，如果\(o_1,o_2,o_3\)分别为\(0.1,10,0.1\)，由于\(o_2\)最大，那么预测类别为2，其代表猫。</p>
-<p>然而，直接使用输出层的输出有两个问题。</p>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="luo-ji-hui-gui-ru-he-shi-xian-duo-fen-lei">逻辑回归如何实现多分类</h2>
+<ul>
+<li><strong>方式1：</strong> 修改逻辑回归的损失函数，使用softmax函数构造模型解决多分类问题，softmax分类模型会有相同于类别数的输出，输出的值为对于样本属于各个类别的概率，最后对于样本进行预测的类型为概率值最高的那个类别。</li>
+<li><strong>方式2：</strong> 根据每个类别都建立一个二分类器，本类别的样本标签定义为0，其它分类样本标签定义为1，则有多少个类别就构造多少个逻辑回归分类器。</li>
+</ul>
+<p>若所有类别之间有明显的互斥则使用softmax分类器，若所有类别不互斥有交叉的情况则构造相应类别个数的逻辑回归分类器。</p>
+<h2 id="luo-ji-si-te-hui-gui-wei-shi-yao-yao-dui-te-zheng-jin-xing-chi-san-hua">逻辑斯特回归为什么要对特征进行离散化</h2>
 <ol>
-<li>一方面，由于输出层的输出值的范围不确定，难以直观上判断这些值的意义。例如，刚才举的例子中的输出值10表示“很置信”图像类别为猫，因为该输出值是其他两类的输出值的100倍。但如果\(o_1=o_3=10^3\)，那么输出值10却又表示图像类别为猫的概率很低。</li>
-<li>另一方面，由于真实标签是离散值，这些离散值与不确定范围的输出值之间的误差难以衡量。</li>
+<li>非线性,逻辑回归属于广义线性模型，表达能力受限；单变量离散化为N个后，每个变量有单独的权重，相当于为模型引入了非线性，能够提升模型表达能力，加大拟合； 离散特征的增加和减少都很容易，易于模型的快速迭代；</li>
+<li>速度快！稀疏向量内积乘法运算速度快，计算结果方便存储，容易扩展；</li>
+<li>鲁棒性！离散化后的特征对异常数据有很强的鲁棒性：比如一个特征是年龄&gt;30是1，否则0。如果特征没有离散化，一个异常数据“年龄300岁”会给模型造成很大的干扰；</li>
+<li>方便交叉与特征组合：离散化后可以进行特征交叉，由M+N个变量变为M*N个变量，进一步引入非线性，提升表达能力；</li>
+<li>稳定性：特征离散化后，模型会更稳定，比如如果对用户年龄离散化，20-30作为一个区间，不会因为一个用户年龄长了一岁就变成一个完全不同的人。当然处于区间相邻处的样本会刚好相反，所以怎么划分区间是门学问；</li>
+<li>简化模型：特征离散化以后，起到了简化了逻辑回归模型的作用，降低了模型过拟合的风险。</li>
 </ol>
-<p>softmax运算符解决了以上两个问题。它通过下式将输出值变换成值为正且和为1的概率分布：</p>
-<p>\[
-\hat{y}_1, \hat{y}_2, \hat{y}_3 = \text{softmax}(o_1, o_2, o_3)
-\]</p>
-<p>其中</p>
-<p>\[
-\hat{y}_1 = \frac{ \exp(o_1)}{\sum_{i=1}^3 \exp(o_i)},\quad
-\hat{y}_2 = \frac{ \exp(o_2)}{\sum_{i=1}^3 \exp(o_i)},\quad
-\hat{y}_3 = \frac{ \exp(o_3)}{\sum_{i=1}^3 \exp(o_i)}.
-\]</p>
-<p>容易看出\(\hat{y}_1 + \hat{y}_2 + \hat{y}_3 = 1\)且\(0 \leq \hat{y}_1, \hat{y}_2, \hat{y}_3 \leq 1\)，因此\(\hat{y}_1, \hat{y}_2, \hat{y}_3\)是一个合法的概率分布。这时候，如果\(\hat{y}_2=0.8\)，不管\(\hat{y}_1\)和\(\hat{y}_3\)的值是多少，我们都知道图像类别为猫的概率是80%。此外，注意到</p>
-<p>\[
-\underset{i}{\arg\max} o_i = \underset{i}{\arg\max} \hat{y}_i
-\]</p>
-<p>因此softmax运算不改变预测类别输出。</p>
-<h2 id="dan-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi">单样本分类的矢量计算表达式</h2>
-<p>为了提高计算效率，可以将单样本分类通过矢量计算来表达。在上面的图像分类问题中，假设softmax回归的权重和偏差参数分别为</p>
-<p>\[
-\boldsymbol{W} = 
-\begin{bmatrix}
-    w_{11} &amp; w_{12} &amp; w_{13} \\
-    w_{21} &amp; w_{22} &amp; w_{23} \\
-    w_{31} &amp; w_{32} &amp; w_{33} \\
-    w_{41} &amp; w_{42} &amp; w_{43}
-\end{bmatrix},\quad
-\boldsymbol{b} = 
-\begin{bmatrix}
-    b_1 &amp; b_2 &amp; b_3
-\end{bmatrix},
-\]</p>
-<p>设高和宽分别为2个像素的图像样本\(i\)的特征为<br>
-\[
-\boldsymbol{x}^{(i)} = \begin{bmatrix}x_1^{(i)} &amp; x_2^{(i)} &amp; x_3^{(i)} &amp; x_4^{(i)}\end{bmatrix},
-\]</p>
-<p>输出层的输出为<br>
-\[
-\boldsymbol{o}^{(i)} = \begin{bmatrix}o_1^{(i)} &amp; o_2^{(i)} &amp; o_3^{(i)}\end{bmatrix},
-\]</p>
-<p>预测为狗、猫或鸡的概率分布为<br>
-\[
-\boldsymbol{\hat{y}}^{(i)} = \begin{bmatrix}\hat{y}_1^{(i)} &amp; \hat{y}_2^{(i)} &amp; \hat{y}_3^{(i)}\end{bmatrix}.
-\]</p>
-<p>softmax回归对样本\(i\)分类的矢量计算表达式为</p>
-<p>\[
-\begin{aligned}
-\boldsymbol{o}^{(i)} &amp;= \boldsymbol{x}^{(i)} \boldsymbol{W} + \boldsymbol{b},\\
-\boldsymbol{\hat{y}}^{(i)} &amp;= \text{softmax}(\boldsymbol{o}^{(i)}).
-\end{aligned}
-\]</p>
-<h2 id="xiao-pi-liang-yang-ben-fen-lei-de-shi-liang-ji-suan-biao-da-shi">小批量样本分类的矢量计算表达式</h2>
-<p>为了进一步提升计算效率，对小批量数据做矢量计算。广义上讲，给定一个小批量样本，其批量大小为\(n\)，输入个数（特征数）为\(d\)，输出个数（类别数）为\(q\)。设批量特征为\(\boldsymbol{X} \in \mathbb{R}^{n \times d}\)。假设softmax回归的权重和偏差参数分别为\(\boldsymbol{W} \in \mathbb{R}^{d \times q}\)和\(\boldsymbol{b} \in \mathbb{R}^{1 \times q}\)。softmax回归的矢量计算表达式为</p>
-<p>\[
-\begin{aligned}
-\boldsymbol{O} &amp;= \boldsymbol{X} \boldsymbol{W} + \boldsymbol{b},\\
-\boldsymbol{\hat{Y}} &amp;= \text{softmax}(\boldsymbol{O}),
-\end{aligned}
-\]</p>
-<p>其中的加法运算使用了广播机制，\(\boldsymbol{O}, \boldsymbol{\hat{Y}} \in \mathbb{R}^{n \times q}\)且这两个矩阵的第\(i\)行分别为样本\(i\)的输出\(\boldsymbol{o}^{(i)}\)和概率分布\(\boldsymbol{\hat{y}}^{(i)}\)。</p>
-<h2 id="jiao-cha-shang-sun-shi-han-shu">交叉熵损失函数</h2>
-<p>使用softmax运算后可以更方便地与离散标签计算误差。softmax运算将输出变换成一个合法的类别预测分布。实际上，真实标签也可以用类别分布表达：对于样本\(i\)，构造向量\(\boldsymbol{y}^{(i)}\in \mathbb{R}^{q}\) ，使其第\(y^{(i)}\)个元素为1，其余为0。这样我们的训练目标可以设为使预测概率分布\(\boldsymbol{\hat y}^{(i)}\)尽可能接近真实的标签概率分布\(\boldsymbol{y}^{(i)}\)。</p>
-<p>可以像线性回归那样使用平方损失函数\(\|\boldsymbol{\hat y}^{(i)}-\boldsymbol{y}^{(i)}\|^2/2\)。然而，想要预测分类结果正确，并不需要预测概率完全等于标签概率。例如，在图像分类的例子里，如果\(y^{(i)}=3\)，那么我们只需要\(\hat{y}^{(i)}_3\)比其他两个预测值\(\hat{y}^{(i)}_1\)和\(\hat{y}^{(i)}_2\)大就行了。即使\(\hat{y}^{(i)}_3\)值为0.6，不管其他两个预测值为多少，类别预测均正确。而平方损失则过于严格，例如\(\hat y^{(i)}_1=\hat y^{(i)}_2=0.2\)比\(\hat y^{(i)}_1=0, \hat y^{(i)}_2=0.4\)的损失要小很多，虽然两者都有同样正确的分类预测结果。</p>
-<p>改善上述问题的一个方法是使用更适合<strong>衡量两个概率分布差异</strong>的测量函数。其中，交叉熵是一个常用的衡量方法：</p>
-<p>\[
-H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y_j^{(i)} \log \hat y_j^{(i)}
-\]</p>
-<p>其中带下标的\(y_j^{(i)}\)是向量\(\boldsymbol y^{(i)}\)中非0即1的元素。在上式中，假设向量\(\boldsymbol y^{(i)}\)中只有第\(j\)个元素\(y^{(i)}_{j}\)为1，其余全为0，于是\(H(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}) = -\log \hat y_{j}^{(i)}\)。也就是说，交叉熵只关心对正确类别的预测概率，因为只要其值足够大，就可以确保分类结果正确。当然，遇到一个样本有多个标签时，例如图像里含有不止一个物体时，我们并不能做这一步简化。但即便对于这种情况，交叉熵同样只关心对图像中出现的物体类别的预测概率。</p>
-<p>假设训练数据集的样本数为\(n\)，交叉熵损失函数定义为<br>
-\[
-\ell(\boldsymbol{\Theta}) = \frac{1}{n} \sum_{i=1}^n H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right )
-\]</p>
-<p>其中\(\boldsymbol{\Theta}\)代表模型参数。同样地，如果每个样本只有一个标签，那么交叉熵损失可以简写成\(\ell(\boldsymbol{\Theta}) = -(1/n)  \sum_{i=1}^n \log \hat y_{j}^{(i)}\)。从另一个角度来看，我们知道最小化\(\ell(\boldsymbol{\Theta})\)等价于最大化\(\exp(-n\ell(\boldsymbol{\Theta}))=\prod_{i=1}^n \hat y_{j}^{(i)}\)，即最小化交叉熵损失函数等价于最大化训练数据集所有标签类别的联合预测概率。</p>
-<p>优点：</p>
-<ol>
-<li>它是<strong>非负</strong>的,并且当实际输出接近目标值时它<strong>接近0</strong>,因此可以作为代价函数.</li>
-<li>它关于权重的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w_{j}}=\frac{1}{n} \sum_{x} x_{j}(\sigma(z)-y)\),也就是误差越大,学习速度越快.而<strong>二次代价函数</strong>关于权重和偏置的<strong>偏导数</strong>是\(\frac{\partial C}{\partial w}=(a-y) \sigma^{\prime}(z) x=a \sigma^{\prime}(z)\)和\(\frac{\partial C}{\partial b}=(a-y) \sigma^{\prime}(z)=a \sigma^{\prime}(z)\)，而\(\sigma\)函数容易饱和，梯度小，导致模型难以快速学习参数。</li>
-<li>如果输出层是<strong>线性神经元</strong>,那么<strong>二次代价函数</strong>不再会导致学习速度下降的问题,可以选用.如果输出神经元是<strong>S型神经元</strong>,<strong>交叉熵</strong>一般都是更好的选择.</li>
-<li>对于多分类交叉熵代价函数为：\(C=-\sum_{j=1}^{T} y_{j} \log {p_j}\)</li>
-</ol>
-<blockquote>
-<p>二分类问题<strong>交叉熵代价函数</strong>:\(C=-\frac{1}{n} \sum_{x}[y \ln a+(1-y) \ln (1-a)]\)</p>
-</blockquote>
-<h2 id="dai-ma-shi-xian">代码实现</h2>
-<h3 id="shu-ju">数据</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.datasets <span class="keyword">import</span> fashion_mnist</span><br><span class="line"></span><br><span class="line">batch_size=<span class="number">256</span></span><br><span class="line">(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</span><br><span class="line">x_train = tf.cast(x_train, tf.float32) / <span class="number">255</span> <span class="comment">#在进行矩阵相乘时需要float型，故强制类型转换为float型</span></span><br><span class="line">x_test = tf.cast(x_test,tf.float32) / <span class="number">255</span> <span class="comment">#在进行矩阵相乘时需要float型，故强制类型转换为float型</span></span><br><span class="line">train_iter = tf.data.Dataset.from_tensor_slices((x_train, y_train)).batch(batch_size)</span><br><span class="line">test_iter = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(batch_size)</span><br></pre></td></tr></table></figure>
-<h3 id="chu-shi-hua-mo-xing-can-shu">初始化模型参数</h3>
-<p>使用向量表示每个样本。已知每个样本输入是高和宽均为28像素的图像。模型的输入向量的长度是 \(28 \times 28 = 784\)：该向量的每个元素对应图像中每个像素。由于图像有10个类别，单层神经网络输出层的输出个数为10，因此softmax回归的权重和偏差参数分别为\(784 \times 10\)和\(1 \times 10\)的矩阵。<code>Variable</code>来标注需要记录梯度的向量。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num_inputs = <span class="number">784</span></span><br><span class="line">num_outputs = <span class="number">10</span></span><br><span class="line">W = tf.Variable(tf.random.normal(shape=(num_inputs, num_outputs), mean=<span class="number">0</span>, stddev=<span class="number">0.01</span>, dtype=tf.float32))</span><br><span class="line">b = tf.Variable(tf.zeros(num_outputs, dtype=tf.float32))</span><br></pre></td></tr></table></figure>
-<h3 id="shi-xian-softmax-yun-suan">实现 softmax 运算</h3>
-<p>在下面的函数中，矩阵<code>logits</code>的行数是样本数，列数是输出个数。为了表达样本预测各个输出的概率，softmax运算先通过<code>exp</code>函数对每个元素做指数运算，再对<code>exp</code>矩阵同行元素求和，最后令矩阵每行各元素与该行元素之和相除。这样一来，最终得到的矩阵每行元素和为1且非负，该矩阵每行都是合法的概率分布。softmax运算的输出矩阵中的任意一行元素代表了一个样本在各个输出类别上的预测概率。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(logits, axis=<span class="number">-1</span>)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.exp(logits)/tf.reduce_sum(tf.exp(logits), axis, keepdims=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>给定一个<code>Tensor</code>矩阵<code>X</code>。只对其中同一列（<code>axis=0</code>）或同一行（<code>axis=1</code>）的元素求和，并在结果中保留行和列这两个维度（<code>keepdims=True</code>）。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">X = tf.constant([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line">tf.reduce_sum(X, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">tf.reduce_sum(X, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462401</span>, shape=(<span class="number">1</span>, <span class="number">3</span>), dtype=int32, numpy=array([[<span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]], dtype=int32)&gt;</span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462403</span>, shape=(<span class="number">2</span>, <span class="number">1</span>), dtype=int32, numpy=array([[ <span class="number">6</span>],[<span class="number">15</span>]], dtype=int32)&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="ding-yi-mo-xing-ji-sun-shi-han-shu">定义模型及损失函数</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">net</span><span class="params">(X)</span>:</span></span><br><span class="line">    logits = tf.matmul(tf.reshape(X, shape=(<span class="number">-1</span>, W.shape[<span class="number">0</span>])), W) + b</span><br><span class="line">    <span class="keyword">return</span> softmax(logits)</span><br></pre></td></tr></table></figure>
-<p>下面实现了softmax回归中的交叉熵损失函数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    y = tf.cast(tf.reshape(y, shape=[<span class="number">-1</span>, <span class="number">1</span>]),dtype=tf.int32)</span><br><span class="line">    y = tf.one_hot(y, depth=y_hat.shape[<span class="number">-1</span>])</span><br><span class="line">    y = tf.cast(tf.reshape(y, shape=[<span class="number">-1</span>, y_hat.shape[<span class="number">-1</span>]]),dtype=tf.int32)</span><br><span class="line">    <span class="keyword">return</span> -tf.math.log(tf.boolean_mask(y_hat, y)+<span class="number">1e-8</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>为了得到标签的预测概率，可以使用<code>boolean_mask</code>函数和<code>one_hot</code>函数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y_hat = np.array([[<span class="number">0.1</span>, <span class="number">0.3</span>, <span class="number">0.6</span>], [<span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.5</span>]])</span><br><span class="line">y = np.array([<span class="number">0</span>, <span class="number">2</span>], dtype=<span class="string">'int32'</span>)</span><br><span class="line">tf.boolean_mask(y_hat, tf.one_hot(y, depth=<span class="number">3</span>))</span><br><span class="line"><span class="comment">#output</span></span><br><span class="line">&lt;tf.Tensor: id=<span class="number">462449</span>, shape=(<span class="number">2</span>,), dtype=float64, numpy=array([<span class="number">0.1</span>, <span class="number">0.5</span>])&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="ji-suan-fen-lei-zhun-que-lu">计算分类准确率</h3>
-<p>下面定义准确率<code>accuracy</code>函数。其中<code>tf.argmax(y_hat, axis=1)</code>返回矩阵<code>y_hat</code>每行中最大元素的索引，且返回结果与变量<code>y</code>形状相同。相等条件判断式<code>(tf.argmax(y_hat, axis=1) == y)</code>是一个数据类型为<code>bool</code>的<code>Tensor</code>。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accuracy</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.mean((tf.argmax(y_hat, axis=<span class="number">1</span>) == y))</span><br></pre></td></tr></table></figure>
-<p>评价模型<code>net</code>在数据集<code>data_iter</code>上的准确率:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 描述,对于tensorflow2中，比较的双方必须类型都是int型，所以要将输出和标签都转为int型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_accuracy</span><span class="params">(data_iter, net)</span>:</span></span><br><span class="line">    acc_sum, n = <span class="number">0.0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, (X, y) <span class="keyword">in</span> enumerate(data_iter):</span><br><span class="line">        y = tf.cast(y,dtype=tf.int64)</span><br><span class="line">        acc_sum += np.sum(tf.cast(tf.argmax(net(X), axis=<span class="number">1</span>), dtype=tf.int64) == y)</span><br><span class="line">        n += y.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> acc_sum / n</span><br></pre></td></tr></table></figure>
-<h3 id="xun-lian-mo-xing-ji-yu-ce">训练模型及预测</h3>
-<p>使用小批量随机梯度下降来优化模型的损失函数。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 训练</span></span><br><span class="line">num_epochs, lr = <span class="number">5</span>, <span class="number">0.1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(net, train_iter, test_iter, loss, num_epochs, batch_size, params=None, lr=None, trainer=None)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">        train_l_sum, train_acc_sum, n = <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">            <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">                y_hat = net(X)</span><br><span class="line">                l = tf.reduce_sum(loss(y_hat, y))</span><br><span class="line">            grads = tape.gradient(l, params)</span><br><span class="line">            <span class="keyword">if</span> trainer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="comment"># 如果没有传入优化器，则编写的小批量随机梯度下降</span></span><br><span class="line">                <span class="keyword">for</span> i, param <span class="keyword">in</span> enumerate(params):</span><br><span class="line">                    param.assign_sub(lr * grads[i] / batch_size)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># tf.keras.optimizers.SGD 直接使用是随机梯度下降 theta(t+1) = theta(t) - learning_rate * gradient</span></span><br><span class="line">                <span class="comment"># 这里使用批量梯度下降，需要对梯度除以 batch_size, </span></span><br><span class="line">                trainer.apply_gradients(zip([grad / batch_size <span class="keyword">for</span> grad <span class="keyword">in</span> grads], params))  </span><br><span class="line">                </span><br><span class="line">            y = tf.cast(y, dtype=tf.float32)</span><br><span class="line">            train_l_sum += l.numpy()</span><br><span class="line">            train_acc_sum += tf.reduce_sum(tf.cast(tf.argmax(y_hat, axis=<span class="number">1</span>) == tf.cast(y, dtype=tf.int64), dtype=tf.int64)).numpy()</span><br><span class="line">            n += y.shape[<span class="number">0</span>]</span><br><span class="line">        test_acc = evaluate_accuracy(test_iter, net)</span><br><span class="line">        print(<span class="string">'epoch %d, loss %.4f, train acc %.3f, test acc %.3f'</span>% (epoch + <span class="number">1</span>, train_l_sum / n, train_acc_sum / n, test_acc))</span><br><span class="line"></span><br><span class="line">trainer = tf.keras.optimizers.SGD(lr)</span><br><span class="line">train(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size, [W, b], lr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># output</span></span><br><span class="line">epoch <span class="number">1</span>, loss <span class="number">0.8969</span>, train acc <span class="number">0.736</span>, test acc <span class="number">0.813</span></span><br><span class="line">epoch <span class="number">2</span>, loss <span class="number">0.5987</span>, train acc <span class="number">0.806</span>, test acc <span class="number">0.826</span></span><br><span class="line">epoch <span class="number">3</span>, loss <span class="number">0.5524</span>, train acc <span class="number">0.820</span>, test acc <span class="number">0.832</span></span><br><span class="line">epoch <span class="number">4</span>, loss <span class="number">0.5297</span>, train acc <span class="number">0.826</span>, test acc <span class="number">0.834</span></span><br><span class="line">epoch <span class="number">5</span>, loss <span class="number">0.5139</span>, train acc <span class="number">0.830</span>, test acc <span class="number">0.836</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">predict_label = tf.argmax(net(X)</span><br></pre></td></tr></table></figure>
-<h3 id="tensorflow-kuai-su-shi-xian-ban-ben">tensorflow 快速实现版本</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="comment"># 数据</span></span><br><span class="line">fashion_mnist = keras.datasets.fashion_mnist</span><br><span class="line">(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</span><br><span class="line">x_train = x_train / <span class="number">255.0</span></span><br><span class="line">x_test = x_test / <span class="number">255.0</span></span><br><span class="line"><span class="comment"># 模型</span></span><br><span class="line">model = keras.Sequential([</span><br><span class="line">    keras.layers.Flatten(input_shape=(<span class="number">28</span>, <span class="number">28</span>)),</span><br><span class="line">    keras.layers.Dense(<span class="number">10</span>, activation=tf.nn.softmax)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失</span></span><br><span class="line">loss = <span class="string">'sparse_categorical_crossentropy'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 优化器</span></span><br><span class="line">optimizer = tf.keras.optimizers.SGD(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">model.compile(optimizer=tf.keras.optimizers.SGD(<span class="number">0.1</span>),</span><br><span class="line">              loss = <span class="string">'sparse_categorical_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line">model.fit(x_train,y_train,epochs=<span class="number">5</span>,batch_size=<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 评估</span></span><br><span class="line">test_loss, test_acc = model.evaluate(x_test, y_test)</span><br><span class="line">print(<span class="string">'Test Acc:'</span>,test_acc)</span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">predict_labels = tf.argmax(model.predict(x_test),axis=<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="xiao-jie">小结</h2>
+<h2 id="luo-ji-hui-gui-de-mu-biao-han-shu-zhong-zeng-da-l-1-zheng-ze-hua-hui-shi-shi-yao-jie-guo">逻辑回归的目标函数中增大L1正则化会是什么结果</h2>
+<p>所有的参数w都会变成0。</p>
+<h2 id="luo-ji-hui-gui-yu-zui-da-shang-mo-xing-de-gong-tong-dian">逻辑回归与最大熵模型的共同点</h2>
+<p>最大熵模型与逻辑斯谛回归模型有类似的形式,它们又称为<strong>对数线性模型</strong>.模型学习就是在给定的训练数据条件下对模型进行极大似然估计或正则化的极大似然估计.</p>
+<h1 id="zong-jie">总结</h1>
 <ul>
 <li>softmax回归适用于分类问题。它使用softmax运算输出类别的概率分布。</li>
 <li>softmax回归是一个单层神经网络，输出个数等于分类问题中的类别个数。</li>
@@ -5585,21 +5834,19 @@ H\left(\boldsymbol y^{(i)}, \boldsymbol {\hat y}^{(i)}\right ) = -\sum_{j=1}^q y
     <url>/2020/05/23/machine_learning/linear_regression/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/23/machine_learning/linear_regression/71505f8a532d4d5e9b259634ff1c99c3.jpeg" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-xian-xing-hui-gui">什么是线性回归</h1>
+<h1 id="xian-xing-hui-gui">线性回归</h1>
+<h2 id="jian-jie">简介</h2>
 <ul>
 <li>线性：两个变量之间的关系是一次函数关系的——图象<strong>是直线</strong>，叫做线性。</li>
 <li>非线性：两个变量之间的关系不是一次函数关系的——图象<strong>不是直线</strong>，叫做非线性。</li>
 <li>回归：人们在测量事物的时候因为客观条件所限，求得的都是测量值，而不是事物真实的值，为了能够得到真实值，无限次的进行测量，最后通过这些测量数据计算<strong>回归到真实值</strong>，这就是回归的由来。</li>
 </ul>
-<h2 id="neng-gou-jie-jue-shi-yao-yang-de-wen-ti">能够解决什么样的问题</h2>
-<p>线性回归输出是一个连续值，适用于回归问题。通过对大量的观测数据进行处理，从而得到比较符合事物内部规律的数学表达式。寻找到数据与数据之间的规律所在，从而就可以模拟出结果，也就是对结果进行预测。解决的就是通过已知的数据得到未知的结果。例如：对房价的预测、判断信用评价、电影票房预估等。</p>
-<h2 id="biao-da-shi-shi-shi-yao">表达式是什么</h2>
-<p>\[
-Y=wx+b
-\]<br>
-\(w\)叫做\(x\)的系数，\(b\)叫做偏置项。</p>
-<h2 id="ru-he-ji-suan">如何计算</h2>
-<h3 id="sun-shi-han-shu">损失函数</h3>
+<h2 id="biao-da-shi">表达式</h2>
+<p>简单来说，线性回归算法就是**找到一条直线（一元线性回归）或一个平面（多元线性回归）能够根据输入的特征向量来更好的预测输出y的值。**其本质含义在于 X 与 Y 是线性相关的。<br>
+\[
+y = w_0 + w_1x_1 + \cdots  + w_px_p  = W^TX
+\]</p>
+<h2 id="sun-shi-han-shu">损失函数</h2>
 <p>在模型训练中，需要衡量预测值与真实值之间的误差。通常会选取一个非负数作为误差，且数值越小表示误差越小。一个常用的选择是平方函数。它在评估索引为 \(i\) 的样本误差的表达式为</p>
 <p>\[
 \ell^{(i)}(W, b) = \frac{1}{2} \left(\hat{y}^{(i)} - y^{(i)}\right)^2
@@ -5612,7 +5859,7 @@ Y=wx+b
 <p>\[
 W^*, b^* = \underset{W, b}{\arg\min} \ell(W, b)
 \]</p>
-<h3 id="you-hua-suan-fa">优化算法</h3>
+<h2 id="you-hua-suan-fa">优化算法</h2>
 <p>当模型和损失函数形式较为简单时，上面的误差最小化问题的解可以直接用公式表达出来。这类解叫作<strong>解析解</strong>。线性回归和平方误差刚好属于这个范畴。然而，大多数深度学习模型并没有解析解，只能通过优化算法有限次迭代模型参数来尽可能降低损失函数的值。这类解叫作<strong>数值解</strong>。</p>
 <p>在求数值解的优化算法中，小批量随机梯度下降在深度学习中被广泛使用。它的算法很简单：先选取一组模型参数的初始值，如随机选取；接下来对参数进行多次迭代，使每次迭代都可能降低损失函数的值。在每次迭代中，先随机均匀采样一个由固定数目训练数据样本所组成的小批量\(\mathcal{B}\)，然后求小批量中数据样本的平均损失有关模型参数的导数（梯度），最后用此结果与预先设定的一个正数的乘积作为模型参数在本次迭代的减小量。以\(\hat{y}^{(i)} = x_1^{(i)} w_1 + x_2^{(i)} w_2 + b\)为例在训练的线性回归模型的过程中，模型的每个参数将作如下迭代：<br>
 \[
@@ -5623,7 +5870,90 @@ b &amp;\leftarrow b -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \fra
 \end{aligned}
 \]</p>
 <p>在上式中，\(|\mathcal{B}|\) 代表每个小批量中的样本个数<code>(batch size)</code>，\(\eta\) 称作学习率<code>(learning rate)</code>并取正数。需要强调的是，这里的批量大小和学习率的值是人为设定的，并不是通过模型训练学出的，因此叫作超参数。</p>
-<h1 id="guo-ni-he-qian-ni-he-ru-he-jie-jue">过拟合、欠拟合如何解决</h1>
+<h2 id="zui-xiao-er-cheng-fa-gu-ji">最小二乘法估计</h2>
+<p>\[
+X = (x_1,  ..., x_N)^T \\
+Y = (y_1, ..., y_N)^T
+\]</p>
+<p>\[
+\begin{align}
+L(w) &amp;= \sum_{i=1}^N ||w^Tx_i - y_i ||^2 \\
+&amp;= \sum_{i=1}^N (w^Tx_i - y_i)^2 \\
+&amp;= \begin{pmatrix} w^Tx_1 - y_1 &amp; ... &amp; w^Tx_N - y_N  \end{pmatrix} \begin{pmatrix} w^Tx_1 - y_1 \\ ... \\ w^Tx_N - y_N  \end{pmatrix}
+\end{align}
+\]</p>
+<p>其中有：<br>
+\[
+\begin{align}
+\begin{pmatrix} w^Tx_1 - y_1 &amp; ... &amp; w^Tx_N - y_N  \end{pmatrix} = w^T \begin{pmatrix} x_1  &amp; ... &amp; x_N  \end{pmatrix} - \begin{pmatrix} y_1  &amp; ... &amp; y_N  \end{pmatrix} &amp;=  w^TX^T - Y^T
+\end{align}
+\]</p>
+<p>\[
+\begin{align}
+\begin{pmatrix} w^Tx_1 - y_1 \\ ... \\ w^Tx_N - y_N  \end{pmatrix} = \begin{pmatrix} x_1 \\ ... \\ x_N  \end{pmatrix}w - \begin{pmatrix}  y_1 \\ ... \\  y_N  \end{pmatrix}  = Xw-Y
+\end{align}
+\]</p>
+<p>那么，最终就得到：<br>
+\[
+\begin{align}
+L(w) &amp;=  (w^TX^T - Y^T)(Xw + Y) \\
+&amp;= w^TX^TXw - w^TX^TY - Y^TXw - Y^TY
+\end{align}
+\]<br>
+考虑到 \(w^TX^TY\) 与 \(Y^TXw\) 的结果其实都是一维实数且二者为转置，因此，二者的值相等， 那么就有：<br>
+\[
+L(w) = w^TX^TXw - 2w^TX^TY - Y^TY
+\]<br>
+那么就有：<br>
+\[
+\hat{w} = argmin \, L(w) \\
+\frac{\delta L(w)}{\delta w} = 2X^TXw - 2X^TY = 0
+\]<br>
+从而就得到：<br>
+\[
+w = (X^TX)^{-1}X^TY
+\]</p>
+<h3 id="cong-gai-lu-jiao-du-kan-zui-xiao-er-cheng-fa">从概率角度看最小二乘法</h3>
+<p>最小二乘法隐藏的一个条件是： <strong>误差服从正态分布。</strong></p>
+<p>假设起始条件：<br>
+\[
+X = (x_1, \cdots, x_N)^T \\
+Y = (Y_1, \cdots, y_N)^T
+\]<br>
+假设误差服从正态分布，那么则有：<br>
+\[
+\varepsilon \sim N(0, \sigma^2) \\
+\]<br>
+那么当噪声服从正态分布时，输出值也服从正态分布：<br>
+\[
+y = f(w) + \varepsilon = w^Tx + \varepsilon
+\]</p>
+<p>\[
+y | (x;w) \sim N(w^Tx, \sigma^2); \\
+P(y|x;w) = \frac{1}{\sqrt{2\pi\sigma}} e^{-\frac{(y-w^Tx)^2}{2 \sigma^2}} \\
+\]</p>
+<p>极大似然过程推导：<br>
+\[
+\begin{align}
+L(w) &amp;= log P(Y|X;w)  \\
+&amp;= log \prod_{i=1}^N P(y_i|x_i; w) \\
+&amp;= \sum_{i=1}^N log P(y_i | x_i; w) \\
+&amp;= \sum_{i=1}^N (log \frac{1}{\sqrt{2 \pi \sigma}} + log \, e^{-\frac{(y_i-w^Tx_i)^2}{2 \sigma^2}}) \\
+&amp;= \sum_{i=1}^N (log \frac{1}{\sqrt{2 \pi \sigma}}  -\frac{(y_i-w^Tx_i)^2}{2 \sigma^2}) \\
+&amp;:= \sum_{i=1}^N ( -(y_i-w^Tx_i)^2) \\
+&amp;= - \sum_{i=1}^N (y_i-w^Tx_i)^2
+\end{align}
+\]<br>
+最终是要用极大似然估计 \(w\)：<br>
+\[
+\begin{align}
+\hat{w} &amp;= argmax_w L(w) \\
+&amp;= argmax_w - \sum_{i=1}^N (y_i-w^Tx_i)^2
+\end{align}
+\]</p>
+<h3 id></h3>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="guo-ni-he-qian-ni-he-ru-he-jie-jue">过拟合、欠拟合如何解决</h2>
 <p>使用正则化项，也就是给loss function加上一个参数项，正则化项有<strong>L1正则化、L2正则化、ElasticNet</strong>。加入这个正则化项好处：</p>
 <ul>
 <li>控制参数幅度，不让模型“无法无天”。</li>
@@ -5665,159 +5995,12 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 \]</p>
 <h2 id="shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui">什么场景下使用ElasticNet回归</h2>
 <p>ElasticNet在我们发现用Lasso回归太过(太多特征被稀疏为0),而岭回归也正则化的不够(回归系数衰减太慢)的时候，可以考虑使用ElasticNet回归来综合，得到比较好的结果。</p>
-<h1 id="xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu">线性回归要求因变量服从正态分布？</h1>
-<p>假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布\(N(0,\delta^2)\)时，因变量则符合正态分布\(N(wx(i)+b,\delta^2)\)，其中预测函数\(y=wx(i)+b\)。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。 <strong>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</strong></p>
-<h1 id="yu-shen-jing-wang-luo-zhi-jian-de-guan-xi">与神经网络之间的关系</h1>
+<h2 id="xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu">线性回归要求因变量服从正态分布？</h2>
+<p>假设线性回归的噪声服从均值为0的正态分布。 当噪声符合正态分布\(N(0,\delta^2)\)时，因变量则符合正态分布\(N(wx_i+b,\delta^2)\)，其中预测函数\(y=wx_i+b\)。这个结论可以由正态分布的概率密度函数得到。也就是说当噪声符合正态分布时，其因变量必然也符合正态分布。 <strong>在用线性回归模型拟合数据之前，首先要求数据应符合或近似符合正态分布，否则得到的拟合函数不正确。</strong></p>
+<h2 id="yu-shen-jing-wang-luo-zhi-jian-de-guan-xi">与神经网络之间的关系</h2>
 <p>在深度学习中，可以使用神经网络图直观地表现模型结构。为了更清晰地展示线性回归作为神经网络的结构，下图使用神经网络图表示本节中介绍的线性回归模型。神经网络图隐去了模型参数权重和偏差。</p>
 <p><img src="/2020/05/23/machine_learning/linear_regression/3.1_linreg.svg" alt></p>
-<p>在上图所示的神经网络中，输入分别为 \(x_1\) 和 \(x_2\)，也叫特征数或特征向量维度。图中网络的输出为 \(o\)，输出层的输出个数为1。需要注意的是，我们直接将图3.1中神经网络的输出 \(o\) 作为线性回归的输出，即 \(\hat{y} = o\)。由于输入层并不涉及计算，按照惯例，图示的神经网络的层数为1。所以，线性回归是一个单层神经网络。输出层中负责计算 \(o\) 的单元又叫神经元。在线性回归中，\(o\) 的计算依赖于 \(x_1\) 和 \(x_2\)。也就是说，输出层中的神经元和输入层中各个输入完全连接。因此，这里的输出层又叫全连接层或稠密层。</p>
-<h1 id="dai-ma-shi-xian">代码实现</h1>
-<p><code><a class="btn" href="kc_data.zip">
-            <i class="fa fa-download"></i>数据下载
-          </a></code></p>
-<h2 id="ji-qi-xue-xi-fang-fa">机器学习方法</h2>
-<h3 id="shu-ju-jie-shao">数据介绍</h3>
-<p>数据主要包括2014年5月至2015年5月美国King County的房屋销售价格以及房屋的基本信息。 数据分为训练数据和测试数据，分别保存在kc_train.csv和kc_test.csv两个文件中。 其中训练数据主要包括10000条记录，14个字段，主要字段说明如下：</p>
-<blockquote>
-<ol>
-<li>第一列“销售日期”：2014年5月到2015年5月房屋出售时的日期</li>
-<li>第二列“销售价格”：房屋交易价格，单位为美元，是目标预测值</li>
-<li>第三列“卧室数”：房屋中的卧室数目</li>
-<li>第四列“浴室数”：房屋中的浴室数目</li>
-<li>第五列“房屋面积”：房屋里的生活面积</li>
-<li>第六列“停车面积”：停车坪的面积</li>
-<li>第七列“楼层数”：房屋的楼层数</li>
-<li>第八列“房屋评分”：King County房屋评分系统对房屋的总体评分</li>
-<li>第九列“建筑面积”：除了地下室之外的房屋建筑面积</li>
-<li>第十列“地下室面积”：地下室的面积</li>
-<li>第十一列“建筑年份”：房屋建成的年份</li>
-<li>第十二列“修复年份”：房屋上次修复的年份</li>
-<li>第十三列&quot;纬度&quot;：房屋所在纬度</li>
-<li>第十四列“经度”：房屋所在经度。</li>
-</ol>
-</blockquote>
-<p>测试数据主要包括3000条记录，13个字段，跟训练数据的不同是测试数据并不包括房屋销售价格，需要通过由训练数据所建立的模型以及所给的测试数据，得出测试数据相应的房屋销售价格预测值。</p>
-<h3 id="bu-zou">步骤</h3>
-<p><img src="/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343030663535342e706e67.png" alt></p>
-<blockquote>
-<ol>
-<li>选择合适的模型，对模型的好坏进行评估和选择。</li>
-<li>对缺失的值进行补齐操作，可以使用均值的方式补齐数据，使得准确度更高。</li>
-<li>数据的取值一般跟属性有关系，但世界万物的属性是很多的，有些值小，但不代表不重要，所有为了提高预测的准确度，统一数据维度进行计算，方法有特征缩放和归一法等。</li>
-<li>数据处理好之后就可以进行调用模型库进行训练了。</li>
-<li>使用测试数据进行目标函数预测输出，观察结果是否符合预期。或者通过画出对比函数进行结果线条对比。</li>
-</ol>
-</blockquote>
-<h3 id="mo-xing-xuan-ze">模型选择</h3>
-<p>一元线性回归<br>
-\[
-y:h(x)=wx+b
-\]<br>
-n元线性回归<br>
-\[
-y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
-\]<br>
-这里，y表示要求的销售价格，x表示特征值。需要调用sklearn库来进行训练。</p>
-<h3 id="shu-ju-chu-li">数据处理</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#读取训练数据</span></span><br><span class="line">train_set = pd.read_csv(<span class="string">'kc_train.csv'</span>)</span><br><span class="line"><span class="comment">#销售价格</span></span><br><span class="line">target=pd.read_csv(<span class="string">'kc_train2.csv'</span>)  </span><br><span class="line"><span class="comment">#测试数据</span></span><br><span class="line">test=pd.read_csv(<span class="string">'kc_test.csv'</span>)   </span><br><span class="line"></span><br><span class="line">train_set.info()</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/23/machine_learning/linear_regression/image-20200524102417564.png" alt></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#特征缩放</span></span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</span><br><span class="line">minmax_scaler=MinMaxScaler()</span><br><span class="line"><span class="comment">#进行拟合，内部参数会发生变化</span></span><br><span class="line">minmax_scaler.fit(train_set)   </span><br><span class="line">scaler_train_set=minmax_scaler.transform(train_set)</span><br><span class="line">scaler_test_set = minmax_scaler.transform(test_set)</span><br><span class="line">scaler_train_set=pd.DataFrame(scaler_train_set,columns=train_set.columns)</span><br><span class="line">scaler_test_set = pd.DataFrame(scaler_test_set,columns=train_set.columns)</span><br><span class="line">scaler_train_set.head()</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/23/machine_learning/linear_regression/image-20200524103226890.png" alt></p>
-<h3 id="xun-lian-mo-xing">训练模型</h3>
-<p>使用sklearn库的线性回归函数进行调用训练。梯度下降法获得误差最小值。最后使用均方误差法来评价模型的好坏程度，并画图进行比较。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#选择基于梯度下降的线性回归模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">LR_reg=LinearRegression()</span><br><span class="line"><span class="comment">#进行拟合</span></span><br><span class="line">LR_reg.fit(scaler_housing,target)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用均方误差用于评价模型好坏</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line">preds=LR_reg.predict(scaler_housing)   <span class="comment">#输入数据进行预测得到结果</span></span><br><span class="line">mse=mean_squared_error(preds,target)   <span class="comment">#使用均方误差来评价模型好坏，可以输出mse进行查看评价值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#绘图进行比较</span></span><br><span class="line">plot.figure(figsize=(<span class="number">10</span>,<span class="number">7</span>))       <span class="comment">#画布大小</span></span><br><span class="line">num=<span class="number">100</span></span><br><span class="line">x=np.arange(<span class="number">1</span>,num+<span class="number">1</span>)              <span class="comment">#取100个点进行比较</span></span><br><span class="line">plot.plot(x,target[:num],label=<span class="string">'target'</span>)      <span class="comment">#目标取值</span></span><br><span class="line">plot.plot(x,preds[:num],label=<span class="string">'preds'</span>)        <span class="comment">#预测取值</span></span><br><span class="line">plot.legend(loc=<span class="string">'upper right'</span>)  <span class="comment">#线条显示位置</span></span><br><span class="line">plot.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/23/machine_learning/linear_regression/687474703a2f2f7777772e7761696c69616e2e776f726b2f696d616765732f323031382f31322f31302f3132343039346539362e706e67.png" alt></p>
-<p>这张结果对比图中就可以看出模型是否得到精确的目标函数，是否能够精确预测房价。如果想要预测test文件里的数据，那就把test文件里的数据进行读取，并且进行特征缩放，调用： <strong>LR_reg.predict(test)</strong> 就可以得到预测结果，并进行输出操作。</p>
-<h2 id="shen-jing-wang-luo-de-fang-fa-tensorflow">神经网络的方法(tensorflow)</h2>
-<p>以房价预测问题为例(只为了简便使用其中两个特征，记为\(x_1,x_2\))。如果对训练数据集里的3个房屋样本(记为:\(x^{(1)},x^{(2)},x^{(3)},\))逐一预测价格，将得到:<br>
-\[
-\begin{aligned}
-\hat{y}^{(1)} &amp;= x_1^{(1)} w_1 + x_2^{(1)} w_2 + b,\\
-\hat{y}^{(2)} &amp;= x_1^{(2)} w_1 + x_2^{(2)} w_2 + b,\\
-\hat{y}^{(3)} &amp;= x_1^{(3)} w_1 + x_2^{(3)} w_2 + b.
-\end{aligned}
-\]<br>
-将上面3个等式转化成矢量计算:<br>
-\[
-\boldsymbol{\hat{y}} =
-\begin{bmatrix}
-    \hat{y}^{(1)} \\
-    \hat{y}^{(2)} \\
-    \hat{y}^{(3)}
-\end{bmatrix},\quad
-\boldsymbol{X} =
-\begin{bmatrix}
-    x_1^{(1)} &amp; x_2^{(1)} \\
-    x_1^{(2)} &amp; x_2^{(2)} \\
-    x_1^{(3)} &amp; x_2^{(3)}
-\end{bmatrix},\quad
-\boldsymbol{w} =
-\begin{bmatrix}
-    w_1 \\
-    w_2
-\end{bmatrix}
-\]<br>
-广义上讲，当数据样本数为 \(n\)，特征数为 \(d\) 时，线性回归的矢量计算表达式为\(\boldsymbol{\hat{y}} = \boldsymbol{X} \boldsymbol{w} + b\),其中模型输出 \(\boldsymbol{\hat{y}} \in \mathbb{R}^{n \times 1}\) 批量数据样本特征 \(\boldsymbol{X} \in \mathbb{R}^{n \times d}\)，权重 \(\boldsymbol{w} \in \mathbb{R}^{d \times 1}\)， 偏差 \(b \in \mathbb{R}\)。相应地，批量数据样本标签 \(\boldsymbol{y} \in \mathbb{R}^{n \times 1}\)。假设模型参数 \(\boldsymbol{\theta} = [w_1, w_2,\ldots, b]^\top\)，可以重写损失函数为<br>
-\[
-\ell(\boldsymbol{\theta})=\frac{1}{2n}(\boldsymbol{\hat{y}}-\boldsymbol{y})^\top(\boldsymbol{\hat{y}}-\boldsymbol{y})
-\]</p>
-<p>小批量随机梯度下降的迭代步骤将相应地改写为<br>
-\[
-\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}}   \nabla_{\boldsymbol{\theta}} \ell^{(i)}(\boldsymbol{\theta}),
-\]</p>
-<p>其中梯度是损失有关标量模型参数的偏导数组成的向量：<br>
-\[
-\nabla_{\boldsymbol{\theta}} \ell^{(i)}(\boldsymbol{\theta})=
-\begin{bmatrix}
-    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_1} \\
-    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial w_2} \\
-    \ldots \\
-    \frac{ \partial \ell^{(i)}(w_1, w_2, b)  }{\partial b}
-\end{bmatrix} =
-\begin{bmatrix}
-    x_1^{(i)} (x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}) \\
-    x_2^{(i)} (x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}) \\
-        \ldots \\
-    x_1^{(i)} w_1 + x_2^{(i)} w_2 +\ldots+ b - y^{(i)}
-\end{bmatrix}=
-\begin{bmatrix}
-    x_1^{(i)} \\
-    x_2^{(i)} \\
-        \ldots \\
-    1
-\end{bmatrix}
-(\hat{y}^{(i)} - y^{(i)})
-\]</p>
-<h3 id="du-qu-shu-ju">读取数据</h3>
-<p>在训练模型的时候，需要遍历数据集并不断读取小批量数据样本。这里定义一个函数：它每次返回<code>batch_size</code>个随机样本的特征和标签。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_iter</span><span class="params">(batch_size, features, labels)</span>:</span></span><br><span class="line">    num_examples = len(features)</span><br><span class="line">    indices = list(range(num_examples))</span><br><span class="line">    random.shuffle(indices)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_examples, batch_size):</span><br><span class="line">        j = indices[i: min(i+batch_size, num_examples)]</span><br><span class="line">        <span class="keyword">yield</span> tf.gather(np.array(features,dtype=np.float32), axis=<span class="number">0</span>, indices=j), tf.gather(np.array(labels,dtype=np.float32), axis=<span class="number">0</span>, indices=j)</span><br></pre></td></tr></table></figure>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">batch_size</span> = <span class="number">10</span></span><br><span class="line"><span class="comment"># 将训练数据的特征和标签组合</span></span><br><span class="line"><span class="attr">dataset</span> = tfdata.Dataset.from_tensor_slices((features, labels))</span><br><span class="line"><span class="comment"># 随机读取小批量</span></span><br><span class="line"><span class="attr">dataset</span> = dataset.shuffle(buffer_size=num_examples) </span><br><span class="line"><span class="attr">dataset</span> = dataset.batch(batch_size)</span><br><span class="line"><span class="attr">data_iter</span> = iter(dataset)</span><br></pre></td></tr></table></figure>
-<h3 id="ding-yi-mo-xing">定义模型</h3>
-<p>初始化模型参数:将权重初始化成均值为0、标准差为0.01的正态随机数，偏差则初始化成0。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">num_features = len(train_set.columns)</span><br><span class="line">w = tf.Variable(tf.random.normal((num_features, <span class="number">1</span>), stddev=<span class="number">0.01</span>),dtype=tf.float32)</span><br><span class="line">b = tf.Variable(tf.zeros((<span class="number">1</span>,)),dtype=tf.float32)</span><br></pre></td></tr></table></figure>
-<p>下面是线性回归的矢量计算表达式的实现。使用<code>matmul</code>函数做矩阵乘法。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linreg</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.matmul(X, w) + b</span><br></pre></td></tr></table></figure>
-<h3 id="ding-yi-sun-shi-han-shu">定义损失函数</h3>
-<p>使用平方损失来定义线性回归的损失函数。在实现中，我们需要把真实值<code>y</code>变形成预测值<code>y_hat</code>的形状。以下函数返回的结果也将和<code>y_hat</code>的形状相同。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">squared_loss</span><span class="params">(y_hat, y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (y_hat - tf.reshape(y, y_hat.shape)) ** <span class="number">2</span> /<span class="number">2</span></span><br></pre></td></tr></table></figure>
-<h3 id="ding-yi-you-hua-suan-fa">定义优化算法</h3>
-<p><code>sgd</code>函数实现了小批量随机梯度下降算法。它通过不断迭代模型参数来优化损失函数。这里自动求梯度模块计算得来的梯度是一个批量样本的梯度和，将它除以批量大小来得到平均值。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sgd</span><span class="params">(params, lr, batch_size, grads)</span>:</span></span><br><span class="line">    <span class="string">"""Mini-batch stochastic gradient descent."""</span></span><br><span class="line">    <span class="keyword">for</span> i, param <span class="keyword">in</span> enumerate(params):</span><br><span class="line">        param.assign_sub(lr * grads[i] / batch_size)</span><br></pre></td></tr></table></figure>
-<h3 id="xun-lian-mo-xing-1">训练模型</h3>
-<p>在训练中，将多次迭代模型参数。在每次迭代中，根据当前读取的小批量数据样本（特征<code>X</code>和标签<code>y</code>），通过调用反向函数<code>t.gradients</code>计算小批量随机梯度，并调用优化算法<code>sgd</code>迭代模型参数。由于之前设批量大小<code>batch_size</code>为10，每个小批量的损失<code>l</code>的形状为(10, 1)。由于变量<code>l</code>并不是一个标量，所以我们可以调用<code>reduce_sum()</code>将其求和得到一个标量，再运行<code>t.gradients</code>得到该变量有关模型参数的梯度。</p>
-<blockquote>
-<p>注意在每次更新完参数后不要忘了将参数的梯度清零。</p>
-</blockquote>
-<p>在一个epoch中，将完整遍历一遍<code>data_iter</code>函数，并对训练数据集中所有样本都使用一次（假设样本数能够被批量大小整除）。迭代周期个数<code>num_epochs</code>和学习率<code>lr</code>都是超参数，在实践中，大多超参数都需要通过反复试错来不断调节。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">lr = <span class="number">0.1</span></span><br><span class="line">num_epochs = <span class="number">30</span></span><br><span class="line">batch_size = <span class="number">32</span></span><br><span class="line">net = linreg</span><br><span class="line">loss = squared_loss</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">    <span class="keyword">for</span> X, y <span class="keyword">in</span> data_iter(batch_size, train_set, target):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> t:</span><br><span class="line">            t.watch([w,b])</span><br><span class="line">            l = loss(net(X, w, b), y)</span><br><span class="line">        grads = t.gradient(l, [w, b])</span><br><span class="line">        sgd([w, b], lr, batch_size, grads)</span><br><span class="line">    train_l = loss(net(X, w, b), y)</span><br><span class="line">    print(<span class="string">'epoch %d, loss %f'</span> % (epoch + <span class="number">1</span>, tf.reduce_mean(train_l)))</span><br></pre></td></tr></table></figure>
-<h3 id="tensorflow-kuai-su-shi-xian-ban-ben">tensorflow快速实现版本</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> initializers <span class="keyword">as</span> init</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> losses</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> optimizers</span><br><span class="line"><span class="comment"># 模型</span></span><br><span class="line">model = keras.Sequential()</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, kernel_initializer=init.RandomNormal(stddev=<span class="number">0.01</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失</span></span><br><span class="line">loss = losses.MeanSquaredError()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 优化器</span></span><br><span class="line">trainer = optimizers.SGD(learning_rate=<span class="number">0.03</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">num_epochs = <span class="number">30</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, num_epochs + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> (batch, (X, y)) <span class="keyword">in</span> enumerate(dataset):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">            l = loss(model(X, training=<span class="literal">True</span>), y)</span><br><span class="line">        </span><br><span class="line">        grads = tape.gradient(l, model.trainable_variables)</span><br><span class="line">        trainer.apply_gradients(zip(grads, model.trainable_variables))</span><br><span class="line">    </span><br><span class="line">    l = loss(model(features), labels)</span><br><span class="line">    print(<span class="string">'epoch %d, loss: %f'</span> % (epoch, l))</span><br></pre></td></tr></table></figure>
-<h2 id="xiao-jie">小结</h2>
-<ul>
-<li>可以看出，仅使用<code>Variables</code>和<code>GradientTape</code>模块就可以很容易地实现一个模型。</li>
-<li>和大多数深度学习模型一样，对于线性回归这样一种单层神经网络，它的基本要素包括模型、训练数据、损失函数和优化算法。</li>
-<li>既可以用神经网络图表示线性回归，又可以用矢量计算表示该模型。</li>
-</ul>
+<p>在上图所示的神经网络中，输入分别为 \(x_1\) 和 \(x_2\)，也叫特征数或特征向量维度。图中网络的输出为 \(o\)，输出层的输出个数为1。需要注意的是，直接将图中神经网络的输出 \(o\) 作为线性回归的输出，即 \(\hat{y} = o\)。由于输入层并不涉及计算，按照惯例，图示的神经网络的层数为1。所以，<strong>线性回归是一个单层神经网络</strong>。输出层中负责计算 \(o\) 的单元又叫神经元。在线性回归中，\(o\) 的计算依赖于 \(x_1\) 和 \(x_2\)。也就是说，输出层中的神经元和输入层中各个输入完全连接。因此，这里的输出层又叫全连接层或稠密层。</p>
 ]]></content>
       <categories>
         <category>技术/机器学习</category>
@@ -5828,15 +6011,71 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
       </tags>
   </entry>
   <entry>
-    <title>多层感知机</title>
-    <url>/2020/05/22/machine_learning/multi-layer-perceptron/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_mlp.svg" alt></p>
+    <title>感知机</title>
+    <url>/2020/05/22/machine_learning/perceptron/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2020/05/22/machine_learning/perceptron/3.8_mlp.svg" alt></p>
 <a id="more"></a>
+<h1 id="gan-zhi-ji-mo-xing">感知机模型</h1>
+<h2 id="jian-jie">简介</h2>
+<p>感知机可以拟合任何线性函数，这也就意味着任何<strong>线性分类</strong>或<strong>线性回归</strong>问题都可以用感知器来解决。</p>
+<p><img src="/2020/05/22/machine_learning/perceptron/006gOeiSly1g1gj9rt5fsj307s03ut8i.jpg" alt></p>
+<p>\[
+f(x) = sign(w^Tx) \\
+sign(a) = \begin{cases} +1, &amp; a \ge 0 \\ -1, &amp; a &lt; 0 \end{cases} 
+\]</p>
+<h2 id="gan-zhi-ji-de-xun-lian">感知机的训练</h2>
+<p>感知器的训练主要包含两大问题：</p>
+<ul>
+<li>
+<p>如何判断一个样本是不是被正确分类？</p>
+</li>
+<li>
+<p>如何定义损失函数？</p>
+</li>
+</ul>
+<h3 id="ru-he-pan-duan-yi-ge-dian-bei-zheng-que-fen-lei">如何判断一个点被正确分类？</h3>
+<p>误分类分为以下两种情况：</p>
+<ul>
+<li>当$w^T  x_i   &gt; 0 $ 时，得出$y_i = -1 $ ， 此时出现误分类</li>
+<li>当$w^Tx_i  &lt; 0 $ 时，得出$ y_i = 1$ ，此时也出现误分类</li>
+</ul>
+<p>那么，我们分析，对于误分类的数据$(x_i,y_i) $ 来说，必有：<br>
+$$</p>
+<ul>
+<li>y_iw^T x_i &gt; 0<br>
+$$<br>
+那么，我们得出，我们可以通过  \(- y_iw^Tx_i > 0\) 来得出一个点是不是误分类点。</li>
+</ul>
+<h3 id="sun-shi-han-shu">损失函数</h3>
+<p>感知机中采用的损失函数是<strong>误分类点到超平面S的总距离。</strong></p>
+<p>输入样本中的任意一点到超平面S的距离：<br>
+\[
+L = \frac{1}{||w||}|w^T x_i|  , \qquad  ||w||是w的L_2范数
+\]</p>
+<p>那么误分类点到超平面 S 的距离为：<br>
+$$</p>
+<ul>
+<li>\frac{1}{||w||}y_i(w^T x_i)<br>
+\[
+$\frac{1}{||w||}$ 是一个固定值，可以不用考虑，这样我们也可以得出我们的**损失函数**如下：
+\]<br>
+L(w,b) = - \sum_{x_i \in M  }{y_i w^Tx_i }<br>
+$$</li>
+</ul>
+<h3 id="qiu-qu-w-b">求取w， b</h3>
+<p>损失函数对于 \(w\) 方向上的梯度为：<br>
+\[
+\frac{\partial {L}}{\partial{w}} = - \sum_{x_i \in M} y_i x_i
+\]<br>
+那么随便给定一个误分类点\((x_i, y_i)\)， 对w，b的更新如下：<br>
+\[
+w \leftarrow  w + \eta y_i x_i
+\]</p>
+<hr>
 <h1 id="duo-ceng-gan-zhi-ji">多层感知机</h1>
-<p>深度学习主要关注多层模型。本节介绍多层神经网络的概念。</p>
 <h2 id="yin-cang-ceng">隐藏层</h2>
 <p>多层感知机在单层神经网络的基础上引入了一到多个隐藏层。隐藏层位于输入层和输出层之间。下图展示了一个多层感知机的神经网络图，它含有一个隐藏层，该层中有5个隐藏单元。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_mlp.svg" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_mlp.svg" alt></p>
 <p>在上图图所示的多层感知机中，输入和输出个数分别为<code>4</code>和<code>3</code>，中间的隐藏层中包含了<code>5</code>个隐藏单元。由于输入层不涉及计算，图中的多层感知机的层数为<code>2</code>，隐藏层中的神经元和输入层中各个输入完全连接，输出层中的神经元和隐藏层中的各个神经元也完全连接。因此，多层感知机中的隐藏层和输出层都是全连接层。</p>
 <p>具体来说，给定一个小批量样本\(\boldsymbol{X} \in \mathbb{R}^{n \times d}\)，其批量大小为\(n\)，输入个数为\(d\)。假设多层感知机只有一个隐藏层，其中隐藏单元个数为\(h\)。记隐藏层的输出为\(\boldsymbol{H}\)，有\(\boldsymbol{H} \in \mathbb{R}^{n \times h}\)。因为隐藏层和输出层均是全连接层，可以设隐藏层的权重参数和偏差参数分别为\(\boldsymbol{W}_h \in \mathbb{R}^{d \times h}\)和 \(\boldsymbol{b}_h \in \mathbb{R}^{1 \times h}\)，输出层的权重和偏差参数分别为\(\boldsymbol{W}_o \in \mathbb{R}^{h \times q}\)和\(\boldsymbol{b}_o \in \mathbb{R}^{1 \times q}\)。其输出\(\boldsymbol{O} \in \mathbb{R}^{n \times q}\)的计算为:</p>
 <p>\[
@@ -5857,35 +6096,35 @@ y:h(x)=\sum^n_{i=1}w_ix^i+b=WX+b
 <p>\[
 \text{ReLU}(x) = \max(x, 0)
 \]</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_relu.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_relu.png" alt></p>
 <p>当输入为负数时，ReLU函数的导数为0；当输入为正数时，ReLU函数的导数为1。尽管输入为0时ReLU函数不可导，但是可以取此处的导数为0。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_relu_grad.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_relu_grad.png" alt></p>
 <h3 id="sigmoid-han-shu">sigmoid函数</h3>
 <p>sigmoid函数可以将元素的值变换到0和1之间：</p>
 <p>\[
 \text{sigmoid}(x) = \frac{1}{1 + \exp(-x)}
 \]</p>
 <p>sigmoid函数在早期的神经网络中较为普遍，但它目前逐渐被更简单的ReLU函数取代。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_sigmoid.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_sigmoid.png" alt></p>
 <p>依据链式法则，sigmoid函数的导数</p>
 <p>\[
 \text{sigmoid}'(x) = \text{sigmoid}(x)\left(1-\text{sigmoid}(x)\right)
 \]</p>
 <p>下面绘制了sigmoid函数的导数。当输入为0时，sigmoid函数的导数达到最大值0.25；当输入越偏离0时，sigmoid函数的导数越接近0。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_sigmoid_grad.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_sigmoid_grad.png" alt></p>
 <h3 id="tanh-han-shu">tanh函数</h3>
 <p>tanh（双曲正切）函数可以将元素的值变换到-1和1之间：</p>
 <p>\[
 \text{tanh}(x) = \frac{1 - \exp(-2x)}{1 + \exp(-2x)}
 \]</p>
 <p>当输入接近0时，tanh函数接近线性变换。虽然该函数的形状和sigmoid函数的形状很像，但tanh函数在坐标系的原点上对称。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_tanh.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_tanh.png" alt></p>
 <p>依据链式法则，tanh函数的导数</p>
 <p>\[
 \text{tanh}'(x) = 1 - \text{tanh}^2(x)
 \]</p>
 <p>下面绘制了tanh函数的导数。当输入为0时，tanh函数的导数达到最大值1；当输入越偏离0时，tanh函数的导数越接近0。</p>
-<p><img src="/2020/05/22/machine_learning/multi-layer-perceptron/3.8_tanh_grad.png" alt></p>
+<p><img src="/2020/05/22/machine_learning/perceptron/3.8_tanh_grad.png" alt></p>
 <h1 id="dai-ma-shi-xian-tensorflow">代码实现(tensorflow)</h1>
 <h2 id="zhun-bei-shu-ju-shu-ju">准备数据数据</h2>
 <p>使用Fashion-MNIST数据集，使用多层感知机对图像进行分类。</p>
@@ -15780,8 +16019,10 @@ Corr(x,y) = \frac{Cov(x,y)}{\sqrt{Var(x)Var(y)}}
   </entry>
   <entry>
     <title>优化算法</title>
-    <url>/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="ti-du-xia-jiang-suan-fa">梯度下降算法</h2>
+    <url>/2018/07/11/optimization/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/2018/07/11/optimization/C80A2811-1678-4371-BCCD-8AA51A777820.jpg" alt></p>
+<a id="more"></a>
+<h1 id="ti-du-xia-jiang-suan-fa">梯度下降算法</h1>
 <p>梯度下降法(Gradient descent)或最速下降法(steepest descent)是求解无约束最优化问题的一种常用的、实现简单的方法。<br>
 假设\(f(x)\)是\(R^n\)上具有一阶连续偏导数的函数。求解<br>
 \[
@@ -15797,8 +16038,7 @@ x^{(k+1)} \leftarrow x^{(k)}+\lambda_{k} p_{k}
 \[
 f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\lambda p_{k}\right)
 \]</p>
-<a id="more"></a>
-<h3 id="suan-fa-miao-shu">算法描述：</h3>
+<h2 id="suan-fa-miao-shu">算法描述：</h2>
 <p>输入:目标函数\(f(x)\)，梯度函数\(g(x^k)=\nabla f(x^k)\),计算\(\epsilon\).<br>
 输出：\(f(x)\)的极小值点\(x^\star\)</p>
 <ol>
@@ -15813,31 +16053,31 @@ f\left(x^{(k)}+\lambda_{k} p_{k}\right)=\min _{\lambda \geq 0} f\left(x^{(k)}+\l
 \(或\)\left|x<sup>{(k+1)}-x</sup>{(k)}\right|&lt;\varepsilon\(停止迭代。令\)x^\star = x^{k+1}$</li>
 <li>否则，置\(k=k+1\),转3.</li>
 </ol>
-<h3 id="ti-du-xia-jiang-diao-you">梯度下降调优</h3>
+<h2 id="ti-du-xia-jiang-diao-you">梯度下降调优</h2>
 <ol>
 <li><strong>算法的步长选择</strong>。步长取值取决于数据样本，可以多取一些值，从大到小，分别运行算法，看看迭代效果，如果损失函数在变小，说明取值有效，否则要增大步长。步长太大，会导致迭代过快，甚至有可能错过最优解。步长太小，迭代速度太慢，很长时间算法都不能结束。所以算法的步长需要多次运行后才能得到一个较为优的值。</li>
 <li><strong>算法参数的初始值选择</strong>。初始值不同，获得的最小值也有可能不同，因此梯度下降求得的只是局部最小值；当然如果损失函数是凸函数则一定是最优解。由于有局部最优解的风险，需要多次用不同初始值运行算法，关键损失函数的最小值，选择损失函数最小化的初值。</li>
 <li><strong>归一化</strong>。由于样本不同特征的取值范围不一样，可能导致迭代很慢，为了减少特征取值的影响，可以对特征数据归一化。</li>
 </ol>
-<h3 id="ti-du-xia-jiang-fa-da-jia-zu-bgd-sgd-mbgd">梯度下降法大家族（BGD，SGD，MBGD）</h3>
+<h2 id="ti-du-xia-jiang-fa-da-jia-zu-bgd-sgd-mbgd">梯度下降法大家族（BGD，SGD，MBGD）</h2>
 <ol>
 <li><strong>批量梯度下降法（Batch Gradient Descent）</strong> 批量梯度下降法，是梯度下降法最常用的形式，具体做法也就是在更新参数时使用所有的样本来进行更新。</li>
 <li><strong>随机梯度下降法（Stochastic Gradient Descent）</strong> 其实和批量梯度下降法原理类似，区别在与求梯度时没有用所有的样本的数据，而是仅仅选取一个样本来求梯度。随机梯度下降法，和批量梯度下降法是两个极端，一个采用所有数据来梯度下降，一个用一个样本来梯度下降。自然各自的优缺点都非常突出。对于训练速度来说，随机梯度下降法由于每次仅仅采用一个样本来迭代，训练速度很快，而批量梯度下降法在样本量很大的时候，训练速度不能让人满意。对于准确度来说，随机梯度下降法用于仅仅用一个样本决定梯度方向，导致解很有可能不是最优。对于收敛速度来说，由于随机梯度下降法一次迭代一个样本，导致迭代方向变化很大，不能很快的收敛到局部最优解。</li>
 <li><strong>小批量梯度下降法（Mini-batch Gradient Descent）</strong> 小批量梯度下降法是批量梯度下降法和随机梯度下降法的折衷，也就是对于\(m\)个样本，我们采用\(x\)个样本来迭代，\(1&lt;x&lt;m\)。一般可以取\(x=16,32,64...\)，当然根据样本的数据，可以调整这个\(x\) 的值。</li>
 </ol>
 <p>上述三种方法得到局部最优解的过程：<br>
-<img src="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/C80A2811-1678-4371-BCCD-8AA51A777820.jpg" alt="avatar"></p>
-<h3 id="dai-ma-shi-xian">代码实现</h3>
+<img src="/2018/07/11/optimization/C80A2811-1678-4371-BCCD-8AA51A777820.jpg" alt></p>
+<h2 id="dai-ma-shi-xian">代码实现</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(X, y, W, B, alpha, max_iters)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    使用了所有的样本进行梯度下降</span></span><br><span class="line"><span class="string">    X: 训练集,</span></span><br><span class="line"><span class="string">    y: 标签,</span></span><br><span class="line"><span class="string">    W: 权重向量,</span></span><br><span class="line"><span class="string">    B: bias,</span></span><br><span class="line"><span class="string">    alpha: 学习率,</span></span><br><span class="line"><span class="string">    max_iters: 最大迭代次数.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    dW = <span class="number">0</span> <span class="comment"># 权重梯度收集器</span></span><br><span class="line">    dB = <span class="number">0</span> <span class="comment"># Bias梯度的收集器</span></span><br><span class="line">    m = X.shape[<span class="number">0</span>] <span class="comment"># 样本数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(max_iters):</span><br><span class="line">        dW = <span class="number">0</span> <span class="comment"># 每次迭代重置</span></span><br><span class="line">        dB = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(m):</span><br><span class="line">            <span class="comment"># 1. 迭代所有的样本</span></span><br><span class="line">            <span class="comment"># 2. 计算权重和bias的梯度保存在w_grad和b_grad,</span></span><br><span class="line">            <span class="comment"># 3. 通过增加w_grad和b_grad来更新dW和dB</span></span><br><span class="line">            W = W - alpha * (dW / m) <span class="comment"># 更新权重</span></span><br><span class="line">            B = B - alpha * (dB / m) <span class="comment"># 更新bias</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> W, B</span><br></pre></td></tr></table></figure>
-<h3 id="ti-du-xia-jiang-he-zui-xiao-er-cheng-fa">梯度下降和最小二乘法</h3>
+<h2 id="ti-du-xia-jiang-he-zui-xiao-er-cheng-fa">梯度下降和最小二乘法</h2>
 <p>梯度下降法和最小二乘法相比，梯度下降法需要选择步长，而最小二乘法不需要。梯度下降法是迭代求解，最小二乘法是计算解析解。如果样本量不算很大，且存在解析解，最小二乘法比起梯度下降法要有优势，计算速度很快。但是如果样本量很大，用最小二乘法由于需要求一个超级大的逆矩阵，这时就很难或者很慢才能求解解析解了，使用迭代的梯度下降法比较有优势。</p>
-<h2 id="niu-dun-fa">牛顿法</h2>
+<h1 id="niu-dun-fa">牛顿法</h1>
 <p>一般来说，牛顿法主要应用在两个方面，1：求方程的根；2：最优化。</p>
-<h3 id="qiu-jie-guo-cheng">求解过程</h3>
+<h2 id="qiu-jie-guo-cheng">求解过程</h2>
 <p>并不是所有的方程都有求根公式，或者求根公式很复杂，导致求解困难。利用牛顿法，可以迭代求解。</p>
 <p>原理是利用泰勒公式，在 \(x_0\)处展开，且展开到一阶, 即 \(f(x)=f(x_0)+f^\prime{x_0}(x-x_0)\) 。求解方程\(f(x)=0\)，等价于\(f(x_0)+f^\prime(x_0)(x-x_0)=0\)，求解 \(x=x_1=x_0-\frac{f(x_0)}{f^\prime(x_0)}\)。因为这是利用泰勒公式的一阶展开,\(f(x)=f(x_0)+f^\prime(x_0)(x-x_0)\) 处并不是完全相等，而是近似相等，这里求得的的\(x_1\)并不能让 \(f(x)=0\)，只能说 \(f(x_1)\) 的值比\(f(x_9)\)的值更接近于0，于是迭代的想法就很自然了，可以进而推出 \(x_{n+1}=x_n-\frac{f(x_n)}{f\prime(x_n)}\)，通过迭代，这个式子必然在 \(f(x^\star)=0\) 的时候收敛。整个过程如下：<br>
-<img src="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/B03C2A8B-AF9F-4871-94F6-0E7F6D6EC890.png" alt="avatar"></p>
-<h3 id="zui-you-hua">最优化</h3>
+<img src="/2018/07/11/optimization/B03C2A8B-AF9F-4871-94F6-0E7F6D6EC890.png" alt></p>
+<h2 id="zui-you-hua">最优化</h2>
 <p>无约束最优化问题<br>
 \[
 min_{x \in R^N}f(x)
@@ -15870,7 +16110,7 @@ H_kp_k = -g_k
 x^{k+1} = x^k+p_k
 \]<br>
 最终在\(\nabla f(x^\star)=0\)收敛</p>
-<h3 id="suan-fa-miao-shu-1">算法描述</h3>
+<h2 id="suan-fa-miao-shu-1">算法描述</h2>
 <p>输入：目标函数\(f(x)\)，梯度\(g(x) = \nabla f(x)\),海塞矩阵\(H(x)\),精度(阈值)\(\epsilon\)</p>
 <p>输出：\(f(x)\)的极小值点\(x^\star\)</p>
 <ol>
@@ -15896,7 +16136,7 @@ H_kp_k = -g_k
 <p>置 k=k+1, 转2.</p>
 </li>
 </ol>
-<h3 id="niu-dun-fa-he-ti-du-xia-jiang">牛顿法和梯度下降</h3>
+<h2 id="niu-dun-fa-he-ti-du-xia-jiang">牛顿法和梯度下降</h2>
 <p>梯度下降法和牛顿法相比，两者都是迭代求解，不过梯度下降法是梯度求解，而牛顿法是用二阶的海森矩阵的逆矩阵求解。相对而言，使用牛顿法收敛更快（迭代更少次数）。但是每次迭代的时间比梯度下降法长。</p>
 <p>梯度下降法：<br>
 \[
@@ -15907,14 +16147,14 @@ x^{k+1} = x^k - \lambda \nabla f(x^k)
 x^{k+1} = x^k-\lambda(H^k)^{-1}\nabla f(x^k)
 \]<br>
 至于为什么牛顿法收敛更快，通俗来说梯度下降法每次只从你当前所处位置选一个坡度最大的方向走一步，牛顿法在选择方向时，不仅会考虑坡度是否够大，还会考虑你走了一步之后，坡度是否会变得更大。所以，可以说牛顿法比梯度下降法看得更远一点，能更快地走到最底部。从几何上说，牛顿法就是用一个二次曲面去拟合你当前所处位置的局部曲面，而梯度下降法是用一个平面去拟合当前的局部曲面，通常情况下，二次曲面的拟合会比平面更好，所以牛顿法选择的下降路径会更符合真实的最优下降路径。<br>
-<img src="/2018/07/11/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/84835FEB-0EA4-41E5-B07D-41BBEB49AE9B.jpg" alt="9c6e73f0200cbe504e0370a18ca3a95a"><br>
+<img src="/2018/07/11/optimization/84835FEB-0EA4-41E5-B07D-41BBEB49AE9B.jpg" alt><br>
 红色的牛顿法的迭代路径，绿色的是梯度下降法的迭代路径。<br>
 牛顿法是梯度下降法的进一步发展，梯度法利用了目标函数的一阶偏导信息、一负梯度方向作为搜索方向，只考虑目标函数在迭代点的局部性质；而牛顿法不仅使用目标函数的一阶偏导数，还进一步利用了目标函数的二阶偏导数，这样就考虑了梯度变化的趋势，因而能更全面地确定合适的搜索方向以加快收敛，它具有二阶收敛速度，但是牛顿法也存在两个<strong>缺点</strong> ：</p>
 <ul>
 <li>对目标函数有较严格的要求，函数必须具有连续的一、二阶偏导，海塞矩阵必须正定。</li>
 <li>计算相当复杂，除了需要计算梯度外，还需计算二阶偏导矩阵和它的逆矩阵。计算量、存储量都很大。且均以维数N的平方比增加，当N很大时，这个问题就更加突出。</li>
 </ul>
-<h2 id="ni-niu-dun-fa">拟牛顿法</h2>
+<h1 id="ni-niu-dun-fa">拟牛顿法</h1>
 <p>在牛顿法的迭代计算中，需要计算海塞矩阵的逆矩阵\(H^-1\)，这一计算比较复杂，考虑用一个n阶矩阵\(G_k=G(x^k)\)来近似替代\(H^{-1}_{k}=H^{-1}(x^k)\)。这就是拟牛顿的基本想法。</p>
 <p>要找到近似的替代矩阵，必定要和\(H_k\)有类似的性质。先看下牛顿法迭代中海塞矩阵\(H_k\)满足的条件。首先，\(H_k\)满足以下关系：</p>
 <p>取\(x=x^{k-1}\)，由<br>
@@ -15957,7 +16197,7 @@ G_{k+1} = G_k + \nabla G_k
 <h3 id="broyden">Broyden</h3>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>技术/机器学习</category>
       </categories>
       <tags>
         <tag>优化算法</tag>

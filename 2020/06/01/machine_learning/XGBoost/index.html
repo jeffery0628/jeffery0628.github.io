@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -30,11 +30,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/u=2735111756,2432069868&amp;fm=26&amp;gp=0.jpg.png">
 <meta property="og:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/quesbase64153438578739198433.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/quesbase64153438580139159593.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/quesbase64153438657261833493.png">
-<meta property="og:image" content="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64153438674199471483.png">
+<meta property="og:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/image-20200815183230266.png">
 <meta property="article:published_time" content="2020-06-01T00:38:20.000Z">
-<meta property="article:modified_time" content="2020-06-01T16:38:58.589Z">
+<meta property="article:modified_time" content="2020-08-15T10:35:10.543Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/06/01/machine_learning/XGBoost/u=2735111756,2432069868&amp;fm=26&amp;gp=0.jpg.png">
@@ -236,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-02 00:38:58" itemprop="dateModified" datetime="2020-06-02T00:38:58+08:00">2020-06-02</time>
+                <time title="修改时间：2020-08-15 18:35:10" itemprop="dateModified" datetime="2020-08-15T18:35:10+08:00">2020-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,14 +273,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -296,22 +294,28 @@
       
         <p><img src="/2020/06/01/machine_learning/XGBoost/u=2735111756,2432069868&amp;fm=26&amp;gp=0.jpg.png" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-xg-boost">什么是XGBoost</h1>
+<h1 id="xg-boost">XGBoost</h1>
 <p>XGBoost是陈天奇等人开发的一个开源机器学习项目，高效地实现了GBDT算法并进行了算法和工程上的许多改进，被广泛应用在Kaggle竞赛及其他许多机器学习竞赛中并取得了不错的成绩。</p>
 <p>说到XGBoost，不得不提GBDT(Gradient Boosting Decision Tree)。因为XGBoost本质上还是一个GBDT，但是力争<strong>把速度和效率发挥到极致</strong>，所以叫X (Extreme) GBoosted。包括前面说过，两者都是boosting方法。</p>
 <h2 id="xg-boost-shu-de-ding-yi">XGBoost树的定义</h2>
 <p>先来举个<strong>例子</strong>，我们要预测一家人对电子游戏的喜好程度，考虑到年轻和年老相比，年轻更可能喜欢电子游戏，以及男性和女性相比，男性更喜欢电子游戏，故先根据年龄大小区分小孩和大人，然后再通过性别区分开是男是女，逐一给各人在电子游戏喜好程度上打分，就这样，训练出了2棵树tree1和tree2，类似之前GBDT的原理，两棵树的结论累加起来便是最终的结论，所以小孩的预测分数就是两棵树中小孩所落到的结点的分数相加：2 + 0.9 = 2.9。爷爷的预测分数同理：-1 + （-0.9）= -1.9。具体如下图所示：</p>
 <p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438578739198433.png" alt></p>
-<p>惊呼，这不是跟上文介绍的GBDT乃异曲同工么？</p>
-<p>事实上，如果不考虑工程实现、解决问题上的一些差异，XGBoost与GBDT<strong>比较大的不同就是目标函数的定义</strong>。XGBoost的目标函数如下图所示：</p>
-<p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438580139159593.png" alt></p>
-<p>其中：</p>
-<ul>
-<li>红色箭头所指向的L 即为损失函数（比如平方损失函数：\(l(y_i,y^i)=(y_i-y^i)^2\)</li>
-<li>红色方框所框起来的是正则项（包括L1正则、L2正则）</li>
-<li>红色圆圈所圈起来的为常数项</li>
-<li>对于\(f(x)\)，XGBoost利用泰勒展开三项，做一个近似。<strong>\(f(x)\)表示的是其中一颗回归树。</strong></li>
-</ul>
+<p>事实上，如果不考虑工程实现、解决问题上的一些差异，XGBoost与GBDT<strong>比较大的不同就是目标函数的定义</strong>。</p>
+<p>XGBoost的目标函数如下：<br>
+\[
+Obj^{t} = \sum_{i=1}^{n} l(y_i,\hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t)+constant
+\]<br>
+其中，\(l\)为损失函数(比如平方损失函数：\(l(y_i,y^i)=(y_i-y^i)^2\))，\(\Omega(f_t)\)为正则项（包括L1正则、L2正则），\(constant\)为常数项。用泰勒展开来近似原来的目标：<br>
+\[
+Obj^{(t)} \simeq \sum_{i=1}^n[l(y_i,\hat{y}_i^{(t-1)})+g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)] + \Omega(f_t) + constant
+\]<br>
+其中：\(g_i = \partial_{ \hat{y}_i^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\),\(h_i = \partial^2_{ \hat{y}_i^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\)。对于\(f(x)\)，XGBoost利用泰勒展开三项，做一个近似。\(f(x)\)表示的是其中一颗回归树。</p>
+<blockquote>
+<p>泰勒展开：<br>
+\[
+f(x+\Delta x) \simeq f(x) + f^\prime(x)\Delta(x)+\frac{1}{2}f^{\prime \prime}(x)\Delta x^2
+\]</p>
+</blockquote>
 <p>XGBoost的<strong>核心算法思想</strong>，基本就是：</p>
 <ol>
 <li>不断地添加树，不断地进行特征分裂来生长一棵树，每次添加一个树，其实是学习一个新函数**\(f(x)\)**，去拟合上次预测的残差。</li>
@@ -319,21 +323,32 @@
 <li>最后只需要将每棵树对应的分数加起来就是该样本的预测值。</li>
 </ol>
 <p>显然，我们的目标是要使得树群的预测值\(y_i^{\prime}\)尽量接近真实值\(y_i\)，而且有尽量大的泛化能力。类似之前GBDT的套路，XGBoost也是需要将多棵树的得分累加得到最终的预测得分（每一次迭代，都在现有树的基础上，增加一棵树去拟合前面树的预测结果与真实值之间的残差）。</p>
-<p><img src="/2020/06/01/machine_learning/XGBoost/quesbase64153438657261833493.png" alt></p>
-<p>那接下来，如何选择每一轮加入什么 \(f\) 呢？答案是非常直接的，选取一个 \(f\) 来使得我们的目标函数尽量最大地降低。这里 \(f\) 可以使用泰勒展开公式近似。</p>
+<p>如何选择每一轮加入什么 \(f\) 呢？答案是非常直接的，选取一个 \(f\) 来使得我们的目标函数尽量最大地降低。这里 \(f\) 可以使用泰勒展开公式近似。<br>
+\[
+\begin{array}{ll}
+\hat{y}_{i}^{(0)} &amp; =0 \\
+\hat{y}_{i}^{(1)} &amp; =f_{1}\left(x_{i}\right)=\hat{y}_{i}^{(0)}+f_{1}\left(x_{i}\right) \\
+\hat{y}_{i}^{(2)} &amp; =f_{1}\left(x_{i}\right)+f_{2}\left(x_{i}\right)=\hat{y}_{i}^{(1)}+f_{2}\left(x_{i}\right) \\
+\hat{y}_{i}^{(t)} &amp; =\sum_{k=1}^{t} f_{k}\left(x_{i}\right)=\hat{y}_{i}^{(t-1)}+f_{t}\left(x_{i}\right)
+\end{array}
+\]</p>
 <h2 id="zheng-ze-xiang-shu-de-fu-za-du">正则项：树的复杂度</h2>
+<p>目标函数中,正则化项\(\Omega(f_t)\)定义如下：<br>
+\[
+\Omega(f_t) = \gamma T+\frac{1}{2} \lambda \sum_{j=1}^T w_j^2
+\]</p>
 <p>XGBoost对树的复杂度包含了两个部分：</p>
 <ul>
 <li>一个是树里面叶子节点的个数T</li>
-<li>一个是树上叶子节点的得分w的L2模平方（对w进行L2正则化，相当于针对每个叶结点的得分增加L2平滑，目的是为了避免过拟合）</li>
+<li>一个是树上叶子节点的得分\(w\)的L2模平方（对\(w\)进行L2正则化，相当于针对每个叶结点的得分增加L2平滑，目的是为了避免过拟合）</li>
 </ul>
-<p><img src="https://julyedu-img.oss-cn-beijing.aliyuncs.com/quesbase64153438674199471483.png" alt></p>
+<p><img src="/2020/06/01/machine_learning/XGBoost/image-20200815183230266.png" alt></p>
 <p>再来看一下XGBoost的目标函数（损失函数揭示训练误差 + 正则化定义复杂度）：</p>
 <p>\[
 L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 \]<br>
 正则化公式也就是目标函数的后半部分，对于上式而言，\(y_i^{\prime}\)是整个累加模型的输出，正则化项\(\sum \Omega (f_t)\)是则表示树的复杂度的函数，值越小复杂度越低，泛化能力越强。</p>
-<h2 id="shu-gai-zen-yao-chang">树该怎么长</h2>
+<h2 id="shu-de-sheng-chang">树的生长</h2>
 <p>从头到尾了解了xgboost如何优化、如何计算，但树到底长啥样，我们却一直没看到。很显然，一棵树的生成是由一个节点一分为二，然后不断分裂最终形成为整棵树。那么树怎么分裂的就成为了接下来我们要探讨的关键。对于一个叶子节点如何进行分裂，XGBoost作者在其原始论文中给出了一种分裂节点的方法：<strong>枚举所有不同树结构的贪心法</strong></p>
 <p>不断地枚举不同树的结构，然后利用打分函数来寻找出一个最优结构的树，接着加入到模型中，不断重复这样的操作。这个寻找的过程使用的就是<strong>贪心算法</strong>。选择一个feature分裂，计算loss function最小值，然后再选一个feature分裂，又得到一个loss function最小值，你枚举完，找一个效果最好的，把树给分裂，就得到了小树苗。</p>
 <p>总而言之，XGBoost使用了和CART回归树一样的想法，利用贪婪算法，遍历所有特征的所有特征划分点，不同的是使用的目标函数不一样。具体做法就是分裂后的目标函数值比单子叶子节点的目标函数的增益，同时为了限制树生长过深，还加了个阈值，只有当增益大于该阈值才进行分裂。从而继续分裂，形成一棵树，再形成一棵树，<strong>每次在上一次的预测基础上取最优进一步分裂/建树。</strong></p>
@@ -344,7 +359,8 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 <li>当树达到最大深度时则停止建立决策树，设置一个超参数max_depth，避免树太深导致学习局部样本，从而过拟合；</li>
 <li>样本权重和小于设定阈值时则停止建树。什么意思呢，即涉及到一个超参数-最小的样本权重和min_child_weight，和GBM的 min_child_leaf 参数类似，但不完全一样。大意就是一个叶子节点样本太少了，也终止同样是防止过拟合；</li>
 </ol>
-<h1 id="xg-boost-yu-gbdt-you-shi-yao-bu-tong">XGBoost与GBDT有什么不同</h1>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="xg-boost-yu-gbdt-you-shi-yao-bu-tong">XGBoost与GBDT有什么不同</h2>
 <p>除了算法上与传统的GBDT有一些不同外，XGBoost还在工程实现上做了大量的优化。总的来说，两者之间的区别和联系可以总结成以下几个方面。</p>
 <ol>
 <li>GBDT是机器学习算法，XGBoost是该算法的工程实现。</li>
@@ -354,9 +370,9 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 <li>传统的GBDT在每轮迭代时使用全部的数据，XGBoost则采用了与随机森林相似的策略，支持对数据进行采样。</li>
 <li>传统的GBDT没有设计对缺失值进行处理，XGBoost能够自动学习出缺失值的处理策略。</li>
 </ol>
-<h1 id="wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li">为什么XGBoost要用泰勒展开，优势在哪里？</h1>
+<h2 id="wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li">为什么XGBoost要用泰勒展开，优势在哪里？</h2>
 <p>XGBoost使用了一阶和二阶偏导, 二阶导数有利于梯度下降的更快更准. 使用泰勒展开取得函数做自变量的二阶导数形式, 可以在不选定损失函数具体形式的情况下, 仅仅依靠输入数据的值就可以进行叶子分裂优化计算, 本质上也就把损失函数的选取和模型算法优化/参数选择分开了. 这种去耦合增加了XGBoost的适用性, 使得它按需选取损失函数, 可以用于分类, 也可以用于回归。</p>
-<h2 id="dai-ma-shi-xian">代码实现</h2>
+<h1 id="dai-ma-shi-xian">代码实现</h1>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">import</span> xgboost</span><br><span class="line"><span class="comment"># First XGBoost model for Pima Indians dataset</span></span><br><span class="line">from numpy <span class="built_in">import</span> loadtxt</span><br><span class="line">from xgboost <span class="built_in">import</span> XGBClassifier </span><br><span class="line">from sklearn.model_selection <span class="built_in">import</span> train_test_split</span><br><span class="line">from sklearn.metrics <span class="built_in">import</span> accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># load data</span></span><br><span class="line"><span class="attr">dataset</span> = loadtxt('pima-indians-diabetes.csv', <span class="attr">delimiter=",")</span></span><br><span class="line"><span class="comment"># split data into X and y</span></span><br><span class="line"><span class="attr">X</span> = dataset[:,<span class="number">0</span>:<span class="number">8</span>]</span><br><span class="line"><span class="attr">Y</span> = dataset[:,<span class="number">8</span>]</span><br><span class="line"><span class="comment"># split data into train and test sets</span></span><br><span class="line"><span class="attr">seed</span> = <span class="number">7</span></span><br><span class="line"><span class="attr">test_size</span> = <span class="number">0.33</span></span><br><span class="line">X_train, X_test, y_train, <span class="attr">y_test</span> = train_test_split(X, Y, <span class="attr">test_size=test_size,</span> <span class="attr">random_state=seed)</span></span><br><span class="line"><span class="comment"># fit model no training data</span></span><br><span class="line"><span class="attr">model</span> = XGBClassifier()</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line"><span class="comment"># make predictions for test data</span></span><br><span class="line"><span class="attr">y_pred</span> = model.predict(X_test)</span><br><span class="line"><span class="attr">predictions</span> = [round(value) for value <span class="keyword">in</span> y_pred]</span><br><span class="line"><span class="comment"># evaluate predictions</span></span><br><span class="line"><span class="attr">accuracy</span> = accuracy_score(y_test, predictions)</span><br><span class="line">print(<span class="string">"Accuracy: %.2f%%"</span> % (accuracy * <span class="number">100.0</span>))</span><br></pre></td></tr></table></figure>
 <h1 id="can-kao-wen-xian">参考文献</h1>
 <ol>
@@ -472,7 +488,7 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-xg-boost"><span class="nav-number">1.</span> <span class="nav-text">什么是XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xg-boost-shu-de-ding-yi"><span class="nav-number">1.1.</span> <span class="nav-text">XGBoost树的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zheng-ze-xiang-shu-de-fu-za-du"><span class="nav-number">1.2.</span> <span class="nav-text">正则项：树的复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-gai-zen-yao-chang"><span class="nav-number">1.3.</span> <span class="nav-text">树该怎么长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-ting-zhi-shu-de-xun-huan-sheng-cheng"><span class="nav-number">1.4.</span> <span class="nav-text">如何停止树的循环生成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xg-boost-yu-gbdt-you-shi-yao-bu-tong"><span class="nav-number">2.</span> <span class="nav-text">XGBoost与GBDT有什么不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li"><span class="nav-number">3.</span> <span class="nav-text">为什么XGBoost要用泰勒展开，优势在哪里？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">3.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao-wen-xian"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xg-boost"><span class="nav-number">1.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xg-boost-shu-de-ding-yi"><span class="nav-number">1.1.</span> <span class="nav-text">XGBoost树的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zheng-ze-xiang-shu-de-fu-za-du"><span class="nav-number">1.2.</span> <span class="nav-text">正则项：树的复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-de-sheng-chang"><span class="nav-number">1.3.</span> <span class="nav-text">树的生长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-ting-zhi-shu-de-xun-huan-sheng-cheng"><span class="nav-number">1.4.</span> <span class="nav-text">如何停止树的循环生成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#xg-boost-yu-gbdt-you-shi-yao-bu-tong"><span class="nav-number">2.1.</span> <span class="nav-text">XGBoost与GBDT有什么不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-xg-boost-yao-yong-tai-le-zhan-kai-you-shi-zai-na-li"><span class="nav-number">2.2.</span> <span class="nav-text">为什么XGBoost要用泰勒展开，优势在哪里？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao-wen-xian"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -490,14 +506,14 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">89</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -712,7 +728,8 @@ L(\phi)=\sum_{i}l(y_i^{\prime}-y_i)+\sum_k\Omega(f_t)
 </script>
 
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
