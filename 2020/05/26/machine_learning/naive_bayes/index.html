@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="朴素贝叶斯">
+<meta property="og:url" content="https://jeffery.ink/2020/05/26/machine_learning/naive_bayes/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/05/26/machine_learning/naive_bayes/v2-535ae1780dfe52729c4db435cbad1465_1440w.jpg">
+<meta property="article:published_time" content="2020-05-26T14:26:48.000Z">
+<meta property="article:modified_time" content="2020-08-16T01:20:12.719Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/05/26/machine_learning/naive_bayes/v2-535ae1780dfe52729c4db435cbad1465_1440w.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/05/26/machine_learning/naive_bayes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>朴素贝叶斯 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/05/26/machine_learning/naive_bayes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          朴素贝叶斯
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-16 09:20:12" itemprop="dateModified" datetime="2020-08-16T09:20:12+08:00">2020-08-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/26/machine_learning/naive_bayes/" class="post-meta-item leancloud_visitors" data-flag-title="朴素贝叶斯" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/05/26/machine_learning/naive_bayes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/26/machine_learning/naive_bayes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/05/26/machine_learning/naive_bayes/v2-535ae1780dfe52729c4db435cbad1465_1440w.jpg" alt></p>
+<a id="more"></a>
+<h1 id="po-su-bei-xie-si">朴素贝叶斯</h1>
+<h2 id="jian-jie">简介</h2>
+<p>朴素贝叶斯是基于<strong>贝叶斯定理</strong>和<strong>特征条件独立假设</strong>的分类方法.首先学习输入/输出的联合概率分布,然后基于此模型,对给定的输入x,利用贝叶斯定理求出后验概率最大的输出y.属于生成模型.<br>
+\[
+P(类别\mid特征 )=\frac{P(特征\mid类别) P(类别)}{P(特征)}
+\]</p>
+<h2 id="ji-ben-gai-nian">基本概念</h2>
+<h3 id="tiao-jian-gai-lu">条件概率</h3>
+<p>\[
+P(X|Y) =  \frac{P(X,Y)}{P(Y)}
+\]</p>
+<p>\(P(X|Y)\)含义： 表示 \(y\) 发生的条件下 \(x\) 发生的概率。</p>
+<h3 id="xian-yan-gai-lu">先验概率</h3>
+<p>含义： <strong>表示事件发生前的预判概率</strong>。这个可以是基于历史数据统计，也可以由背景常识得出，也可以是主观观点得出。一般都是单独事件发生的概率，如 \(P(A)\)</p>
+<h3 id="hou-yan-gai-lu">后验概率</h3>
+<p>基于先验概率求得的<strong>反向条件概率</strong>，形式上与条件概率相同（若 <code>P(X|Y)</code> 为正向，则 <code>P(Y|X)</code> 为反向）</p>
+<h2 id="bei-xie-si-gong-shi">贝叶斯公式</h2>
+<p>贝叶斯公式如下：<br>
+\[
+P(Y|X) = \frac{P(X|Y) P(Y)}{P(X)}  \\
+\]</p>
+<blockquote>
+<ul>
+<li>P(Y) 叫做<strong>先验概率</strong>，意思是事件X发生之前，我们对事件Y发生的一个概率的判断</li>
+<li>P(Y|X) 叫做<strong>后验概率</strong>，意思是时间X发生之后，我们对事件Y发生的一个概率的重新评估</li>
+<li>P(Y,X) 叫做<strong>联合概率</strong>， 意思是事件X与事件Y同时发生的概率。</li>
+</ul>
+</blockquote>
+<h2 id="tiao-jian-du-li-jia-she">条件独立假设</h2>
+<p>\[
+P(x|c) = p(x_1, x_2,  \cdots x_n | c) = \prod_{i=1}^Np(x_i | c)
+\]</p>
+<p>朴素贝叶斯采用条件独立假设的动机在于： <strong>简化运算。</strong></p>
+<h2 id="suan-fa-bu-zou">算法步骤</h2>
+<ol>
+<li>
+<p>首先学习先验概率分布<br>
+\[
+p(c_k),k=1,2,3,4,...,k
+\]</p>
+</li>
+<li>
+<p>然后学习条件概率分布:<br>
+\[
+P\left(X=x | Y=c_{k}\right)=P\left(X^{(1)}=x^{(1)}, \cdots, X^{(n)}=x^{(n)} | Y=c_{k}\right)
+\]<br>
+如果估计实际,需要指数级的计算,所以朴素贝叶斯法对条件概率分布作了条件独立性的假设,上式变成:<br>
+\[
+\prod_{j=1}^{n} P\left(X^{(n)}=x^{(n)} | Y=c_{k}\right)
+\]</p>
+</li>
+<li>
+<p>在分类时,通过学习到的模型计算后验概率分布,由贝叶斯定理得到</p>
+<p>\[
+P\left(Y=c_{k} | X=x\right)=\frac{P\left(X=x | Y=c_{k}\right) P\left(Y=c_{k}\right)}{\sum_{k} P\left(X=x | Y=c_{k}\right) P\left(Y=c_{k}\right)}
+\]</p>
+</li>
+<li>
+<p>将条件独立性假设得到的等式代入,并且注意到分母都是相同的,所以得到朴素贝叶斯分类器:<br>
+\[
+y=\arg \max _{a_{k}} P\left(Y=c_{k}\right) \prod_{j} P\left(X^{(l)}=x^{(l)} | Y=c_{k}\right)
+\]</p>
+</li>
+</ol>
+<p>朴素贝叶斯将实例分到<strong>后验概率最大</strong>的类中,这等价于<strong>期望风险最小化</strong>。</p>
+<p><strong>特殊情况处理方法</strong>：</p>
+<ol>
+<li>
+<p>用极大似然估计可能会出现所要估计的概率值为0的情况,在累乘后会影响后验概率的计算结果,使分类产生偏差.可以采用<strong>贝叶斯估计</strong>,在随机变量各个取值的频数上赋予一个正数：</p>
+<p>\[
+P_{\lambda}\left(X^{(1)}=a_{j q} | Y=c_{k}\right)=\frac{\sum_{i=1}^{N} I\left(x_{i}^{(l)}=a_{\beta}, y_{i}=c_{k}\right)+\lambda}{\sum_{i=1}^{N} I\left(y_{i}=c_{k}\right)+S_{j} \lambda}
+\]<br>
+\(S_j\)为\(j\)属性可能取值数量,当\(\lambda=0\)时就是极大似然估计.常取\(\lambda=1\),称为<strong>拉普拉斯平滑</strong>.</p>
+</li>
+<li>
+<p>如果是连续值的情况,可以假设连续变量服从高斯分布,然后用训练数据估计参数：<br>
+\[
+P\left(X_{i}=x_{i} | Y=y_{i}\right)=\frac{1}{\sqrt{2 \pi} \sigma_{i j}^{2}} e^{\frac{\left(x_{i}-\mu_{j}\right)^{2}}{2 \sigma_{i}^{2}}}
+\]</p>
+</li>
+</ol>
+<h2 id="po-su-bei-xie-si-zhong-de-san-chong-mo-xing">朴素贝叶斯中的三种模型</h2>
+<h3 id="duo-xiang-shi-mo-xing">多项式模型</h3>
+<p>多项式模型适用于离散特征情况，在文本领域应用广泛， 其基本思想是：<strong>我们将重复的词语视为其出现多次</strong>。</p>
+<h3 id="gao-si-mo-xing">高斯模型</h3>
+<p>高斯模型适合<strong>连续特征情况</strong>， 给出高斯公式：<br>
+\[
+P(x_{i}|y_{k}) = \frac{1}{\sqrt{2\pi\sigma_{y_{k}}^{2}}}exp( -\frac{(x_{i}-\mu_{y_{k}})^2}  {2\sigma_{y_{k}}^{2}}   )
+\]</p>
+<h3 id="bo-nu-li-mo-xing">伯努利模型</h3>
+<p>伯努利模型适用于离散特征情况，它将重复的词语都视为只出现一次。</p>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="po-su-bei-xie-si-wei-he-po-su">朴素贝叶斯为何朴素？</h2>
+<p>朴素贝叶斯的朴素性体现在该算法基于一个简单的假设： <strong>所有的变量都是相互独立的</strong>，用贝叶斯公式表达如下：<br>
+\[
+P(Y|X_1, X_2) = \frac{P(X_1|Y) P(X_2|Y) P(Y)}{P(X_1)P(X_2)}
+\]<br>
+<strong>而在很多情况下，所有变量几乎不可能满足两两之间的条件。</strong></p>
+<h2 id="wei-shi-yao-xu-yao-jia-she-te-zheng-zhi-jian-xiang-hu-du-li-ni">为什么需要假设特征之间相互独立呢？</h2>
+<ol>
+<li>
+<p>假如没有这个假设，那么我们对右边这些概率的估计其实是不可做的，现实生活中，往往有非常多的特征，每一个特征的取值也是非常之多，那么通过统计来估计后面概率的值，变得几乎不可做，这也是为什么需要假设特征之间独立的原因。</p>
+</li>
+<li>
+<p>假如没有假设特征之间相互独立，那么统计的时候，就需要在整个特征空间中去找，比如统计p(不帅、性格不好、身高矮、不上进|嫁),我们就需要在嫁的条件下，去找四种特征全满足分别是不帅，性格不好，身高矮，不上进的人的个数，这样的话，由于数据的稀疏性，很容易统计到0的情况。 这样是不合适的。</p>
+</li>
+</ol>
+<p>根据上面两个原因，朴素贝叶斯法对条件概率分布做了条件独立性的假设，由于这是一个较强的假设，朴素贝叶斯也由此得名！这一假设使得朴素贝叶斯法变得简单，但有时会牺牲一定的分类准确率。</p>
+<h2 id="po-su-bei-xie-si-fen-lei-zhong-mou-ge-lei-bie-de-gai-lu-wei-0-zen-yao-ban">朴素贝叶斯分类中某个类别的概率为0怎么办？</h2>
+<p><strong>问题：</strong> 如下，A1,A2,A3是三个特征，Y是分类结果。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">A1</th>
+<th style="text-align:center">A2</th>
+<th style="text-align:center">A3</th>
+<th style="text-align:center">Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">P(Y=<span class="number">0</span>) = <span class="number">3</span>/<span class="number">5</span></span><br><span class="line">P(Y=<span class="number">1</span>) = <span class="number">2</span>/<span class="number">5</span></span><br><span class="line">P(Y=<span class="number">0</span>|A1=<span class="number">1</span>,A2=<span class="number">0</span>,A3=<span class="number">0</span>) = <span class="number">3</span>/<span class="number">5</span> * <span class="number">1</span>/<span class="number">3</span> * <span class="number">2</span>/<span class="number">3</span> * <span class="number">1</span>/<span class="number">3</span> = <span class="number">2</span>/<span class="number">45</span></span><br><span class="line">P(Y=<span class="number">1</span>|A1=<span class="number">1</span>,A2=<span class="number">0</span>,A3=<span class="number">0</span>) = <span class="number">2</span>/<span class="number">5</span> * <span class="number">1</span>/<span class="number">2</span> * <span class="number">1</span>/<span class="number">4</span> * <span class="number">1</span>/<span class="number">2</span> = <span class="number">1</span>/<span class="number">40</span></span><br></pre></td></tr></table></figure>
+<p>答案是<strong>拉普拉斯平滑</strong>。</p>
+<h2 id="po-su-bei-xie-si-de-yao-qiu-shi-shi-yao">朴素贝叶斯的要求是什么？</h2>
+<ul>
+<li>贝叶斯定理</li>
+<li>特征条件独立假设</li>
+</ul>
+<h2 id="po-su-bei-xie-si-de-you-que-dian">朴素贝叶斯的优缺点？</h2>
+<ul>
+<li>优点： 对小规模数据表现很好，适合多分类任务，适合增量式训练。</li>
+<li>缺点：对输入数据的表达形式很敏感（离散、连续，值极大极小之类的）。</li>
+</ul>
+<h2 id="po-su-bei-xie-si-yu-lr-qu-bie">朴素贝叶斯与 LR 区别？</h2>
+<ul>
+<li>朴素贝叶斯是生成模型，根据已有样本进行贝叶斯估计学习出先验概率 P(Y) 和条件概率 P(X|Y)，进而求出联合分布概率 P(XY)，最后利用贝叶斯定理求解P(Y|X)， 而LR是判别模型，根据极大化对数似然函数直接求出条件概率 P(Y|X)</li>
+<li>朴素贝叶斯是基于很强的<strong>条件独立假设</strong>（在已知分类Y的条件下，各个特征变量取值是相互独立的），而 LR 则对此没有要求</li>
+<li>朴素贝叶斯适用于数据集少的情景，而LR适用于大规模数据集。</li>
+</ul>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/26/named_entity_recognition/" rel="prev" title="命名实体识别">
+      <i class="fa fa-chevron-left"></i> 命名实体识别
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/30/machine_learning/decision-tree/" rel="next" title="决策树">
+      决策树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#po-su-bei-xie-si"><span class="nav-number">1.</span> <span class="nav-text">朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-ben-gai-nian"><span class="nav-number">1.2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tiao-jian-gai-lu"><span class="nav-number">1.2.1.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xian-yan-gai-lu"><span class="nav-number">1.2.2.</span> <span class="nav-text">先验概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hou-yan-gai-lu"><span class="nav-number">1.2.3.</span> <span class="nav-text">后验概率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bei-xie-si-gong-shi"><span class="nav-number">1.3.</span> <span class="nav-text">贝叶斯公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tiao-jian-du-li-jia-she"><span class="nav-number">1.4.</span> <span class="nav-text">条件独立假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#suan-fa-bu-zou"><span class="nav-number">1.5.</span> <span class="nav-text">算法步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-zhong-de-san-chong-mo-xing"><span class="nav-number">1.6.</span> <span class="nav-text">朴素贝叶斯中的三种模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-xiang-shi-mo-xing"><span class="nav-number">1.6.1.</span> <span class="nav-text">多项式模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gao-si-mo-xing"><span class="nav-number">1.6.2.</span> <span class="nav-text">高斯模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bo-nu-li-mo-xing"><span class="nav-number">1.6.3.</span> <span class="nav-text">伯努利模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-wei-he-po-su"><span class="nav-number">2.1.</span> <span class="nav-text">朴素贝叶斯为何朴素？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-xu-yao-jia-she-te-zheng-zhi-jian-xiang-hu-du-li-ni"><span class="nav-number">2.2.</span> <span class="nav-text">为什么需要假设特征之间相互独立呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-fen-lei-zhong-mou-ge-lei-bie-de-gai-lu-wei-0-zen-yao-ban"><span class="nav-number">2.3.</span> <span class="nav-text">朴素贝叶斯分类中某个类别的概率为0怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-de-yao-qiu-shi-shi-yao"><span class="nav-number">2.4.</span> <span class="nav-text">朴素贝叶斯的要求是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-de-you-que-dian"><span class="nav-number">2.5.</span> <span class="nav-text">朴素贝叶斯的优缺点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#po-su-bei-xie-si-yu-lr-qu-bie"><span class="nav-number">2.6.</span> <span class="nav-text">朴素贝叶斯与 LR 区别？</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.2m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

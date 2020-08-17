@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/06/05/machine_learning/bayes_network/image-20200810220318576.png">
 <meta property="og:image" content="https://jeffery.ink/2020/06/05/machine_learning/bayes_network/image-20200810220337488.png">
 <meta property="article:published_time" content="2020-06-05T13:57:02.000Z">
-<meta property="article:modified_time" content="2020-08-10T15:12:33.878Z">
+<meta property="article:modified_time" content="2020-08-16T01:50:36.044Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/06/05/machine_learning/bayes_network/00630Defgy1g4wsx3zf05j306o06xglm.jpg">
@@ -242,7 +242,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-10 23:12:33" itemprop="dateModified" datetime="2020-08-10T23:12:33+08:00">2020-08-10</time>
+                <time title="修改时间：2020-08-16 09:50:36" itemprop="dateModified" datetime="2020-08-16T09:50:36+08:00">2020-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,14 +281,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -307,13 +307,27 @@
 <p>概率图中的节点分为隐含节点和观测节点，边分为有向边和无向边。从概率论的角度，节点对应于随机变量，边对应于随机变量的依赖或相关关系，其中<strong>有向边表示单向的依赖，无向边表示相互依赖关系</strong>。</p>
 <p>概率图模型分为<strong>贝叶斯网络和马尔可夫网络</strong>两大类。贝叶斯网络可以用一个有向图结构表示，马尔可夫网络可以表示成一个无向图的网络结构。</p>
 <p>概率图模型包括了朴素贝叶斯模型、最大熵模型、隐马尔可夫模型、条件随机场、主题模型等，在机器学习的诸多场景中都有着广泛的应用。</p>
-<h1 id="pin-lu-pai-guan-dian">频率派观点</h1>
+<h1 id="pin-lu-pai-vs-bei-xie-si-pai">频率派 vs 贝叶斯派</h1>
+<p>对于有 n 个样本的样本集 \(X = (x_1, ..., x_n)\) 以及参数 \(\theta\)， 那么有 \(X\) 服从概率分布 $ P(x|\theta)$</p>
+<h2 id="pin-lu-pai-guan-dian">频率派观点</h2>
 <p>长久以来，人们对一件事情发生或不发生的概率，只有固定的0和1，即要么发生，要么不发生，从来不会去考虑某件事情发生的概率有多大，不发生的概率又是多大。而且概率虽然未知，但最起码是一个确定的值。比如如果问那时的人们一个问题：“有一个袋子，里面装着若干个白球和黑球，请问从袋子中取得白球的概率是多少？”他们会想都不用想，会立马告诉你，取出白球的概率就是1/2，要么取到白球，要么取不到白球，即θ只能有一个值，而且不论你取了多少次，取得白球的<strong>概率θ始终都是1/2</strong>，即不随观察结果X的变化而变化。这种<strong>频率派</strong>的观点长期统治着人们的观念。</p>
-<h1 id="bei-xie-si-xue-pai">贝叶斯学派</h1>
+<p>也就是说，<strong>频率派</strong>认为 \(\theta\) 是一个未知的<strong>常量</strong>， 数据 \(X\) 是一个随机变量，其服从一定的概率分布， 目的是通过极大似然估计 + 随机变量 \(X\) 来估计出未知参数 \(\theta\) 。<br>
+\[
+\theta_{MLE} = argmax_{\theta} \,\, log P(X|\theta)
+\]</p>
+<h2 id="bei-xie-si-xue-pai">贝叶斯学派</h2>
 <p>托马斯·贝叶斯发表了一篇名为“An essay towards solving a problem in the doctrine of chances”，翻译过来则是：机遇理论中一个问题的解。</p>
 <p><img src="/2020/06/05/machine_learning/bayes_network/quesbase64155385172674171677.jpg" alt></p>
 <p>这篇论文可以用上面的例子来说明，“有一个袋子，里面装着若干个白球和黑球，请问从袋子中取得白球的概率θ是多少？”贝叶斯认为取得白球的概率是个不确定的值，因为其中含有机遇的成分。比如，一个朋友创业，你明明知道创业的结果就两种，即要么成功要么失败，但你依然会忍不住去估计他创业成功的几率有多大？你如果对他为人比较了解，而且有方法、思路清晰、有毅力、且能团结周围的人，你会不由自主的估计他创业成功的几率可能在80%以上。这种不同于最开始的“非黑即白、非0即1”的思考方式，便是<strong>贝叶斯式的思考方式。</strong></p>
-<p><strong>先简单总结下频率派与贝叶斯派各自不同的思考方式：</strong></p>
+<p>贝叶斯派认为 \(\theta\) 是一个随机变量，其服从一定的概率分布 \(p(\theta)\)。其采用最大后验估计来计算 \(P(\theta|X)\)。<br>
+\[
+P(\theta|X) = \frac{P(X | \theta) P(\theta)}{P(X)}
+\]</p>
+<p>其中，先验： \(P(\theta)\) ， 似然： \(P(X|\theta)\) ， 后验：\(P(\theta|X)\)<br>
+\[
+\theta_{MAP} = argmax_{\theta} \,  \, P(\theta | X) = argmax_{\theta} P(X|\theta)P(\theta)
+\]</p>
+<p><strong>简单总结下频率派与贝叶斯派各自不同的思考方式：</strong></p>
 <ul>
 <li>频率派把需要推断的参数θ看做是<strong>固定的</strong>未知常数，即概率虽然是未知的，但最起码是确定的一个值，同时，样本X 是随机的，所以频率派重点研究样本空间，大部分的概率计算都是针对样本X 的分布；</li>
 <li>而贝叶斯派的观点则截然相反，他们认为参数是随机变量，而样本X 是固定的，由于样本是固定的，所以他们重点研究的是参数的分布。</li>
@@ -322,12 +336,39 @@
 <p>比如往台球桌上扔一个球，这个球落会落在何处呢？如果是不偏不倚的把球抛出去，那么此球落在台球桌上的任一位置都有着相同的机会，即球落在台球桌上某一位置的概率\(\theta\)服从均匀分布。这种在实验之前定下的属于基本前提性质的分布称为<strong>先验分布，或着\(\theta\)的无条件分布</strong>。</p>
 <p>至此，贝叶斯及贝叶斯派提出了一个思考问题的固定模式：<br>
 \[
-\text{先验分布}\pi(\theta) + \text{样本信息}X = \text{后验分布} \pi(\theta | x)
+\text{先验分布}\pi(\theta) + \text{样本信息}x = \text{后验分布} \pi(\theta | x)
 \]<br>
 上述思考模式意味着，新观察到的样本信息将修正人们以前对事物的认知。换言之，在得到新的样本信息之前，人们对\(\theta\)的认知是先验分布\(\pi(\theta)\)，在得到新的样本信息\(X\)后，人们对\(\theta\)的认知为\(\pi(\theta|x)\)。</p>
 <p>其中，先验信息一般来源于经验跟历史资料。比如林丹跟某选手对决，解说一般会根据林丹历次比赛的成绩对此次比赛的胜负做个大致的判断。再比如，某工厂每天都要对产品进行质检，以评估产品的不合格率θ，经过一段时间后便会积累大量的历史资料，这些历史资料便是先验知识，有了这些先验知识，便在决定对一个产品是否需要每天质检时便有了依据，如果以往的历史资料显示，某产品的不合格率只有0.01%，便可视为信得过产品或免检产品，只每月抽检一两次，从而省去大量的人力物力。</p>
 <p>而<strong>后验分布</strong>\(\pi(\theta | X)\)一般也认为是在给定样本\(X\)的情况下的θ条件分布，而使\(\pi(\theta|X)\)达到最大的值\(\theta\)称为<strong>最大后验估计</strong>，类似于经典统计学中的<strong>极大似然估计</strong>。</p>
 <p>综合起来看，则好比是人类刚开始时对大自然只有少得可怜的先验知识，但随着不断观察、实验获得更多的样本、结果，使得人们对自然界的规律摸得越来越透彻。所以，贝叶斯方法既符合人们日常生活的思考方式，也符合人们认识自然的规律。</p>
+<h1 id="ji-da-si-ran-gu-ji-vs-zui-da-hou-yan-gu-ji">极大似然估计 vs 最大后验估计</h1>
+<h2 id="ji-da-si-ran-gu-ji-mle">极大似然估计 - MLE</h2>
+<p><strong>原理</strong>：利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值(认为参数是固定值)。</p>
+<p>极大似然估计提供了一种给定观察数据来评估模型参数的方法：<strong>模型已定，参数未知</strong>。经过若干次实验，观察结果，利用实验结果得到某个参数值能够使得样本出现的概率为最大，称为极大似然估计。</p>
+<p><strong>离散</strong>情况下参数 \(\theta\) 的<strong>似然函数</strong>：<br>
+\[
+L(\theta) = L(X_1, X_2, \cdots, X_n; \theta) = \prod_{i=1}^n p(X_i| \theta)
+\]</p>
+<p><strong>极大似然估计：</strong> 对于给定的样本值\((x_1, x_2, \cdots, x_n)\) 有：<br>
+\[
+\hat{\vec\theta}= \mathop {\arg \max}_{\vec\theta} L(\vec\theta )
+\]<br>
+使得似然函数 \(L(x_1, x_2, \cdots, x_n; \theta)\)达到最大值的参数值 \(\hat{\theta} = \hat{\theta} (x_1, \cdots, x_n)\) 称为未知数 \(\theta\) 的最大似然估计值。</p>
+<h2 id="zui-da-hou-yan-gu-ji-map">最大后验估计 - MAP</h2>
+<p>MAP 的基础是贝叶斯公式：</p>
+<p>贝叶斯估计：<br>
+\[
+P(\theta|X) = \frac{P(X | \theta) P(\theta)}{P(X)}= \frac{P(X | \theta) P(\theta)}{\int_{\theta} P(X|\theta)P(\theta)d{\theta}} \\
+\]<br>
+贝叶斯预测：<br>
+\[
+p(\hat{x} | X) = \int_{\theta} p(\hat{x},\theta|X) d{\theta} = \int_{\theta} p(\hat{x}|\theta) p(\theta|X)d{\theta}
+\]</p>
+<p>MAP 优化的就是后验概率， 目的是通过观测值使得后验概率最大：<br>
+\[
+\theta_{MAP} = argmax_{\theta} \,  \, P(\theta | X) = argmax_{\theta} P(X|\theta)P(\theta)
+\]</p>
 <h1 id="bei-xie-si-ding-li">贝叶斯定理</h1>
 <p><strong>条件概率</strong>（又称后验概率）就是事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为\(P(A|B)\)，读作“在B条件下A的概率”。在同一个样本空间\(\Omega\)中的事件或者子集A与B，如果随机从\(\Omega\)中选出的一个元素属于B，那么这个随机选择的元素还属于A的概率就定义为在B的前提下A的<strong>条件概率</strong>：<br>
 \[
@@ -353,7 +394,7 @@ P(c \mid w)=P(w \mid c) * P(c) / P(w)
 由于对于所有备选的<code>c</code>来说，对应的都是同一个<code>w</code>，所以它们的<code>P(w)</code>是相同的，因此只要最大化\(P(w \mid c) * P(c)\)即可，其中，\(P(c)\)表示某个正确的词的出现<code>概率</code>，它可以用<code>频率</code>代替。如果有一个足够大的文本库，那么这个文本库中每个单词的出现频率，就相当于它的发生概率。某个词的出现频率越高，\(P(c)\)就越大。比如在输入一个错误的词<code>Julw</code>时，系统更倾向于去猜测你可能想输入的词是<code>July</code>，而不是<code>Jult</code>，因为<code>July</code>更常见。</p>
 <p>\(P(w|c)\)表示在试图拼写<code>c</code>的情况下，出现拼写错误<code>w</code>的概率。为了简化问题，假定两个单词在字形上越接近，就有越可能拼错，\(P(w|c)\)就越大。举例来说，相差一个字母的拼法，就比相差两个字母的拼法，发生概率更高。你想拼写单词<code>July</code>，那么错误拼成<code>Julw</code>（相差一个字母）的可能性，就比拼成<code>Jullw</code>高（相差两个字母）。一般把这种问题称为“编辑距离”。</p>
 <p>所以，通过比较所有拼写相近的词在文本库中的出现频率，再从中挑出出现频率最高的一个，即是用户最想输入的那个词。</p>
-<p>#贝叶斯网络</p>
+<h1 id="bei-xie-si-wang-luo">贝叶斯网络</h1>
 <p>贝叶斯网络，又称信念网络，或有向无环图模型，是一种概率图模型。它是一种模拟人类推理过程中因果关系的不确定性处理模型，其网络拓朴结构是一个有向无环图(DAG)。</p>
 <p><img src="/2020/06/05/machine_learning/bayes_network/00630Defgy1g4wsx3zf05j306o06xglm.jpg" alt></p>
 <p>贝叶斯网络的有向无环图中的节点表示随机变量: \({X_1,X_2,...,X_n}\).它们可以是可观察到的变量，或隐变量、未知参数等。认为有因果关系（或非条件独立）的变量或命题则用箭头来连接。若两个节点间以一个单箭头连接在一起，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值。</p>
@@ -364,7 +405,7 @@ P(c \mid w)=P(w \mid c) * P(c) / P(w)
 \[
 P(x_1,...,x_k)=P(x_k|x_1,...,x_{k-1})...P(x_2|x_1)P(x_1)
 \]</p>
-<p>##贝叶斯网络的结构形式</p>
+<h2 id="bei-xie-si-wang-luo-de-jie-gou-xing-shi">贝叶斯网络的结构形式</h2>
 <h3 id="head-to-head">head-to-head</h3>
 <p><img src="/2020/06/05/machine_learning/bayes_network/image-20200810220113458.png" alt></p>
 <p>依上图，所以有：\(P(a,b,c) = P(a)*P(b)*P(c|a,b)\)成立，即在c未知的条件下，a、b被阻断(blocked)，是独立的，称之为head-to-head条件独立。</p>
@@ -397,7 +438,7 @@ P(x_1,...,x_k)=P(x_k|x_1,...,x_{k-1})...P(x_2|x_1)P(x_1)
 \[
 P\left(X_{n+1}=x \mid X_{0}, X_{1}, X_{2}, \ldots, X_{n}\right)=P\left(X_{n+1}=x \mid X_{n}\right)
 \]</p>
-<p>##因子图</p>
+<h2 id="yin-zi-tu">因子图</h2>
 <p>wikipedia上是这样定义因子图的：将一个具有多变量的全局函数因子分解，得到几个局部函数的乘积，以此为基础得到的一个双向图叫做因子图。</p>
 <p>通俗来讲，所谓因子图就是对函数进行因子分解得到的一种<strong>概率图</strong>。一般内含两种节点：<strong>变量节点</strong>和<strong>函数节点</strong>。我们知道，一个全局函数通过因式分解能够分解为多个局部函数的乘积，这些局部函数和对应的变量关系就体现在因子图上。</p>
 <p>举个例子，现在有一个全局函数，其因式分解方程为：<br>
@@ -409,6 +450,7 @@ g(x_1,x_2,x_3,x_4,x_5)=f_A(x_1)f_B(x_2)f_C(x_1,x_2,x_3)f_D(x_3,x_4)f_E(x_3,x_5)
 <p><img src="/2020/06/05/machine_learning/bayes_network/image-20200810220337488.png" alt></p>
 <p>在概率图中，求某个变量的边缘分布是常见的问题。这问题有很多求解方法，其中之一就是把贝叶斯网络或马尔科夫随机场转换成因子图，然后用sum-product算法求解。换言之，基于因子图可以用<strong>sum-product 算法</strong>高效的求各个变量的边缘分布。</p>
 <h1 id="po-su-bei-xie-si">朴素贝叶斯</h1>
+<p>详情参考<code><a href="/2020/06/05/machine_learning/bayes_network/" title="朴素贝叶斯">朴素贝叶斯</a></code></p>
 <p>朴素贝叶斯是经典的机器学习算法之一，也是为数不多的基于概率论的分类算法。朴素贝叶斯原理简单，也很容易实现，多用于文本分类，比如垃圾邮件过滤。**朴素贝叶斯可以看做是贝叶斯网络的特殊情况：即该网络中无边，各个节点都是独立的。 **</p>
 <p>朴素贝叶斯朴素在哪里呢？ —— <strong>两个假设</strong>：</p>
 <ul>
@@ -418,7 +460,9 @@ g(x_1,x_2,x_3,x_4,x_5)=f_A(x_1)f_B(x_2)f_C(x_1,x_2,x_3)f_D(x_3,x_4)f_E(x_3,x_5)
 <p>贝叶斯公式如下：<br>
 \[
 P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}\\
-P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\text {特征})}
+\]</p>
+<p>\[
+P(类别 \mid 特征 )=\frac{P(特征|类别) P(类别)}{P(特征)}
 \]</p>
 <p><strong>为什么需要假设特征之间相互独立呢？</strong></p>
 <ol>
@@ -440,20 +484,82 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
 <p>朴素贝叶斯模型的<strong>朴素的含义是</strong>假设样本特征彼此独立. 这个假设现实中基本上不存在, 但特征相关性很小的实际情况还是很多的, 所以这个模型仍然能够工作得很好。</p>
 <p>解释朴素贝叶斯算法里面的先验概率、似然估计和边际似然估计？</p>
 <ul>
-<li>**先验概率：**就是因变量在数据集中的比例。这是在没有任何进一步的信息的时候，是对分类能做出的最接近的猜测。</li>
-<li>**似然估计：**似然估计是在其他一些变量的给定的情况下，一个观测值被分类为1的概率。例如，“FREE”这个词在以前的垃圾邮件使用的概率就是似然估计。</li>
-<li>**边际似然估计：**边际似然估计就是，“FREE”这个词在任何消息中使用的概率。</li>
+<li><strong>先验概率</strong>：就是因变量在数据集中的比例。这是在没有任何进一步的信息的时候，是对分类能做出的最接近的猜测。</li>
+<li><strong>似然估计</strong>：似然估计是在其他一些变量的给定的情况下，一个观测值被分类为1的概率。</li>
+<li><strong>边际似然估计</strong>：边际似然估计就是，“FREE”这个词在任何消息中使用的概率。</li>
 </ul>
-<h1 id="sheng-cheng-shi-mo-xing-he-pan-bie-shi-mo-xing-de-qu-bie">生成式模型和判别式模型的区别</h1>
+<h1 id="pan-bie-mo-xing-he-sheng-cheng-mo-xing">判别模型和生成模型</h1>
+<h2 id="pan-bie-mo-xing">判别模型</h2>
+<p><strong>代表</strong>：K 近邻、感知机（神经网络）、决策树、逻辑斯蒂回归、<strong>最大熵模型</strong>、SVM、提升方法、<strong>条件随机场</strong></p>
+<p><strong>思想</strong>： 由<strong>数据</strong>直接学习<strong>决策函数 \(Y=f(X)\)</strong> 或<strong>条件概率分布 \(P(Y|X)\)</strong> 作为预测的模型。</p>
+<p><strong>理解</strong>： 直观的说，判别模型学习的是<strong>类别之间的最优分隔面</strong>，反映的是不同类<strong>数据之间的差异</strong>。</p>
+<p><strong>举例</strong>：要确定一个羊是山羊还是绵羊，用判别模型的方法是从历史数据中学习到模型，然后通过提取这只羊的特征来预测出这只羊是山羊的概率，是绵羊的概率。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>它寻找不同类别之间的最优分类面，反映的是异类数据之间的差异。</li>
+<li>直接面对预测，往往学习的准确率更高。</li>
+<li>由于直接学习P(Y|X)或P(X)，可以对数据进行各种程度上的抽象、定义特征并使用特征，因此可以简化学习问题。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>不能反映训练数据本身的特性。</li>
+</ol>
+<h2 id="sheng-cheng-mo-xing">生成模型</h2>
+<p><strong>代表</strong>：朴素贝叶斯、隐马尔可夫模型、混合高斯模型、贝叶斯网络、马尔可夫随机场</p>
+<p><strong>思想</strong>：由数据学习得到<strong>联合概率密度分布</strong> \(P(X,Y)\)， 然后求出<strong>条件概率分布</strong> \(P(Y|X)\) 作为预测的模型：<br>
+\[
+P(Y|X) = \frac{P(X,Y)}{P(X)}
+\]<br>
+<strong>举例</strong>：利用生成模型是根据山羊的特征首先学习出一个山羊的模型，然后根据绵羊的特征学习出一个绵羊的模型，然后从这只羊中提取特征，放到山羊模型中看概率多少，放到绵羊模型中看概率多少，哪个大就是哪个。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>可以从统计的角度表示数据的分布情况，能够反映同类数据本身的相似度。但它不关心到底划分各类的那个分类边界在哪。</li>
+<li>生成方法的学习收敛速度更快，即当样本容量增加的时候，学到的模型可以更快的收敛于真实模型。</li>
+<li>当存在隐变量时，仍可以用生成方法学习。此时判别方法就不能用。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>学习和计算过程比较复杂。</li>
+</ol>
+<h2 id="pan-bie-mo-xing-vs-sheng-cheng-mo-xing">判别模型 vs 生成模型</h2>
 <ul>
 <li>
-<p><strong>判别模型</strong>(discriminative model)通过求解条件概率分布P(y|x)或者直接计算y的值来预测y。</p>
+<p>由生成模型能够得到判别模型，但由判别模型得不到生成模型</p>
+</li>
+<li>
+<p>当存在“<strong>隐变量</strong>”时，只能使用<strong>生成模型</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>隐变量：当我们找不到引起某一现象的原因时，就把这个在起作用，但无法确定的因素，叫“隐变量”</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>判别模型</strong>通过求解条件概率分布\(P(y|x)\)或者直接计算\(y\)的值来预测\(y\)。</p>
 <p>线性回归（Linear Regression）,逻辑回归（Logistic Regression）,支持向量机（SVM）, 传统神经网络（Traditional Neural Networks）,线性判别分析（Linear Discriminative Analysis），条件随机场（Conditional Random Field）</p>
 </li>
 <li>
-<p><strong>生成模型</strong>（generative model）通过对观测值和标注数据计算联合概率分布P(x,y)来达到判定估算y的目的。</p>
+<p><strong>生成模型</strong>通过对观测值和标注数据计算联合概率分布\(P(x,y)\)来达到判定估算\(y\)的目的。</p>
 <p>朴素贝叶斯（Naive Bayes）, 隐马尔科夫模型（HMM）,贝叶斯网络（Bayesian Networks）和隐含狄利克雷分布（Latent Dirichlet Allocation）、混合高斯模型</p>
 </li>
+</ul>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h2 id="ji-da-si-ran-gu-ji-yu-zui-da-hou-yan-gai-lu-de-qu-bie">极大似然估计与最大后验概率的区别？</h2>
+<ul>
+<li>最大似然估计提供了一种给定观察数据来评估模型参数的方法， 最大似然估计中的采样满足<strong>所有采样都是独立同分布的假设。</strong></li>
+<li>最大后验概率是根据经验数据获难以观察量的点估计,与最大似然估计最大的不同是<strong>最大后验概率融入了要估计量的先验分布在其中</strong>，所以最大后验概率可以看做规则化的最大似然估计。</li>
+</ul>
+<h2 id="gai-lu-yu-si-ran-de-qu-bie">概率与似然的区别</h2>
+<ul>
+<li>概率是指在给定参数\(\theta\)的情况下,样本的随机向量 \(X=x\) 的可能性。</li>
+<li>似然表示的是在给定样本 \(X=x\) 的情况下,参数 \(\theta\) 为真实值的可能性。</li>
+</ul>
+<p>一般情况,对随机变量的取值用概率表示。而在非贝叶斯统计的情况下,参数为一个实数而不是随机变量,一般用似然来表示。</p>
+<h2 id="bei-xie-si-pai-yu-pin-lu-xue-pai-de-qu-bie">贝叶斯派与频率学派的区别</h2>
+<ul>
+<li>频率派认为抽样是无限的,在无限的抽样中,对于决策的规则可以很精确。贝叶斯派认为世界无时无刻不在改变,未知的变量和事件都有一定的概率,即后验概率是先验概率的修正。</li>
+<li>频率派认为模型参数是固定的,一个模型在无数次抽样后,参数是不变的。而贝叶斯学派认为数据才是固定的而参数并不是。</li>
+<li>频率派认为模型不存在先验而贝叶斯派认为模型存在先验。</li>
 </ul>
 <h1 id="dai-ma-shi-xian">代码实现</h1>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups  <span class="comment"># 从sklearn.datasets里导入新闻数据抓取器 fetch_20newsgroups</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> CountVectorizer  <span class="comment"># 从sklearn.feature_extraction.text里导入文本特征向量化模块</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB     <span class="comment"># 从sklean.naive_bayes里导入朴素贝叶斯模型</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.数据获取</span></span><br><span class="line">news = fetch_20newsgroups(subset=<span class="string">'all'</span>)</span><br><span class="line">print(len(news.data))  <span class="comment"># 输出数据的条数：18846</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.数据预处理：训练集和测试集分割，文本特征向量化</span></span><br><span class="line">X_train,X_test,y_train,y_test = train_test_split(news.data,news.target,test_size=<span class="number">0.25</span>,random_state=<span class="number">33</span>) <span class="comment"># 随机采样25%的数据样本作为测试集</span></span><br><span class="line"><span class="comment">#print X_train[0]  #查看训练样本</span></span><br><span class="line"><span class="comment">#print y_train[0:100]  #查看标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#文本特征向量化</span></span><br><span class="line">vec = CountVectorizer()</span><br><span class="line">X_train = vec.fit_transform(X_train)</span><br><span class="line">X_test = vec.transform(X_test)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.使用朴素贝叶斯进行训练</span></span><br><span class="line">mnb = MultinomialNB()   <span class="comment"># 使用默认配置初始化朴素贝叶斯</span></span><br><span class="line">mnb.fit(X_train,y_train)    <span class="comment"># 利用训练数据对模型参数进行估计</span></span><br><span class="line">y_predict = mnb.predict(X_test)     <span class="comment"># 对参数进行预测</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.获取结果报告</span></span><br><span class="line">print(<span class="string">'The Accuracy of Naive Bayes Classifier is:'</span>, mnb.score(X_test,y_test))</span><br><span class="line">print(classification_report(y_test, y_predict, target_names = news.target_names))</span><br></pre></td></tr></table></figure>
@@ -566,7 +672,7 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dui-gai-lu-tu-mo-xing-de-li-jie"><span class="nav-number">1.</span> <span class="nav-text">对概率图模型的理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pin-lu-pai-guan-dian"><span class="nav-number">2.</span> <span class="nav-text">频率派观点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-xue-pai"><span class="nav-number">3.</span> <span class="nav-text">贝叶斯学派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-ding-li"><span class="nav-number">4.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-ding-li-ying-yong-pin-xie-jian-cha"><span class="nav-number">5.</span> <span class="nav-text">贝叶斯定理应用：拼写检查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#head-to-head"><span class="nav-number">5.0.1.</span> <span class="nav-text">head-to-head</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail-to-tail"><span class="nav-number">5.0.2.</span> <span class="nav-text">tail-to-tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head-to-tail"><span class="nav-number">5.0.3.</span> <span class="nav-text">head-to-tail</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#po-su-bei-xie-si"><span class="nav-number">6.</span> <span class="nav-text">朴素贝叶斯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sheng-cheng-shi-mo-xing-he-pan-bie-shi-mo-xing-de-qu-bie"><span class="nav-number">7.</span> <span class="nav-text">生成式模型和判别式模型的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">8.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dui-gai-lu-tu-mo-xing-de-li-jie"><span class="nav-number">1.</span> <span class="nav-text">对概率图模型的理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pin-lu-pai-vs-bei-xie-si-pai"><span class="nav-number">2.</span> <span class="nav-text">频率派 vs 贝叶斯派</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pin-lu-pai-guan-dian"><span class="nav-number">2.1.</span> <span class="nav-text">频率派观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bei-xie-si-xue-pai"><span class="nav-number">2.2.</span> <span class="nav-text">贝叶斯学派</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ji-da-si-ran-gu-ji-vs-zui-da-hou-yan-gu-ji"><span class="nav-number">3.</span> <span class="nav-text">极大似然估计 vs 最大后验估计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-da-si-ran-gu-ji-mle"><span class="nav-number">3.1.</span> <span class="nav-text">极大似然估计 - MLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zui-da-hou-yan-gu-ji-map"><span class="nav-number">3.2.</span> <span class="nav-text">最大后验估计 - MAP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-ding-li"><span class="nav-number">4.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-ding-li-ying-yong-pin-xie-jian-cha"><span class="nav-number">5.</span> <span class="nav-text">贝叶斯定理应用：拼写检查</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bei-xie-si-wang-luo"><span class="nav-number">6.</span> <span class="nav-text">贝叶斯网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bei-xie-si-wang-luo-de-jie-gou-xing-shi"><span class="nav-number">6.1.</span> <span class="nav-text">贝叶斯网络的结构形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#head-to-head"><span class="nav-number">6.1.1.</span> <span class="nav-text">head-to-head</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail-to-tail"><span class="nav-number">6.1.2.</span> <span class="nav-text">tail-to-tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head-to-tail"><span class="nav-number">6.1.3.</span> <span class="nav-text">head-to-tail</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yin-zi-tu"><span class="nav-number">6.2.</span> <span class="nav-text">因子图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#po-su-bei-xie-si"><span class="nav-number">7.</span> <span class="nav-text">朴素贝叶斯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pan-bie-mo-xing-he-sheng-cheng-mo-xing"><span class="nav-number">8.</span> <span class="nav-text">判别模型和生成模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pan-bie-mo-xing"><span class="nav-number">8.1.</span> <span class="nav-text">判别模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sheng-cheng-mo-xing"><span class="nav-number">8.2.</span> <span class="nav-text">生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pan-bie-mo-xing-vs-sheng-cheng-mo-xing"><span class="nav-number">8.3.</span> <span class="nav-text">判别模型 vs 生成模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">9.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-da-si-ran-gu-ji-yu-zui-da-hou-yan-gai-lu-de-qu-bie"><span class="nav-number">9.1.</span> <span class="nav-text">极大似然估计与最大后验概率的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gai-lu-yu-si-ran-de-qu-bie"><span class="nav-number">9.2.</span> <span class="nav-text">概率与似然的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bei-xie-si-pai-yu-pin-lu-xue-pai-de-qu-bie"><span class="nav-number">9.3.</span> <span class="nav-text">贝叶斯派与频率学派的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dai-ma-shi-xian"><span class="nav-number">10.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -584,7 +690,7 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -597,7 +703,7 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -643,7 +749,7 @@ P(类别 \mid 特征 )=\frac{P(\text { 特征类别 }) P(\text { 联别 })}{P(\t
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

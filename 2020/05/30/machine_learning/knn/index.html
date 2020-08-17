@@ -20,36 +20,36 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
 <meta property="og:title" content="k近邻">
-<meta property="og:url" content="https://jeffery.ink/2020/06/09/machine_learning/knn/index.html">
+<meta property="og:url" content="https://jeffery.ink/2020/05/30/machine_learning/knn/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155344275027763857.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155368320742672975.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155368335593855374.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377895462114526.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377904784496247.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377912448672600.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377914973991477.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377917753460670.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377920028856740.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase6415537792238505282.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377998951412539.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155377966743482553.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155378000183167311.jpg">
-<meta property="article:published_time" content="2020-06-09T14:14:12.000Z">
-<meta property="article:modified_time" content="2020-08-12T14:40:09.437Z">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155283966654403646.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155283966654403646.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155344275027763857.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155368320742672975.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155368335593855374.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377895462114526.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377904784496247.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377912448672600.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377914973991477.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377917753460670.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377920028856740.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase6415537792238505282.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377998951412539.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155377966743482553.png">
+<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155378000183167311.jpg">
+<meta property="article:published_time" content="2020-05-30T14:14:12.000Z">
+<meta property="article:modified_time" content="2020-08-16T12:36:43.856Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png">
+<meta name="twitter:image" content="https://jeffery.ink/2020/05/30/machine_learning/knn/quesbase64155283966654403646.png">
 
-<link rel="canonical" href="https://jeffery.ink/2020/06/09/machine_learning/knn/">
+<link rel="canonical" href="https://jeffery.ink/2020/05/30/machine_learning/knn/">
 
 
 <script id="page-configurations">
@@ -223,7 +223,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/06/09/machine_learning/knn/">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/05/30/machine_learning/knn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/snoppy.jpeg">
@@ -246,7 +246,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 22:40:09" itemprop="dateModified" datetime="2020-08-12T22:40:09+08:00">2020-08-12</time>
+                <time title="修改时间：2020-08-16 20:36:43" itemprop="dateModified" datetime="2020-08-16T20:36:43+08:00">2020-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
             </span>
 
           
-            <span id="/2020/06/09/machine_learning/knn/" class="post-meta-item leancloud_visitors" data-flag-title="k近邻" title="阅读次数">
+            <span id="/2020/05/30/machine_learning/knn/" class="post-meta-item leancloud_visitors" data-flag-title="k近邻" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -274,8 +274,8 @@
       </span>
       <span class="post-meta-item-text">评论：</span>
     
-    <a title="valine" href="/2020/06/09/machine_learning/knn/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/09/machine_learning/knn/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/05/30/machine_learning/knn/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/30/machine_learning/knn/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -285,14 +285,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>9.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -304,19 +304,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
+        <p><img src="/2020/05/30/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
 <a id="more"></a>
-<h1 id="shi-yao-shi-knn">什么是KNN</h1>
+<h1 id="knn">KNN</h1>
 <h2 id="knn-de-tong-su-jie-shi">KNN的通俗解释</h2>
 <p>何谓K近邻算法，简称KNN算法，单从名字来猜想，可以简单粗暴的认为是：K个最近的邻居，当K=1时，算法便成了最近邻算法，即寻找最近的那个邻居。</p>
 <p>用官方的话来说，所谓K近邻算法，即是给定一个训练数据集，对新的输入实例，<strong>在训练数据集中找到与该实例最邻近的K个实例，这K个实例的多数属于某个类，就把该输入实例分类到这个类中。</strong></p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155283966654403646.png" alt></p>
 <p>如上图所示，有两类不同的样本数据，分别用蓝色的小正方形和红色的小三角形表示，而图正中间的那个绿色的圆所标示的数据则是待分类的数据。也就是说，现在，我们不知道中间那个绿色的数据是从属于哪一类（蓝色小正方形or红色小三角形），KNN就是解决这个问题的。</p>
 <p>如果K=3，绿色圆点的最近的3个邻居是2个红色小三角形和1个蓝色小正方形，少数从属于多数，基于统计的方法，判定绿色的这个待分类点属于红色的三角形一类。</p>
 <p>如果K=5，绿色圆点的最近的5个邻居是2个红色三角形和3个蓝色的正方形，还是少数从属于多数，基于统计的方法，判定绿色的这个待分类点属于蓝色的正方形一类。</p>
 <p><strong>当无法判定当前待分类点是从属于已知分类中的哪一类时，我们可以依据统计学的理论看它所处的位置特征，衡量它周围邻居的权重，而把它归为(或分配)到权重更大的那一类。这就是K近邻算法的核心思想。</strong></p>
 <h2 id="jin-lin-de-ju-chi-du-liang">近邻的距离度量</h2>
-<p>K近邻算法的核心在于找到实例点的邻居，这个时候，问题就接踵而至了，如何找到邻居，邻居的判定标准是什么，用什么来度量。有哪些距离度量的表示法：</p>
+<p>K近邻算法的核心在于找到实例点的邻居，这个时候，问题就接踵而至了，如何找到邻居，邻居的判定标准是什么，用什么来度量。常见距离度量的表示法：</p>
 <h3 id="ou-shi-ju-chi">欧氏距离</h3>
 <p>最常见的两点之间或多点之间的距离表示法，又称之为欧几里得度量，它定义于欧几里得空间中，如点 \(x = (x_1,\ldots,x_n)\) 和 \(y = (y_1,\ldots,y_n)\) 之间的距离为：</p>
 <p>\[
@@ -375,77 +375,8 @@ d=\max _{i}\left(\left|x_{1 i}-x_{2 i}\right|\right)
 <p>\[
 d=lim_{k\to\infin}(\sum_{i=1}^{n}|x_{1i}-x_{2i}|^k)^{1/k}
 \]</p>
-<h3 id="min-ke-fu-si-ji-ju-chi">闵可夫斯基距离</h3>
-<p>闵氏距离不是一种距离，而是一组距离的定义。两个n维变量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的闵可夫斯基距离定义为：<br>
-\[
-d=\sqrt[p]{\sum_{k=1}^{n}|x_{1k}-x_{2k}|^p}
-\]<br>
-其中p是一个变参数。当p=1时，就是曼哈顿距离当p=2时，就是欧氏距离当p→∞时，就是切比雪夫距离。根据变参数的不同，闵氏距离可以表示一类的距离。</p>
-<h3 id="biao-zhun-hua-ou-shi-ju-chi">标准化欧氏距离</h3>
-<p>标准化欧氏距离是针对简单欧氏距离的缺点而作的一种改进方案。标准欧氏距离的思路：既然数据各维分量的分布不一样，那先将各个分量都“标准化”到均值、方差相等。至于均值和方差标准化到多少，先复习点统计学知识。</p>
-<p>假设样本集X的数学期望或均值为m，标准差为s，那么X的“标准化变量”X*表示为：(X-m）/s，而且标准化变量的数学期望为0，方差为1。即，样本集的标准化过程用公式描述就是：<br>
-\[
-X^*=\frac{X-m}{s}
-\]<br>
-标准化后的值 =  ( 标准化前的值  － 分量的均值 ) /分量的标准差　　<br>
-经过简单的推导就可以得到两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的标准化欧氏距离的公式：<br>
-\[
-d=\sqrt{\sum_{k=1}^{n}(\frac{x_{1k}-x_{2k}}{s_k})^2}
-\]</p>
-<h3 id="ma-shi-ju-chi">马氏距离</h3>
-<p>有M个样本向量\(X_1,\ldots,X_m\)，协方差矩阵记为\(S\)，均值记为向量\(\mu\)，则其中样本向量\(X\)到\(\mu\)的马氏距离表示为：<br>
-\[
-D(X)=\sqrt{(X-u)^TS^{-1}(X_i-X_j)}
-\]<br>
-若协方差矩阵是单位矩阵（各个样本向量之间独立同分布）,则公式就成了欧氏距离：<br>
-\[
-D(X_i,X_j)=\sqrt{(X_i-X_j)^T(X_i-X_j)}
-\]<br>
-若协方差矩阵是对角矩阵，公式变成了标准化欧氏距离。</p>
-<p>马氏距离的优缺点：量纲无关，排除变量之间的相关性的干扰。</p>
-<h3 id="ba-shi-ju-chi">巴氏距离</h3>
-<p>在统计中，巴氏距离距离测量两个离散或连续概率<strong>分布的相似性</strong>。它与衡量两个统计样品或种群之间的重叠量的巴氏距离系数密切相关。同时，Bhattacharyya系数可以被用来确定两个样本被认为相对接近的，它是用来测量中的类分类的可分离性。对于离散概率分布 p和q在同一域 X，它被定义为：<br>
-\[
-D_B(p,q)=-lnBC(p,q)
-\]<br>
-其中：<br>
-\[
-BC(p,q)=\sum_{x\in_{}X}\sqrt{p(x)q(x)}
-\]<br>
-是Bhattacharyya系数。</p>
-<h3 id="yi-ming-ju-chi">汉明距离</h3>
-<p>两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2。应用：信息编码（为了增强容错性，应使得编码间的最小汉明距离尽可能大）。</p>
-<h3 id="jia-jiao-yu-xian">夹角余弦</h3>
-<p>几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。</p>
-<p>在二维空间中向量\(A(x_1,y_1)\)与向量\(B(x_2,y_2)\)的夹角余弦公式：<br>
-\[
-cos\theta=\frac{x_1x_2+y_1y_2}{\sqrt{x_1^2+y_1^2}\sqrt{x_2^2+y_2^2}}
-\]<br>
-两个n维样本点\(a(x_{11},x_{12},\ldots,x_{1n})\)和\(b(x_{21},x_{22},\ldots,x_{2n})\)的夹角余弦：<br>
-\[
-cos\theta=\frac{a*b}{|a||b|}
-\]<br>
-夹角余弦取值范围为[-1,1]。夹角余弦越大表示两个向量的夹角越小，夹角余弦越小表示两向量的夹角越大。当两个向量的方向重合时夹角余弦取最大值1，当两个向量的方向完全相反夹角余弦取最小值-1。</p>
-<h3 id="jie-qia-de-xiang-si-xi-shu">杰卡德相似系数</h3>
-<p><strong>两个集合A和B的交集元素在A，B的并集中所占的比例</strong>，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是<strong>衡量两个集合的相似度</strong>一种指标。<br>
-\[
-J(A,B)=\frac{|A\cap_{}B|}{|A\cup_{}B|}
-\]<br>
-与杰卡德相似系数相反的概念是杰卡德距离：<br>
-\[
-J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
-\]</p>
-<h3 id="pi-er-xun-xi-shu">皮尔逊系数</h3>
-<p>在统计学中，皮尔逊积矩相关系数用于度量两个变量X和Y之间的相关（<strong>线性相关</strong>），其值介于-1与1之间。通常情况下通过以下取值范围判断变量的相关强度：</p>
-<blockquote>
-<p>0.8-1.0     极强相关<br>
-0.6-0.8     强相关<br>
-0.4-0.6     中等程度相关<br>
-0.2-0.4     弱相关<br>
-0.0-0.2     极弱相关或无相关</p>
-</blockquote>
 <h3 id="ju-chi-xiao-jie">距离小结</h3>
-<p>简单说来，各种“距离”的应用场景简单概括为，</p>
+<p>简单说来，各种“距离”的应用场景简单概括为，更多可参考<code><a href="/2020/08/16/deeplearning/distance_measure/" title="距离度量方法">距离度量方法</a></code>：</p>
 <ul>
 <li>空间：欧氏距离，</li>
 <li>路径：曼哈顿距离，国际象棋国王：切比雪夫距离，</li>
@@ -474,7 +405,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 <h1 id="kdd-de-shi-xian-kd-shu">KDD的实现：KD树</h1>
 <p>Kd-树是K-dimension tree的缩写，是对数据点在k维空间（如二维(x，y)，三维(x，y，z)，k维(x，y，z…)）中划分的一种数据结构，主要应用于多维空间关键数据的搜索（如：范围搜索和最近邻搜索）。本质上说，Kd-树就是一种<strong>平衡二叉树</strong>。</p>
 <p>首先必须搞清楚的是，k-d树是一种空间划分树，说白了，就是把整个空间划分为特定的几个部分，然后在特定空间的部分内进行相关搜索操作。想像一个三维空间，kd树按照一定的划分规则把这个三维空间划分了多个空间，如下图所示：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155344275027763857.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155344275027763857.png" alt></p>
 <h2 id="gou-jian-kd-shu">构建KD树</h2>
 <p>kd树构建的伪代码如下所示：</p>
 <p>算法：构建k-d树（createKDTree）</p>
@@ -503,7 +434,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 </li>
 </ol>
 <p>再举一个简单直观的实例来介绍k-d树构建算法。假设有6个二维数据点\({(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)}\)，数据点位于二维空间内，如下图所示。为了能有效的找到最近邻，k-d树采用分而治之的思想，即将整个空间划分为几个小部分，首先，粗黑线将空间一分为二，然后在两个子空间中，细黑直线又将整个空间划分为四部分，最后虚黑直线将这四部分进一步划分。</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155368320742672975.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155368320742672975.png" alt></p>
 <p>6个二维数据点\({(2,3),(5,4),(9,6),(4,7),(8,1),(7,2)}\)构建kd树的具体步骤为：</p>
 <ol>
 <li>确定：split域=x。具体是：6个数据点在x，y维度上的数据方差分别为39，28.63，所以<strong>在x轴上方差更大</strong>，故split域值为x；</li>
@@ -512,28 +443,28 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 <li>如上算法所述，kd树的构建是一个递归过程，我们对左子空间和右子空间内的数据重复根节点的过程就可以得到一级子节点\((5,4)\)和\((9,6)\)，同时将空间和数据集进一步细分，如此往复直到空间中只包含一个数据点。</li>
 </ol>
 <p>与此同时，经过对上面所示的空间划分之后，我们可以看出，点(7,2)可以为根结点，从根结点出发的两条红粗斜线指向的(5,4)和(9,6)则为根结点的左右子结点，而(2,3)，(4,7)则为(5,4)的左右孩子(通过两条细红斜线相连)，最后，(8,1)为(9,6)的左孩子(通过细红斜线相连)。如此，便形成了下面这样一棵k-d树：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155368335593855374.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155368335593855374.png" alt></p>
 <p><strong>对于n个实例的k维数据来说，建立kd-tree的时间复杂度为<code>O(knlogn)</code>。</strong></p>
 <p>k-d树算法可以分为两大部分，除了上部分有关k-d树本身这种数据结构建立的算法，另一部分是在建立的k-d树上各种诸如插入，删除，查找(最邻近查找)等操作涉及的算法。下面，依次来看kd树的插入、删除、查找操作。</p>
 <h2 id="kd-shu-de-cha-ru">KD树的插入</h2>
 <p>元素插入到一个K-D树的方法和二叉检索树类似。本质上，在偶数层比较x坐标值，而在奇数层比较y坐标值。当我们到达了树的底部，（也就是当一个空指针出现），我们也就找到了结点将要插入的位置。生成的K-D树的形状依赖于结点插入时的顺序。给定N个点，其中一个结点插入和检索的平均代价是O(log2N)。</p>
 <p>插入的过程如下:</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377895462114526.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377895462114526.png" alt></p>
 <p>应该清楚，这里描述的插入过程中，每个结点将其所在的平面分割成两部分。因比，Chicago 将平面上所有结点分成两部分，一部分所有的结点x坐标值小于35，另一部分结点的x坐标值大于或等于35。同样Mobile将所有x坐标值大于35的结点以分成两部分，一部分结点的Y坐标值是小于10，另一部分结点的Y坐标值大于或等于10。后面的Toronto、Buffalo也按照一分为二的规则继续划分。</p>
 <h2 id="kd-shu-de-shan-chu">KD树的删除</h2>
 <p>KD树的删除可以用递归程序来实现。假设希望从K-D树中删除结点（a,b）。如果（a,b）的两个子树都为空，则用空树来代替（a,b）。否则，在（a,b）的子树中寻找一个合适的结点来代替它，譬如(c,d)，则递归地从K-D树中删除（c,d）。一旦(c,d)已经被删除，则用（c,d）代替（a,b）。假设(a,b)是一个X识别器，那么，它得替代节点要么是（a,b）左子树中的X坐标最大值的结点，要么是（a,b）右子树中x坐标最小值的结点。</p>
 <p>举一个实际的例子，如下图所示，原始图像及对应的kd树，现在要删除图中的A结点，请看一系列删除步骤：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377904784496247.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377904784496247.jpg" alt></p>
 <p>要删除上图中结点A，选择结点A的右子树中X坐标值最小的结点，这里是C，C成为根，如下图：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377912448672600.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377912448672600.jpg" alt></p>
 <p>从C的右子树中找出一个结点代替先前C的位置，</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377914973991477.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377914973991477.jpg" alt></p>
 <p>这里是D，并将D的左子树转为它的右子树，D代替先前C的位置，如下图：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377917753460670.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377917753460670.jpg" alt></p>
 <p>在D的新右子树中，找X坐标最小的结点，这里为H，H代替D的位置，</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377920028856740.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377920028856740.jpg" alt></p>
 <p>在D的右子树中找到一个Y坐标最小的值，这里是I，将I代替原先H的位置，从而A结点从图中顺利删除，如下图所示：</p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase6415537792238505282.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase6415537792238505282.jpg" alt></p>
 <p>从K-D树中删除一个结点是代价很高的，很清楚删除子树的根受到子树中结点个数的限制。用\(TPL(T)\)表示树\(T\)总的路径长度。可看出树中子树大小的总和为\(TPL(T)+N\)。 以随机方式插入\(N\)个点形成树的TPL是\(O(Nlog_2N)\),这就意味着从一个随机形成的K-D树中删除一个随机选取的结点平均代价的上界是\(O(log_2N)\) 。</p>
 <h2 id="kd-shu-de-zui-jin-lin-sou-suo-suan-fa">KD树的最近邻搜索算法</h2>
 <p>k-d树查询算法的伪代码如下所示：</p>
@@ -549,8 +480,8 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 <li><strong>回溯查找</strong>：以\(（2,4.5）\)为圆心，以3.041为半径作圆，如下图所示。可见该圆和y = 4超平面交割，所以需要进入（5,4）左子空间进行查找，也就是将\(（2,3）\)节点加入搜索路径中得&lt;\((7,2)\)，\((2,3)\)&gt;；于是接着搜索至\(（2,3）\)叶子节点，\(（2,3）\)距离\(（2,4.5）\)比\(（5,4）\)要近，所以最近邻点更新为\(（2,3）\)，最近距离更新为1.5；</li>
 <li>回溯查找至\(（5,4）\)，直到最后回溯到根结点\(（7,2）\)的时候，以\(（2,4.5）\)为圆心1.5为半径作圆，并不和x = 7分割超平面交割，如下图所示。至此，搜索路径回溯完，返回最近邻点\(（2,3）\)，最近距离1.5。</li>
 </ol>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377998951412539.jpg" alt></p>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155377966743482553.png" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377998951412539.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155377966743482553.png" alt></p>
 <h2 id="kd-shu-jin-lin-sou-suo-suan-fa-de-gai-jin-bbf-suan-fa">kd树近邻搜索算法的改进：BBF算法</h2>
 <p>实例点是随机分布的，那么kd树搜索的平均计算复杂度是\(O(logN)\)，这里的\(N\)是训练实例树。所以说，kd树更适用于训练实例数远大于空间维数时的k近邻搜索，当空间维数接近训练实例数时，<strong>它的效率会迅速下降，一降降到“解放前”：线性扫描的速度。</strong></p>
 <p>也正因为上述k最近邻搜索算法的第4个步骤中的所述：“回退到根结点时，搜索结束”，每个最近邻点的查询比较完成过程最终都要回退到根结点而结束，而导致了许多不必要回溯访问和比较到的结点，这些多余的损耗在高维度数据查找的时候，搜索效率将变得相当之地下，那有什么办法可以改进这个原始的kd树最近邻搜索算法呢？</p>
@@ -563,12 +494,12 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 <li>此时优先队列为{<code>（9,6）</code>}，最佳点为<code>（7,2）</code>；然后一直检索到叶子结点<code>（4,7）</code>，此时优先队列为{<code>（2,3）</code>，<code>（9,6）</code>}，“最佳点”则为<code>（5,4）</code>；</li>
 <li>提取优先级最高的结点<code>（2,3）</code>，重复步骤2，直到优先队列为空。</li>
 </ol>
-<p><img src="/2020/06/09/machine_learning/knn/quesbase64155378000183167311.jpg" alt></p>
+<p><img src="/2020/05/30/machine_learning/knn/quesbase64155378000183167311.jpg" alt></p>
 <h1 id="guan-yu-knn-de-yi-xie-wen-ti">关于KNN的一些问题</h1>
 <ol>
 <li>
 <p>k-means或kNN，是用欧氏距离来计算最近的邻居之间的距离。为什么不用曼哈顿距离？</p>
-<p>**答：**不用曼哈顿距离，因为它只计算水平或垂直距离，有维度的限制。另一方面，欧式距离可用于任何空间的距离计算问题。因为，数据点可以存在于任何空间，欧氏距离是更可行的选择。例如：想象一下国际象棋棋盘，象或车所做的移动是由曼哈顿距离计算的，因为它们是在各自的水平和垂直方向的运动。</p>
+<p>答：不用曼哈顿距离，因为它只计算水平或垂直距离，有维度的限制。另一方面，欧式距离可用于任何空间的距离计算问题。因为，数据点可以存在于任何空间，欧氏距离是更可行的选择。例如：想象一下国际象棋棋盘，象或车所做的移动是由曼哈顿距离计算的，因为它们是在各自的水平和垂直方向的运动。</p>
 </li>
 <li>
 <p>KD-Tree相比KNN来进行快速图像特征比对的好处在哪里?</p>
@@ -623,12 +554,12 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/08/machine_learning/clustering/" rel="prev" title="聚类算法">
-      <i class="fa fa-chevron-left"></i> 聚类算法
+    <a href="/2020/05/30/machine_learning/decision-tree/" rel="prev" title="决策树">
+      <i class="fa fa-chevron-left"></i> 决策树
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/06/10/machine_learning/topic_model/" rel="next" title="主题模型">
-      主题模型 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/31/machine_learning/random-forest/" rel="next" title="随机森林">
+      随机森林 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -689,7 +620,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-knn"><span class="nav-number">1.</span> <span class="nav-text">什么是KNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#knn-de-tong-su-jie-shi"><span class="nav-number">1.1.</span> <span class="nav-text">KNN的通俗解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jin-lin-de-ju-chi-du-liang"><span class="nav-number">1.2.</span> <span class="nav-text">近邻的距离度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ou-shi-ju-chi"><span class="nav-number">1.2.1.</span> <span class="nav-text">欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man-ha-dun-ju-chi"><span class="nav-number">1.2.2.</span> <span class="nav-text">曼哈顿距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qie-bi-xue-fu-ju-chi"><span class="nav-number">1.2.3.</span> <span class="nav-text">切比雪夫距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-ke-fu-si-ji-ju-chi"><span class="nav-number">1.2.4.</span> <span class="nav-text">闵可夫斯基距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#biao-zhun-hua-ou-shi-ju-chi"><span class="nav-number">1.2.5.</span> <span class="nav-text">标准化欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ma-shi-ju-chi"><span class="nav-number">1.2.6.</span> <span class="nav-text">马氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ba-shi-ju-chi"><span class="nav-number">1.2.7.</span> <span class="nav-text">巴氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-ming-ju-chi"><span class="nav-number">1.2.8.</span> <span class="nav-text">汉明距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jia-jiao-yu-xian"><span class="nav-number">1.2.9.</span> <span class="nav-text">夹角余弦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jie-qia-de-xiang-si-xi-shu"><span class="nav-number">1.2.10.</span> <span class="nav-text">杰卡德相似系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pi-er-xun-xi-shu"><span class="nav-number">1.2.11.</span> <span class="nav-text">皮尔逊系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-chi-xiao-jie"><span class="nav-number">1.2.12.</span> <span class="nav-text">距离小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-zhi-xuan-ze"><span class="nav-number">2.</span> <span class="nav-text">K值选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#knn-zui-jin-lin-fen-lei-suan-fa-de-guo-cheng"><span class="nav-number">3.</span> <span class="nav-text">KNN最近邻分类算法的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kdd-de-shi-xian-kd-shu"><span class="nav-number">4.</span> <span class="nav-text">KDD的实现：KD树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gou-jian-kd-shu"><span class="nav-number">4.1.</span> <span class="nav-text">构建KD树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-cha-ru"><span class="nav-number">4.2.</span> <span class="nav-text">KD树的插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-shan-chu"><span class="nav-number">4.3.</span> <span class="nav-text">KD树的删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-zui-jin-lin-sou-suo-suan-fa"><span class="nav-number">4.4.</span> <span class="nav-text">KD树的最近邻搜索算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-jin-lin-sou-suo-suan-fa-de-gai-jin-bbf-suan-fa"><span class="nav-number">4.5.</span> <span class="nav-text">kd树近邻搜索算法的改进：BBF算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guan-yu-knn-de-yi-xie-wen-ti"><span class="nav-number">5.</span> <span class="nav-text">关于KNN的一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#knn"><span class="nav-number">1.</span> <span class="nav-text">KNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#knn-de-tong-su-jie-shi"><span class="nav-number">1.1.</span> <span class="nav-text">KNN的通俗解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jin-lin-de-ju-chi-du-liang"><span class="nav-number">1.2.</span> <span class="nav-text">近邻的距离度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ou-shi-ju-chi"><span class="nav-number">1.2.1.</span> <span class="nav-text">欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man-ha-dun-ju-chi"><span class="nav-number">1.2.2.</span> <span class="nav-text">曼哈顿距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qie-bi-xue-fu-ju-chi"><span class="nav-number">1.2.3.</span> <span class="nav-text">切比雪夫距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-chi-xiao-jie"><span class="nav-number">1.2.4.</span> <span class="nav-text">距离小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-zhi-xuan-ze"><span class="nav-number">2.</span> <span class="nav-text">K值选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#knn-zui-jin-lin-fen-lei-suan-fa-de-guo-cheng"><span class="nav-number">3.</span> <span class="nav-text">KNN最近邻分类算法的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kdd-de-shi-xian-kd-shu"><span class="nav-number">4.</span> <span class="nav-text">KDD的实现：KD树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gou-jian-kd-shu"><span class="nav-number">4.1.</span> <span class="nav-text">构建KD树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-cha-ru"><span class="nav-number">4.2.</span> <span class="nav-text">KD树的插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-shan-chu"><span class="nav-number">4.3.</span> <span class="nav-text">KD树的删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-de-zui-jin-lin-sou-suo-suan-fa"><span class="nav-number">4.4.</span> <span class="nav-text">KD树的最近邻搜索算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kd-shu-jin-lin-sou-suo-suan-fa-de-gai-jin-bbf-suan-fa"><span class="nav-number">4.5.</span> <span class="nav-text">kd树近邻搜索算法的改进：BBF算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guan-yu-knn-de-yi-xie-wen-ti"><span class="nav-number">5.</span> <span class="nav-text">关于KNN的一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -707,7 +638,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -720,7 +651,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -766,7 +697,7 @@ J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802184159590.png">
 <meta property="og:image" content="https://jeffery.ink/2020/08/01/deeplearning/Xavier/image-20200802184607043.png">
 <meta property="article:published_time" content="2020-08-01T13:51:03.000Z">
-<meta property="article:modified_time" content="2020-08-02T10:49:37.685Z">
+<meta property="article:modified_time" content="2020-08-16T03:58:43.281Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="参数初始化">
 <meta property="article:tag" content="论文阅读">
@@ -249,7 +249,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-02 18:49:37" itemprop="dateModified" datetime="2020-08-02T18:49:37+08:00">2020-08-02</time>
+                <time title="修改时间：2020-08-16 11:58:43" itemprop="dateModified" datetime="2020-08-16T11:58:43+08:00">2020-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -288,14 +288,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.5k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -536,7 +536,75 @@ W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j
 <p>保持层间转换，使得激活和渐变都能够很好地发挥作用似乎是有帮助的，并且允许消除纯监督深层网络与预先使用无监督学习训练的深层网络之间的差异的很大一部分。</p>
 </li>
 </ol>
-<h1 id="reference">reference</h1>
+<h1 id="xavier-tui-dao-guo-cheng">Xavier推导过程</h1>
+<h2 id="dan-ceng-wang-luo">单层网络</h2>
+<p>假设使用线性激活函数 \(f(x)\)，那么对于一层网络来说有：<br>
+\[
+y = f(x) = \sum_i^n w_ix_i + b, \,\,\, i = i\cdots n
+\]<br>
+根据方差展开式有：<br>
+\[
+Var(w_ix_i) = E[w_i]^2Var(x_i) + E[x_i]^2 Var(w_i) + Var(w_i) Var(x_i)
+\]<br>
+那么，当 \(E(x_i) = E(w_i) = 0, \,\,\,\, i = 1\cdots n\) 时， 输出 y 的方差为：<br>
+\[
+Var(y) = \sum_i^n Var(w_ix_i) =  \sum_i^n Var(w_i) Var(x_i)
+\]<br>
+如果 $w_1, \cdots, w_n $ 独立同分布， \(x_1, \cdots, x_n\) 也独立同分布， 那么有：<br>
+\[
+Var(w_1) = \cdots = Var(w_n)  \\ Var(x_1) = \cdots = Var(x_n)
+\]<br>
+那么，我们就可以得出：<br>
+\[
+Var(y) = n_i Var(w_i) Var(x_i)
+\]<br>
+于是，为了保证方差的一致性，则应该有：<br>
+\[
+Var(w_i) = \frac{1}{n_i}
+\]<br>
+延伸到多层网络中，我们假设 \(z^i\) 是第 \(i\) 层激活函数的输出向量， \(s^i\) 是第 \(i\) 层激活函数的输入向量。</p>
+<h2 id="qian-xiang-chuan-bo">前向传播</h2>
+<p>\[
+s^i = z^iW^i + b^i \\ z^{i+1} = f(s^i)
+\]</p>
+<p>那么在前向传播中， 第 \(i\) 层的方差可以累积表达为：<br>
+\[
+Var[z^i] = Var[x] \prod_{j=0}^{i-1} n_j Var[W^j]
+\]</p>
+<h2 id="fan-xiang-chuan-bo">反向传播</h2>
+<p>而在反向传播公式中， 损失函数对于 \(s^i\) 梯度公式为：<br>
+\[
+\frac{\delta Cost}{\delta s_k^i} = f'(s^i_k) W_k^{i+1} \frac{\delta Cost}{\delta s^{i+1}}  \\
+\]<br>
+那么在d层网络中，第 \(i\) 层梯度的累计方差为：<br>
+\[
+Var[\frac{\delta Cost}{ \delta s^i}] = Var[\frac{\delta Cost}{\delta s^d}] \prod_{j=i}^d n_{j+1} Var[W^j] \\
+\]<br>
+我们的目的是，要求各层输入方差一致且各层梯度的方差也一致，这也就意味着：<br>
+\[
+Var[z^i] = Var[z^{i-1}]= \cdots = Var[x] \\ Var[\frac{\delta Cost}{\delta s^i}] =  = \cdots = Var[\frac{\delta Cost}{\delta s^{d}}]
+\]<br>
+那么必须有，前向传播：<br>
+\[
+\forall i ,  n_i Var[W^i] = 1
+\]<br>
+反向传播:<br>
+\[
+\forall  i, n_{i+1} Var[W^i] = 1
+\]</p>
+<p>\(W\)需要同时满足以上两个条件， 因此作为折中，有：<br>
+\[
+\forall i, Var[W^i] = \frac{2}{n_i + n_{i+1}}
+\]<br>
+如果我们假设 \(W\) 服从均匀分布，则\(W\)在区间[a,b]内均匀分布的方差为：<br>
+\[
+Var = \frac{(b-a)^2}{12}
+\]<br>
+那么带入就可以得到\(W\)的分布：<br>
+\[
+W \, \sim U [ -\frac{\sqrt{6}}{\sqrt{n_i+ n_{i + 1}}}, \frac{\sqrt{6}}{\sqrt{n_i + n_{i + 1}}} ]
+\]</p>
+<h1 id="can-kao">参考</h1>
 <ol>
 <li><a href="https://blog.csdn.net/qq_34784753/article/details/78668884" target="_blank" rel="noopener">【Deep Learning】笔记：Understanding the difficulty of training deep feedforward neural networks</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/78857752" target="_blank" rel="noopener">论文阅读-Xavier 初始化</a></li>
@@ -655,7 +723,7 @@ W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deep-neural-networks"><span class="nav-number">2.</span> <span class="nav-text">Deep Neural Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experimental-setting-and-datasets"><span class="nav-number">3.</span> <span class="nav-text">Experimental Setting and Datasets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#online-learning-on-an-infinite-dataset"><span class="nav-number">3.1.</span> <span class="nav-text">Online Learning on an Infinite Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finite-datasets"><span class="nav-number">3.2.</span> <span class="nav-text">finite datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-setting"><span class="nav-number">3.3.</span> <span class="nav-text">Experimental Setting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#effect-of-activation-functions-and-saturation-during-training"><span class="nav-number">4.</span> <span class="nav-text">Effect of Activation Functions and Saturation During Training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-sigmoid"><span class="nav-number">4.1.</span> <span class="nav-text">Experiments with the Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-with-the-hyperbolic-tangent"><span class="nav-number">4.2.</span> <span class="nav-text">Experiment with the Hyperbolic tangent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-softsign"><span class="nav-number">4.3.</span> <span class="nav-text">Experiments with the Softsign</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#studying-gradients-and-their-propagation"><span class="nav-number">5.</span> <span class="nav-text">Studying Gradients and their Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-the-cost-function"><span class="nav-number">5.1.</span> <span class="nav-text">Effect of the Cost Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradient-at-initialization"><span class="nav-number">5.2.</span> <span class="nav-text">Gradient at initialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#theoretical-considerations-and-a-new-normalized-initialization"><span class="nav-number">5.2.1.</span> <span class="nav-text">Theoretical Considerations and a New Normalized Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gradient-propagation-study"><span class="nav-number">5.2.2.</span> <span class="nav-text">Gradient Propagation Study</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#back-propagated-gradients-during-learning"><span class="nav-number">5.3.</span> <span class="nav-text">Back-propagated Gradients During Learning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#error-curves-and-conlusions"><span class="nav-number">6.</span> <span class="nav-text">Error Curves and Conlusions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#conclusion"><span class="nav-number">7.</span> <span class="nav-text">conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">8.</span> <span class="nav-text">reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deep-neural-networks"><span class="nav-number">2.</span> <span class="nav-text">Deep Neural Networks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experimental-setting-and-datasets"><span class="nav-number">3.</span> <span class="nav-text">Experimental Setting and Datasets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#online-learning-on-an-infinite-dataset"><span class="nav-number">3.1.</span> <span class="nav-text">Online Learning on an Infinite Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finite-datasets"><span class="nav-number">3.2.</span> <span class="nav-text">finite datasets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-setting"><span class="nav-number">3.3.</span> <span class="nav-text">Experimental Setting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#effect-of-activation-functions-and-saturation-during-training"><span class="nav-number">4.</span> <span class="nav-text">Effect of Activation Functions and Saturation During Training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-sigmoid"><span class="nav-number">4.1.</span> <span class="nav-text">Experiments with the Sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment-with-the-hyperbolic-tangent"><span class="nav-number">4.2.</span> <span class="nav-text">Experiment with the Hyperbolic tangent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-with-the-softsign"><span class="nav-number">4.3.</span> <span class="nav-text">Experiments with the Softsign</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#studying-gradients-and-their-propagation"><span class="nav-number">5.</span> <span class="nav-text">Studying Gradients and their Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-the-cost-function"><span class="nav-number">5.1.</span> <span class="nav-text">Effect of the Cost Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradient-at-initialization"><span class="nav-number">5.2.</span> <span class="nav-text">Gradient at initialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#theoretical-considerations-and-a-new-normalized-initialization"><span class="nav-number">5.2.1.</span> <span class="nav-text">Theoretical Considerations and a New Normalized Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gradient-propagation-study"><span class="nav-number">5.2.2.</span> <span class="nav-text">Gradient Propagation Study</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#back-propagated-gradients-during-learning"><span class="nav-number">5.3.</span> <span class="nav-text">Back-propagated Gradients During Learning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#error-curves-and-conlusions"><span class="nav-number">6.</span> <span class="nav-text">Error Curves and Conlusions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#conclusion"><span class="nav-number">7.</span> <span class="nav-text">conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xavier-tui-dao-guo-cheng"><span class="nav-number">8.</span> <span class="nav-text">Xavier推导过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dan-ceng-wang-luo"><span class="nav-number">8.1.</span> <span class="nav-text">单层网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qian-xiang-chuan-bo"><span class="nav-number">8.2.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fan-xiang-chuan-bo"><span class="nav-number">8.3.</span> <span class="nav-text">反向传播</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -673,7 +741,7 @@ W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -686,7 +754,7 @@ W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -732,7 +800,7 @@ W \sim U\left[-\frac{\sqrt{6}}{\sqrt{n_{j}+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_{j
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

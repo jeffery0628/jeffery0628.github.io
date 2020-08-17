@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="距离度量方法">
+<meta property="og:url" content="https://jeffery.ink/2020/08/16/deeplearning/distance_measure/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/08/16/deeplearning/distance_measure/14200239_f81W.jpg">
+<meta property="article:published_time" content="2020-08-16T12:25:22.000Z">
+<meta property="article:modified_time" content="2020-08-16T12:37:28.352Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/08/16/deeplearning/distance_measure/14200239_f81W.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/08/16/deeplearning/distance_measure/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>距离度量方法 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/08/16/deeplearning/distance_measure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          距离度量方法
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-16 20:37:28" itemprop="dateModified" datetime="2020-08-16T20:37:28+08:00">2020-08-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/16/deeplearning/distance_measure/" class="post-meta-item leancloud_visitors" data-flag-title="距离度量方法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/08/16/deeplearning/distance_measure/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/16/deeplearning/distance_measure/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/08/16/deeplearning/distance_measure/14200239_f81W.jpg" alt></p>
+<a id="more"></a>
+<h1 id="ju-chi-du-liang-fang-fa">距离度量方法</h1>
+<h3 id="ou-shi-ju-chi">欧氏距离</h3>
+<p>最常见的两点之间或多点之间的距离表示法，又称之为欧几里得度量，它定义于欧几里得空间中，如点 \(x = (x_1,\ldots,x_n)\) 和 \(y = (y_1,\ldots,y_n)\) 之间的距离为：</p>
+<p>\[
+d(x,y)=\sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2}
+\]</p>
+<p>二维平面上两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的欧氏距离：<br>
+\[
+d=\sqrt{\left(x_{1}-x_{2}\right)^{2}+\left(y_{1}-y_{2}\right)^{2}}
+\]<br>
+三维空间两点\(a(x_1,y_1,z_1)\)与\(b(x_2,y_2,z_2)\)间的欧氏距离：<br>
+\[
+d=\sqrt{\left(x_{1}-x_{2}\right)^{2}+\left(y_{1}-y_{2}\right)^{2}+\left(z_{1}-z_{2}\right)^{2}}
+\]<br>
+两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\)间的欧氏距离：<br>
+\[
+d=\sqrt{\sum_{k=1}^{n}\left(x_{1 k}-x_{2 k}\right)^{2}}
+\]<br>
+也可以用表示成向量运算的形式：</p>
+<p>\[
+d=\sqrt{(a-b)(a-b)^{T}}
+\]</p>
+<h3 id="man-ha-dun-ju-chi">曼哈顿距离</h3>
+<p>定义曼哈顿距离的正式意义为L1-距离或城市区块距离，也就是在欧几里得空间的固定直角坐标系上两点所形成的线段对轴产生的投影的距离总和。例如在平面上，坐标\(（x_1, y_1）\)的点\(P_1\)与坐标\(（x_2, y_2）\)的点\(P_2\)的曼哈顿距离为：\(|x_1-x_2|+|y_1-y_2|\)，曼哈顿距离依赖座标系统的转度，而非系统在座标轴上的平移或映射。</p>
+<p>通俗来讲，想象你在曼哈顿要从一个十字路口开车到另外一个十字路口，驾驶距离是两点间的直线距离吗？显然不是，除非你能穿越大楼。而实际驾驶距离就是这个“曼哈顿距离”，此即曼哈顿距离名称的来源， 同时，曼哈顿距离也称为城市街区距离。</p>
+<p>二维平面两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的曼哈顿距离 :<br>
+\[
+d=|x_1-x_2|+|y_1-y_2|
+\]<br>
+两个\(n\)维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\)间的曼哈顿距离:</p>
+<p>\[
+d=\sum_{k=1}^{n}\left|x_{1 k}-x_{2 k}\right|
+\]</p>
+<h3 id="qie-bi-xue-fu-ju-chi">切比雪夫距离</h3>
+<p>若二个向量或二个点\(p\)和\(q\)，其座标分别为\(p_i\)及\(q_i\)，则两者之间的切比雪夫距离定义如下：<br>
+\[
+d = max_{x_i}(|x_2-x_1|,|y_1-y_1|)
+\]<br>
+这也等于以下Lp度量的极值：\(\lim_{x\rightarrow\infty}(\sum_{i=1}^n|p_i-q_i|^k)^{\frac{1}{k}}\) ，因此切比雪夫距离也称为L∞度量。</p>
+<p>以数学的观点来看，切比雪夫距离是由一致范数（或称为上确界范数）所衍生的度量，也是超凸度量的一种。</p>
+<p>在平面几何中，若二点p及q的直角坐标系坐标为\((x_1,y_1)\)及\((x_2,y_2)\)，则切比雪夫距离为：<br>
+\[
+D_{\text {Chess}}=\max \left(\left|x_{2}-x_{1}\right|,\left|y_{2}-y_{1}\right|\right)
+\]</p>
+<blockquote>
+<p>玩过国际象棋的朋友或许知道，国王走一步能够移动到相邻的8个方格中的任意一个。那么国王从格子(x1,y1)走到格子(x2,y2)最少需要多少步？。你会发现最少步数总是max( | x2-x1 | , | y2-y1 | ) 步 。有一种类似的一种距离度量方法叫切比雪夫距离。</p>
+</blockquote>
+<p>二维平面两点\(a(x_1,y_1)\)与\(b(x_2,y_2)\)间的切比雪夫距离 ：<br>
+\[
+d = max_{x_i}(|x_2-x_1|,|y_1-y_1|)
+\]<br>
+两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与\(b(x_{21},x_{22},\ldots,x_{2n})\)间的切比雪夫距离：<br>
+\[
+d=\max _{i}\left(\left|x_{1 i}-x_{2 i}\right|\right)
+\]<br>
+这个公式的另一种等价形式是</p>
+<p>\[
+d=lim_{k\to\infin}(\sum_{i=1}^{n}|x_{1i}-x_{2i}|^k)^{1/k}
+\]</p>
+<h3 id="min-ke-fu-si-ji-ju-chi">闵可夫斯基距离</h3>
+<p>闵氏距离不是一种距离，而是一组距离的定义。两个n维变量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的闵可夫斯基距离定义为：<br>
+\[
+d=\sqrt[p]{\sum_{k=1}^{n}|x_{1k}-x_{2k}|^p}
+\]<br>
+其中p是一个变参数。当p=1时，就是曼哈顿距离当p=2时，就是欧氏距离当p→∞时，就是切比雪夫距离。根据变参数的不同，闵氏距离可以表示一类的距离。</p>
+<h3 id="biao-zhun-hua-ou-shi-ju-chi">标准化欧氏距离</h3>
+<p>标准化欧氏距离是针对简单欧氏距离的缺点而作的一种改进方案。标准欧氏距离的思路：既然数据各维分量的分布不一样，那先将各个分量都“标准化”到均值、方差相等。至于均值和方差标准化到多少，先复习点统计学知识。</p>
+<p>假设样本集X的数学期望或均值为m，标准差为s，那么X的“标准化变量”X*表示为：(X-m）/s，而且标准化变量的数学期望为0，方差为1。即，样本集的标准化过程用公式描述就是：<br>
+\[
+X^*=\frac{X-m}{s}
+\]<br>
+标准化后的值 =  ( 标准化前的值  － 分量的均值 ) /分量的标准差　　<br>
+经过简单的推导就可以得到两个n维向量\(a(x_{11},x_{12},\ldots,x_{1n})\)与 \(b(x_{21},x_{22},\ldots,x_{2n})\) 间的标准化欧氏距离的公式：<br>
+\[
+d=\sqrt{\sum_{k=1}^{n}(\frac{x_{1k}-x_{2k}}{s_k})^2}
+\]</p>
+<h3 id="ma-shi-ju-chi">马氏距离</h3>
+<p>有M个样本向量\(X_1,\ldots,X_m\)，协方差矩阵记为\(S\)，均值记为向量\(\mu\)，则其中样本向量\(X\)到\(\mu\)的马氏距离表示为：<br>
+\[
+D(X)=\sqrt{(X-u)^TS^{-1}(X_i-X_j)}
+\]<br>
+若协方差矩阵是单位矩阵（各个样本向量之间独立同分布）,则公式就成了欧氏距离：<br>
+\[
+D(X_i,X_j)=\sqrt{(X_i-X_j)^T(X_i-X_j)}
+\]<br>
+若协方差矩阵是对角矩阵，公式变成了标准化欧氏距离。</p>
+<p>马氏距离的优缺点：量纲无关，排除变量之间的相关性的干扰。</p>
+<h3 id="ba-shi-ju-chi">巴氏距离</h3>
+<p>在统计中，巴氏距离距离测量两个离散或连续概率<strong>分布的相似性</strong>。它与衡量两个统计样品或种群之间的重叠量的巴氏距离系数密切相关。同时，Bhattacharyya系数可以被用来确定两个样本被认为相对接近的，它是用来测量中的类分类的可分离性。对于离散概率分布 p和q在同一域 X，它被定义为：<br>
+\[
+D_B(p,q)=-lnBC(p,q)
+\]<br>
+其中：<br>
+\[
+BC(p,q)=\sum_{x\in_{}X}\sqrt{p(x)q(x)}
+\]<br>
+是Bhattacharyya系数。</p>
+<h3 id="yi-ming-ju-chi">汉明距离</h3>
+<p>两个等长字符串s1与s2之间的汉明距离定义为将其中一个变为另外一个所需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为2。应用：信息编码（为了增强容错性，应使得编码间的最小汉明距离尽可能大）。</p>
+<h3 id="jia-jiao-yu-xian">夹角余弦</h3>
+<p>几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。</p>
+<p>在二维空间中向量\(A(x_1,y_1)\)与向量\(B(x_2,y_2)\)的夹角余弦公式：<br>
+\[
+cos\theta=\frac{x_1x_2+y_1y_2}{\sqrt{x_1^2+y_1^2}\sqrt{x_2^2+y_2^2}}
+\]<br>
+两个n维样本点\(a(x_{11},x_{12},\ldots,x_{1n})\)和\(b(x_{21},x_{22},\ldots,x_{2n})\)的夹角余弦：<br>
+\[
+cos\theta=\frac{a*b}{|a||b|}
+\]<br>
+夹角余弦取值范围为[-1,1]。夹角余弦越大表示两个向量的夹角越小，夹角余弦越小表示两向量的夹角越大。当两个向量的方向重合时夹角余弦取最大值1，当两个向量的方向完全相反夹角余弦取最小值-1。</p>
+<h3 id="jie-qia-de-xiang-si-xi-shu">杰卡德相似系数</h3>
+<p><strong>两个集合A和B的交集元素在A，B的并集中所占的比例</strong>，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是<strong>衡量两个集合的相似度</strong>一种指标。<br>
+\[
+J(A,B)=\frac{|A\cap_{}B|}{|A\cup_{}B|}
+\]<br>
+与杰卡德相似系数相反的概念是杰卡德距离：<br>
+\[
+J_{\delta}(A,B)=1-J(A,B)=\frac{|A\cup_{}B|-|A\cap_{}B|}{|A\cup_{}B|}
+\]</p>
+<h3 id="pi-er-xun-xi-shu">皮尔逊系数</h3>
+<p>在统计学中，皮尔逊积矩相关系数用于度量两个变量X和Y之间的相关（<strong>线性相关</strong>），其值介于-1与1之间。通常情况下通过以下取值范围判断变量的相关强度：</p>
+<blockquote>
+<p>0.8-1.0     极强相关<br>
+0.6-0.8     强相关<br>
+0.4-0.6     中等程度相关<br>
+0.2-0.4     弱相关<br>
+0.0-0.2     极弱相关或无相关</p>
+</blockquote>
+<h3 id="ju-chi-xiao-jie">距离小结</h3>
+<p>简单说来，各种“距离”的应用场景简单概括为，</p>
+<ul>
+<li>空间：欧氏距离，</li>
+<li>路径：曼哈顿距离，国际象棋国王：切比雪夫距离，</li>
+<li>以上三种的统一形式:闵可夫斯基距离，</li>
+<li>加权：标准化欧氏距离，</li>
+<li>排除量纲和依存：马氏距离，</li>
+<li>向量差距：夹角余弦，</li>
+<li>编码差别：汉明距离，</li>
+<li>集合近似度：杰卡德类似系数与距离，</li>
+<li>相关：相关系数与相关距离。</li>
+</ul>
+<h1 id="chang-jian-wen-ti">常见问题</h1>
+<h3 id="yu-xian-xiang-si-du-yu-ou-shi-ju-chi-de-qu-bie-yu-lian-xi">余弦相似度 与 欧式距离的区别与联系</h3>
+<ul>
+<li>
+<p>区别：</p>
+<p>欧式距离和余弦相似度都能度量2个向量之间的相似度，但是欧式距离从2点之间的距离去考量，余弦相似从2个向量之间的夹角去考量。举例如下：</p>
+<blockquote>
+<p>假设 2人对三部电影的评分分别是 <code>A = [3, 3, 3]</code> 和 <code>B = [5, 5, 5]</code></p>
+<p>那么2人的欧式距离是 根号12 = 3.46， A、B的余弦相似度是1（方向完全一致）。</p>
+</blockquote>
+<p>从上例可以发出，2人对三部电影的评价趋势是一致的，但是欧式距离并不能反映出这一点，余弦相似则能够很好地反应。余弦相似可以很好地规避指标刻度的差异，最常见的应用是计算<strong>文本的相似度</strong> 。</p>
+</li>
+<li>
+<p>联系：</p>
+<p><strong>归一化后计算的欧式距离是关于余弦相似的单调函数</strong>，可以认为归一化后，余弦相似与欧式距离效果是一致的（欧式距离越小等价于余弦相似度越大）。</p>
+<p>因此可以将 <strong>求余弦相似转为求欧式距离</strong> ，余弦相似的计算复杂度过高，转为求欧式距离后，可以借助<code>KDTree</code>（KNN算法用到）或者<code>BallTree</code>（对高维向量友好）来降低复杂度。</p>
+<p>比如：\(A(x_1,y_1)\),\(B(x_2,y_2)\),余弦定义：\(cos(\theta) = \frac{&lt;A,B>}{|A||B|}\)。</p>
+<p>归一化后<br>
+\[
+A\left(\frac{x_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}}, \frac{y_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}}\right), B\left(\frac{x_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}, \frac{y_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}\right)
+\]<br>
+余弦相似度：<br>
+\[
+\cos =\frac{x_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}} \times \frac{x_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}+\frac{y_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}} \times \frac{y_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}
+\]<br>
+欧氏距离：<br>
+\[
+\begin{aligned}
+e u c &amp;=\sqrt{\left(\frac{x_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}}-\frac{x_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}\right)^{2}+\left(\frac{y_{1}}{\sqrt{x_{1}^{2}+y_{1}^{2}}}-\frac{y_{2}}{\sqrt{x_{2}^{2}+y_{2}^{2}}}\right)^{2}} \\
+&amp;=\sqrt{2-2 \times \cos }
+\end{aligned}
+\]</p>
+</li>
+</ul>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://my.oschina.net/hunglish/blog/787596" target="_blank" rel="noopener">机器学习——几种距离度量方法比较</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/14/deeplearning/gradient_checkpointing/" rel="prev" title="gradient checkpointing">
+      <i class="fa fa-chevron-left"></i> gradient checkpointing
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/16/deeplearning/object_function/" rel="next" title="object_function">
+      object_function <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ju-chi-du-liang-fang-fa"><span class="nav-number">1.</span> <span class="nav-text">距离度量方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ou-shi-ju-chi"><span class="nav-number">1.0.1.</span> <span class="nav-text">欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man-ha-dun-ju-chi"><span class="nav-number">1.0.2.</span> <span class="nav-text">曼哈顿距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qie-bi-xue-fu-ju-chi"><span class="nav-number">1.0.3.</span> <span class="nav-text">切比雪夫距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-ke-fu-si-ji-ju-chi"><span class="nav-number">1.0.4.</span> <span class="nav-text">闵可夫斯基距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#biao-zhun-hua-ou-shi-ju-chi"><span class="nav-number">1.0.5.</span> <span class="nav-text">标准化欧氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ma-shi-ju-chi"><span class="nav-number">1.0.6.</span> <span class="nav-text">马氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ba-shi-ju-chi"><span class="nav-number">1.0.7.</span> <span class="nav-text">巴氏距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-ming-ju-chi"><span class="nav-number">1.0.8.</span> <span class="nav-text">汉明距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jia-jiao-yu-xian"><span class="nav-number">1.0.9.</span> <span class="nav-text">夹角余弦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jie-qia-de-xiang-si-xi-shu"><span class="nav-number">1.0.10.</span> <span class="nav-text">杰卡德相似系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pi-er-xun-xi-shu"><span class="nav-number">1.0.11.</span> <span class="nav-text">皮尔逊系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-chi-xiao-jie"><span class="nav-number">1.0.12.</span> <span class="nav-text">距离小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yu-xian-xiang-si-du-yu-ou-shi-ju-chi-de-qu-bie-yu-lian-xi"><span class="nav-number">2.0.1.</span> <span class="nav-text">余弦相似度 与 欧式距离的区别与联系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.2m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

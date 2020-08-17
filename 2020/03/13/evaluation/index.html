@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"post","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="article">
@@ -32,8 +32,9 @@
 <meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-de51547b4b0ab69983515d2f97c45f22_1440w.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-18db5822a9accd275adf89ca3fa2d3cf_1440w.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/03/13/evaluation/006gOeiSly1g40gyog0e8j30av09rgn9.jpg">
 <meta property="article:published_time" content="2020-03-13T11:39:32.000Z">
-<meta property="article:modified_time" content="2020-07-13T14:53:44.456Z">
+<meta property="article:modified_time" content="2020-08-16T12:40:29.940Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/03/13/evaluation/v2-9edc860c849ab1737d76d7ee138b31cd_1440w.jpg">
@@ -235,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-13 22:53:44" itemprop="dateModified" datetime="2020-07-13T22:53:44+08:00">2020-07-13</time>
+                <time title="修改时间：2020-08-16 20:40:29" itemprop="dateModified" datetime="2020-08-16T20:40:29+08:00">2020-08-16</time>
               </span>
 
           
@@ -265,7 +266,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -452,6 +453,10 @@ F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3
 </blockquote>
 <h3 id="dai-ma">代码</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="comment"># 二分类</span></span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">scores = np.array([<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.35</span>, <span class="number">0.8</span>])</span><br><span class="line">fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># fpr</span></span><br><span class="line">array([ <span class="number">0.</span> ,  <span class="number">0.5</span>,  <span class="number">0.5</span>,  <span class="number">1.</span> ])</span><br><span class="line"><span class="comment"># tpr</span></span><br><span class="line">array([ <span class="number">0.5</span>,  <span class="number">0.5</span>,  <span class="number">1.</span> ,  <span class="number">1.</span> ])</span><br><span class="line"><span class="comment"># thresholds</span></span><br><span class="line">array([ <span class="number">0.8</span> ,  <span class="number">0.4</span> ,  <span class="number">0.35</span>,  <span class="number">0.1</span> ])</span><br><span class="line"></span><br><span class="line">auc = metrics.auc(fpr, tpr) <span class="comment">#0.75</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多分类</span></span><br><span class="line">fpr, tpr, thresholds = metrics.roc_auc_score(y_true, y_scores, multi_class=<span class="string">'ovo'</span>,labels=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>],average=<span class="string">'macro'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="p-r-qu-xian">P-R 曲线</h2>
+<p>P-R 曲线其横坐标为 Recall， 纵坐标为 Precision， 其能帮助我们很好的做出权衡</p>
+<p><img src="/2020/03/13/evaluation/006gOeiSly1g40gyog0e8j30av09rgn9.jpg" alt></p>
+<p>在上图中，我们发现， A 完全包住了C， 着意味着A 的Precision 与 Recall 都高于C， A优于C。 而对比 A,B， 二者存在交叉的情况，此时采用曲线下面积大小衡量性能，面积越大，性能越好，此处的A优于B。</p>
 <h1 id="can-kao">参考</h1>
 <ol>
 <li><a href="https://blog.csdn.net/sinat_28576553/article/details/80258619" target="_blank" rel="noopener">分类问题的几个评价指标（Precision、Recall、F1-Score、Micro-F1、Macro-F1）</a></li>
@@ -566,7 +571,7 @@ F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fen-lei-ping-jie-zhi-biao"><span class="nav-number">1.</span> <span class="nav-text">分类评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#accuracy"><span class="nav-number">1.1.</span> <span class="nav-text">Accuracy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#precison-recall-f"><span class="nav-number">1.2.</span> <span class="nav-text">Precison、Recall、F</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#micro-f-1-he-macro-f-1"><span class="nav-number">1.3.</span> <span class="nav-text">Micro-F1和Macro-F1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#micro-f-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">Micro-F1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macro-f-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Macro-F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roc-he-auc"><span class="nav-number">1.4.</span> <span class="nav-text">ROC 和 AUC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#roc"><span class="nav-number">1.4.1.</span> <span class="nav-text">ROC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#micro"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">micro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#macro"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">macro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weight"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">weight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sample"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">sample</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auc"><span class="nav-number">1.4.2.</span> <span class="nav-text">AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dai-ma"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fen-lei-ping-jie-zhi-biao"><span class="nav-number">1.</span> <span class="nav-text">分类评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#accuracy"><span class="nav-number">1.1.</span> <span class="nav-text">Accuracy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#precison-recall-f"><span class="nav-number">1.2.</span> <span class="nav-text">Precison、Recall、F</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#micro-f-1-he-macro-f-1"><span class="nav-number">1.3.</span> <span class="nav-text">Micro-F1和Macro-F1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#micro-f-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">Micro-F1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macro-f-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Macro-F1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roc-he-auc"><span class="nav-number">1.4.</span> <span class="nav-text">ROC 和 AUC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#roc"><span class="nav-number">1.4.1.</span> <span class="nav-text">ROC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#micro"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">micro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#macro"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">macro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weight"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">weight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sample"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">sample</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auc"><span class="nav-number">1.4.2.</span> <span class="nav-text">AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dai-ma"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p-r-qu-xian"><span class="nav-number">1.5.</span> <span class="nav-text">P-R 曲线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -584,7 +589,7 @@ F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -597,7 +602,7 @@ F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -643,7 +648,7 @@ F P R=\frac{FP_1}{FP_1+TN_1} w_{1}+\frac{FP_2}{FP_2+TN_2} w_{2}+\frac{FP_3}{FP_3
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         
