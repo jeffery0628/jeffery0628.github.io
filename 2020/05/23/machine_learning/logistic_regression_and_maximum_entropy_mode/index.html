@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/Logistic-Regression-learning.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/logistic_regression_and_maximum_entropy_mode/00630Defly1g4pvk2ctatj30cw0b63yq.jpg">
 <meta property="article:published_time" content="2020-05-23T15:05:47.000Z">
-<meta property="article:modified_time" content="2020-08-15T14:38:08.138Z">
+<meta property="article:modified_time" content="2020-08-22T02:40:11.869Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="logistic">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-15 22:38:08" itemprop="dateModified" datetime="2020-08-15T22:38:08+08:00">2020-08-15</time>
+                <time title="修改时间：2020-08-22 10:40:11" itemprop="dateModified" datetime="2020-08-22T10:40:11+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +243,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
                 </span>
             </span>
 
@@ -335,14 +339,17 @@ H_{w,b}(x)=\frac{1}{1+e^{(w \ast x+b)}}
 <h2 id="duo-xiang-luo-ji-hui-gui">多项逻辑回归</h2>
 <p>当问题是多分类问题时,可以作如下推广:设\(Y\)有\(K\)类可能取值:</p>
 <p>\[
-P(Y=k | x)=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1\\ P(Y=K | x)=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}
+\begin{align}
+P(Y=k | x)&amp;=\frac{\exp \left(w_{k} \cdot x\right)}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)}, \quad k=1,2, \cdots, K-1 \tag{}\\ 
+P(Y=K | x)&amp;=\frac{1}{1+\sum_{k=1}^{K-1} \exp \left(w_{k} \cdot x\right)} \tag{}
+\end{align}
 \]</p>
 <p>实际上就是<strong>one-vs-all</strong>的思想,将其他所有类当作一个类,问题转换为二分类问题.</p>
 <p>使用最大似然法衡量模型输出的概率与真实概率的差别，假设样本一共有N个，那么这组样本发生的总概率可以表示为：<br>
 \[
 P(\boldsymbol{W})=\prod_{n=1}^{N}\left(\frac{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}\right)
 \]<br>
-对函数取对数再乘以-1，推导得到：<br>
+对函数取对数再乘以\(-1\)，推导得到：<br>
 \[
 \begin{aligned}
 F(\boldsymbol{W})=-\ln (P(\boldsymbol{W})) &amp;=\sum_{n=1}^{N} \ln \left(\frac{\sum_{k^{\prime}}^{C} e^{\boldsymbol{w}_{k^{\prime}}^{T} \boldsymbol{x}_{n}}}{e^{\boldsymbol{w}_{y_{n}}^{T} \boldsymbol{x}_{n}}}\right) \\
@@ -400,19 +407,20 @@ f(x)=\frac{f\left(x_{0}\right)}{0 !}+\frac{f^{\prime}\left(x_{0}\right)}{1 !}\le
 <h2 id="strong-zui-da-shang-mo-xing-strong"><strong>最大熵模型</strong></h2>
 <p>给定训练数据集,可以确定联合分布\(P(X,Y)\)的经验分布\(\tilde{P}(X=x, Y=y)=\frac{v(X=x, Y=y)}{N}\)和边缘分布\(P(X)\)的经验分布\(\tilde{P}(X=x)=\frac{v(X=x)}{N}\),其中\(v\)表示频数,\(N\)表示样本容量.用<strong>特征函数\(f(x,y)\)</strong>=1描述x与y满足某一事实,可以得到特征函数关于P(X,Y)的经验分布的期望值和关于模型P(Y|X)与P(X)的经验分布的期望值,假设两者相等,就得到了<strong>约束条件</strong>\(\sum_{x, y} \tilde{P}(x) P(y | x) f(x, y)=\sum_{x, y} \tilde{P}(x, y) f(x, y)\).定义在条件概率分布\(P(Y|X)\)上的条件熵为\(H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\),则<strong>条件熵最大</strong>的模型称为最大熵模型.</p>
 <h2 id="zui-da-shang-mo-xing-de-xue-xi">最大熵模型的学习</h2>
-<p>就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
+<p>最大熵模型的学习就是求解最大熵模型的过程.等价于<strong>约束最优化问题</strong><br>
 \[
 \begin{aligned}
-&amp;\max _{P_{e c}} H(P)=-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
-&amp;\text { s.t. } \quad E_{p}\left(f_{i}\right)=E_{p}\left(f_{i}\right), \quad i=1,2, \cdots, n\\
+&amp;\max _{P_{e c}} H(P) =-\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
+\text { s.t. } \\ &amp; E_{p}\left(f_{i}\right)=E_{p}\left(f_{i}\right), \quad i=1,2, \cdots, n\\
      &amp;\sum_{y} P(y | x)=1
 \end{aligned}
 \]<br>
-,将求最大值问题改为等价的求最小值问题<br>
+将求最大值问题改为等价的求最小值问题<br>
 \[
 \begin{aligned}
 &amp;\min _{R \in C}-H(P)=\sum_{x, y} \tilde{P}(x) P(y | x) \log P(y | x)\\
-&amp;\text { s.t. } \quad E_{P}\left(f_{i}\right)-E_{\beta}\left(f_{i}\right)=0, \quad i=1,2, \cdots, n\\
+\text { s.t. } \\
+&amp; E_{P}\left(f_{i}\right)-E_{\beta}\left(f_{i}\right)=0, \quad i=1,2, \cdots, n\\
 &amp;\sum_{y} P(y | x)=1
 \end{aligned}
 \]</p>
@@ -596,20 +604,20 @@ L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -680,7 +688,7 @@ L(P, w) &amp; \equiv-H(P)+w_{0}\left(1-\sum_{y} P(y | x)\right)+\sum_{i=1}^{n} w
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>

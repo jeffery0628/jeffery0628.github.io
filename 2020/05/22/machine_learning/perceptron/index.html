@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/05/22/machine_learning/perceptron/3.8_tanh.png">
 <meta property="og:image" content="https://jeffery.ink/2020/05/22/machine_learning/perceptron/3.8_tanh_grad.png">
 <meta property="article:published_time" content="2020-05-22T14:29:33.000Z">
-<meta property="article:modified_time" content="2020-08-16T09:27:38.671Z">
+<meta property="article:modified_time" content="2020-08-22T02:06:14.722Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jeffery.ink/2020/05/22/machine_learning/perceptron/3.8_mlp.svg">
@@ -240,7 +240,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-16 17:27:38" itemprop="dateModified" datetime="2020-08-16T17:27:38+08:00">2020-08-16</time>
+                <time title="修改时间：2020-08-22 10:06:14" itemprop="dateModified" datetime="2020-08-22T10:06:14+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,7 +248,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
                 </span>
             </span>
 
@@ -279,7 +283,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.4k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -305,8 +309,9 @@
 <p>感知机可以拟合任何线性函数，这也就意味着任何<strong>线性分类</strong>或<strong>线性回归</strong>问题都可以用感知器来解决。</p>
 <p><img src="/2020/05/22/machine_learning/perceptron/006gOeiSly1g1gj9rt5fsj307s03ut8i.jpg" alt></p>
 <p>\[
-f(x) = sign(w^Tx) \\
-sign(a) = \begin{cases} +1, &amp; a \ge 0 \\ -1, &amp; a &lt; 0 \end{cases} 
+\begin{array}{}
+f(x) = sign(w^Tx)  \quad\text{其中,}\quad sign(a) = \begin{cases} +1, &amp; a \ge 0 \\ -1, &amp; a &lt; 0 \end{cases}
+\end{array}
 \]</p>
 <h2 id="gan-zhi-ji-de-xun-lian">感知机的训练</h2>
 <p>感知器的训练主要包含两大问题：</p>
@@ -324,13 +329,11 @@ sign(a) = \begin{cases} +1, &amp; a \ge 0 \\ -1, &amp; a &lt; 0 \end{cases}
 <li>当$w^T  x_i   &gt; 0 $ 时，得出$y_i = -1 $ ， 此时出现误分类</li>
 <li>当$w^Tx_i  &lt; 0 $ 时，得出$ y_i = 1$ ，此时也出现误分类</li>
 </ul>
-<p>那么，我们分析，对于误分类的数据$(x_i,y_i) $ 来说，必有：<br>
-$$</p>
-<ul>
-<li>y_iw^T x_i &gt; 0<br>
-$$<br>
-那么，我们得出，我们可以通过  \(- y_iw^Tx_i > 0\) 来得出一个点是不是误分类点。</li>
-</ul>
+<p>那么，我们分析，对于误分类的数据$(x_i,y_i) $ 来说，必有:</p>
+<p>\[
+  -y_iw^T x_i > 0
+\]<br>
+那么，我们得出，我们可以通过  \(- y_iw^Tx_i > 0\) 来得出一个点是不是误分类点。</p>
 <h3 id="sun-shi-han-shu">损失函数</h3>
 <p>感知机中采用的损失函数是<strong>误分类点到超平面S的总距离。</strong></p>
 <p>输入样本中的任意一点到超平面S的距离：<br>
@@ -338,15 +341,13 @@ $$<br>
 L = \frac{1}{||w||}|w^T x_i|  , \qquad  ||w||是w的L_2范数
 \]</p>
 <p>那么误分类点到超平面 S 的距离为：<br>
-$$</p>
-<ul>
-<li>\frac{1}{||w||}y_i(w^T x_i)<br>
 \[
-$\frac{1}{||w||}$ 是一个固定值，可以不用考虑，这样我们也可以得出我们的**损失函数**如下：
+-\frac{1}{||w||}y_i(w^T x_i)
 \]<br>
-L(w,b) = - \sum_{x_i \in M  }{y_i w^Tx_i }<br>
-$$</li>
-</ul>
+\(\frac{1}{||w||}\) 是一个固定值，可以不用考虑，这样我们也可以得出我们的<strong>损失函数</strong>如下：<br>
+\[
+L(w,b) = -\sum_{x_i \in M  }{y_i w^Tx_i }
+\]</p>
 <h3 id="qiu-qu-w-b">求取w， b</h3>
 <p>损失函数对于 \(w\) 方向上的梯度为：<br>
 \[
@@ -505,8 +506,8 @@ w \leftarrow  w + \eta y_i x_i
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/20/pytorch_bugs/" rel="prev" title="Pytorch Bugs">
-      <i class="fa fa-chevron-left"></i> Pytorch Bugs
+    <a href="/2020/05/15/data_structures_and_algorithms/" rel="prev" title="数据结构-屠龙14式">
+      <i class="fa fa-chevron-left"></i> 数据结构-屠龙14式
     </a></div>
       <div class="post-nav-item">
     <a href="/2020/05/23/machine_learning/linear_regression/" rel="next" title="线性回归">
@@ -589,20 +590,20 @@ w \leftarrow  w + \eta y_i x_i
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -673,7 +674,7 @@ w \leftarrow  w + \eta y_i x_i
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>

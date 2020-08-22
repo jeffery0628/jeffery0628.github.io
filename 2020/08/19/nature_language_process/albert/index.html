@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="ALBERT">
+<meta property="og:url" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819221459508.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819222449225.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819222559980.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819221459508.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819224232560.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819224700510.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819224829854.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819225350159.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819225608169.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819225753949.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819225815689.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819225921224.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819230243171.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819230335186.png">
+<meta property="og:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819231158897.png">
+<meta property="article:published_time" content="2020-08-19T13:47:20.000Z">
+<meta property="article:modified_time" content="2020-08-22T05:43:35.965Z">
+<meta property="article:author" content="Li Zhen">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/08/19/nature_language_process/albert/image-20200819221459508.png">
+
+<link rel="canonical" href="https://jeffery.ink/2020/08/19/nature_language_process/albert/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ALBERT | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/08/19/nature_language_process/albert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ALBERT
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 13:43:35" itemprop="dateModified" datetime="2020-08-22T13:43:35+08:00">2020-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">自然语言处理</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">深度学习自然语言处理</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/19/nature_language_process/albert/" class="post-meta-item leancloud_visitors" data-flag-title="ALBERT" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/08/19/nature_language_process/albert/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/19/nature_language_process/albert/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/08/19/nature_language_process/albert/image-20200819221459508.png" alt></p>
+<a id="more"></a>
+<p><code><a class="btn" href="albert.pdf">
+            <i class="fa fa-download"></i>albert.pdf
+          </a></code></p>
+<h1 id="motivation">Motivation</h1>
+<p>自BERT的成功以来，预训练模型都采用了很大的参数量以取得更好的模型表现。但是模型参数量越来越大也带来了很多问题，比如对算力要求越来越高、模型需要更长的时间去训练、甚至有些情况下参数量更大的模型表现却更差。</p>
+<p>本文做了一个实验，将BERT-large的参数量隐层大小翻倍得到BERT-xlarge模型，并将BERT-large与BERT-xlarge的结构进行对比:</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819222449225.png" alt></p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819222559980.png" alt></p>
+<p>可以看出，BERT-xlarge虽然有更多的参数量，但在训练时其loss波动更大，Masked LM的表现比BERT-large稍差，而在阅读理解数据集RACE上的表现更是远低于BERT-large。</p>
+<p>为了解决目前预训练模型参数量过大的问题，本文提出了两种能够大幅减少预训练模型参数量的方法，此外还提出用Sentence-order prediction（SOP）任务代替BERT中的Next-sentence prediction（NSP）任务，基于这些本文提出了ALBERT（A Lite BERT）模型，在多个自然语言理解任务中取得了state-of-the-art的结果。</p>
+<h1 id="model">Model</h1>
+<h2 id="factorized-embedding-parameterization">Factorized embedding parameterization</h2>
+<p>在BERT、XLNet、RoBERTa等模型中，由于模型结构的限制，WordePiece embedding的大小\(E\)(embedding size)总是与隐层大小\(H\)(hidden size)相同，即\(E \equiv H\) 。从建模的角度考虑，词嵌入学习的是单词与上下文无关的表示，而隐层则是学习与上下文相关的表示。显然后者更加复杂，需要更多的参数，也就是说模型应当增大隐层大小\(H\)，或者说满足\(H \gg E\) 。但实际上词汇表的大小\(V\)通常非常大，如果\(E=H\)的话，增加隐层大小\(H\)后将会使embedding matrix的维度\(V \times E\)非常巨大。</p>
+<p>因此本文想要打破\(E\)与\(H\)之间的绑定关系，从而减小模型的参数量，同时提升模型表现。具体做法是将embedding matrix分解为两个大小分别为\(V \times E\)和\(E \times H\)矩阵，也就是说先将单词投影到一个低维的embedding空间\(E\)，再将其投影到高维的隐藏空间\(H\)。这使得embedding matrix的维度从\(O(V \times h)\)减小到\(O(V \times E + E \times H)\) 。当\(H \gg E\)时，参数量减少非常明显。在实现时，随机初始化\(V \times E\)和\(E \times H\)的矩阵，计算某个单词的表示需用一个单词的one-hot向量乘以\(V \times E\)维的矩阵，再用得到的结果乘\(E \times H\)维的矩阵即可。两个矩阵的参数通过模型学习。</p>
+<h2 id="cross-layer-parameter-sharing">Cross-layer parameter sharing</h2>
+<p>文中提出的另一个减少参数量的方法就是层之间的参数共享，即多个层使用相同的参数。参数共享有三种方式：</p>
+<ul>
+<li>只共享feed-forward network的参数</li>
+<li>只共享attention的参数</li>
+<li>共享全部参数</li>
+</ul>
+<p>ALBERT默认是共享全部参数的，在后续实验结果中可以看到几种方式的模型表现。</p>
+<p>如下图所示，实验表明加入参数共享之后，每一层的输入embedding和输出embedding的L2距离和余弦相似度都比BERT稳定了很多。这证明参数共享能够使模型参数更加稳定。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819221459508.png" alt></p>
+<h2 id="inter-sentence-coherence-loss">Inter-sentence coherence loss</h2>
+<p>除了减少模型参数外，论文还对BERT的预训练任务NSP进行了改进。在BERT中，NSP任务的正例是文章中连续的两个句子，而负例则是从两篇文档中各选一个句子构造而成。在先前的研究中，已经证明NSP是并不是一个合适的预训练任务。</p>
+<p>本文推测其原因是模型在判断两个句子的关系时不仅考虑了两个句子之间的连贯性（coherence），还会考虑到两个句子的话题（topic）。而两篇文档的话题通常不同，模型会更多的通过话题去分析两个句子的关系，而不是句子间的连贯性，这使得NSP任务变成了一个相对简单的任务。</p>
+<p>因此本文提出了Sentence-order prediction (SOP)来取代NSP。具体来说，其正例与NSP相同，但负例是通过选择一篇文档中的两个连续的句子并将它们的顺序交换构造的。这样两个句子就会有相同的话题，模型学习到的就更多是句子间的连贯性。</p>
+<h1 id="model-setup">Model setup</h1>
+<p>论文为ALBERT选择了四种参数设置：base, large, xlarge和xxlarge。如下图</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819224232560.png" alt></p>
+<p>与BERT相比，ALBERT的参数量明显要少很多，ALBERT-xxlarge的参数量也只有BERT-large的70%。注意其中ALBERT-xxlarge只用了12层是因为实验结果证明此时12层与24层结果几乎相同。</p>
+<h1 id="experimental-results">Experimental Results</h1>
+<h2 id="bert-vs-albert">BERT vs. ALBERT</h2>
+<p>从实验结果可见，ALBERT的训练速度明显比BERT快，ALBERT-xxlarge的表现更是全方面超过了BERT。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819224700510.png" alt></p>
+<h2 id="factorized-embedding-parameterization-1">Factorized Embedding Parameterization</h2>
+<p>从下图实验结果可见，对于不共享参数的情况，\(E\)几乎是与大越好；而共享参数之后，\(E\) 太大反而会使模型表现变差， \(E=128\)模型表现最好，因此ALBERT的默认参数设置中\(E=128\)。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819224829854.png" alt></p>
+<p>考虑到ALBERT-base的\(H=768\)，那么\(E=768\)时，模型应该可以看作没有减少embedding参数量的情况。而不共享参数的实验结果表明此时模型表现更好，那么似乎说明了Factorized embedding在一定程度上降低了模型的表现(但是共享参数的情况下，可以使用更大的模型)。</p>
+<h2 id="cross-layer-parameter-sharing-1">Cross-Layer Parameter Sharing</h2>
+<p>如下图所示，可以看出参数共享几乎也是对模型结果有负面影响的。但是考虑到其能够大幅削减参数量，并且对结果影响不是特别大，因此权衡之下选择了参数共享。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819225350159.png" alt></p>
+<h2 id="sop">SOP</h2>
+<p>如下图实验结果所示，如果不使用NSP或SOP作为预训练任务的话，模型在NSP和SOP两个任务上表现都很差；如果使用NSP作为预训练任务的话，模型确实能很好的解决NSP问题，但是在SOP问题上表现却很差，几乎相当于随机猜，因此说明NSP任务确实很难学到句子间的连贯性；而如果用SOP作为预训练任务，则模型也可以较好的解决NSP问题，同时模型在下游任务上表现也更好。说明SOP确实是更好的预训练任务。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819225608169.png" alt></p>
+<h2 id="effect-of-network-depth-and-width">Effect Of Network Depth And Width</h2>
+<p>从下面两个对比试验结果我们可以看出，增加模型的层数或隐层大小确实能够在一定程度上提升模型的表现。但当大小增加到一定量时，反而会使模型表现变差。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819225753949.png" alt></p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819225815689.png" alt></p>
+<h2 id="additional-training-data-and-dropout-effects">Additional Training Data And Dropout Effects</h2>
+<p>ALBERT训练时还加入了XLNet和RoBERTa训练时用的额外数据，实验表明加入额外数据确实会提升模型表现。此外，作者还观察到模型似乎一直没有过拟合数据，因此去除了Dropout，从对比试验可以看出，去除Dropout后模型表现确实更好。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819225921224.png" alt></p>
+<h2 id="current-state-of-the-art-on-nlu-tasks">Current State-Of-The-Art On NLU Tasks</h2>
+<p>最后是ALBERT在各个NLU任务上的表现，几乎都达到了state-of-the-art的表现。</p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819230243171.png" alt></p>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819230335186.png" alt></p>
+<h1 id="hyperparameters">hyperparameters</h1>
+<p><img src="/2020/08/19/nature_language_process/albert/image-20200819231158897.png" alt></p>
+<blockquote>
+<ul>
+<li>LR: Learning Rate.</li>
+<li>BSZ: Batch Size.</li>
+<li>DR: Dropout Rate.</li>
+<li>TS: Training Steps.</li>
+<li>WS: Warmup Steps.</li>
+<li>MSL: Maximum Sequence Length.</li>
+</ul>
+</blockquote>
+<h1 id="conclusion">conclusion</h1>
+<ul>
+<li>本文提出了Factorized embedding和层之间参数共享两种削减参数量的方式，在大家都想着把模型做大的时候给大家指出了另一条可行的路，意义重大。但本文提出的两种方法实际上都带来了模型效果的下降，也就是说本文似乎也还没有找到BERT中真正的冗余参数，减少模型参数量这方面还需要更多的研究。</li>
+<li>本文提出了SOP，很好地替换了NSP作为预训练任务，给模型表现带来了明显提升。</li>
+<li>本文的削减参数使模型表现下降，结果更好主要是靠SOP、更大的\(H\) 、更多的数据、去除dropout。那么如果不削减参数的话再使用SOP、加更多的数据、去除dropout呢？</li>
+<li>本文的削减参数量参数量带来了模型训练速度的提升，但是ALBERT-xxlarge比BERT-xlarge参数量少了约1000M，而训练速度并没有太大的提升（只有1.2倍）。原因应该是更少的参数量的确能带来速度上的提升，但是本文提出的Factorized embedding引入了额外的矩阵运算，并且同时ALBERT-xxlarge大幅增加了\(H\) ，实际上增加了模型的计算量。</li>
+<li>本文还有两个小细节可以学习
+<ul>
+<li>一个是在模型不会过拟合的情况下不使用dropout</li>
+<li>另一个则是warm-start:即在训练深层网络（例如12层）时，可以先训练浅层网络（例如6层），再在其基础上做fine-tune，这样可以加快深层模型的收敛。</li>
+</ul>
+</li>
+</ul>
+<h1 id="reference">reference</h1>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/87562926" target="_blank" rel="noopener">【论文阅读】ALBERT </a></li>
+<li><a href="https://github.com/brightmart/albert_zh" target="_blank" rel="noopener">albert_zh</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/17/deeplearning/normalization/normalization_summary/" rel="prev" title="归一化方法总结">
+      <i class="fa fa-chevron-left"></i> 归一化方法总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#motivation"><span class="nav-number">1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#factorized-embedding-parameterization"><span class="nav-number">2.1.</span> <span class="nav-text">Factorized embedding parameterization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-layer-parameter-sharing"><span class="nav-number">2.2.</span> <span class="nav-text">Cross-layer parameter sharing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inter-sentence-coherence-loss"><span class="nav-number">2.3.</span> <span class="nav-text">Inter-sentence coherence loss</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#model-setup"><span class="nav-number">3.</span> <span class="nav-text">Model setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#experimental-results"><span class="nav-number">4.</span> <span class="nav-text">Experimental Results</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bert-vs-albert"><span class="nav-number">4.1.</span> <span class="nav-text">BERT vs. ALBERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#factorized-embedding-parameterization-1"><span class="nav-number">4.2.</span> <span class="nav-text">Factorized Embedding Parameterization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-layer-parameter-sharing-1"><span class="nav-number">4.3.</span> <span class="nav-text">Cross-Layer Parameter Sharing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sop"><span class="nav-number">4.4.</span> <span class="nav-text">SOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-network-depth-and-width"><span class="nav-number">4.5.</span> <span class="nav-text">Effect Of Network Depth And Width</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#additional-training-data-and-dropout-effects"><span class="nav-number">4.6.</span> <span class="nav-text">Additional Training Data And Dropout Effects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#current-state-of-the-art-on-nlu-tasks"><span class="nav-number">4.7.</span> <span class="nav-text">Current State-Of-The-Art On NLU Tasks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hyperparameters"><span class="nav-number">5.</span> <span class="nav-text">hyperparameters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#conclusion"><span class="nav-number">6.</span> <span class="nav-text">conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">7.</span> <span class="nav-text">reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.2m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/00630Defgy1g4nse7rf9xj308u089gme.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/05/23/machine_learning/linear_regression/3.1_linreg.svg">
 <meta property="article:published_time" content="2020-05-23T00:43:13.000Z">
-<meta property="article:modified_time" content="2020-08-16T14:37:27.212Z">
+<meta property="article:modified_time" content="2020-08-22T02:15:51.425Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="线性回归">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-16 22:37:27" itemprop="dateModified" datetime="2020-08-16T22:37:27+08:00">2020-08-16</time>
+                <time title="修改时间：2020-08-22 10:15:51" itemprop="dateModified" datetime="2020-08-22T10:15:51+08:00">2020-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,7 +245,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">技术/机器学习</span></a>
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
                 </span>
             </span>
 
@@ -305,7 +309,7 @@
 <li>回归：人们在测量事物的时候因为客观条件所限，求得的都是测量值，而不是事物真实的值，为了能够得到真实值，无限次的进行测量，最后通过这些测量数据计算<strong>回归到真实值</strong>，这就是回归的由来。</li>
 </ul>
 <h2 id="biao-da-shi">表达式</h2>
-<p>简单来说，线性回归算法就是**找到一条直线（一元线性回归）或一个平面（多元线性回归）能够根据输入的特征向量来更好的预测输出y的值。**其本质含义在于 X 与 Y 是线性相关的。<br>
+<p>简单来说，线性回归算法就是找到一条直线（一元线性回归）或一个平面（多元线性回归）能够根据输入的特征向量来更好的预测输出y的值。其本质含义在于 X 与 Y 是线性相关的。<br>
 \[
 y = w_0 + w_1x_1 + \cdots  + w_px_p  = W^TX
 \]</p>
@@ -314,7 +318,7 @@ y = w_0 + w_1x_1 + \cdots  + w_px_p  = W^TX
 <p>\[
 \ell^{(i)}(W, b) = \frac{1}{2} \left(\hat{y}^{(i)} - y^{(i)}\right)^2
 \]</p>
-<p>其中常数 \(\frac 1 2\) 使对平方项求导后的常数系数为1，这样在形式上稍微简单一些。显然，误差越小表示预测价格与真实价格越相近，且当二者相等时误差为0。给定训练数据集，这个误差只与模型参数相关，因此我们将它记为以模型参数为参数的函数。通常，用训练数据集中所有样本误差的<strong>平均</strong>来衡量模型预测的质量，即</p>
+<p>其中常数 \(\frac 1 2\) 使对平方项求导后的常数系数为1，这样在形式上稍微简单一些。显然，误差越小表示预测值与真实值越相近，且当二者相等时误差为0。给定训练数据集，这个误差只与模型参数相关，因此将它记为以模型参数为参数的函数。用训练数据集中所有样本误差的<strong>平均</strong>来衡量模型预测的质量，即</p>
 <p>\[
 \ell(W, b) =\frac{1}{n} \sum_{i=1}^n \ell^{(i)}(W, b) =\frac{1}{n} \sum_{i=1}^n \frac{1}{2}\left(X^{(i)} W +  b - y^{(i)}\right)^2
 \]</p>
@@ -414,7 +418,6 @@ L(w) &amp;= log P(Y|X;w)  \\
 &amp;= argmax_w - \sum_{i=1}^N (y_i-w^Tx_i)^2
 \end{align}
 \]</p>
-<h3 id></h3>
 <h1 id="l-1-zheng-ze-hua-xi-shu-zheng-ze-hua">L1 正则化 - 稀疏正则化</h1>
 <p>1-范数: 表示向量元素的绝对值之和。<br>
 \[
@@ -647,7 +650,7 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xing-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-da-shi"><span class="nav-number">1.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu"><span class="nav-number">1.3.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-hua-suan-fa"><span class="nav-number">1.4.</span> <span class="nav-text">优化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zui-xiao-er-cheng-fa-gu-ji"><span class="nav-number">1.5.</span> <span class="nav-text">最小二乘法估计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cong-gai-lu-jiao-du-kan-zui-xiao-er-cheng-fa"><span class="nav-number">1.5.1.</span> <span class="nav-text">从概率角度看最小二乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.5.2.</span> <span class="nav-text"></span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#l-1-zheng-ze-hua-xi-shu-zheng-ze-hua"><span class="nav-number">2.</span> <span class="nav-text">L1 正则化 - 稀疏正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#l-2-zheng-ze-hua-quan-zhong-shuai-jian"><span class="nav-number">3.</span> <span class="nav-text">L2 正则化 – 权重衰减</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">4.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#guo-ni-he-qian-ni-he-ru-he-jie-jue"><span class="nav-number">4.1.</span> <span class="nav-text">过拟合、欠拟合如何解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-2-zheng-ze-hua-ling-hui-gui"><span class="nav-number">4.2.</span> <span class="nav-text">什么是L2正则化(岭回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-yong-l-2-zheng-ze-hua"><span class="nav-number">4.3.</span> <span class="nav-text">什么场景下用L2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-1-zheng-ze-hua-lasso-hui-gui"><span class="nav-number">4.4.</span> <span class="nav-text">什么是L1正则化(Lasso回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-l-1-zheng-ze-hua"><span class="nav-number">4.5.</span> <span class="nav-text">什么场景下使用L1正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-elastic-net-hui-gui"><span class="nav-number">4.6.</span> <span class="nav-text">什么是ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui"><span class="nav-number">4.7.</span> <span class="nav-text">什么场景下使用ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-he-zhi-dui-quan-zhong-jin-xing-zheng-ze-cheng-fa-er-bu-zhen-dui-pian-zhi"><span class="nav-number">4.8.</span> <span class="nav-text">为何只对权重进行正则惩罚，而不针对偏置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quan-zhong-shuai-jian-de-mu-de"><span class="nav-number">4.9.</span> <span class="nav-text">权重衰减的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#l-1-yu-l-2-de-yi-tong"><span class="nav-number">4.10.</span> <span class="nav-text">L1 与 L2 的异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-he-l-1-he-l-2-zheng-ze-hua-ke-yi-fang-zhi-guo-ni-he"><span class="nav-number">4.11.</span> <span class="nav-text">为何 L1 和 L2 正则化可以防止过拟合？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu"><span class="nav-number">4.12.</span> <span class="nav-text">线性回归要求因变量服从正态分布？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xian-xing-hui-gui-yu-shen-jing-wang-luo-zhi-jian-de-guan-xi"><span class="nav-number">4.13.</span> <span class="nav-text">线性回归与神经网络之间的关系</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xing-hui-gui"><span class="nav-number">1.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-da-shi"><span class="nav-number">1.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu"><span class="nav-number">1.3.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-hua-suan-fa"><span class="nav-number">1.4.</span> <span class="nav-text">优化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zui-xiao-er-cheng-fa-gu-ji"><span class="nav-number">1.5.</span> <span class="nav-text">最小二乘法估计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cong-gai-lu-jiao-du-kan-zui-xiao-er-cheng-fa"><span class="nav-number">1.5.1.</span> <span class="nav-text">从概率角度看最小二乘法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#l-1-zheng-ze-hua-xi-shu-zheng-ze-hua"><span class="nav-number">2.</span> <span class="nav-text">L1 正则化 - 稀疏正则化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#l-2-zheng-ze-hua-quan-zhong-shuai-jian"><span class="nav-number">3.</span> <span class="nav-text">L2 正则化 – 权重衰减</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">4.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#guo-ni-he-qian-ni-he-ru-he-jie-jue"><span class="nav-number">4.1.</span> <span class="nav-text">过拟合、欠拟合如何解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-2-zheng-ze-hua-ling-hui-gui"><span class="nav-number">4.2.</span> <span class="nav-text">什么是L2正则化(岭回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-yong-l-2-zheng-ze-hua"><span class="nav-number">4.3.</span> <span class="nav-text">什么场景下用L2正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-l-1-zheng-ze-hua-lasso-hui-gui"><span class="nav-number">4.4.</span> <span class="nav-text">什么是L1正则化(Lasso回归)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-l-1-zheng-ze-hua"><span class="nav-number">4.5.</span> <span class="nav-text">什么场景下使用L1正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-elastic-net-hui-gui"><span class="nav-number">4.6.</span> <span class="nav-text">什么是ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-chang-jing-xia-shi-yong-elastic-net-hui-gui"><span class="nav-number">4.7.</span> <span class="nav-text">什么场景下使用ElasticNet回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-he-zhi-dui-quan-zhong-jin-xing-zheng-ze-cheng-fa-er-bu-zhen-dui-pian-zhi"><span class="nav-number">4.8.</span> <span class="nav-text">为何只对权重进行正则惩罚，而不针对偏置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quan-zhong-shuai-jian-de-mu-de"><span class="nav-number">4.9.</span> <span class="nav-text">权重衰减的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#l-1-yu-l-2-de-yi-tong"><span class="nav-number">4.10.</span> <span class="nav-text">L1 与 L2 的异同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-he-l-1-he-l-2-zheng-ze-hua-ke-yi-fang-zhi-guo-ni-he"><span class="nav-number">4.11.</span> <span class="nav-text">为何 L1 和 L2 正则化可以防止过拟合？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xian-xing-hui-gui-yao-qiu-yin-bian-liang-fu-cong-zheng-tai-fen-bu"><span class="nav-number">4.12.</span> <span class="nav-text">线性回归要求因变量服从正态分布？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xian-xing-hui-gui-yu-shen-jing-wang-luo-zhi-jian-de-guan-xi"><span class="nav-number">4.13.</span> <span class="nav-text">线性回归与神经网络之间的关系</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -665,20 +668,20 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -749,7 +752,7 @@ min(\frac{1}{2m}[\sum_{i=1}^{m}({y_i}^{'}-y_i)^2+\lambda\sum_{j=1}^{n}\theta_j^2
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
