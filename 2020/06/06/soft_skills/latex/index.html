@@ -55,7 +55,7 @@
 <meta property="og:image" content="https://jeffery.ink/2020/06/06/soft_skills/latex/image-20200609134020824.png">
 <meta property="og:image" content="https://jeffery.ink/2020/06/06/soft_skills/latex/image-20200609134518050.png">
 <meta property="article:published_time" content="2020-06-06T14:23:55.000Z">
-<meta property="article:modified_time" content="2020-08-22T01:34:15.874Z">
+<meta property="article:modified_time" content="2020-09-05T08:27:58.161Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="latex">
 <meta name="twitter:card" content="summary">
@@ -258,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 09:34:15" itemprop="dateModified" datetime="2020-08-22T09:34:15+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-05 16:27:58" itemprop="dateModified" datetime="2020-09-05T16:27:58+08:00">2020-09-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,7 +301,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>20k</span>
+              <span>21k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -327,18 +327,18 @@
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>x_{2}</td>
-<td>\(x_{2}\)</td>
+<td style="text-align:center"><code>x_{2}</code></td>
+<td style="text-align:center">\(x_{2}\)</td>
 </tr>
 <tr>
-<td>x^2</td>
-<td>\(x^{2}\)</td>
+<td style="text-align:center"><code>x^2</code></td>
+<td style="text-align:center">\(x^{2}\)</td>
 </tr>
 </tbody>
 </table>
@@ -348,41 +348,79 @@
 <p>\[
 y = wx+b \tag{1.1}
 \]</p>
+<h2 id="xia-hua-xian">下划线</h2>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>显示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\underline{x+y}</td>
+<td>\(\underline{x+y}\)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="gua-hao">括号</h2>
-<ol>
-<li>
-<p>() [] 直接写就行，而 {} 则需要转义</p>
-<ol>
-<li>y \in {3, 4, 5} : \(y \in \{3, 4, 5\}\)</li>
-</ol>
-</li>
-<li>
-<p>有时候括号需要大号的，此时需要使用\left和\right加大括号的大小。</p>
-<ol>
-<li>\left(\frac {x} {y} \right)^2 : \(\left(\frac {x} {y} \right)^2\)</li>
-</ol>
-</li>
-<li>
-<p>\left 和 \right必须成对出现，对于不显示的一边可以使用 . 代替</p>
-</li>
-<li>
-<p>\left. \frac{du}{dx} \right| _{x=0} : \(\left. \frac{du}{dx} \right| _{x=0}\)</p>
-</li>
-<li>
-<p>双括号\(\left\|g_{k}\right\|\)</p>
-</li>
-<li>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>显示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[ ]</code></td>
+<td>[ ]</td>
+</tr>
+<tr>
+<td><code>( )</code></td>
+<td>( )</td>
+</tr>
+<tr>
+<td><code>\\{ \\}</code></td>
+<td>{ }</td>
+</tr>
+<tr>
+<td><code>\left( x \right)</code></td>
+<td>\(\left( x \right)\)</td>
+</tr>
+<tr>
+<td><code>\left|x \right.</code></td>
+<td>$ \left</td>
+</tr>
+<tr>
+<td><code>\left. \frac{du}{dx} \right \| _{x=0}</code></td>
+<td>$\left. \frac{du}{dx} \right</td>
+</tr>
+<tr>
+<td><code>\left\|  g_{k} \right\|</code></td>
+<td>\(\left\|g_{k}\right\|\)</td>
+</tr>
+</tbody>
+</table>
 <p>左大括号：</p>
-<p><code>\left\{\begin{array}{ll} x=\frac{3 \pi}{2}(1+2 t) \cos \left(\frac{3 \pi}{2}(1+2 t)\right) &amp; \\ y=s, &amp; 0 \leq s \leq L,|t| \leq 1 \\ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right) \end{array}\right.</code><br>
-\[
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\left\&#123;\begin&#123;array&#125;&#123;ll&#125;</span><br><span class="line">x&#x3D;\frac&#123;3 \pi&#125;&#123;2&#125;(1+2 t) \cos \left(\frac&#123;3 \pi&#125;&#123;2&#125;(1+2 t)\right) &amp; \\</span><br><span class="line">y&#x3D;s, &amp; 0 \leq s \leq L,|t| \leq 1 \\</span><br><span class="line">z&#x3D;\frac&#123;3 \pi&#125;&#123;2&#125;(1+2 t) \sin \left(\frac&#123;3 \pi&#125;&#123;2&#125;(1+2 t)\right)</span><br><span class="line">\end&#123;array&#125;\right.</span><br></pre></td></tr></table></figure>
+<p>\[
 \left\{\begin{array}{ll}
 x=\frac{3 \pi}{2}(1+2 t) \cos \left(\frac{3 \pi}{2}(1+2 t)\right) &amp; \\
 y=s, &amp; 0 \leq s \leq L,|t| \leq 1 \\
 z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 \end{array}\right.
 \]</p>
+<blockquote>
+<ol>
+<li>
+<p>() [] 直接写就行，而 {} 则需要转义</p>
+</li>
+<li>
+<p>\left 和 \right必须成对出现，对于不显示的一边可以使用 . 代替</p>
 </li>
 </ol>
+</blockquote>
 <h2 id="fen-shu">分数</h2>
 <p>两种写法：</p>
 <table>
@@ -394,8 +432,12 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">\frac{1}{2x+1}</td>
+<td style="text-align:center"><code>\frac{1}{2x+1}</code></td>
 <td style="text-align:center">\(\frac{1}{2x+1}\)</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\displaystyle \frac{1}{2x+1}</code></td>
+<td style="text-align:center">\(\displaystyle \frac{1}{2x+1}\)</td>
 </tr>
 </tbody>
 </table>
@@ -403,14 +445,14 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\sqrt[n]{a}</td>
-<td>\(\sqrt[n]{a}\)</td>
+<td style="text-align:center"><code>\sqrt[n]{a}</code></td>
+<td style="text-align:center">\(\sqrt[n]{a}\)</td>
 </tr>
 </tbody>
 </table>
@@ -418,22 +460,22 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\log</td>
-<td>\(\log\)</td>
+<td style="text-align:center"><code>\log</code></td>
+<td style="text-align:center">\(\log\)</td>
 </tr>
 <tr>
-<td>\lg</td>
-<td>\(\lg\)</td>
+<td style="text-align:center"><code>\lg</code></td>
+<td style="text-align:center">\(\lg\)</td>
 </tr>
 <tr>
-<td>\ln</td>
-<td>\(\ln\)</td>
+<td style="text-align:center"><code>\ln</code></td>
+<td style="text-align:center">\(\ln\)</td>
 </tr>
 </tbody>
 </table>
@@ -441,14 +483,14 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\vec{a}</td>
-<td>\(\vec{a}\)</td>
+<td style="text-align:center"><code>\vec{a}</code></td>
+<td style="text-align:center">\(\vec{a}\)</td>
 </tr>
 </tbody>
 </table>
@@ -456,41 +498,41 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\bot</td>
-<td>\(\bot\)</td>
+<td style="text-align:center"><code>\bot</code></td>
+<td style="text-align:center">\(\bot\)</td>
 <td></td>
-<td>\angle</td>
-<td>\(\angle\)</td>
+<td style="text-align:center"><code>\angle</code></td>
+<td style="text-align:center">\(\angle\)</td>
 </tr>
 <tr>
-<td>\sin</td>
-<td>\(\sin\)</td>
+<td style="text-align:center"><code>\sin</code></td>
+<td style="text-align:center">\(\sin\)</td>
 <td></td>
-<td>\cos</td>
-<td>\(\cos\)</td>
+<td style="text-align:center"><code>\cos</code></td>
+<td style="text-align:center">\(\cos\)</td>
 </tr>
 <tr>
-<td>\tan</td>
-<td>\(\tan\)</td>
+<td style="text-align:center"><code>\tan</code></td>
+<td style="text-align:center">\(\tan\)</td>
 <td></td>
-<td>\cot</td>
-<td>\(\cot\)</td>
+<td style="text-align:center"><code>\cot</code></td>
+<td style="text-align:center">\(\cot\)</td>
 </tr>
 <tr>
-<td>\sec</td>
-<td>\(\sec\)</td>
+<td style="text-align:center"><code>\sec</code></td>
+<td style="text-align:center">\(\sec\)</td>
 <td></td>
-<td>\csc</td>
-<td>\(\csc\)</td>
+<td style="text-align:center"><code>\csc</code></td>
+<td style="text-align:center">\(\csc\)</td>
 </tr>
 </tbody>
 </table>
@@ -498,22 +540,22 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\ldots</td>
-<td>\(\ldots\)</td>
+<td style="text-align:center"><code>\ldots</code></td>
+<td style="text-align:center">\(\ldots\)</td>
 </tr>
 <tr>
-<td>\cdots</td>
-<td>\(\cdots\)</td>
+<td style="text-align:center"><code>\cdots</code></td>
+<td style="text-align:center">\(\cdots\)</td>
 </tr>
 <tr>
-<td>\cdot</td>
-<td>\(\cdot\)</td>
+<td style="text-align:center"><code>\cdot</code></td>
+<td style="text-align:center">\(\cdot\)</td>
 </tr>
 </tbody>
 </table>
@@ -521,41 +563,41 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\#</td>
-<td>\(\#\)</td>
+<td style="text-align:center"><code>\#</code></td>
+<td style="text-align:center">\(\#\)</td>
 <td></td>
-<td>\_</td>
-<td>\(\_\)</td>
+<td style="text-align:center"><code>\_</code></td>
+<td style="text-align:center">\(\_\)</td>
 </tr>
 <tr>
-<td>\$</td>
-<td>$$$</td>
+<td style="text-align:center"><code>\$</code></td>
+<td style="text-align:center">$$$</td>
 <td></td>
-<td>\%</td>
-<td>\(\%\)</td>
+<td style="text-align:center"><code>\%</code></td>
+<td style="text-align:center">\(\%\)</td>
 </tr>
 <tr>
-<td>\&amp;</td>
-<td>\(\&amp;\)</td>
+<td style="text-align:center"><code>\&amp;</code></td>
+<td style="text-align:center">\(\&amp;\)</td>
 <td></td>
-<td></td>
-<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\{</td>
-<td>\(\{\)</td>
+<td style="text-align:center"><code>\{</code></td>
+<td style="text-align:center">\(\{\)</td>
 <td></td>
-<td>\}</td>
-<td>\(\}\)</td>
+<td style="text-align:center"><code>\}</code></td>
+<td style="text-align:center">\(\}\)</td>
 </tr>
 </tbody>
 </table>
@@ -563,270 +605,283 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\pm</td>
-<td>\(\pm\)</td>
+<td style="text-align:center"><code>\pm</code></td>
+<td style="text-align:center">\(\pm\)</td>
 <td></td>
-<td>\times</td>
-<td>\(\times\)</td>
+<td style="text-align:center"><code>\times</code></td>
+<td style="text-align:center">\(\times\)</td>
 </tr>
 <tr>
-<td>\div</td>
-<td>\(\div\)</td>
+<td style="text-align:center"><code>\mp</code></td>
+<td style="text-align:center">\(\mp\)</td>
 <td></td>
-<td>\mid</td>
-<td>\(\mid\)</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\cdot</td>
-<td>\(\cdot\)</td>
+<td style="text-align:center"><code>\div</code></td>
+<td style="text-align:center">\(\div\)</td>
 <td></td>
-<td>\circ</td>
-<td>\(\circ\)</td>
+<td style="text-align:center"><code>\mid</code></td>
+<td style="text-align:center">\(\mid\)</td>
 </tr>
 <tr>
-<td>\ast</td>
-<td>\(\ast\)</td>
+<td style="text-align:center"><code>\cdot</code></td>
+<td style="text-align:center">\(\cdot\)</td>
 <td></td>
-<td>\bigodot</td>
-<td>\(\bigodot\)</td>
+<td style="text-align:center"><code>\circ</code></td>
+<td style="text-align:center">\(\circ\)</td>
 </tr>
 <tr>
-<td>\bigotimes</td>
-<td>\(\bigotimes\)</td>
+<td style="text-align:center"><code>\ast</code></td>
+<td style="text-align:center">\(\ast\)</td>
 <td></td>
-<td>\equiv</td>
-<td>\(\equiv\)</td>
+<td style="text-align:center"><code>\bigodot</code></td>
+<td style="text-align:center">\(\bigodot\)</td>
 </tr>
 <tr>
-<td>\leq or \le</td>
-<td>\(\leq\)</td>
+<td style="text-align:center"><code>\bigotimes</code></td>
+<td style="text-align:center">\(\bigotimes\)</td>
 <td></td>
-<td>\geq or \ge</td>
-<td>\(\geq\)</td>
+<td style="text-align:center"><code>\equiv</code></td>
+<td style="text-align:center">\(\equiv\)</td>
 </tr>
 <tr>
-<td>\ll</td>
-<td>\(\ll\)</td>
+<td style="text-align:center"><code>\leq or \le</code></td>
+<td style="text-align:center">\(\leq\)</td>
 <td></td>
-<td>\gg</td>
-<td>\(\gg\)</td>
+<td style="text-align:center"><code>\geq or \ge</code></td>
+<td style="text-align:center">\(\geq\)</td>
 </tr>
 <tr>
-<td>\neq or  \ne</td>
-<td>\(\neq\)</td>
+<td style="text-align:center"><code>\ll</code></td>
+<td style="text-align:center">\(\ll\)</td>
 <td></td>
-<td>\approx</td>
-<td>\(\approx\)</td>
+<td style="text-align:center"><code>\gg</code></td>
+<td style="text-align:center">\(\gg\)</td>
 </tr>
 <tr>
-<td>\succeq</td>
-<td>\(\succeq\)</td>
+<td style="text-align:center"><code>\neq or  \ne</code></td>
+<td style="text-align:center">\(\neq\)</td>
 <td></td>
-<td>\preceq</td>
-<td>\(\preceq\)</td>
+<td style="text-align:center"><code>\approx</code></td>
+<td style="text-align:center">\(\approx\)</td>
 </tr>
 <tr>
-<td>\doteq</td>
-<td>\(\doteq\)</td>
+<td style="text-align:center"><code>\succeq</code></td>
+<td style="text-align:center">\(\succeq\)</td>
 <td></td>
-<td>\cong</td>
-<td>\(\cong\)</td>
+<td style="text-align:center"><code>\preceq</code></td>
+<td style="text-align:center">\(\preceq\)</td>
 </tr>
 <tr>
-<td>\sim</td>
-<td>\(\sim\)</td>
+<td style="text-align:center"><code>\doteq</code></td>
+<td style="text-align:center">\(\doteq\)</td>
 <td></td>
-<td>\simeq</td>
-<td>\(\simeq\)</td>
+<td style="text-align:center"><code>\cong</code></td>
+<td style="text-align:center">\(\cong\)</td>
 </tr>
 <tr>
-<td>\vdash</td>
-<td>\(\vdash\)</td>
+<td style="text-align:center"><code>\sim</code></td>
+<td style="text-align:center">\(\sim\)</td>
 <td></td>
-<td>\dashv</td>
-<td>\(\dashv\)</td>
+<td style="text-align:center"><code>\simeq</code></td>
+<td style="text-align:center">\(\simeq\)</td>
 </tr>
 <tr>
-<td>\models</td>
-<td>\(\models\)</td>
+<td style="text-align:center"><code>\vdash</code></td>
+<td style="text-align:center">\(\vdash\)</td>
 <td></td>
-<td>\perp</td>
-<td>\(\perp\)</td>
+<td style="text-align:center"><code>\dashv</code></td>
+<td style="text-align:center">\(\dashv\)</td>
 </tr>
 <tr>
-<td>\smile</td>
-<td>\(\smile\)</td>
+<td style="text-align:center"><code>\models</code></td>
+<td style="text-align:center">\(\models\)</td>
 <td></td>
-<td>\frown</td>
-<td>\(\frown\)</td>
+<td style="text-align:center"><code>\perp</code></td>
+<td style="text-align:center">\(\perp\)</td>
 </tr>
 <tr>
-<td>\saymp</td>
-<td>\(\asymp\)</td>
+<td style="text-align:center"><code>\smile</code></td>
+<td style="text-align:center">\(\smile\)</td>
 <td></td>
-<td>:</td>
-<td>\(\:\)</td>
+<td style="text-align:center"><code>\frown</code></td>
+<td style="text-align:center">\(\frown\)</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\saymp</code></td>
+<td style="text-align:center">\(\asymp\)</td>
+<td></td>
+<td style="text-align:center"><code>\\:</code></td>
+<td style="text-align:center">\(\\:\)</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\overline{x}</code></td>
+<td style="text-align:center">\(\overline{x}\)</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
 <h2 id="xi-la-zi-mu">希腊字母</h2>
-<p>大写：开头字母大写<br>
-斜体：命令前面加var</p>
+<p>大写：开头字母大写。斜体：命令前面加var</p>
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
-<th>大写</th>
-<th>斜体</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">大写</th>
+<th style="text-align:center">斜体</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
-<th>大写</th>
-<th>斜体</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">大写</th>
+<th style="text-align:center">斜体</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\alpha</td>
-<td>\(\alpha\)</td>
-<td>A</td>
+<td style="text-align:center"><code>\alpha</code></td>
+<td style="text-align:center">\(\alpha\)</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center"></td>
 <td></td>
-<td></td>
-<td>\beta</td>
-<td>\(\beta\)</td>
-<td>B</td>
-<td></td>
+<td style="text-align:center"><code>\beta</code></td>
+<td style="text-align:center">\(\beta\)</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\gamma</td>
-<td>\(\gamma\)</td>
-<td>\(\Gamma\)</td>
-<td>\(\varGamma\)</td>
+<td style="text-align:center"><code>\gamma</code></td>
+<td style="text-align:center">\(\gamma\)</td>
+<td style="text-align:center">\(\Gamma\)</td>
+<td style="text-align:center">\(\varGamma\)</td>
 <td></td>
-<td>\delta</td>
-<td>\(\delta\)</td>
-<td>\(\Delta\)</td>
-<td>\(\varDelta\)</td>
+<td style="text-align:center"><code>\delta</code></td>
+<td style="text-align:center">\(\delta\)</td>
+<td style="text-align:center">\(\Delta\)</td>
+<td style="text-align:center">\(\varDelta\)</td>
 </tr>
 <tr>
-<td>\epsilon</td>
-<td>\(\epsilon\)</td>
-<td>E</td>
-<td>\(\varepsilon\)</td>
+<td style="text-align:center"><code>\epsilon</code></td>
+<td style="text-align:center">\(\epsilon\)</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">\(\varepsilon\)</td>
 <td></td>
-<td>\zeta</td>
-<td>\(\zeta\)</td>
-<td>Z</td>
-<td></td>
+<td style="text-align:center"><code>\zeta</code></td>
+<td style="text-align:center">\(\zeta\)</td>
+<td style="text-align:center">Z</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\eta</td>
-<td>\(\eta\)</td>
-<td>H</td>
+<td style="text-align:center"><code>\eta</code></td>
+<td style="text-align:center">\(\eta\)</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center"></td>
 <td></td>
-<td></td>
-<td>\theta</td>
-<td>\(\theta\)</td>
-<td>\(\Theta\)</td>
-<td>\(\varTheta\)</td>
+<td style="text-align:center"><code>\theta</code></td>
+<td style="text-align:center">\(\theta\)</td>
+<td style="text-align:center">\(\Theta\)</td>
+<td style="text-align:center">\(\varTheta\)</td>
 </tr>
 <tr>
-<td>\iota</td>
-<td>\(\iota\)</td>
-<td>I</td>
+<td style="text-align:center"><code>\iota</code></td>
+<td style="text-align:center">\(\iota\)</td>
+<td style="text-align:center">I</td>
+<td style="text-align:center"></td>
 <td></td>
-<td></td>
-<td>\kappa</td>
-<td>\(\kappa\)</td>
-<td>K</td>
-<td></td>
+<td style="text-align:center"><code>\kappa</code></td>
+<td style="text-align:center">\(\kappa\)</td>
+<td style="text-align:center">K</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\lambda</td>
-<td>\(\lambda\)</td>
-<td>\(\Lambda\)</td>
-<td>\(\varLambda\)</td>
+<td style="text-align:center"><code>\lambda</code></td>
+<td style="text-align:center">\(\lambda\)</td>
+<td style="text-align:center">\(\Lambda\)</td>
+<td style="text-align:center">\(\varLambda\)</td>
 <td></td>
-<td>\mu</td>
-<td>\(\mu\)</td>
-<td>M</td>
-<td></td>
+<td style="text-align:center"><code>\mu</code></td>
+<td style="text-align:center">\(\mu\)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\xi</td>
-<td>\(\xi\)</td>
-<td>\(\Xi\)</td>
-<td>\(\varXi\)</td>
+<td style="text-align:center"><code>\xi</code></td>
+<td style="text-align:center">\(\xi\)</td>
+<td style="text-align:center">\(\Xi\)</td>
+<td style="text-align:center">\(\varXi\)</td>
 <td></td>
-<td>\nu</td>
-<td>\(\nu\)</td>
-<td>N</td>
-<td></td>
+<td style="text-align:center"><code>\nu</code></td>
+<td style="text-align:center">\(\nu\)</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\pi</td>
-<td>\(\pi\)</td>
-<td>\(\Pi\)</td>
-<td>\(\varPi\)</td>
+<td style="text-align:center"><code>\pi</code></td>
+<td style="text-align:center">\(\pi\)</td>
+<td style="text-align:center">\(\Pi\)</td>
+<td style="text-align:center">\(\varPi\)</td>
 <td></td>
-<td>\rho</td>
-<td>\(\rho\)</td>
-<td>P</td>
-<td>\(\varrho\)</td>
+<td style="text-align:center"><code>\rho</code></td>
+<td style="text-align:center">\(\rho\)</td>
+<td style="text-align:center">P</td>
+<td style="text-align:center">\(\varrho\)</td>
 </tr>
 <tr>
-<td>\sigma</td>
-<td>\(\sigma\)</td>
-<td>\(\Sigma\)</td>
-<td>\(\varSigma\)</td>
+<td style="text-align:center"><code>\sigma</code></td>
+<td style="text-align:center">\(\sigma\)</td>
+<td style="text-align:center">\(\Sigma\)</td>
+<td style="text-align:center">\(\varSigma\)</td>
 <td></td>
-<td>\tau</td>
-<td>\(\tau\)</td>
-<td>T</td>
-<td></td>
+<td style="text-align:center"><code>\tau</code></td>
+<td style="text-align:center">\(\tau\)</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
-<td>\upsilon</td>
-<td>\(\upsilon\)</td>
-<td>\(\Upsilon\)</td>
-<td>\(\varUpsilon\)</td>
+<td style="text-align:center"><code>\upsilon</code></td>
+<td style="text-align:center">\(\upsilon\)</td>
+<td style="text-align:center">\(\Upsilon\)</td>
+<td style="text-align:center">\(\varUpsilon\)</td>
 <td></td>
-<td>\phi</td>
-<td>\(\phi\)</td>
-<td>\(\Phi\)</td>
-<td>\(\varPhi\)</td>
+<td style="text-align:center"><code>\phi</code></td>
+<td style="text-align:center">\(\phi\)</td>
+<td style="text-align:center">\(\Phi\)</td>
+<td style="text-align:center">\(\varPhi\)</td>
 </tr>
 <tr>
-<td>\chi</td>
-<td>\(\chi\)</td>
-<td>X</td>
+<td style="text-align:center"><code>\chi</code></td>
+<td style="text-align:center">\(\chi\)</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center"></td>
 <td></td>
-<td></td>
-<td>\psi</td>
-<td>\(\psi\)</td>
-<td>\(\Psi\)</td>
-<td>\(\varPsi\)</td>
+<td style="text-align:center"><code>\psi</code></td>
+<td style="text-align:center">\(\psi\)</td>
+<td style="text-align:center">\(\Psi\)</td>
+<td style="text-align:center">\(\varPsi\)</td>
 </tr>
 <tr>
-<td>\omega</td>
-<td>\(\omega\)</td>
-<td>\(\Omega\)</td>
-<td>\(\varOmega\)</td>
+<td style="text-align:center"><code>\omega</code></td>
+<td style="text-align:center">\(\omega\)</td>
+<td style="text-align:center">\(\Omega\)</td>
+<td style="text-align:center">\(\varOmega\)</td>
 <td></td>
-<td>\omicron</td>
-<td>\(\omicron\)</td>
-<td>\(\Omicron\)</td>
-<td></td>
+<td style="text-align:center"><code>\omicron</code></td>
+<td style="text-align:center">\(\omicron\)</td>
+<td style="text-align:center">\(\Omicron\)</td>
+<td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
@@ -834,76 +889,76 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\emptyset</td>
-<td>\(\emptyset\)</td>
+<td style="text-align:center"><code>\emptyset</code></td>
+<td style="text-align:center">\(\emptyset\)</td>
 <td></td>
-<td>\propto</td>
-<td>\(\propto\)</td>
+<td style="text-align:center"><code>\propto</code></td>
+<td style="text-align:center">\(\propto\)</td>
 </tr>
 <tr>
-<td>\notin</td>
-<td>\(\notin\)</td>
+<td style="text-align:center"><code>\notin</code></td>
+<td style="text-align:center">\(\notin\)</td>
 <td></td>
-<td>\Join or \bowtie</td>
-<td>\(\Join\)</td>
+<td style="text-align:center"><code>\Join or \bowtie</code></td>
+<td style="text-align:center">\(\Join\)</td>
 </tr>
 <tr>
-<td>\supset</td>
-<td>\(\supset\)</td>
+<td style="text-align:center"><code>\supset</code></td>
+<td style="text-align:center">\(\supset\)</td>
 <td></td>
-<td>\subseteq</td>
-<td>\(\subseteq\)</td>
+<td style="text-align:center"><code>\subseteq</code></td>
+<td style="text-align:center">\(\subseteq\)</td>
 </tr>
 <tr>
-<td>\subset</td>
-<td>\(\subset\)</td>
+<td style="text-align:center"><code>\subset</code></td>
+<td style="text-align:center">\(\subset\)</td>
 <td></td>
-<td>\supseteq</td>
-<td>\(\supseteq\)</td>
+<td style="text-align:center"><code>\supseteq</code></td>
+<td style="text-align:center">\(\supseteq\)</td>
 </tr>
 <tr>
-<td>\sqsubset</td>
-<td>\(\sqsubset\)</td>
+<td style="text-align:center"><code>\sqsubset</code></td>
+<td style="text-align:center">\(\sqsubset\)</td>
 <td></td>
-<td>\sqsupseteq</td>
-<td>\(\sqsupseteq\)</td>
+<td style="text-align:center"><code>\sqsupseteq</code></td>
+<td style="text-align:center">\(\sqsupseteq\)</td>
 </tr>
 <tr>
-<td>\bigcap</td>
-<td>\(\bigcap\)</td>
+<td style="text-align:center"><code>\bigcap</code></td>
+<td style="text-align:center">\(\bigcap\)</td>
 <td></td>
-<td>\bigcup</td>
-<td>\(\bigcup\)</td>
+<td style="text-align:center"><code>\bigcup</code></td>
+<td style="text-align:center">\(\bigcup\)</td>
 </tr>
 <tr>
-<td>\bigvee</td>
-<td>\(\bigvee\)</td>
+<td style="text-align:center"><code>\bigvee</code></td>
+<td style="text-align:center">\(\bigvee\)</td>
 <td></td>
-<td>\bigwedge</td>
-<td>\(\bigwedge\)</td>
+<td style="text-align:center"><code>\bigwedge</code></td>
+<td style="text-align:center">\(\bigwedge\)</td>
 </tr>
 <tr>
-<td>\biguplus</td>
-<td>\(\biguplus\)</td>
+<td style="text-align:center"><code>\biguplus</code></td>
+<td style="text-align:center">\(\biguplus\)</td>
 <td></td>
-<td>\bigsqcup</td>
-<td>\(\bigsqcup\)</td>
+<td style="text-align:center"><code>\bigsqcup</code></td>
+<td style="text-align:center">\(\bigsqcup\)</td>
 </tr>
 <tr>
-<td>\in</td>
-<td>\(\in\)</td>
+<td style="text-align:center"><code>\in</code></td>
+<td style="text-align:center">\(\in\)</td>
 <td></td>
-<td>\ni or \owns</td>
-<td>\(\owns\)</td>
+<td style="text-align:center"><code>\ni or \owns</code></td>
+<td style="text-align:center">\(\owns\)</td>
 </tr>
 </tbody>
 </table>
@@ -911,27 +966,27 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\because</td>
-<td>\(\because\)</td>
+<td style="text-align:center"><code>\because</code></td>
+<td style="text-align:center">\(\because\)</td>
 <td></td>
-<td>\therefore</td>
-<td>\(\therefore\)</td>
+<td style="text-align:center"><code>\therefore</code></td>
+<td style="text-align:center">\(\therefore\)</td>
 </tr>
 <tr>
-<td>\forall</td>
-<td>\(\forall\)</td>
+<td style="text-align:center"><code>\forall</code></td>
+<td style="text-align:center">\(\forall\)</td>
 <td></td>
-<td>\exists</td>
-<td>\(\exists\)</td>
+<td style="text-align:center"><code>\exists</code></td>
+<td style="text-align:center">\(\exists\)</td>
 </tr>
 </tbody>
 </table>
@@ -939,48 +994,48 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>y{\prime}x</td>
-<td>\(y{\prime}x\)</td>
+<td style="text-align:center"><code>y{\prime}x</code></td>
+<td style="text-align:center">\(y{\prime}x\)</td>
 <td></td>
-<td>\int</td>
-<td>\(\int\)</td>
+<td style="text-align:center"><code>\int</code></td>
+<td style="text-align:center">\(\int\)</td>
 </tr>
 <tr>
-<td>\iint</td>
-<td>\(\iint\)</td>
+<td style="text-align:center"><code>\iint</code></td>
+<td style="text-align:center">\(\iint\)</td>
 <td></td>
-<td>\iiint</td>
-<td>\(\iiint\)</td>
+<td style="text-align:center"><code>\iiint</code></td>
+<td style="text-align:center">\(\iiint\)</td>
 </tr>
 <tr>
-<td>\oint</td>
-<td>\(oint\)</td>
+<td style="text-align:center"><code>\oint</code></td>
+<td style="text-align:center">\(oint\)</td>
 <td></td>
-<td>\lim</td>
-<td>\(lim\)</td>
+<td style="text-align:center"><code>\lim</code></td>
+<td style="text-align:center">\(lim\)</td>
 </tr>
 <tr>
-<td>\infty</td>
-<td>\(\infty\)</td>
+<td style="text-align:center"><code>\infty</code></td>
+<td style="text-align:center">\(\infty\)</td>
 <td></td>
-<td>\nabla</td>
-<td>\(\nabla\)</td>
+<td style="text-align:center"><code>\nabla</code></td>
+<td style="text-align:center">\(\nabla\)</td>
 </tr>
 <tr>
-<td>\partial</td>
-<td>\(\partial\)</td>
+<td style="text-align:center"><code>\partial</code></td>
+<td style="text-align:center">\(\partial\)</td>
 <td></td>
-<td></td>
-<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
@@ -988,55 +1043,55 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\uparrow</td>
-<td>\(\uparrow\)</td>
+<td style="text-align:center"><code>\uparrow</code></td>
+<td style="text-align:center">\(\uparrow\)</td>
 <td></td>
-<td>\downarrow</td>
-<td>\(\downarrow\)</td>
+<td style="text-align:center"><code>\downarrow</code></td>
+<td style="text-align:center">\(\downarrow\)</td>
 </tr>
 <tr>
-<td>\Uparrow</td>
-<td>\(\Uparrow\)</td>
+<td style="text-align:center"><code>\Uparrow</code></td>
+<td style="text-align:center">\(\Uparrow\)</td>
 <td></td>
-<td>\Downarrow</td>
-<td>\(\Downarrow\)</td>
+<td style="text-align:center"><code>\Downarrow</code></td>
+<td style="text-align:center">\(\Downarrow\)</td>
 </tr>
 <tr>
-<td>\leftarrow</td>
-<td>\(\leftarrow\)</td>
+<td style="text-align:center"><code>\leftarrow</code></td>
+<td style="text-align:center">\(\leftarrow\)</td>
 <td></td>
-<td>\rightarrow</td>
-<td>\(\rightarrow\)</td>
+<td style="text-align:center"><code>\rightarrow</code></td>
+<td style="text-align:center">\(\rightarrow\)</td>
 </tr>
 <tr>
-<td>\Leftarrow</td>
-<td>\(\Leftarrow\)</td>
+<td style="text-align:center"><code>\Leftarrow</code></td>
+<td style="text-align:center">\(\Leftarrow\)</td>
 <td></td>
-<td>\Rightarrow</td>
-<td>\(\Rightarrow\)</td>
+<td style="text-align:center"><code>\Rightarrow</code></td>
+<td style="text-align:center">\(\Rightarrow\)</td>
 </tr>
 <tr>
-<td>\longleftarrow</td>
-<td>\(\longleftarrow\)</td>
+<td style="text-align:center"><code>\longleftarrow</code></td>
+<td style="text-align:center">\(\longleftarrow\)</td>
 <td></td>
-<td>\longrightarrow</td>
-<td>\(\longrightarrow\)</td>
+<td style="text-align:center"><code>\longrightarrow</code></td>
+<td style="text-align:center">\(\longrightarrow\)</td>
 </tr>
 <tr>
-<td>\Longrightarrow</td>
-<td>\(\Longrightarrow\)</td>
+<td style="text-align:center"><code>\Longrightarrow</code></td>
+<td style="text-align:center">\(\Longrightarrow\)</td>
 <td></td>
-<td>\Longrightarrow</td>
-<td>\(\Longrightarrow\)</td>
+<td style="text-align:center"><code>\Longrightarrow</code></td>
+<td style="text-align:center">\(\Longrightarrow\)</td>
 </tr>
 </tbody>
 </table>
@@ -1044,60 +1099,60 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
-<th>使用</th>
-<th>例子</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">使用</th>
+<th style="text-align:center">例子</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\sum</td>
-<td>\(\sum\)</td>
-<td>\sum_{i=1}^{N}</td>
-<td>\(\sum_{i=1}^{N}\)</td>
+<td style="text-align:center"><code>\sum</code></td>
+<td style="text-align:center">\(\sum\)</td>
+<td style="text-align:center"><code>\sum_{i=1}^{N}</code></td>
+<td style="text-align:center">\(\sum_{i=1}^{N}\)</td>
 </tr>
 <tr>
-<td>\prod</td>
-<td>\(\prod\)</td>
-<td>\prod_{i=1}^{N}</td>
-<td>\(\prod_{i=1}^{N}\)</td>
+<td style="text-align:center"><code>\prod</code></td>
+<td style="text-align:center">\(\prod\)</td>
+<td style="text-align:center"><code>\prod_{i=1}^{N}</code></td>
+<td style="text-align:center">\(\prod_{i=1}^{N}\)</td>
 </tr>
 <tr>
-<td>\coprod</td>
-<td>\(\coprod\)</td>
-<td>\coprod_{i=1}^{N}</td>
-<td>\(\coprod_{i=1}^{N}\)</td>
+<td style="text-align:center"><code>\coprod</code></td>
+<td style="text-align:center">\(\coprod\)</td>
+<td style="text-align:center"><code>\coprod_{i=1}^{N}</code></td>
+<td style="text-align:center">\(\coprod_{i=1}^{N}\)</td>
 </tr>
 <tr>
-<td>\int</td>
-<td>\(\int\)</td>
-<td>\int_{a}^{b}</td>
-<td>\(\int_{a}^{b}\)</td>
+<td style="text-align:center"><code>\int</code></td>
+<td style="text-align:center">\(\int\)</td>
+<td style="text-align:center"><code>\int_{a}^{b}</code></td>
+<td style="text-align:center">\(\int_{a}^{b}\)</td>
 </tr>
 <tr>
-<td>\iint</td>
-<td>\(\iint\)</td>
-<td>\iint_{a}^{b}</td>
-<td>\(\iint_{a}^{b}\)</td>
+<td style="text-align:center"><code>\iint</code></td>
+<td style="text-align:center">\(\iint\)</td>
+<td style="text-align:center"><code>\iint_{a}^{b}</code></td>
+<td style="text-align:center">\(\iint_{a}^{b}\)</td>
 </tr>
 <tr>
-<td>\bigcup</td>
-<td>\(\bigcup\)</td>
-<td>\bigcup_{i=1}^{N}</td>
-<td>\(\bigcup_{i=1}^{N}\)</td>
+<td style="text-align:center"><code>\bigcup</code></td>
+<td style="text-align:center">\(\bigcup\)</td>
+<td style="text-align:center"><code>\bigcup_{i=1}^{N}</code></td>
+<td style="text-align:center">\(\bigcup_{i=1}^{N}\)</td>
 </tr>
 <tr>
-<td>\bigcap</td>
-<td>\(\bigcap\)</td>
-<td>\bigcap_{i=1}^{N}</td>
-<td>\(\bigcap_{i=1}^{N}\)</td>
+<td style="text-align:center"><code>\bigcap</code></td>
+<td style="text-align:center">\(\bigcap\)</td>
+<td style="text-align:center"><code>\bigcap_{i=1}^{N}</code></td>
+<td style="text-align:center">\(\bigcap_{i=1}^{N}\)</td>
 </tr>
 <tr>
-<td>\lim_{n\rightarrow+\infty}</td>
-<td>\(lim_{n\rightarrow+\infty}\)</td>
-<td>\lim_{n\rightarrow+\infty}\frac{1}{n(n+1)}</td>
-<td>\(\lim_{n\rightarrow+\infty}\frac{1}{n(n+1)}\)</td>
+<td style="text-align:center"><code>\lim_{n\rightarrow+\infty}</code></td>
+<td style="text-align:center">\(lim_{n\rightarrow+\infty}\)</td>
+<td style="text-align:center"><code>\lim_{n\rightarrow+\infty}\frac{1}{n(n+1)}</code></td>
+<td style="text-align:center">\(\lim_{n\rightarrow+\infty}\frac{1}{n(n+1)}\)</td>
 </tr>
 </tbody>
 </table>
@@ -1105,55 +1160,55 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 <th></th>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\hat{a}</td>
-<td>\(\hat{a}\)</td>
+<td style="text-align:center"><code>\hat{a}</code></td>
+<td style="text-align:center">\(\hat{a}\)</td>
 <td></td>
-<td>\dot{a}</td>
-<td>\(\dot{a}\)</td>
+<td style="text-align:center"><code>\dot{a}</code></td>
+<td style="text-align:center">\(\dot{a}\)</td>
 </tr>
 <tr>
-<td>\grave{a}</td>
-<td>\(\grave{a}\)</td>
+<td style="text-align:center"><code>\grave{a}</code></td>
+<td style="text-align:center">\(\grave{a}\)</td>
 <td></td>
-<td>\acute{a}</td>
-<td>\(\acute{a}\)</td>
+<td style="text-align:center"><code>\acute{a}</code></td>
+<td style="text-align:center">\(\acute{a}\)</td>
 </tr>
 <tr>
-<td>\bar{a}</td>
-<td>\(\bar{a}\)</td>
+<td style="text-align:center"><code>\bar{a}</code></td>
+<td style="text-align:center">\(\bar{a}\)</td>
 <td></td>
-<td>\tilde{a}</td>
-<td>\(\tilde{a}\)</td>
+<td style="text-align:center"><code>\tilde{a}</code></td>
+<td style="text-align:center">\(\tilde{a}\)</td>
 </tr>
 <tr>
-<td>\check{a}</td>
-<td>\(\check{a}\)</td>
+<td style="text-align:center"><code>\check{a}</code></td>
+<td style="text-align:center">\(\check{a}\)</td>
 <td></td>
-<td>\ddot{a}</td>
-<td>\(\ddot{a}\)</td>
+<td style="text-align:center"><code>\ddot{a}</code></td>
+<td style="text-align:center">\(\ddot{a}\)</td>
 </tr>
 <tr>
-<td>\widehat{A}</td>
-<td>\(\widehat{A}\)</td>
+<td style="text-align:center"><code>\widehat{A}</code></td>
+<td style="text-align:center">\(\widehat{A}\)</td>
 <td></td>
-<td>\widetilde{A}</td>
-<td>\(\widetilde{A}\)</td>
+<td style="text-align:center"><code>\widetilde{A}</code></td>
+<td style="text-align:center">\(\widetilde{A}\)</td>
 </tr>
 <tr>
-<td>\vec{a}</td>
-<td>\(\vec{a}\)</td>
+<td style="text-align:center"><code>\vec{a}</code></td>
+<td style="text-align:center">\(\vec{a}\)</td>
 <td></td>
-<td>\breve{a}</td>
-<td>\(\breve{a}\)</td>
+<td style="text-align:center"><code>\breve{a}</code></td>
+<td style="text-align:center">\(\breve{a}\)</td>
 </tr>
 </tbody>
 </table>
@@ -1161,34 +1216,28 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 <table>
 <thead>
 <tr>
-<th>命令</th>
-<th>显示</th>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\overline{a+b+c+d}</td>
-<td>\(\overline{a+b+c+d}\)</td>
+<td style="text-align:center"><code>\overline{a+b+c+d}</code></td>
+<td style="text-align:center">\(\overline{a+b+c+d}\)</td>
 </tr>
 <tr>
-<td>\underline{a+b+c+d}</td>
-<td>\(\underline{a+b+c+d}\)</td>
+<td style="text-align:center"><code>\underline{a+b+c+d}</code></td>
+<td style="text-align:center">\(\underline{a+b+c+d}\)</td>
 </tr>
 <tr>
-<td>\overbrace{a+\underbrace{b+c}_{1.0}+d}^{2.0}</td>
-<td>\(\overbrace{a+\underbrace{b+c}_{1.0}+d}^{2.0}\)</td>
+<td style="text-align:center"><code>\overbrace{a+\underbrace{b+c}\_{1.0}+d}^{2.0}</code></td>
+<td style="text-align:center">\(\overbrace{a+\underbrace{b+c}_{1.0}+d}^{2.0}\)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="ju-zhen">矩阵</h2>
-<p>命令</p>
-<p>\left|\begin{array}{cccc}
-     1 &amp; 6 &amp; 9 \\\ 
-     7 &amp; 9 &amp; 0 \\\
-     9 &amp; 5 &amp; 0
-\end{array}\right|</p>
-<p>显示：<br>
-\[
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\left|\begin&#123;array&#125;&#123;cccc&#125;</span><br><span class="line">     1 &amp; 6 &amp; 9 \\\ </span><br><span class="line">     7 &amp; 9 &amp; 0 \\\</span><br><span class="line">     9 &amp; 5 &amp; 0</span><br><span class="line">\end&#123;array&#125;\right|</span><br></pre></td></tr></table></figure>
+<p>\[
 \left|\begin{array}{cccc}
      1 &amp; 6 &amp; 9 \\ 
      7 &amp; 9 &amp; 0 \\
@@ -1197,52 +1246,219 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 \]</p>
 <h1 id="zhu-yao-fu-hao-yi-lan">主要符号一览</h1>
 <h2 id="shu">数</h2>
-<ul>
-<li>\(x\)：标量</li>
-<li>\(\boldsymbol{x}\)：向量</li>
-<li>\(\boldsymbol{X}\)：矩阵</li>
-<li>\(\mathsf{X}\)：张量</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>x</code></td>
+<td style="text-align:center">\(x\)</td>
+<td style="text-align:center">标量</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\boldsymbol{x}</code></td>
+<td style="text-align:center">\(\boldsymbol{x}\)</td>
+<td style="text-align:center">向量</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\boldsymbol{X}</code></td>
+<td style="text-align:center">\(\boldsymbol{X}\)</td>
+<td style="text-align:center">矩阵</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\mathsf{X}</code></td>
+<td style="text-align:center">\(\mathsf{X}\)</td>
+<td style="text-align:center">张量</td>
+</tr>
+</tbody>
+</table>
 <h2 id="ji-he">集合</h2>
-<ul>
-<li>\(\mathcal{X}\)：集合</li>
-<li>\(\mathbb{R}\)：实数集合</li>
-<li>\(\mathbb{R}^n\)：\(n\)维的实数向量集合</li>
-<li>\(\mathbb{R}^{x\times y}\)：\(x\)行\(y\)列的实数矩阵集合</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\mathcal{X}</code></td>
+<td style="text-align:center">\(\mathcal{X}\)</td>
+<td style="text-align:center">集合</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\mathbb{R}</code></td>
+<td style="text-align:center">\(\mathbb{R}\)</td>
+<td style="text-align:center">实数集合</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\mathbb{R}^n</code></td>
+<td style="text-align:center">\(\mathbb{R}^n\)</td>
+<td style="text-align:center">\(n\)维的实数向量集合</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\mathbb{R}^{x\times y}</code></td>
+<td style="text-align:center">\(\mathbb{R}^{x\times y}\)</td>
+<td style="text-align:center">\(x\)行\(y\)列的实数矩阵集合</td>
+</tr>
+</tbody>
+</table>
 <h2 id="cao-zuo-fu">操作符</h2>
-<ul>
-<li>\(\boldsymbol{(\cdot)}^\top\)：向量或矩阵的转置</li>
-<li>\(\odot\)：按元素相乘，即阿达马（Hadamard）积</li>
-<li>\(\lvert\mathcal{X}\rvert\)：集合\(\mathcal{X}\)中元素个数</li>
-<li>\(\|\cdot\|_p\)：\(L_p\)范数</li>
-<li>\(\|\cdot\|\)：\(L_2\)范数</li>
-<li>\(\sum\)：连加</li>
-<li>\(\prod\)：连乘</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\boldsymbol{(\cdot)}^\top</code></td>
+<td style="text-align:center">\(\boldsymbol{(\cdot)}^\top\)</td>
+<td style="text-align:center">向量或矩阵的转置</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\odot</code></td>
+<td style="text-align:center">\(\odot\)</td>
+<td style="text-align:center">按元素相乘，即阿达马（Hadamard）积</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\lvert\mathcal{X}\rvert</code></td>
+<td style="text-align:center">\(\lvert\mathcal{X}\rvert\)</td>
+<td style="text-align:center">集合\(\mathcal{X}\)中元素个数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\|\cdot\|_p</code></td>
+<td style="text-align:center">\(\|\cdot\|_p\)</td>
+<td style="text-align:center">\(L_p\)范数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\|\cdot\|</code></td>
+<td style="text-align:center">\(\|\cdot\|\)</td>
+<td style="text-align:center">\(L_2\)范数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\sum</code></td>
+<td style="text-align:center">\(\sum\)</td>
+<td style="text-align:center">累加</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\prod</code></td>
+<td style="text-align:center">\(\prod\)</td>
+<td style="text-align:center">连乘</td>
+</tr>
+</tbody>
+</table>
 <h2 id="han-shu">函数</h2>
-<ul>
-<li>\(f(\cdot)\)：函数</li>
-<li>\(\log(\cdot)\)：自然对数函数</li>
-<li>\(\exp(\cdot)\)：指数函数</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>f(\cdot)</code></td>
+<td style="text-align:center">\(f(\cdot)\)</td>
+<td style="text-align:center">函数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\log(\cdot)</code></td>
+<td style="text-align:center">\(\log(\cdot)\)</td>
+<td style="text-align:center">自然对数函数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\exp(\cdot)</code></td>
+<td style="text-align:center">\(\exp(\cdot)\)</td>
+<td style="text-align:center">指数函数</td>
+</tr>
+</tbody>
+</table>
 <h2 id="dao-shu-he-ti-du">导数和梯度</h2>
-<ul>
-<li>\(\frac{dy}{dx}\)：\(y\)关于\(x\)的导数</li>
-<li>\(\frac{\partial y}{\partial x}\)：\(y\)关于\(x\)的偏导数</li>
-<li>\(\nabla_{\cdot} y\)：\(y\)关于\(\cdot\)的梯度</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\frac{dy}{dx}</code></td>
+<td style="text-align:center">\(\frac{dy}{dx}\)</td>
+<td style="text-align:center">\(y\)关于\(x\)的导数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\frac{\partial y}{\partial x}</code></td>
+<td style="text-align:center">\(\frac{\partial y}{\partial x}\)</td>
+<td style="text-align:center">\(y\)关于\(x\)的偏导数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\nabla_{\cdot} y</code></td>
+<td style="text-align:center">\(\nabla_{\cdot} y\)</td>
+<td style="text-align:center">\(y\)关于\(\cdot\)的梯度</td>
+</tr>
+</tbody>
+</table>
 <h2 id="gai-lu-he-tong-ji">概率和统计</h2>
-<ul>
-<li>\(P(\cdot)\)：概率分布</li>
-<li>\(\cdot\sim P\)：随机变量\(\cdot\)的概率分布是\(P\)</li>
-<li>\(P(\cdot \mid\cdot)\)：条件概率分布</li>
-<li>\(E_{\cdot}\left(f(\cdot)\right)\)：函数\(f(\cdot)\)对\(\cdot\)的数学期望</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>P(\cdot)</code></td>
+<td style="text-align:center">\(P(\cdot)\)</td>
+<td style="text-align:center">概率分布</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\cdot\sim P</code></td>
+<td style="text-align:center">\(\cdot\sim P\)</td>
+<td style="text-align:center">随机变量\(\cdot\)的概率分布是\(P\)</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>P(\cdot \mid\cdot)</code></td>
+<td style="text-align:center">\(P(\cdot \mid\cdot)\)</td>
+<td style="text-align:center">条件概率分布</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>E_{\cdot}\left(f(\cdot)\right)</code></td>
+<td style="text-align:center">\(E_{\cdot}\left(f(\cdot)\right)\)</td>
+<td style="text-align:center">函数\(f(\cdot)\)对\(\cdot\)的数学期望</td>
+</tr>
+</tbody>
+</table>
 <h2 id="fu-za-du">复杂度</h2>
-<ul>
-<li>\(\mathcal{O}\)：大O符号（渐进符号）</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">显示</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\mathcal{O}</code></td>
+<td style="text-align:center">\(\mathcal{O}\)</td>
+<td style="text-align:center">大O符号（渐进符号）</td>
+</tr>
+</tbody>
+</table>
 <h1 id="an-zhuang-ji-pei-zhi-mac">安装及配置（mac）</h1>
 <h2 id="an-zhuang">安装</h2>
 <ol>
@@ -1567,7 +1783,7 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-su-cha-biao"><span class="nav-number">1.</span> <span class="nav-text">latex 速查表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-xia-biao"><span class="nav-number">1.1.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gong-shi-xu-hao"><span class="nav-number">1.2.</span> <span class="nav-text">公式序号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gua-hao"><span class="nav-number">1.3.</span> <span class="nav-text">括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fen-shu"><span class="nav-number">1.4.</span> <span class="nav-text">分数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kai-fang"><span class="nav-number">1.5.</span> <span class="nav-text">开方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dui-shu"><span class="nav-number">1.6.</span> <span class="nav-text">对数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-liang"><span class="nav-number">1.7.</span> <span class="nav-text">向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#san-jiao-yun-suan"><span class="nav-number">1.8.</span> <span class="nav-text">三角运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sheng-lue-hao"><span class="nav-number">1.9.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xu-yao-zhuan-yi-de-zi-fu"><span class="nav-number">1.10.</span> <span class="nav-text">需要转义的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pu-tong-fu-hao"><span class="nav-number">1.11.</span> <span class="nav-text">普通符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xi-la-zi-mu"><span class="nav-number">1.12.</span> <span class="nav-text">希腊字母</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he-yun-suan"><span class="nav-number">1.13.</span> <span class="nav-text">集合运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-yun-suan"><span class="nav-number">1.14.</span> <span class="nav-text">逻辑运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-fen"><span class="nav-number">1.15.</span> <span class="nav-text">微分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-tou"><span class="nav-number">1.16.</span> <span class="nav-text">箭头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qiu-he-lian-cheng-he-ji-fen-hao"><span class="nav-number">1.17.</span> <span class="nav-text">求和、连乘和积分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zi-mo-shi-zhong-yin-fu"><span class="nav-number">1.18.</span> <span class="nav-text">数字模式重音符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lian-xian-fu-hao"><span class="nav-number">1.19.</span> <span class="nav-text">连线符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen"><span class="nav-number">1.20.</span> <span class="nav-text">矩阵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-yao-fu-hao-yi-lan"><span class="nav-number">2.</span> <span class="nav-text">主要符号一览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu"><span class="nav-number">2.1.</span> <span class="nav-text">数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he"><span class="nav-number">2.2.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cao-zuo-fu"><span class="nav-number">2.3.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#han-shu"><span class="nav-number">2.4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao-shu-he-ti-du"><span class="nav-number">2.5.</span> <span class="nav-text">导数和梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gai-lu-he-tong-ji"><span class="nav-number">2.6.</span> <span class="nav-text">概率和统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-za-du"><span class="nav-number">2.7.</span> <span class="nav-text">复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#an-zhuang-ji-pei-zhi-mac"><span class="nav-number">3.</span> <span class="nav-text">安装及配置（mac）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pei-zhi"><span class="nav-number">3.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-yu-fa"><span class="nav-number">4.</span> <span class="nav-text">latex 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">4.1.</span> <span class="nav-text">Hello world</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhong-ying-wen-hun-pai"><span class="nav-number">4.2.</span> <span class="nav-text">中英文混排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zuo-zhe-biao-ti-ri-qi"><span class="nav-number">4.3.</span> <span class="nav-text">作者、标题、日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhang-jie-he-duan-luo"><span class="nav-number">4.4.</span> <span class="nav-text">章节和段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-mu-lu"><span class="nav-number">4.5.</span> <span class="nav-text">插入目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-shu-xue-gong-shi"><span class="nav-number">4.6.</span> <span class="nav-text">插入数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-mo-shi"><span class="nav-number">4.6.1.</span> <span class="nav-text">数学模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-xia-biao-1"><span class="nav-number">4.6.2.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gen-shi-yu-fen-shi"><span class="nav-number">4.6.3.</span> <span class="nav-text">根式与分式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">4.6.4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-jie-fu"><span class="nav-number">4.6.5.</span> <span class="nav-text">定界符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sheng-lue-hao-1"><span class="nav-number">4.6.6.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-zhen-1"><span class="nav-number">4.6.7.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-xing-gong-shi"><span class="nav-number">4.6.8.</span> <span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chang-gong-shi"><span class="nav-number">4.6.8.1.</span> <span class="nav-text">长公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bu-dui-qi"><span class="nav-number">4.6.8.1.1.</span> <span class="nav-text">不对齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dui-qi"><span class="nav-number">4.6.8.1.2.</span> <span class="nav-text">对齐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gong-shi-zu"><span class="nav-number">4.6.8.2.</span> <span class="nav-text">公式组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fen-duan-han-shu"><span class="nav-number">4.6.9.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-gong-shi-gong-ju"><span class="nav-number">4.6.10.</span> <span class="nav-text">数学公式工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-tu-pian"><span class="nav-number">4.7.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-ge"><span class="nav-number">4.8.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-dong-ti"><span class="nav-number">4.9.</span> <span class="nav-text">浮动体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ban-mian-she-zhi"><span class="nav-number">4.10.</span> <span class="nav-text">版面设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-bian-ju"><span class="nav-number">4.10.1.</span> <span class="nav-text">页边距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-mei-ye-jiao"><span class="nav-number">4.10.2.</span> <span class="nav-text">页眉页脚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shou-xing-suo-jin"><span class="nav-number">4.10.3.</span> <span class="nav-text">首行缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xing-jian-ju"><span class="nav-number">4.10.4.</span> <span class="nav-text">行间距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duan-jian-ju"><span class="nav-number">4.10.5.</span> <span class="nav-text">段间距</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-su-cha-biao"><span class="nav-number">1.</span> <span class="nav-text">latex 速查表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-xia-biao"><span class="nav-number">1.1.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gong-shi-xu-hao"><span class="nav-number">1.2.</span> <span class="nav-text">公式序号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xia-hua-xian"><span class="nav-number">1.3.</span> <span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gua-hao"><span class="nav-number">1.4.</span> <span class="nav-text">括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fen-shu"><span class="nav-number">1.5.</span> <span class="nav-text">分数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kai-fang"><span class="nav-number">1.6.</span> <span class="nav-text">开方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dui-shu"><span class="nav-number">1.7.</span> <span class="nav-text">对数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-liang"><span class="nav-number">1.8.</span> <span class="nav-text">向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#san-jiao-yun-suan"><span class="nav-number">1.9.</span> <span class="nav-text">三角运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sheng-lue-hao"><span class="nav-number">1.10.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xu-yao-zhuan-yi-de-zi-fu"><span class="nav-number">1.11.</span> <span class="nav-text">需要转义的字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pu-tong-fu-hao"><span class="nav-number">1.12.</span> <span class="nav-text">普通符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xi-la-zi-mu"><span class="nav-number">1.13.</span> <span class="nav-text">希腊字母</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he-yun-suan"><span class="nav-number">1.14.</span> <span class="nav-text">集合运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-yun-suan"><span class="nav-number">1.15.</span> <span class="nav-text">逻辑运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-fen"><span class="nav-number">1.16.</span> <span class="nav-text">微分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-tou"><span class="nav-number">1.17.</span> <span class="nav-text">箭头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qiu-he-lian-cheng-he-ji-fen-hao"><span class="nav-number">1.18.</span> <span class="nav-text">求和、连乘和积分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zi-mo-shi-zhong-yin-fu"><span class="nav-number">1.19.</span> <span class="nav-text">数字模式重音符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lian-xian-fu-hao"><span class="nav-number">1.20.</span> <span class="nav-text">连线符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ju-zhen"><span class="nav-number">1.21.</span> <span class="nav-text">矩阵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-yao-fu-hao-yi-lan"><span class="nav-number">2.</span> <span class="nav-text">主要符号一览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu"><span class="nav-number">2.1.</span> <span class="nav-text">数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he"><span class="nav-number">2.2.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cao-zuo-fu"><span class="nav-number">2.3.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#han-shu"><span class="nav-number">2.4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao-shu-he-ti-du"><span class="nav-number">2.5.</span> <span class="nav-text">导数和梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gai-lu-he-tong-ji"><span class="nav-number">2.6.</span> <span class="nav-text">概率和统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-za-du"><span class="nav-number">2.7.</span> <span class="nav-text">复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#an-zhuang-ji-pei-zhi-mac"><span class="nav-number">3.</span> <span class="nav-text">安装及配置（mac）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pei-zhi"><span class="nav-number">3.2.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#latex-yu-fa"><span class="nav-number">4.</span> <span class="nav-text">latex 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">4.1.</span> <span class="nav-text">Hello world</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhong-ying-wen-hun-pai"><span class="nav-number">4.2.</span> <span class="nav-text">中英文混排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zuo-zhe-biao-ti-ri-qi"><span class="nav-number">4.3.</span> <span class="nav-text">作者、标题、日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhang-jie-he-duan-luo"><span class="nav-number">4.4.</span> <span class="nav-text">章节和段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-mu-lu"><span class="nav-number">4.5.</span> <span class="nav-text">插入目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-shu-xue-gong-shi"><span class="nav-number">4.6.</span> <span class="nav-text">插入数学公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-mo-shi"><span class="nav-number">4.6.1.</span> <span class="nav-text">数学模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shang-xia-biao-1"><span class="nav-number">4.6.2.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gen-shi-yu-fen-shi"><span class="nav-number">4.6.3.</span> <span class="nav-text">根式与分式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">4.6.4.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ding-jie-fu"><span class="nav-number">4.6.5.</span> <span class="nav-text">定界符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sheng-lue-hao-1"><span class="nav-number">4.6.6.</span> <span class="nav-text">省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-zhen-1"><span class="nav-number">4.6.7.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duo-xing-gong-shi"><span class="nav-number">4.6.8.</span> <span class="nav-text">多行公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chang-gong-shi"><span class="nav-number">4.6.8.1.</span> <span class="nav-text">长公式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bu-dui-qi"><span class="nav-number">4.6.8.1.1.</span> <span class="nav-text">不对齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#dui-qi"><span class="nav-number">4.6.8.1.2.</span> <span class="nav-text">对齐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gong-shi-zu"><span class="nav-number">4.6.8.2.</span> <span class="nav-text">公式组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fen-duan-han-shu"><span class="nav-number">4.6.9.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-xue-gong-shi-gong-ju"><span class="nav-number">4.6.10.</span> <span class="nav-text">数学公式工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-ru-tu-pian"><span class="nav-number">4.7.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#biao-ge"><span class="nav-number">4.8.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-dong-ti"><span class="nav-number">4.9.</span> <span class="nav-text">浮动体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ban-mian-she-zhi"><span class="nav-number">4.10.</span> <span class="nav-text">版面设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-bian-ju"><span class="nav-number">4.10.1.</span> <span class="nav-text">页边距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ye-mei-ye-jiao"><span class="nav-number">4.10.2.</span> <span class="nav-text">页眉页脚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shou-xing-suo-jin"><span class="nav-number">4.10.3.</span> <span class="nav-text">首行缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xing-jian-ju"><span class="nav-number">4.10.4.</span> <span class="nav-text">行间距</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#duan-jian-ju"><span class="nav-number">4.10.5.</span> <span class="nav-text">段间距</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1585,20 +1801,20 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1644,7 +1860,7 @@ z=\frac{3 \pi}{2}(1+2 t) \sin \left(\frac{3 \pi}{2}(1+2 t)\right)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.2m</span>
+    <span title="站点总字数">1.3m</span>
 </div>
 
         

@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/snoppy.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/snoppy.jpeg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="java基础">
+<meta property="og:url" content="https://jeffery.ink/2020/09/05/java/java-basic/index.html">
+<meta property="og:site_name" content="火种2号">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/u=1844033400,2840306055&amp;fm=26&amp;gp=0.jpg">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200905091050620.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200905091337919.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200905091503808.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/data.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200906110809269.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200906110927287.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/image-20200906111629619.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E5%A0%86%E6%A0%88.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E9%98%9F%E5%88%97%E5%9B%BE.bmp">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E6%9F%A5%E8%AF%A2%E5%BF%AB.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E6%B7%BB%E5%8A%A0.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E5%88%A0%E9%99%A4.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E5%8D%95%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84%E7%89%B9%E7%82%B9.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E5%8D%95%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E5%A2%9E%E5%8A%A0%E7%BB%93%E7%82%B9.png">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E5%88%A0%E9%99%A4%E7%BB%93%E7%82%B9.bmp">
+<meta property="og:image" content="https://jeffery.ink/2020/09/05/java/java-basic/%E4%BA%8C%E5%8F%89%E6%A0%91.bmp">
+<meta property="article:published_time" content="2020-09-05T00:56:50.000Z">
+<meta property="article:modified_time" content="2020-09-11T16:10:08.525Z">
+<meta property="article:author" content="Li Zhen">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jeffery.ink/2020/09/05/java/java-basic/u=1844033400,2840306055&amp;fm=26&amp;gp=0.jpg">
+
+<link rel="canonical" href="https://jeffery.ink/2020/09/05/java/java-basic/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java基础 | 火种2号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">火种2号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">火种计划</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>简历</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-books">
+
+    <a href="/books/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-video fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jeffery.ink/2020/09/05/java/java-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/snoppy.jpeg">
+      <meta itemprop="name" content="Li Zhen">
+      <meta itemprop="description" content="他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="火种2号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java基础
+        </h1>
+
+        <div class="post-meta">
+          
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-12 00:10:08" itemprop="dateModified" datetime="2020-09-12T00:10:08+08:00">2020-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/09/05/java/java-basic/" class="post-meta-item leancloud_visitors" data-flag-title="java基础" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">评论：</span>
+    
+    <a title="valine" href="/2020/09/05/java/java-basic/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/05/java/java-basic/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/2020/09/05/java/java-basic/u=1844033400,2840306055&amp;fm=26&amp;gp=0.jpg" alt></p>
+<a id="more"></a>
+<h1 id="zi-jie">字节</h1>
+<p>字节是我们常见的计算机中最小存储单元。计算机存储任何的数据，都是以字节的形式存储。</p>
+<p>8个bit（二进制位） 0000-0000表示为1个字节，写成1 byte或者1 B。</p>
+<ul>
+<li>8 bit = 1 B</li>
+<li>1024 B =1 KB</li>
+<li>1024 KB =1 MB</li>
+<li>1024 MB =1 GB</li>
+<li>1024 GB = 1 TB</li>
+</ul>
+<h1 id="jdk-jre-jvm">JDK、JRE、JVM</h1>
+<h2 id="java-xu-ni-ji-jvm">Java虚拟机——JVM</h2>
+<p><code>JVM（Java Virtual Machine ）</code>：Java虚拟机，简称JVM，是运行所有Java程序的假想计算机，是Java程序的运行环境，是Java 最具吸引力的特性之一。我们编写的Java代码，都运行在 JVM 之上。 跨平台：任何软件的运行，都必须要运行在操作系统之上，而我们用Java编写的软件可以运行在任何的操作系统上，这个特性称为Java语言的跨平台特性。该特性是由JVM实现的，我们编写的程序运行在JVM上，而JVM 运行在操作系统上。</p>
+<p><img src="/2020/09/05/java/java-basic/image-20200905091050620.png" alt></p>
+<p>如图所示，Java的虚拟机本身不具备跨平台功能的，每个操作系统下都有不同版本的虚拟机。</p>
+<h2 id="jre-he-jdk">JRE 和 JDK</h2>
+<p><code>JRE (Java Runtime Environment)</code> ：是Java程序的运行时环境，包含 JVM 和运行时所需要的核心类库 。</p>
+<p><code>JDK (Java Development Kit)</code>：是Java程序开发工具包，包含 JRE 和开发人员使用的工具。</p>
+<p>想要运行一个已有的Java程序，那么只需安装 JRE 即可。</p>
+<p>想要开发一个全新的Java程序，那么必须安装 JDK 。</p>
+<h2 id="san-zhe-guan-xi">三者关系</h2>
+<p><img src="/2020/09/05/java/java-basic/image-20200905091337919.png" alt></p>
+<h1 id="bian-xie-bian-yi-yun-xing">编写、编译、运行</h1>
+<p>Java程序开发三步骤：编写、编译、运行。</p>
+<p><img src="/2020/09/05/java/java-basic/image-20200905091503808.png" alt></p>
+<h2 id="bian-xie">编写</h2>
+<blockquote>
+<p>java源文件名必须和java中类名保持一致。</p>
+<p>一个.java源文件中可以有多个类，但是只能有一个public类, 而且如果有public类的话，这个文件的名字要和这个类的名字一样。如果都没有public类，名字可以不和这个类一样。</p>
+</blockquote>
+<h2 id="bian-yi">编译</h2>
+<p>是指将编写的Java源文件翻译成JVM认识的class文件，在这个过程中， javac 编译器会检查所编写的程序是否有错误，有错误就会提示出来，如果没有错误就会编译成功。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac Demo.java</span><br></pre></td></tr></table></figure>
+<h2 id="yun-xing">运行</h2>
+<p>是指将 class文件交给JVM去运行，此时JVM就会去执行编写的程序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java Demo</span><br></pre></td></tr></table></figure>
+<h1 id="main-fang-fa">main方法</h1>
+<p>main方法：称为主方法。写法是固定格式不可以更改。main方法是程序的入口点或起始点，无论我们编写多少程序，JVM在运行的时候，都会从main方法这里开始执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="zhu-shi">注释</h1>
+<p>单行注释以 //开头，换行结束。</p>
+<p>多行注释以 /*开头 以*/结束。</p>
+<h1 id="guan-jian-zi">关键字</h1>
+<p>关键字有 <code>public</code> 、 <code>class</code> 、 <code>static</code> 、 <code>void</code>等，这些单词已经被Java定义好，全部都是小写字母。</p>
+<h1 id="biao-shi-fu">标识符</h1>
+<p>标识符 ：是指在程序中，自己定义内容。比如类名、方法名、变量名都是标识符。</p>
+<h2 id="ming-ming-gui-ze">命名规则</h2>
+<p>标识符可以包含：</p>
+<ol>
+<li>字母：英文字母26个(区分大小写)</li>
+<li>数字：0-9数字</li>
+<li>$（美元符号）</li>
+<li>_（下划线）</li>
+</ol>
+<p>标识符不能以数字开头，标识符不能是关键字。</p>
+<h2 id="ming-ming-gui-fan">命名规范</h2>
+<ol>
+<li>类名规范：首字母大写，后面每个单词首字母大写（大驼峰式）</li>
+<li>方法名规范： 首字母小写，后面每个单词首字母大写（小驼峰式）。</li>
+<li>变量名规范：全部小写。</li>
+</ol>
+<h1 id="zhuan-yi-zi-fu">转义字符</h1>
+<table>
+<thead>
+<tr>
+<th>转义字符</th>
+<th>描述</th>
+<th>转义字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\f</td>
+<td>换页</td>
+<td>\\</td>
+<td>反斜线</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>倒退一格</td>
+<td>\’</td>
+<td>单引号</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>归位</td>
+<td>\&quot;</td>
+<td>双引号</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表符</td>
+<td>\n</td>
+<td>换行</td>
+</tr>
+</tbody>
+</table>
+<h1 id="shu-ju-lei-xing">数据类型</h1>
+<p><img src="/2020/09/05/java/java-basic/data.png" alt></p>
+<h2 id="chang-liang">常量</h2>
+<p>常量：在程序运行期间，固定不变的量。</p>
+<p>常量的分类：</p>
+<ol>
+<li><code>字符串常量</code>：凡是用双引号引起来的部分，叫做字符串常量。例如：“abc”、“Hello”、“123”</li>
+<li>整数常量：直接写上的数字，没有小数点。例如：100、200、0、-250</li>
+<li>浮点数常量：直接写上的数字，有小数点。例如：2.5、-3.14、0.0</li>
+<li><code>字符常量</code>：凡是用单引号引起来的单个字符，就做字符常量。例如：‘A’、‘b’、‘9’、‘中’</li>
+<li>布尔常量：只有量中取值。true、false。</li>
+<li>空常量：null。代表没有任何数据。</li>
+</ol>
+<h2 id="bian-liang">变量</h2>
+<p>变量：程序运行期间，内容可以发生改变的量。变量定义的格式包括三个要素：</p>
+<ol>
+<li>数据类型</li>
+<li>变量名</li>
+<li>数据值</li>
+</ol>
+<blockquote>
+<p>long类型：建议数据后加L表示。</p>
+<p>ﬂoat类型：建议数据后加F表示。</p>
+<p>注：</p>
+<ol>
+<li>变量名称：在同一个大括号范围内，变量的名字不可以相同。</li>
+<li>变量赋值：定义的变量，不赋值不能使用。</li>
+<li>给变量赋值，不能超出变量类型的数值范围。</li>
+</ol>
+</blockquote>
+<h1 id="shu-ju-lei-xing-zhuan-huan">数据类型转换</h1>
+<p>Java程序中要求参与的计算的数据，必须要保证数据类型的一致性，如果数据类型不一致将发生类型的转换。</p>
+<h2 id="zi-dong-zhuan-huan">自动转换</h2>
+<p><code>自动转换</code>:将<code>取值范围小</code>的类型 自动提升为<code>取值范围大</code>的类型 。代码不需要进行特殊处理，自动完成。</p>
+<h3 id="zhuan-huan-gui-ze">转换规则</h3>
+<p>范围小的类型向范围大的类型提升， <code>byte、short、char</code> 运算时直接提升为 <code>int </code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>、<span class="keyword">short</span>、<span class="keyword">char</span>‐‐&gt;<span class="keyword">int</span>‐‐&gt;<span class="keyword">long</span>‐‐&gt;<span class="keyword">float</span>‐‐&gt;<span class="keyword">double</span></span><br></pre></td></tr></table></figure>
+<h2 id="qiang-zhi-zhuan-huan">强制转换</h2>
+<p><code>强制类型转换</code>：将 <code>取值范围大</code>的类型 强制转换成 <code>取值范围小</code>的类型 。代码需要进行特殊的格式处理，不能自动完成。</p>
+<p>比较而言，自动转换是Java自动执行的，而强制转换需要手动执行。</p>
+<p>转换格式：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据类型 变量名 = （数据类型）被转数据值；</span><br><span class="line"><span class="comment">// double类型数据强制转成int类型，直接去掉小数点。 </span></span><br><span class="line"><span class="built_in">int</span> i = (<span class="built_in">int</span>)<span class="number">1.5</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：</p>
+<p>浮点转成整数，直接取消小数点，可能造成数据损失精度。</p>
+<p>int 强制转成 short 砍掉2个字节，可能造成数据丢失。</p>
+<p>byte/short/char这三种类型都可以发生数学运算，例如加法“+”.</p>
+<p>byte/short/char这三种类型在运算的时候，都会被首先提升成为int类型，然后再计算。</p>
+<p>boolean类型不能发生数据类型转换。</p>
+</blockquote>
+<h1 id="yun-suan-fu">运算符</h1>
+<h2 id="suan-zhu-yun-suan-fu">算术运算符</h2>
+<p>算术运算符：<code>+、-、*、/、%、++、--</code></p>
+<blockquote>
+<p>对于自增：比如a++为先使用再加一，++a为先加一再使用。自减同理。</p>
+</blockquote>
+<p><code>+ </code>符号在遇到字符串的时候，表示<code>连接、拼接</code>的含义。如&quot;a&quot;+&quot;b&quot;的结果是“ab”，连接含义</p>
+<h2 id="fu-zhi-yun-suan-fu">赋值运算符</h2>
+<p><code>赋值运算符</code>：就是将符号右边的值，赋给左边的变量。</p>
+<p>赋值运算符有：<code>=、+=、-=、*=、/=、%=</code></p>
+<h2 id="bi-jiao-yun-suan-fu">比较运算符</h2>
+<p><code>比较运算符</code>：是两个数据之间进行比较的运算，运算结果都是布尔值 <code>true</code> 或者 <code>false </code>。</p>
+<p>比较运算符有：<code>==、&lt;、&gt;、&lt;=、&gt;=、!=</code></p>
+<h2 id="luo-ji-yun-suan-fu">逻辑运算符</h2>
+<p><code>逻辑运算符</code>:是用来连接两个布尔类型结果的运算符，运算结果都是布尔值 <code>true</code> 或者 <code>false</code>.</p>
+<p>逻辑运算符有：<code>&amp;&amp;、||、!</code></p>
+<h2 id="san-yuan-yun-suan-fu">三元运算符</h2>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据类型 变量 = 布尔类型表达式?结果<span class="number">1</span>：结果<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>如果 <code>布尔类型表达式</code> 结果为<code>true</code>，把<code>结果1</code>赋值给变量，如果<code>布尔类型表达式</code>结果为<code>false</code>，把<code>结果2</code>赋值给变量。</p>
+<blockquote>
+<ol start="2">
+<li></li>
+</ol>
+</blockquote>
+<h1 id="j-shell">JShell</h1>
+<p>JShell脚本工具是JDK9的新特性，当我们编写的代码非常少的时候，而又不愿意编写类，main方法，也不愿意去编译和运 行，这个时候可以使用JShell工具。在JShell中，可以编写Java代码，无需写类和方法，直接写方法中的代码即可，同时无需编译和运行，直接回车即可。</p>
+<blockquote>
+<p>JShell工具，只适合片段代码的测试</p>
+</blockquote>
+<h1 id="liu-cheng-kong-zhi">流程控制</h1>
+<h2 id="shun-xu-jie-gou">顺序结构</h2>
+<p>顺序执行，根据编写的顺序，从上到下运行</p>
+<h2 id="pan-duan-jie-gou">判断结构</h2>
+<h3 id="if">if</h3>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(关系表达式)｛</span><br><span class="line">  语句体<span class="comment">;</span></span><br><span class="line">｝</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先判断关系表达式看其结果是true还是false</li>
+<li>如果是true就执行语句体</li>
+<li>如果是false就不执行语句体</li>
+</ul>
+<h3 id="if-else">if…else</h3>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(关系表达式) &#123; </span><br><span class="line">  语句体<span class="number">1</span>; </span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">  语句体<span class="number">2</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先判断关系表达式看其结果是true还是false</li>
+<li>如果是true就执行语句体1</li>
+<li>如果是false就执行语句体2</li>
+</ul>
+<h3 id="if-else-if-else">if…else if…else</h3>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (判断条件<span class="number">1</span>) &#123;</span><br><span class="line">  执行语句<span class="number">1</span>; </span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (判断条件<span class="number">2</span>) &#123;</span><br><span class="line">  执行语句<span class="number">2</span>;</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (...)&#123;</span><br><span class="line">  执行语句...</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (判断条件n) &#123;</span><br><span class="line">  执行语句n; </span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  执行语句n+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先判断关系表达式1看其结果是true还是false</li>
+<li>如果是true就执行语句体1</li>
+<li>如果是false就继续判断关系表达式2看其结果是true还是false</li>
+<li>如果是true就执行语句体2 如果是false就继续判断关系表达式…</li>
+<li>看其结果是true还是false …</li>
+<li>如果没有任何关系表达式为true，就执行语句体n+1。</li>
+</ul>
+<h2 id="xuan-ze-jie-gou">选择结构</h2>
+<h3 id="xuan-ze-yu-ju-switch">选择语句–switch</h3>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(表达式) &#123; </span><br><span class="line">  <span class="keyword">case</span> 常量值<span class="number">1</span>: </span><br><span class="line">        语句体<span class="number">1</span>; </span><br><span class="line">        <span class="keyword">break</span>; </span><br><span class="line">  <span class="keyword">case</span> 常量值<span class="number">2</span>: </span><br><span class="line">    语句体<span class="number">2</span>; </span><br><span class="line">    <span class="keyword">break</span>; </span><br><span class="line">  ... </span><br><span class="line">  <span class="keyword">default</span>: </span><br><span class="line">    语句体n+<span class="number">1</span>; </span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先计算出表达式的值</li>
+<li>其次，和case依次比较，一旦有对应的值，就会执行相应的语句，在执行的过程中，遇到break就会结 束。</li>
+<li>最后，如果所有的case都和表达式的值不匹配，就会执行default语句体部分，然后程序结束掉。</li>
+</ul>
+<blockquote>
+<p>switch后面小括号当中只能是下列数据类型：</p>
+<ul>
+<li>
+<p>基本数据类型：byte/short/char/int</p>
+</li>
+<li>
+<p>引用数据类型：String字符串、enum枚举</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="case-de-chuan-tou-xing">case的穿透性</h3>
+<p>在switch语句中，如果case的后面不写break，将出现穿透现象，也就是不会在判断下一个case的值，直接向后运行，直到遇到break，或者整体switch结束。</p>
+<p>由于case存在穿透性，因此在编写switch语句时，必须要写上break。</p>
+<h2 id="xun-huan-yu-ju">循环语句</h2>
+<p>循环语句可以在满足循环条件的情况下，反复执行某一段代码，这段被重复执行的代码被称为循环体语句，当反复 执行这个循环体时，需要在合适的时候把循环判断条件修改为false，从而结束循环，否则循环将一直执行下去，形 成死循环。</p>
+<h3 id="for">for</h3>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">for</span><span class="params">(初始化表达式①; 布尔表达式②; 步进表达式④)</span></span>&#123; </span><br><span class="line">  循环体③</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行顺序：①②③④&gt;②③④&gt;②③④…②不满足为止。</li>
+<li>①负责完成循环变量初始化</li>
+<li>②负责判断是否满足循环条件，不满足则跳出循环</li>
+<li>③具体执行的语句</li>
+<li>④循环后，循环条件所涉及变量的变化情况</li>
+</ul>
+<h3 id="while">while</h3>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">初始化表达式① <span class="keyword">while</span>(布尔表达式②)&#123; </span><br><span class="line">  循环体③ </span><br><span class="line">  步进表达式④ </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行顺序：①②③④&gt;②③④&gt;②③④…②不满足为止。</li>
+<li>①负责完成循环变量初始化。</li>
+<li>②负责判断是否满足循环条件，不满足则跳出循环。</li>
+<li>③具体执行的语句。</li>
+<li>④循环后，循环变量的变化情况。</li>
+</ul>
+<h3 id="do-while">do…while</h3>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">初始化表达式① <span class="keyword">do</span>&#123; </span><br><span class="line">  循环体③ </span><br><span class="line">  步进表达式④ </span><br><span class="line">&#125;<span class="keyword">while</span>(布尔表达式②);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行顺序：①③④&gt;②③④&gt;②③④…②不满足为止。</li>
+<li>①负责完成循环变量初始化。</li>
+<li>②负责判断是否满足循环条件，不满足则跳出循环。</li>
+<li>③具体执行的语句</li>
+<li>④循环后，循环变量的变化情况</li>
+</ul>
+<blockquote>
+<p>do…while循环的特点：无条件执行一次循环体，即使我们将循环条件直接写成false，也依然会循环一次。</p>
+</blockquote>
+<h3 id="qu-bie">区别</h3>
+<p><code>for</code>和<code> while</code>的小区别：</p>
+<p>控制条件语句所控制的那个变量，在for循环结束后，就不能再被访问到了，而while循环结束还可以继续使用。原因是for循环结束，该变量就从内存中消 失，能够提高内存的使用效率。 在已知循环次数的时候使用推荐使用for，循环次数未知的时推荐使用while。</p>
+<h3 id="break-continue">break、continue</h3>
+<p>break使用场景：终止switch或者循环.</p>
+<p>continue使用场景：结束本次循环，继续下一次的循环.</p>
+<h1 id="fang-fa">方法</h1>
+<p><code>方法</code>：就是将一个功能抽取出来，把代码单独定义在一个大括号内，形成一个单独的功能。</p>
+<h2 id="fang-fa-ding-yi">方法定义</h2>
+<p>定义格式：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修饰符 返回值类型 方法名 （参数列表）｛ </span><br><span class="line">  代码... <span class="comment">;</span></span><br><span class="line">  return <span class="comment">; </span></span><br><span class="line">｝</span><br></pre></td></tr></table></figure>
+<p>要素:</p>
+<ul>
+<li>修饰符</li>
+<li>返回值类型:必须要和 return 语句返回的类型相同，否则编译失败 。</li>
+<li>方法名</li>
+<li>参数列表</li>
+<li>返回值</li>
+</ul>
+<h2 id="diao-yong-fang-fa-de-san-chong-xing-shi">调用方法的三种形式</h2>
+<p>直接调用：直接写方法名调用</p>
+<p>赋值调用：调用方法，在方法前面定义变量，接收方法返回值</p>
+<p>输出语句调用：在输出语句中调用方法，<code> System.out.println(方法名())</code>不能用输出语句调用 void 类型的方法。因为方法执行后没有结果，也就打印不出任何内容。</p>
+<h2 id="fang-fa-zhong-zai">方法重载</h2>
+<p>方法重载：指在同一个类中，允许存在一个以上的同名方法，只要它们的<code>参数列表</code>不同即可，与<code>修饰符</code>和<code>返回值类型</code>无关。</p>
+<p>方法重载与下列因素相关：</p>
+<ol>
+<li>参数个数不同</li>
+<li>参数类型不同</li>
+<li>参数的多类型顺序不同</li>
+</ol>
+<p>方法重载与下列因素无关：</p>
+<ol>
+<li>
+<p>与参数的名称无关</p>
+</li>
+<li>
+<p>与方法的返回值类型无关</p>
+</li>
+</ol>
+<p>参数列表：个数不同，数据类型不同，顺序不同。</p>
+<p>重载方法调用：JVM通过方法的参数列表，调用不同的方法。</p>
+<blockquote>
+<p>注：</p>
+<ol>
+<li>方法定义的先后顺序无所谓。</li>
+<li>方法的定义不能产生嵌套包含关系。</li>
+<li>方法定义之后不会执行，如果希望执行，一定要调用：单独调用、打印调用、赋值调用。</li>
+<li>return后面的返回值数据，必须和方法的返回值类型，对应起来。</li>
+<li>一个方法当中可以有多个return语句，但是必须保证同时只有一个会被执行到，两个return不能连写。</li>
+</ol>
+</blockquote>
+<h1 id="shu-zu">数组</h1>
+<p>数组就是存储数据长度固定的容器，保证多个数据的数据类型要一致。</p>
+<p>特点：</p>
+<ol>
+<li>数组是一种引用数据类型</li>
+<li>数组当中的多个数据，类型必须统一</li>
+<li>数组的长度在程序运行期间不可改变</li>
+</ol>
+<h2 id="chuang-jian-shu-zu">创建数组</h2>
+<p>两种常见的初始化方式：</p>
+<ol>
+<li>动态初始化：在创建数组的时候，直接指定数组当中的数据元素个数。</li>
+<li>静态初始化：在创建数组的时候，不直接指定数据个数多少，而是直接将具体的数据内容进行指定。</li>
+</ol>
+<blockquote>
+<p>虽然静态初始化没有直接告诉长度，但是根据大括号里面的元素具体内容，也可以自动推算出来长度。</p>
+</blockquote>
+<h3 id="dong-tai-chu-shi-hua">动态初始化</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组存储的数据类型[] 数组名字 = new 数组存储的数据类型[长度];</span></span><br><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组存储的数据类型： 创建的数组容器可以存储什么数据类型。</li>
+<li>[] : 表示数组。</li>
+<li>数组名字：为定义的数组起个变量名，满足标识符规范，可以使用名字操作数组。</li>
+<li>new：关键字，创建数组使用的关键字。</li>
+<li>数组存储的数据类型： 创建的数组容器可以存储什么数据类型。</li>
+<li>[长度]：数组的长度，表示数组容器中可以存储多少个元素。</li>
+</ul>
+<blockquote>
+<p>注意：数组有定长特性，长度一旦指定，不可更改。 和水杯道理相同，买了一个2升的水杯，总容量就是2升，不能多也不能少。</p>
+<p>使用动态初始化数组的时候，其中的元素将会自动拥有一个默认值。规则如下：</p>
+<ul>
+<li>如果是整数类型，那么默认为0；</li>
+<li>如果是浮点类型，那么默认为0.0；</li>
+<li>如果是字符类型，那么默认为’\u0000’；</li>
+<li>如果是布尔类型，那么默认为false；</li>
+<li>如果是引用类型，那么默认为null。</li>
+</ul>
+</blockquote>
+<h3 id="jing-tai-chu-shi-hua">静态初始化</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数据类型[] 数组名 = new 数据类型[]&#123;元素1,元素2,元素3...&#125;;</span></span><br><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="comment">//数据类型[] 数组名 = &#123;元素1,元素2,元素3...&#125;;</span></span><br><span class="line"><span class="keyword">int</span>[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>静态初始化其实也有默认值的过程，只不过系统自动马上将默认值替换成为了大括号当中的具体数值。</p>
+</blockquote>
+<h2 id="shu-zu-de-fang-wen">数组的访问</h2>
+<p><code>索引</code>： 每一个存储到数组的元素，都会自动的拥有一个编号，从0开始，这个自动编号称为数组索引 (index)，可以通过数组的索引访问到数组中的元素。</p>
+<p><code>数组的长度属性</code>： 每个数组都具有长度，而且是固定的，Java中赋予了数组的一个属性，可以获取到数组的 长度，语句为： 数组名.length ，属性length的执行结果是数组的长度，int类型结果。数组的最大索引值为数组名.length-1 。</p>
+<h2 id="shu-zu-nei-cun-tu">数组内存图</h2>
+<h3 id="nei-cun">内存</h3>
+<p>内存是计算机中的重要原件，临时存储区域，作用是运行程序。我们编写的程序是存放在硬盘中的，在硬盘中的程序是不会运行的，必须放进内存中才能运行，运行完毕后会清空内存。 Java虚拟机要运行程序，必须要对内存进行空间的分配和管理。</p>
+<table>
+<thead>
+<tr>
+<th>区域名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寄存器</td>
+<td>给CPU使用，和开发无关。</td>
+</tr>
+<tr>
+<td>本地方法栈</td>
+<td>JVM在使用操作系统功能的时候使用，和开发无关。</td>
+</tr>
+<tr>
+<td><code>方法区</code></td>
+<td>存储可以运行的class文件。</td>
+</tr>
+<tr>
+<td><code>堆内存</code></td>
+<td>存储对象或者数组，new来创建的，都存储在堆内存。</td>
+</tr>
+<tr>
+<td><code>方法栈</code></td>
+<td>方法运行时使用的内存，比如main方法运行，进入方法栈中执行。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="shu-zu-zai-nei-cun-zhong-de-cun-chu">数组在内存中的存储</h3>
+<blockquote>
+<p>直接打印数组名称，得到的是数组对应的：内存地址哈希值。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">  <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>]; </span><br><span class="line">  <span class="keyword">int</span>[] arr2 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>]; </span><br><span class="line">  System.out.println(arr); </span><br><span class="line">    System.out.println(arr2); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/09/05/java/java-basic/image-20200906110809269.png" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义数组，存储3个元素 </span></span><br><span class="line">  <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>]; </span><br><span class="line">  <span class="comment">//数组索引进行赋值 </span></span><br><span class="line">  arr[<span class="number">0</span>] = <span class="number">5</span>; arr[<span class="number">1</span>] = <span class="number">6</span>; </span><br><span class="line">  arr[<span class="number">2</span>] = <span class="number">7</span>; </span><br><span class="line">  <span class="comment">//输出3个索引上的元素值 </span></span><br><span class="line">  System.out.println(arr[<span class="number">0</span>]); </span><br><span class="line">  System.out.println(arr[<span class="number">1</span>]); </span><br><span class="line">  System.out.println(arr[<span class="number">2</span>]); </span><br><span class="line">  <span class="comment">//定义数组变量arr2，将arr的地址赋值给arr2 </span></span><br><span class="line">  <span class="keyword">int</span>[] arr2 = arr; arr2[<span class="number">1</span>] = <span class="number">9</span>; </span><br><span class="line">  System.out.println(arr[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/09/05/java/java-basic/image-20200906110927287.png" alt></p>
+<h2 id="shu-zu-chang-jian-cao-zuo">数组常见操作</h2>
+<h3 id="xia-biao-yue-jie">下标越界</h3>
+<p>不能访问数组中不存在的索引，程序运 行后，将会抛出 <code>ArrayIndexOutOfBoundsException</code> 数组越界异常。</p>
+<h3 id="shu-zu-kong-zhi-zhen-yi-chang">数组空指针异常</h3>
+<p>数组变量不可赋null，否则运行的时候会抛出 NullPointerException 空指针异常。</p>
+<h3 id="bian-li">遍历</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123; </span><br><span class="line">  System.out.println(arr[i]); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="shu-zu-zuo-wei-fang-fa-can-shu-he-fan-hui-zhi">数组作为方法参数和返回值</h3>
+<p>数组作为方法<code>参数传递</code>，传递的参数是数组<code>内存地址</code>。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static <span class="built_in">void</span> main(String[] args) &#123; </span><br><span class="line">  <span class="built_in">int</span>[] arr = &#123; <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span> &#125;; </span><br><span class="line">  <span class="comment">//调用方法，传递数组 </span></span><br><span class="line">  printArray(arr); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">/* 创建方法，方法接收数组类型的参数 进行数组的遍历 */</span> </span><br><span class="line"><span class="keyword">public</span> static <span class="built_in">void</span> printArray(<span class="built_in">int</span>[] arr) &#123; </span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123; </span><br><span class="line">    	System.<span class="keyword">out</span>.println(arr[i]); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/09/05/java/java-basic/image-20200906111629619.png" alt></p>
+<p>数组作为方法的<code>返回值</code>，返回的是数组的<code>内存地址</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//调用方法，接收数组的返回值 </span></span><br><span class="line">  <span class="comment">//接收到的是数组的内存地址 </span></span><br><span class="line">  <span class="keyword">int</span>[] arr = getArray(); </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    	System.out.println(arr[i]); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">创建方法，返回值是数组类型</span></span><br><span class="line"><span class="comment">return返回数组的地址</span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getArray() &#123;</span><br><span class="line">    <span class="keyword">int</span>[] arr = &#123; <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span> &#125;;</span><br><span class="line">    <span class="comment">//返回数组的地址，返回到调用者</span></span><br><span class="line">    <span class="keyword">return</span> arr; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：</p>
+<p>方法的参数为基本类型时,传递的是数据值. 方法的参数为引用类型时,传递的是地址值.</p>
+</blockquote>
+<h1 id="chang-jian-de-shu-ju-jie-gou">常见的数据结构</h1>
+<p>数据存储的常用结构有：栈、队列、数组、链表和红黑树。我们分别来了解一下：</p>
+<h2 id="zhan">栈</h2>
+<p><code>栈(stack)</code>：又称堆栈，它是运算受限的线性表，其限制是仅允许在标的一端进行插入和删除操作，不允许在其他任何位置进行添加、查找、删除等操作。</p>
+<p>采用该结构的集合，对元素的存取有如下的特点:</p>
+<ul>
+<li>
+<p>先进后出。</p>
+</li>
+<li>
+<p>栈的入口、出口的都是栈的顶端位置。</p>
+<p><img src="/2020/09/05/java/java-basic/%E5%A0%86%E6%A0%88.png" alt="img"></p>
+</li>
+</ul>
+<p>操作：</p>
+<ul>
+<li><strong>压栈</strong>：就是存元素。即，把元素存储到栈的顶端位置，栈中已有元素依次向栈底方向移动一个位置。</li>
+<li><strong>弹栈</strong>：就是取元素。即，把栈的顶端位置元素取出，栈中已有元素依次向栈顶方向移动一个位置。</li>
+</ul>
+<h2 id="dui-lie">队列</h2>
+<p><code>队列（queue）</code>：简称队，它同堆栈一样，也是一种运算受限的线性表，其限制是仅允许在表的一端进行插入，而在表的另一端进行删除。</p>
+<p>采用该结构的集合，对元素的存取有如下的特点：</p>
+<ul>
+<li>先进先出。</li>
+<li>队列的入口、出口各占一侧。例如，下图中的左侧为入口，右侧为出口。</li>
+</ul>
+<p><img src="/2020/09/05/java/java-basic/%E9%98%9F%E5%88%97%E5%9B%BE.bmp" alt="img"></p>
+<h2 id="shu-zu-1">数组</h2>
+<p><code>数组(Array)</code>:是有序的元素序列，数组是在内存中开辟一段连续的空间，并在此空间存放元素。</p>
+<p>简单的说,采用该结构的集合，对元素的存取有如下的特点：</p>
+<ul>
+<li>
+<p>查找元素快：通过索引，可以快速访问指定位置的元素</p>
+<p><img src="/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E6%9F%A5%E8%AF%A2%E5%BF%AB.png" alt="img"></p>
+</li>
+<li>
+<p>增删元素慢</p>
+<p>指定索引位置增加元素：需要创建一个新数组，将指定新元素存储在指定索引位置，再把原数组元素根据索引，复制到新数组对应索引的位置。如下图<img src="/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E6%B7%BB%E5%8A%A0.png" alt="img"></p>
+<p>指定索引位置删除元素：需要创建一个新数组，把原数组元素根据索引，复制到新数组对应索引的位置，原数组中指定索引位置元素不复制到新数组中。如下图<img src="/2020/09/05/java/java-basic/%E6%95%B0%E7%BB%84%E5%88%A0%E9%99%A4.png" alt="img"></p>
+</li>
+</ul>
+<h2 id="lian-biao">链表</h2>
+<p><code>链表(linked list)</code>:,由一系列结点node组成，结点可以在运行时动态生成。每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。</p>
+<p><img src="/2020/09/05/java/java-basic/%E5%8D%95%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84%E7%89%B9%E7%82%B9.png" alt="img"></p>
+<p>采用该结构的集合，对元素的存取有如下的特点：</p>
+<ul>
+<li>
+<p>多个结点之间，通过地址进行连接。</p>
+<p><img src="/2020/09/05/java/java-basic/%E5%8D%95%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt="img"></p>
+</li>
+<li>
+<p>查找元素慢：想查找某个元素，需要通过连接的节点，依次向后查找指定元素</p>
+</li>
+<li>
+<p>增删元素快：</p>
+<p>增加元素：只需要修改连接下个元素的地址即可。</p>
+<p><img src="/2020/09/05/java/java-basic/%E5%A2%9E%E5%8A%A0%E7%BB%93%E7%82%B9.png" alt="img"></p>
+<p>删除元素：只需要修改连接下个元素的地址即可。</p>
+<p><img src="/2020/09/05/java/java-basic/%E5%88%A0%E9%99%A4%E7%BB%93%E7%82%B9.bmp" alt="img"></p>
+</li>
+</ul>
+<h2 id="hong-hei-shu">红黑树</h2>
+<p><code>二叉树(binary tree)</code>: ,是每个结点不超过2的有序<strong>树（tree）</strong> 。</p>
+<p>二叉树是每个节点最多有两个子树的树结构。顶上的叫根结点，两边被称作“左子树”和“右子树”。</p>
+<p><img src="/2020/09/05/java/java-basic/%E4%BA%8C%E5%8F%89%E6%A0%91.bmp" alt="img"></p>
+<p><strong>红黑树</strong>是二叉树的一种比较有意思的树，红黑树本身就是一颗二叉查找树，将节点插入后，该树仍然是一颗二叉查找树。也就意味着，树的键值仍然是有序的。</p>
+<p>红黑树的约束:</p>
+<ol>
+<li>
+<p>节点可以是红色的或者黑色的</p>
+</li>
+<li>
+<p>根节点是黑色的</p>
+</li>
+<li>
+<p>叶子节点(特指空节点)是黑色的</p>
+</li>
+<li>
+<p>每个红色节点的子节点都是黑色的</p>
+</li>
+<li>
+<p>任何一个节点到其每一个叶子节点的所有路径上黑色节点数相同</p>
+</li>
+</ol>
+<p>红黑树的特点:</p>
+<p>​	速度特别快,趋近平衡树,查找叶子元素最少和最多次数不多于二倍</p>
+
+    </div>
+
+    
+    
+    <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-coffee"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    鼓励一下
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechat.png" alt="Li Zhen 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/ali.png" alt="Li Zhen 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/19/nature_language_process/albert/" rel="prev" title="ALBERT">
+      <i class="fa fa-chevron-left"></i> ALBERT
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/06/java/class_object/" rel="next" title="类与对象">
+      类与对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zi-jie"><span class="nav-number">1.</span> <span class="nav-text">字节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jdk-jre-jvm"><span class="nav-number">2.</span> <span class="nav-text">JDK、JRE、JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java-xu-ni-ji-jvm"><span class="nav-number">2.1.</span> <span class="nav-text">Java虚拟机——JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jre-he-jdk"><span class="nav-number">2.2.</span> <span class="nav-text">JRE 和 JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#san-zhe-guan-xi"><span class="nav-number">2.3.</span> <span class="nav-text">三者关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bian-xie-bian-yi-yun-xing"><span class="nav-number">3.</span> <span class="nav-text">编写、编译、运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bian-xie"><span class="nav-number">3.1.</span> <span class="nav-text">编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bian-yi"><span class="nav-number">3.2.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yun-xing"><span class="nav-number">3.3.</span> <span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#main-fang-fa"><span class="nav-number">4.</span> <span class="nav-text">main方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-shi"><span class="nav-number">5.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guan-jian-zi"><span class="nav-number">6.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#biao-shi-fu"><span class="nav-number">7.</span> <span class="nav-text">标识符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ming-ming-gui-ze"><span class="nav-number">7.1.</span> <span class="nav-text">命名规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ming-ming-gui-fan"><span class="nav-number">7.2.</span> <span class="nav-text">命名规范</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhuan-yi-zi-fu"><span class="nav-number">8.</span> <span class="nav-text">转义字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-ju-lei-xing"><span class="nav-number">9.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-liang"><span class="nav-number">9.1.</span> <span class="nav-text">常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bian-liang"><span class="nav-number">9.2.</span> <span class="nav-text">变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-ju-lei-xing-zhuan-huan"><span class="nav-number">10.</span> <span class="nav-text">数据类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zi-dong-zhuan-huan"><span class="nav-number">10.1.</span> <span class="nav-text">自动转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhuan-huan-gui-ze"><span class="nav-number">10.1.1.</span> <span class="nav-text">转换规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qiang-zhi-zhuan-huan"><span class="nav-number">10.2.</span> <span class="nav-text">强制转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">11.</span> <span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#suan-zhu-yun-suan-fu"><span class="nav-number">11.1.</span> <span class="nav-text">算术运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-zhi-yun-suan-fu"><span class="nav-number">11.2.</span> <span class="nav-text">赋值运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bi-jiao-yun-suan-fu"><span class="nav-number">11.3.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#luo-ji-yun-suan-fu"><span class="nav-number">11.4.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#san-yuan-yun-suan-fu"><span class="nav-number">11.5.</span> <span class="nav-text">三元运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#j-shell"><span class="nav-number">12.</span> <span class="nav-text">JShell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#liu-cheng-kong-zhi"><span class="nav-number">13.</span> <span class="nav-text">流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shun-xu-jie-gou"><span class="nav-number">13.1.</span> <span class="nav-text">顺序结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pan-duan-jie-gou"><span class="nav-number">13.2.</span> <span class="nav-text">判断结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-number">13.2.1.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-else"><span class="nav-number">13.2.2.</span> <span class="nav-text">if…else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-else-if-else"><span class="nav-number">13.2.3.</span> <span class="nav-text">if…else if…else</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xuan-ze-jie-gou"><span class="nav-number">13.3.</span> <span class="nav-text">选择结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xuan-ze-yu-ju-switch"><span class="nav-number">13.3.1.</span> <span class="nav-text">选择语句–switch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-de-chuan-tou-xing"><span class="nav-number">13.3.2.</span> <span class="nav-text">case的穿透性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xun-huan-yu-ju"><span class="nav-number">13.4.</span> <span class="nav-text">循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-number">13.4.1.</span> <span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while"><span class="nav-number">13.4.2.</span> <span class="nav-text">while</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#do-while"><span class="nav-number">13.4.3.</span> <span class="nav-text">do…while</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qu-bie"><span class="nav-number">13.4.4.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#break-continue"><span class="nav-number">13.4.5.</span> <span class="nav-text">break、continue</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fang-fa"><span class="nav-number">14.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-ding-yi"><span class="nav-number">14.1.</span> <span class="nav-text">方法定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diao-yong-fang-fa-de-san-chong-xing-shi"><span class="nav-number">14.2.</span> <span class="nav-text">调用方法的三种形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-zhong-zai"><span class="nav-number">14.3.</span> <span class="nav-text">方法重载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-zu"><span class="nav-number">15.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chuang-jian-shu-zu"><span class="nav-number">15.1.</span> <span class="nav-text">创建数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dong-tai-chu-shi-hua"><span class="nav-number">15.1.1.</span> <span class="nav-text">动态初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jing-tai-chu-shi-hua"><span class="nav-number">15.1.2.</span> <span class="nav-text">静态初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-de-fang-wen"><span class="nav-number">15.2.</span> <span class="nav-text">数组的访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-nei-cun-tu"><span class="nav-number">15.3.</span> <span class="nav-text">数组内存图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nei-cun"><span class="nav-number">15.3.1.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-zu-zai-nei-cun-zhong-de-cun-chu"><span class="nav-number">15.3.2.</span> <span class="nav-text">数组在内存中的存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-chang-jian-cao-zuo"><span class="nav-number">15.4.</span> <span class="nav-text">数组常见操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xia-biao-yue-jie"><span class="nav-number">15.4.1.</span> <span class="nav-text">下标越界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-zu-kong-zhi-zhen-yi-chang"><span class="nav-number">15.4.2.</span> <span class="nav-text">数组空指针异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bian-li"><span class="nav-number">15.4.3.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shu-zu-zuo-wei-fang-fa-can-shu-he-fan-hui-zhi"><span class="nav-number">15.4.4.</span> <span class="nav-text">数组作为方法参数和返回值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-de-shu-ju-jie-gou"><span class="nav-number">16.</span> <span class="nav-text">常见的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhan"><span class="nav-number">16.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dui-lie"><span class="nav-number">16.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-1"><span class="nav-number">16.3.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lian-biao"><span class="nav-number">16.4.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hong-hei-shu"><span class="nav-number">16.5.</span> <span class="nav-text">红黑树</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href='/'>
+    <img class="site-author-image" itemprop="image" alt="Li Zhen"
+      src="/images/snoppy.jpeg">
+  </a>
+  <p class="site-author-name" itemprop="name">Li Zhen</p>
+  <div class="site-description" itemprop="description">他，不论在成年还是在小时候，必须踏上一条极为艰苦的道路，不过这是一条最可靠的道路。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jeffery0628" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jeffery0628" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jeffery.lee.0628@gmail.com" title="邮箱 → mailto:jeffery.lee.0628@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>邮箱</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Li Zhen</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.3m</span>
+</div>
+
+        
+<div class="busuanzi-count">
+    <span class="site-uv">
+      我的第 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 位朋友，
+    </span>
+    <span class="site-pv">
+      历经 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-precise-range-plugin@1.3.0/moment-precise-range.min.js"></script>
+<script>
+  function timer() {
+    var ages = moment.preciseDiff(moment(),moment(20180101,"YYYYMMDD"));
+    ages = ages.replace(/years?/, "年");
+    ages = ages.replace(/months?/, "月");
+    ages = ages.replace(/days?/, "天");
+    ages = ages.replace(/hours?/, "小时");
+    ages = ages.replace(/minutes?/, "分");
+    ages = ages.replace(/seconds?/, "秒");
+    ages = ages.replace(/\d+/g, '<span style="color:#1890ff">$&</span>');
+    div.innerHTML = `我已在此等候你 ${ages}`;
+  }
+  var div = document.createElement("div");
+  //插入到copyright之后
+  var copyright = document.querySelector(".copyright");
+  document.querySelector(".footer-inner").insertBefore(div, copyright.nextSibling);
+  timer();
+  setInterval("timer()",1000)
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'tChTbEIggDSVcdhPBUf0MFxW-gzGzoHsz',
+      appKey     : 'sJ6xUiFnifEDIIfnj3Ut9zy1',
+      placeholder: "留下你的小脚印吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '8' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
