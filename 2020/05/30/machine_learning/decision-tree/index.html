@@ -28,20 +28,20 @@
 <meta property="og:url" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/00630Defly1g4q286viibj30pk0pfk09.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/image39e7b.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/image61cdc.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/image9e194.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/image09288.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/download.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/00630Defly1g4q286viibj30pk0pfk09.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image39e7b.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image61cdc.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image9e194.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image09288.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/download.png">
 <meta property="article:published_time" content="2020-05-30T12:25:34.000Z">
-<meta property="article:modified_time" content="2020-08-22T02:57:32.410Z">
+<meta property="article:modified_time" content="2020-09-20T02:21:54.374Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="决策树">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png">
 
 <link rel="canonical" href="https://jeffery.ink/2020/05/30/machine_learning/decision-tree/">
 
@@ -240,7 +240,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 10:57:32" itemprop="dateModified" datetime="2020-08-22T10:57:32+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:21:54" itemprop="dateModified" datetime="2020-09-20T10:21:54+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -302,11 +302,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/05/30/machine_learning/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/v2-39d109b46ea4f34d5efbf67edc11d57d_1440w.png" alt></p>
 <a id="more"></a>
 <h1 id="jue-ce-shu">决策树</h1>
 <h2 id="jue-ce-shu-de-ji-ben-si-xiang">决策树的基本思想</h2>
-<p><img src="/2020/05/30/machine_learning/decision-tree/00630Defly1g4q286viibj30pk0pfk09.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/00630Defly1g4q286viibj30pk0pfk09.jpg" alt></p>
 <p>LR模型是一股脑儿的把所有特征塞入学习，决策树更像是编程语言中的if-else一样，去做条件判断，这是两者根本性的区别。主要优点是模型具有可读性，分类速度快。其主要围绕着两个问题：</p>
 <ol>
 <li>如何从数据表中找出最佳节点和最佳分枝？</li>
@@ -341,10 +341,10 @@
 <h3 id="jue-ce-shu-de-sheng-cheng">决策树的生成</h3>
 <h4 id="id-3-suan-fa">ID3 算法</h4>
 <p>在根节点处计算信息熵，然后根据特征依次划分并计算其节点的信息熵，用 信息增益 = 根节点信息熵–属性节点的信息熵，根据信息增益进行降序排列，排在前面的就是第一个划分属性，其后依次类推，这就得到了决策树的形状，也就是怎么“长”了。</p>
-<p><img src="/2020/05/30/machine_learning/decision-tree/image39e7b.png" alt></p>
-<p><img src="/2020/05/30/machine_learning/decision-tree/image61cdc.png" alt></p>
-<p><img src="/2020/05/30/machine_learning/decision-tree/image9e194.png" alt></p>
-<p><img src="/2020/05/30/machine_learning/decision-tree/image09288.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image39e7b.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image61cdc.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image9e194.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/image09288.png" alt></p>
 <p>信息增益存在一个问题：对可取值数目较多的属性有所偏好，例如：考虑将“编号”作为一个属性。为了解决这个问题，引出了另一个算法C4.5。</p>
 <h4 id="c-4-5-suan-fa">C4.5算法</h4>
 <p>为了解决信息增益的问题，引入一个信息增益比：</p>
@@ -435,7 +435,7 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用于数据处理和分析的工具包</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment">#引入用于数据预处理/特征工程的工具包</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="comment">#import决策树建模包</span></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">adult_data = pd.read_csv(<span class="string">'./DecisionTree.csv'</span>)</span><br><span class="line">adult_data.info()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">32561</span> entries, <span class="number">0</span> to <span class="number">32560</span></span><br><span class="line">Data columns (total <span class="number">9</span> columns):</span><br><span class="line">workclass         <span class="number">32561</span> non-null object</span><br><span class="line">education         <span class="number">32561</span> non-null object</span><br><span class="line">marital-status    <span class="number">32561</span> non-null object</span><br><span class="line">occupation        <span class="number">32561</span> non-null object</span><br><span class="line">relationship      <span class="number">32561</span> non-null object</span><br><span class="line">race              <span class="number">32561</span> non-null object</span><br><span class="line">gender            <span class="number">32561</span> non-null object</span><br><span class="line">native-country    <span class="number">32561</span> non-null object</span><br><span class="line">income            <span class="number">32561</span> non-null object</span><br><span class="line">dtypes: object(<span class="number">9</span>)</span><br><span class="line">memory usage: <span class="number">2.2</span>+ MB</span><br><span class="line">    </span><br><span class="line">adult_data.shape</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">(<span class="number">32561</span>, <span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列</span></span><br><span class="line">adult_data.columns</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">Index([<span class="string">u'workclass'</span>, <span class="string">u'education'</span>, <span class="string">u'marital-status'</span>, <span class="string">u'occupation'</span>,</span><br><span class="line">       <span class="string">u'relationship'</span>, <span class="string">u'race'</span>, <span class="string">u'gender'</span>, <span class="string">u'native-country'</span>, <span class="string">u'income'</span>],</span><br><span class="line">      dtype=<span class="string">'object'</span>)</span><br><span class="line"><span class="comment"># 特征</span></span><br><span class="line">feature_columns = [<span class="string">u'workclass'</span>, <span class="string">u'education'</span>, <span class="string">u'marital-status'</span>, <span class="string">u'occupation'</span>, <span class="string">u'relationship'</span>, <span class="string">u'race'</span>, <span class="string">u'gender'</span>, <span class="string">u'native-country'</span>]</span><br><span class="line"><span class="comment"># 标签</span></span><br><span class="line">label_column = [<span class="string">'income'</span>]</span><br><span class="line"><span class="comment">#区分特征和目标列</span></span><br><span class="line">features = adult_data[feature_columns]</span><br><span class="line">label = adult_data[label_column]</span><br><span class="line"><span class="comment"># 把每一个离散的类别特征的取值用one-hot 表示（因为数据都是用字符串表示，需要转化成数字）</span></span><br><span class="line">features = pd.get_dummies(features)</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化一个决策树分类器</span></span><br><span class="line">clf = tree.DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>, max_depth=<span class="number">4</span>)</span><br><span class="line"><span class="comment">#用决策树分类器拟合数据</span></span><br><span class="line">clf = clf.fit(features.values, label.values)</span><br><span class="line"><span class="comment"># inference</span></span><br><span class="line">clf.predict(features.values)</span><br></pre></td></tr></table></figure>
 <h2 id="ke-shi-hua-jue-ce-shu">可视化决策树</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pydotplus</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display, Image</span><br><span class="line"></span><br><span class="line">dot_data = tree.export_graphviz(clf, </span><br><span class="line">                                out_file=<span class="literal">None</span>, </span><br><span class="line">                                feature_names=features.columns,</span><br><span class="line">                                class_names = [<span class="string">'&lt;=50k'</span>, <span class="string">'&gt;50k'</span>],</span><br><span class="line">                                filled = <span class="literal">True</span>,</span><br><span class="line">                                rounded =<span class="literal">True</span></span><br><span class="line">                               )</span><br><span class="line">                               </span><br><span class="line">graph = pydotplus.graph_from_dot_data(dot_data)</span><br><span class="line">display(Image(graph.create_png()))</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/30/machine_learning/decision-tree/download.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/decision-tree/download.png" alt></p>
 
     </div>
 
@@ -568,7 +568,7 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -581,7 +581,7 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -627,7 +627,7 @@ R_{1}(j, s)=\left\{x | x^{(j)} \leqslant s\right\} \quad \quad R_{2}(j, s)=\left
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

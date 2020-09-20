@@ -28,19 +28,19 @@
 <meta property="og:url" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/1008922-20170726163008156-1916269133.png">
-<meta property="og:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/decode-crf.png">
-<meta property="og:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/encoder.png">
-<meta property="og:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/encoder-crf.png">
-<meta property="og:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/crf-v.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/1008922-20170726163008156-1916269133.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/decode-crf.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/encoder.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/encoder-crf.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/crf-v.png">
 <meta property="article:published_time" content="2020-04-09T12:32:44.000Z">
-<meta property="article:modified_time" content="2020-08-22T05:45:11.619Z">
+<meta property="article:modified_time" content="2020-09-20T02:14:38.754Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="序列标注">
 <meta property="article:tag" content="条件随机场">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/1008922-20170726163008156-1916269133.png">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/1008922-20170726163008156-1916269133.png">
 
 <link rel="canonical" href="https://jeffery.ink/2020/04/09/nature_language_process/sequence_labeling/">
 
@@ -239,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 13:45:11" itemprop="dateModified" datetime="2020-08-22T13:45:11+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:14:38" itemprop="dateModified" datetime="2020-09-20T10:14:38+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -305,7 +305,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/04/09/nature_language_process/sequence_labeling/1008922-20170726163008156-1916269133.png" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/1008922-20170726163008156-1916269133.png" alt></p>
 <a id="more"></a>
 <h1 id="tiao-jian-sui-ji-chang-crf">条件随机场(CRF)</h1>
 <h2 id="crf-yong-yu-xu-lie-biao-zhu-wen-ti">crf 用于序列标注问题</h2>
@@ -369,7 +369,7 @@ Z_{t+1}^{(k)} &amp;=\left(Z_{t}^{(1)} G_{1 k}+Z_{t}^{(2)} G_{2 k}+\cdots+Z_{t}^{
 \mathbf{Z}_{t+1}=\mathbf{Z}_{t} \boldsymbol{G} \otimes H\left(y_{t+1} | \boldsymbol{x}\right) 
 \]<br>
 其中,\(Z_{t}=\left[Z_{t}^{(1)}, \ldots, Z_{t}^{(k)}\right]\),而 \(G\) 是对 \(g(y_i,y_j)\) (状态转移)各个元素取指数后的矩阵，即\(G=e^{g(y i, y j)}\),而\(H(y_{t+1}|x)\),是编码模型\(h(y_{t+1}|x)\),（RNN、CNN等）对位置 \(t+1\) 的各个标签的打分的指数，即\(H\left(y_{t+1} | x\right)=e^{h\left(y_{t+1} | x\right)}\)，也是一个向量。\(Z_tG\) 这一步是矩阵乘法，得到一个向量，而 \(⊗\) 是两个向量的逐位对应相乘。</p>
-<p><img src="/2020/04/09/nature_language_process/sequence_labeling/decode-crf.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/decode-crf.png" alt></p>
 <p>从\(t\)到\(t+1\)时刻的计算，包括转移概率和\(j+1\)节点本身的概率</p>
 <h3 id="dong-tai-gui-hua">动态规划</h3>
 <p>写出损失函数 \(-logP(y_1,…,y_n|x)\) 后，就可以完成模型的训练了，因为目前的深度学习框架都已经带有自动求导的功能，只要我们能写出可导的 loss，就可以帮我们完成优化过程了。</p>
@@ -533,13 +533,13 @@ U09:%x[0,0]/%x[1,0]</p>
 <h2 id="zhu-zheng-softmax-he-crf-de-yi-tong">逐帧 softmax 和 CRF 的异同?</h2>
 <p><strong>逐帧softmax</strong></p>
 <p>CRF 主要用于序列标注问题，可以简单理解为是<strong>给序列中的每一帧都进行分类</strong>，既然是分类，很自然想到将这个序列用 CNN 或者 RNN 进行编码后，接一个全连接层用 softmax 激活，如下图所示：</p>
-<p><img src="/2020/04/09/nature_language_process/sequence_labeling/encoder.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/encoder.png" alt></p>
 <p>然而，<strong>逐帧softmax并没有直接考虑输出的上下文关联</strong>。比如：当我们设计标签时，比如用 s、b、m、e 的 4 个标签来做字标注法的分词，目标输出序列本身会带有一些上下文关联，如 s 后面就不能接 m 和 e，等等。逐标签 softmax 并没有考虑这种输出层面的上下文关联，所以它意味着把这些关联放到了编码层面，希望模型能自己学到这些内容，但有时候会“强模型所难”。</p>
 <p>而 CRF 则更直接一点，它<strong>将输出层面的关联分离了出来</strong>，这使得模型在学习上更为“从容”,CRF在输出端显式地考虑了上下文关联.</p>
-<p><img src="/2020/04/09/nature_language_process/sequence_labeling/encoder-crf.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/encoder-crf.png" alt></p>
 <p>如果仅仅是引入输出的关联，还不仅仅是 CRF 的全部，CRF 的真正精巧的地方，是它以路径为单位，考虑的是路径的概率。</p>
 <p>假如一个输入有 n 帧，每一帧的标签有 k 中可能性，那么理论上就有\(k^n\)中不同的输入。我们将它用如下的网络图进行简单的可视化。在下图中，每个点代表一个标签的可能性，点之间的连线表示标签之间的关联，而每一种标注结果，都对应着图上的一条完整的路径。</p>
-<p><img src="/2020/04/09/nature_language_process/sequence_labeling/crf-v.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/sequence_labeling/crf-v.png" alt></p>
 <p>而在序列标注任务中，我们的正确答案是一般是唯一的。比如“今天天气不错”，如果对应的分词结果是“今天/天气/不/错”，那么目标输出序列就是 bebess，除此之外别的路径都不符合要求。</p>
 <p>换言之，在序列标注任务中，我们的研究的基本单位应该是路径，我们要做的事情，是从 \(k^n\) 条路径选出正确的一条，那就意味着，如果将它视为一个分类问题，那么将是 \(k^n\) 类中选一类的分类问题。</p>
 <p>这就是逐帧 softmax 和 CRF 的根本不同了：<strong>前者将序列标注看成是 n 个 k 分类问题，后者将序列标注看成是 1 个$ k^n$ 分类问题</strong>。</p>
@@ -608,8 +608,8 @@ U09:%x[0,0]/%x[1,0]</p>
       <i class="fa fa-chevron-left"></i> 模型融合
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/04/11/%E6%96%87%E6%9C%AC%E5%A4%9A%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB/" rel="next" title="文本多标签分类">
-      文本多标签分类 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/04/13/nature_language_process/bert%E7%B3%BB%E5%88%97/" rel="next" title="bert系列">
+      bert系列 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -688,7 +688,7 @@ U09:%x[0,0]/%x[1,0]</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -701,7 +701,7 @@ U09:%x[0,0]/%x[1,0]</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -747,7 +747,7 @@ U09:%x[0,0]/%x[1,0]</p>
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

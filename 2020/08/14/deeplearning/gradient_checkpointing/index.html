@@ -28,15 +28,15 @@
 <meta property="og:url" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/checkpoint.png">
-<meta property="og:image" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/output.gif">
-<meta property="og:image" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/output_poor.gif">
-<meta property="og:image" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/output2.gif">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/checkpoint.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output.gif">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output_poor.gif">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output2.gif">
 <meta property="article:published_time" content="2020-08-14T10:44:35.000Z">
-<meta property="article:modified_time" content="2020-08-22T05:32:28.154Z">
+<meta property="article:modified_time" content="2020-09-20T02:08:22.437Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/checkpoint.png">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/checkpoint.png">
 
 <link rel="canonical" href="https://jeffery.ink/2020/08/14/deeplearning/gradient_checkpointing/">
 
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 13:32:28" itemprop="dateModified" datetime="2020-08-22T13:32:28+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:08:22" itemprop="dateModified" datetime="2020-09-20T10:08:22+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,7 +297,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/08/14/deeplearning/gradient_checkpointing/checkpoint.png" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/checkpoint.png" alt></p>
 <a id="more"></a>
 <h1 id="gradient-checkpointing">gradient checkpointing</h1>
 <p>传统的方式是为了后续backprop的计算，需要保留激活层的所有中间输出。gradient checkpointing只保留一部分激活函数值，只是在backprop的时候重新计算激活值。由于训练过程是<strong>数值不变</strong>的，因此该方法不对模型的最终效果产生影响。</p>
@@ -328,7 +328,7 @@ J = L + s
 \]</p>
 <p>将\(J\)称为有关给定数据样本的目标函数，并在以下的讨论中简称目标函数。</p>
 <h2 id="fan-xiang-chuan-bo">反向传播</h2>
-<p>关于反向传播更详细的知识点，可以查看 <code><a href="/2020/03/16/deeplearning/backprop/" title="反向传播">反向传播</a></code></p>
+<p>关于反向传播更详细的知识点，可以查看 <code></code></p>
 <p>将上述正向传播进行反向传播，求\(W^{(1)}\)和\(W^{(2)}\)的梯度：<br>
 \[
 \frac{\partial J}{\partial \boldsymbol{W}^{(2)}}
@@ -342,15 +342,15 @@ J = L + s
 \]</p>
 <p>由模型参数梯度可以看出，在反向传播过程中需要用到前向过程中每一步的激活值。因此在训练深度模型的时候，会保留每一步计算的激活值。</p>
 <p>下图反映了反向传播过程中对激活值的依赖关系：</p>
-<p><img src="/2020/08/14/deeplearning/gradient_checkpointing/output.gif" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output.gif" alt></p>
 <p>这意味着反向传播所需要的内存随着神经网络层数n（假设每层对应一个激活值）呈现线性增长的趋势。</p>
 <h2 id="yuan-li">原理</h2>
 <p>为了节省内存，这里有两种</p>
 <p>第一种策略是不保留前向计算的激活值，在反向传播的过程中，需要用到某一层的激活值，则前向计算出该激活值，计算过程如下图：</p>
-<p><img src="/2020/08/14/deeplearning/gradient_checkpointing/output_poor.gif" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output_poor.gif" alt></p>
 <p>这种策略的缺点在于：完成一次反向计算过程，需要\(O(n^2)\)复杂度的前向计算，这计算开销就显得有点不切实际。</p>
 <p>另一种策略是保存部分checkpointing(激活值节点)，对于未保存的节点，根据其前面最近的checkpointing重新计算得到。</p>
-<p><img src="/2020/08/14/deeplearning/gradient_checkpointing/output2.gif" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/gradient_checkpointing/output2.gif" alt></p>
 <p>通常来说，最佳的选择是将每隔\(\sqrt{n}\)的节点标记为检查点。这样，检查点个数和检查点之间节点的个数都是\(\sqrt{n}\)的量级，这也意味着所需要的内存也与网络中层数的平方更成比例。由于每个节点最多重新计算一次，因此该策略所需要的额外计算相当于通过网络的单个正向传递。</p>
 <h1 id="zong-jie">总结</h1>
 <p>总得来说，使用该方法，训练时间会增加约30%，但是可以大幅减少显存的使用。</p>
@@ -402,7 +402,7 @@ J = L + s
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/03/tensorflow/tf_build_models/" rel="prev" title="tensorflow2 构建模型的三种方式">
+    <a href="/2020/08/03/tf_build_models/" rel="prev" title="tensorflow2 构建模型的三种方式">
       <i class="fa fa-chevron-left"></i> tensorflow2 构建模型的三种方式
     </a></div>
       <div class="post-nav-item">
@@ -486,7 +486,7 @@ J = L + s
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -499,7 +499,7 @@ J = L + s
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -545,7 +545,7 @@ J = L + s
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

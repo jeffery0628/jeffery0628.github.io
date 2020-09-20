@@ -28,14 +28,14 @@
 <meta property="og:url" content="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/2.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/1.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/2.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/2.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/1.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/2.jpg">
 <meta property="article:published_time" content="2020-08-16T23:23:21.000Z">
-<meta property="article:modified_time" content="2020-08-22T05:34:46.448Z">
+<meta property="article:modified_time" content="2020-09-20T01:58:12.089Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/2.jpg">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/2.jpg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/08/17/deeplearning/normalization/normalization_summary/">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 13:34:46" itemprop="dateModified" datetime="2020-08-22T13:34:46+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 09:58:12" itemprop="dateModified" datetime="2020-09-20T09:58:12+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,7 +300,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/08/17/deeplearning/normalization/normalization_summary/2.jpg" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/2.jpg" alt></p>
 <a id="more"></a>
 <h1 id="gui-yi-hua">归一化</h1>
 <h2 id="gui-yi-hua-shou-duan">归一化手段</h2>
@@ -328,9 +328,9 @@ x^* = \frac{x- \mu }{\sigma}
 <p>归一化的本质就是<strong>线性变换</strong>。 线性变化的诸多良好性质，决定了为什么对数据进行改变后不会造成“失效”，还能提高数据的表现。</p>
 <p><strong>归一化加快了梯度下降求最优解的速度。</strong></p>
 <p>假定一个预测房价的例子，两个特征： 面积与房间数，那么则有： \(y = \theta_1 x_1 + \theta_2x_2\)， \(x_1\) 表房间数，\(x_2\) 表面积 ， 现实中，面积范围往往在 \(1-1000\)， 而房间通常为 \(1-10\)， 那么面积对模型的影响要更大一些，此时寻求最优解的过程为：</p>
-<p><img src="/2020/08/17/deeplearning/normalization/normalization_summary/1.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/1.jpg" alt></p>
 <p>归一化后，寻求最优解的过程为：</p>
-<p><img src="/2020/08/17/deeplearning/normalization/normalization_summary/2.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/normalization_summary/2.jpg" alt></p>
 <p>在未归一化的时候， 由于 \(\theta_1\) 的更新幅度要比  \(\theta_2\) 小， 因此  \(\theta_2\) 的应该要比  \(\theta_1\) 要大，但是在实际中，我们使用常规梯度下降法时，我们各个的学习率都是一样的，这也就造成了 \(\theta_2\) 的更新会比较慢，结果就是寻求最优解的过程会走很多弯路导致模型收敛速度缓慢。</p>
 <p>我们来实际举例， 假设在未归一化的时候， 我们的损失函数为：<br>
 \[
@@ -556,7 +556,7 @@ y_i^l \leftarrow \gamma \, \hat{a}_i^l + \beta \equiv LN_{\gamma, \beta}{(a_i^l)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -569,7 +569,7 @@ y_i^l \leftarrow \gamma \, \hat{a}_i^l + \beta \equiv LN_{\gamma, \beta}{(a_i^l)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -615,7 +615,7 @@ y_i^l \leftarrow \gamma \, \hat{a}_i^l + \beta \equiv LN_{\gamma, \beta}{(a_i^l)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

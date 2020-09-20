@@ -28,14 +28,14 @@
 <meta property="og:url" content="https://jeffery.ink/2020/07/30/deeplearning/normalization/weight_normalization/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/07/30/deeplearning/normalization/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/07/30/deeplearning/normalization/weight_normalization/qG2TNNu9Rq-compress.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/qG2TNNu9Rq-compress.jpg">
 <meta property="article:published_time" content="2020-07-30T13:47:42.000Z">
-<meta property="article:modified_time" content="2020-08-22T05:35:01.835Z">
+<meta property="article:modified_time" content="2020-09-20T01:56:54.301Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="归一化方法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/07/30/deeplearning/normalization/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/07/30/deeplearning/normalization/weight_normalization/">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 13:35:01" itemprop="dateModified" datetime="2020-08-22T13:35:01+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 09:56:54" itemprop="dateModified" datetime="2020-09-20T09:56:54+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,12 +300,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/07/30/deeplearning/normalization/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/v2-67e63301b77923897960fb4b50a84ed9_1440w.jpg" alt></p>
 <a id="more"></a>
 <h1 id="yin-ru">引入</h1>
 <p><code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>介绍了<code>BN</code>的相关知识，<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>介绍了<code>LN</code>的相关知识。而本文介绍的<code>Weight Normalization(WN)</code>是在权值的维度上做归一化，<code>WN</code>的做法是将权值向量<code>w</code>在欧式范数和其方向上解耦成了参数向量\(\vec{v}\)和参数标量\(g\)后使用<code>SGD</code>来分别优化这两个参数。</p>
 <p><code>WN</code>也是和样本无关的，所以可以应用在<code>batch size</code>较小以及RNN动态网络中；另外<code>BN</code>使用的基于<code>mini-batch</code>的归一化统计量代替全局统计量，相当于在梯度计算中引入了噪声。而<code>WN</code>则没有这个问题，所以在生成模型，强化学习等噪声敏感的环境中<code>WN</code>的效果要优于<code>BN</code>。此外<code>WN</code>没有额外参数，这样更节约显存。同时<code>WN</code>的计算效率也要优于要计算归一化统计量的<code>BN</code>。</p>
-<p><code><a class="btn" href="weight_normalization.pdf">
+<p><code><a class="btn" href="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/weight_normalization.pdf" target="_blank" rel="noopener">
             <i class="fa fa-download"></i>weight normalization 下载
           </a></code></p>
 <h1 id="weight-normalization-de-ji-suan">Weight Normalization的计算</h1>
@@ -318,7 +318,7 @@ y=\phi(\mathbf{w} \cdot \mathbf{x}+b) \tag{1}
 w = \frac{g}{\|v\|}v \tag{2}
 \]<br>
 \(\|v\|\)表示\(v\)的欧式范数。当\(v = w\) 且\(g = \|w\|\)时，<code>WN</code>还原为普通的计算方法，所以<code>WN</code>的网络容量要大于普通神经网络。</p>
-<p><img src="/2020/07/30/deeplearning/normalization/weight_normalization/qG2TNNu9Rq-compress.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/weight_normalization/qG2TNNu9Rq-compress.jpg" alt></p>
 <p>当\(g\)固定为\(\|w\|\)时，只优化\(v\)，这时候相当于只优化\(w\)的方向而保留其范数。当\(v\)固定为\(w\)时，这时相当于只优化\(w\)的范数，而保留其方向，这样为我们优化权值提供了更多可以选择的空间，且解耦方向与范数的策略也能加速其收敛。</p>
 <p>在优化\(g\)时，一般通过优化\(g\)的log级参数\(s\)来完成，即\(g = e^s\)。</p>
 <p>\(v\)和\(g\)的更新值可以通过SGD计算得到：<br>
@@ -510,7 +510,7 @@ t^{\prime}=\frac{t-\mu[t]}{\sigma[t]}=\frac{\mathbf{v}}{\sigma[t]} \mathbf{x}-\f
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -523,7 +523,7 @@ t^{\prime}=\frac{t-\mu[t]}{\sigma[t]}=\frac{\mathbf{v}}{\sigma[t]} \mathbf{x}-\f
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -569,7 +569,7 @@ t^{\prime}=\frac{t-\mu[t]}{\sigma[t]}=\frac{\mathbf{v}}{\sigma[t]} \mathbf{x}-\f
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

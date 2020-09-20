@@ -28,20 +28,20 @@
 <meta property="og:url" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/1042406-20161124144326487-1331861308.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/1042406-20161125104106409-1177897648.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/1042406-20161125104737206-364720074.png">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/quesbase6415311358438441728.gif">
-<meta property="og:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/10.svm.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161124144326487-1331861308.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161125104106409-1177897648.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161125104737206-364720074.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/quesbase6415311358438441728.gif">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/10.svm.png">
 <meta property="article:published_time" content="2020-06-03T01:01:36.000Z">
-<meta property="article:modified_time" content="2020-08-22T01:59:17.077Z">
+<meta property="article:modified_time" content="2020-09-20T02:30:18.413Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/06/03/machine_learning/SVM/">
 
@@ -240,7 +240,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 09:59:17" itemprop="dateModified" datetime="2020-08-22T09:59:17+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:30:18" itemprop="dateModified" datetime="2020-09-20T10:30:18+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -302,7 +302,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
 <a id="more"></a>
 <h1 id="svm">SVM</h1>
 <h2 id="jian-jie">简介</h2>
@@ -331,7 +331,7 @@ wx_j + b &lt; 0; \quad x_j \in D_1
 w^Tx+b=0
 \]<br>
 这个超平面可以用分类函数  \(f(x)=w^Tx+b\)表示，当\(f(x)\) 等于0的时候，\(x\)便是位于超平面上的点，而\(f(x)\)大于0的点对应 \(y=1\) 的数据点，\(f(x)\)小于0的点对应\(y=-1\)的点，如下图所示：</p>
-<p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7oendezj30gz0aojrq.jpg" alt></p>
 <h3 id="han-shu-jian-ge-yu-ji-he-jian-ge">函数间隔与几何间隔</h3>
 <p>在分离超平面固定为\(𝑤^T𝑥+𝑏=0\)的时候，\(|w^Tx+b|\)表示点\(x\)到超平面的相对距离。通过观察\(w^Tx+b\)和\(y\)是否同号，我们判断分类是否正确。这里引入函数间隔的概念，定义函数间隔\(\gamma^{\prime}\) 为：<br>
 \[
@@ -346,7 +346,7 @@ w^Tx+b=0
 <h3 id="zhi-chi-xiang-liang">支持向量</h3>
 <p>在感知机模型中，可以找到多个可以分类的超平面将数据分开，并且优化时希望所有的点都被准确分类。但是实际上离超平面很远的点已经被正确分类，它对超平面的位置没有影响。我们最关心是那些离超平面很近的点，这些点很容易被误分类。如果可以让离超平面比较近的点尽可能的远离超平面，最大化几何间隔，那么分类效果会更好一些。SVM的思想起源正起于此。</p>
 <p>如下图所示，分离超平面为\(w^Tx+b=0\)，如果所有的样本不光可以被超平面分开，还和超平面保持一定的函数距离（下图函数距离为1），那么这样的分类超平面是比感知机的分类超平面优的。可以证明，这样的超平面只有一个。和超平面平行的保持一定的函数距离的这两个超平面对应的向量，我们定义为支持向量，如下图虚线所示。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161124144326487-1331861308.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161124144326487-1331861308.jpg" alt></p>
 <p>支持向量到超平面的距离为\(\frac{1}{||w||_2}\),两个支持向量之间的距离为\(\frac{2}{||w||_2}\)。</p>
 <h2 id="mu-biao-han-shu-yu-you-hua">目标函数与优化</h2>
 <p>SVM的模型是让所有点到超平面的距离大于一定的距离，也就是所有的分类点要在各自类别的支持向量两边。用数学式子表示为：<br>
@@ -396,9 +396,9 @@ L(w, b, \alpha)&amp;=\frac{1}{2}\|w\|_{2}^{2}-\sum_{i=1}^{m} \alpha_{i}\left[y_{
 从上面可以看出，通过对\(w,b\)极小化以后，优化函数\(\psi(\alpha)\)仅仅只有\(\alpha\)向量做参数。只要能够(利用SMO算法)极大化\(\psi(\alpha)\)，就可以求出此时对应的\(\alpha\)，进而求出\(w,b\).</p>
 <h2 id="cong-xian-xing-ke-fen-dao-xian-xing-bu-ke-fen">从线性可分到线性不可分</h2>
 <p>有时候本来数据的确是可分的，也就是说可以用 线性分类SVM的学习方法来求解，但是却因为混入了异常点，导致不能线性可分，比如下图，本来数据是可以按下面的实线来做超平面分离的，可由于一个橙色和一个蓝色的异常点导致我们没法用上述方法来分类。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104106409-1177897648.png" alt="img"></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161125104106409-1177897648.png" alt="img"></p>
 <p>另外一种情况没有这么糟糕到不可分，但是会严重影响我们模型的泛化预测效果，比如下图，本来如果我们不考虑异常点，SVM的超平面应该是下图中的红色线所示，但是由于有一个蓝色的异常点，导致我们学习到的超平面是下图中的粗虚线所示，这样会严重影响我们的分类模型预测效果。</p>
-<p><img src="/2020/06/03/machine_learning/SVM/1042406-20161125104737206-364720074.png" alt="img"></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/1042406-20161125104737206-364720074.png" alt="img"></p>
 <p>如何解决这些问题呢？</p>
 <p>SVM引入了软间隔最大化的方法来解决。回顾硬间隔最大化的条件：<br>
 \[
@@ -423,8 +423,8 @@ y_{i}\left(w \cdot x_{i}+b\right) \geq 1-\xi_{i}
 <h2 id="he-han-shu-kernel">核函数Kernel</h2>
 <p>事实上，大部分时候数据并不是线性可分的，这个时候满足这样条件的超平面就根本不存在。对于非线性的情况，SVM 的处理方法是选择一个核函数 κ(⋅,⋅) ，通过将数据映射到高维空间，来解决在原始空间中线性不可分的问题。</p>
 <p>具体来说，在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过核函数将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
-<p><img src="/2020/06/03/machine_learning/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg" alt></p>
-<p><img src="/2020/06/03/machine_learning/SVM/quesbase6415311358438441728.gif" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/00630Defly1g4w7t050xfj30nl0bajrv.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/quesbase6415311358438441728.gif" alt></p>
 <p>通常人们会从一些常用的核函数中选择（根据问题和数据的不同，选择不同的参数，实际上就是得到了不同的核函数），例如：<strong>多项式核、高斯核、线性核。</strong></p>
 <p>核函数简要概括，即以下三点：</p>
 <ol>
@@ -464,7 +464,7 @@ f(x)=\operatorname{sign}\left(\sum_{i=1}^{N_{t}} a_{i}^{*} y_{i} \exp \left(-\fr
 <li>当训练数据线性不可分时，通过使用核技巧及软间隔最大化，学习非线性支持向量机。</li>
 </ul>
 <h2 id="svm-zhong-de-zhi-chi-xiang-liang-shi-shi-yao-yi-si">SVM 中的支持向量是什么意思？</h2>
-<p><img src="/2020/06/03/machine_learning/SVM/10.svm.png" alt="10.svm"></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/SVM/10.svm.png" alt="10.svm"></p>
 <p>如上图所示，在获得分离超平面时，并非所有的点都对分离超平面的位置起决定作用。</p>
 <p>其实在特别远的区域，哪怕你增加10000个样本点，对于超平面的位置，也是没有作用的，因为分割线是由几个关键点决定的（图上三个），这几个关键点支撑起了一个分离超平面，所以这些关键点，就是<strong>支持向量</strong>。</p>
 <h2 id="shi-fou-cun-zai-yi-zu-can-shu-shi-svm-xun-lian-wu-chai-wei-0">是否存在一组参数使SVM训练误差为0？</h2>
@@ -704,7 +704,7 @@ J(\theta) = \frac{1}{2} ||\theta||^2 + C \sum_i max(0, 1-y_i(\theta^Tx_i + b))
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -717,7 +717,7 @@ J(\theta) = \frac{1}{2} ||\theta||^2 + C \sum_i max(0, 1-y_i(\theta^Tx_i + b))
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -763,7 +763,7 @@ J(\theta) = \frac{1}{2} ||\theta||^2 + C \sum_i max(0, 1-y_i(\theta^Tx_i + b))
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

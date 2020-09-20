@@ -28,14 +28,14 @@
 <meta property="og:url" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
-<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731222057465.png">
-<meta property="og:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731215441080.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731222057465.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731215441080.png">
 <meta property="article:published_time" content="2020-07-31T12:33:10.000Z">
-<meta property="article:modified_time" content="2020-08-22T05:34:27.150Z">
+<meta property="article:modified_time" content="2020-09-20T02:00:06.049Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731215441080.png">
 
 <link rel="canonical" href="https://jeffery.ink/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 13:34:27" itemprop="dateModified" datetime="2020-08-22T13:34:27+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:00:06" itemprop="dateModified" datetime="2020-09-20T10:00:06+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,7 +300,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
 <a id="more"></a>
 <h1 id="instance-normalization">Instance Normalization</h1>
 <p>对于图像风格迁移这类注重每个像素的任务来说，每个样本的像素点的信息都是非常重要的，对于像<code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>这种每个批量的所有样本都做归一化的算法来说就不太适用了，因为<code>BN</code>计算归一化统计量时考虑了一个批量中所有图片的内容，从而造成了每个样本独特细节的丢失。而对于<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>这类需要考虑一个样本所有通道的算法来说可能忽略了不同通道的差异，也不太适用于图像风格迁移这类应用。<code>Instance Normalization(IN)</code>是一种更适合对单个像素有更高要求的场景的归一化算法。<code>IN</code>算法计算归一化统计量时考虑单个样本，单个通道的所有元素。</p>
@@ -313,7 +313,7 @@
 \[
 \mu_{t i}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H} x_{t i l m} \quad \sigma_{t i}^{2}=\frac{1}{H W} \sum_{l=1}^{W} \sum_{m=1}^{H}\left(x_{t i l m}-\mu_{t i}\right)^{2} \quad y_{t i j k}=\frac{x_{t i j k}-\mu_{t i}}{\sqrt{\sigma_{t i}^{2}+\epsilon}} \tag{2}
 \]</p>
-<p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731222057465.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731222057465.png" alt></p>
 <p>对于<code>BN</code>中的\(\beta\)和\(\gamma\)，<code>IN</code>中也存在这两个参数。</p>
 <h2 id="dai-ma">代码</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Instancenorm</span><span class="params">(x, gamma, beta)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># x_shape:[B, C, H, W]</span></span><br><span class="line">    results = <span class="number">0.</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line"></span><br><span class="line">    x_mean = np.mean(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=<span class="literal">True</span>)</span><br><span class="line">    x_var = np.var(x, axis=(<span class="number">2</span>, <span class="number">3</span>), keepdims=True0)</span><br><span class="line">    x_normalized = (x - x_mean) / np.sqrt(x_var + eps)</span><br><span class="line">    results = gamma * x_normalized + beta</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
@@ -325,7 +325,7 @@
 </ol>
 <h1 id="group-normalization">Group Normalization</h1>
 <p><code>Group Normalization(GN)</code>是何恺明提出的一种归一化策略，它是介于<code><a href="/2020/07/29/deeplearning/normalization/batch_normalization/" title="batch normalization">batch normalization</a></code>和<code><a href="/2020/07/30/deeplearning/normalization/layer_normalization/" title="layer normalization">layer normalization</a></code>之间的一种折中方案，如下图最右，它通过将<strong>通道</strong>数据分成几组计算归一化统计量，因此<code>GN</code>也是和批量大小无关的算法，因此可以用在<code>batch size</code>比较小的环境中。作者在论文中指出<code>GN</code>要比<code>LN</code>和<code>IN</code>的效果要好。</p>
-<p><img src="/2020/07/31/deeplearning/normalization/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/instance_normalization_and_group_normalization/image-20200731215441080.png" alt></p>
 <h2 id="gn-suan-fa">GN算法</h2>
 <p>和之前所有归一化算法相同，<code>GN</code>也是根据该层的输入数据计算均值和方差，然后使用这两个值更新输入数据：<br>
 \[
@@ -485,7 +485,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -498,7 +498,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -544,7 +544,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

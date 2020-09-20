@@ -28,17 +28,17 @@
 <meta property="og:url" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.11_capacity_vs_error.svg">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.11_capacity_vs_error.svg">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.12_output1.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.12_output2.png">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.8_mlp.svg">
-<meta property="og:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.13_dropout.svg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.11_capacity_vs_error.svg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.11_capacity_vs_error.svg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.12_output1.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.12_output2.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.8_mlp.svg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.13_dropout.svg">
 <meta property="article:published_time" content="2020-05-24T14:45:40.000Z">
-<meta property="article:modified_time" content="2020-08-22T01:58:42.567Z">
+<meta property="article:modified_time" content="2020-09-20T02:29:18.757Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/3.11_capacity_vs_error.svg">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.11_capacity_vs_error.svg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/05/24/machine_learning/overfit_underfit/">
 
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 09:58:42" itemprop="dateModified" datetime="2020-08-22T09:58:42+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:29:18" itemprop="dateModified" datetime="2020-09-20T10:29:18+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -299,7 +299,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/05/24/machine_learning/overfit_underfit/3.11_capacity_vs_error.svg" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.11_capacity_vs_error.svg" alt></p>
 <a id="more"></a>
 <h1 id="pian-chai-vs-fang-chai">偏差 vs 方差</h1>
 <h2 id="ding-yi">定义</h2>
@@ -352,7 +352,7 @@ var(x) = E_D[(f(x;D) - \hat{f}(x))^2]
 \]</p>
 <p>来近似 \(y\)。在上式中，\(w_k\)是模型的权重参数，\(b\)是偏差参数。与线性回归相同，多项式函数拟合也使用平方损失函数。特别地，一阶多项式函数拟合又叫线性函数拟合。</p>
 <p>因为高阶多项式函数模型参数更多，模型函数的选择空间更大，所以高阶多项式函数比低阶多项式函数的复杂度更高。因此，高阶多项式函数比低阶多项式函数更容易在相同的训练数据集上得到更低的训练误差。给定训练数据集，模型复杂度和误差之间的关系通常如下图所示。给定训练数据集，如果模型的复杂度过低，很容易出现欠拟合；如果模型复杂度过高，很容易出现过拟合。应对欠拟合和过拟合的一个办法是针对数据集选择合适复杂度的模型。</p>
-<p><img src="/2020/05/24/machine_learning/overfit_underfit/3.11_capacity_vs_error.svg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.11_capacity_vs_error.svg" alt></p>
 <h3 id="xun-lian-shu-ju-ji-da-xiao">训练数据集大小</h3>
 <p>影响欠拟合和过拟合的另一个重要因素是训练数据集的大小。如果训练数据集中样本数过少，特别是比模型参数数量更少时，过拟合更容易发生。此外，泛化误差不会随训练数据集里样本数量增加而增大。因此，在计算资源允许的范围之内，我们通常希望训练数据集大一些，特别是在模型复杂度较高时，例如层数较多的深度学习模型。</p>
 <h2 id="jie-jue-guo-ni-he-de-fang-fa">解决过拟合的方法</h2>
@@ -384,10 +384,10 @@ w_2 &amp;\leftarrow \left(1- \frac{\eta\lambda}{|\mathcal{B}|} \right)w_2 -   \f
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">batch_size, num_epochs, lr = <span class="number">1</span>, <span class="number">100</span>, <span class="number">0.003</span></span><br><span class="line">net, loss = linreg, squared_loss</span><br><span class="line">optimizer = tf.keras.optimizers.SGD()</span><br><span class="line">train_iter = tf.data.Dataset.from_tensor_slices((train_features, train_labels)).batch(batch_size).shuffle(batch_size)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fit_and_plot</span><span class="params">(lambd)</span>:</span></span><br><span class="line">    w, b = init_params()</span><br><span class="line">    train_ls, test_ls = [], []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">            <span class="keyword">with</span> tf.GradientTape(persistent=<span class="literal">True</span>) <span class="keyword">as</span> tape:</span><br><span class="line">                <span class="comment"># 添加了L2范数惩罚项</span></span><br><span class="line">                l = loss(net(X, w, b), y) + lambd * l2_penalty(w)</span><br><span class="line">            grads = tape.gradient(l, [w, b])</span><br><span class="line">            sgd([w, b], lr, batch_size, grads)</span><br><span class="line">        train_ls.append(tf.reduce_mean(loss(net(train_features, w, b),</span><br><span class="line">                             train_labels)).numpy())</span><br><span class="line">        test_ls.append(tf.reduce_mean(loss(net(test_features, w, b),</span><br><span class="line">                            test_labels)).numpy())</span><br><span class="line">    semilogy(range(<span class="number">1</span>, num_epochs + <span class="number">1</span>), train_ls, <span class="string">'epochs'</span>, <span class="string">'loss'</span>,</span><br><span class="line">                 range(<span class="number">1</span>, num_epochs + <span class="number">1</span>), test_ls, [<span class="string">'train'</span>, <span class="string">'test'</span>])</span><br><span class="line">    print(<span class="string">'L2 norm of w:'</span>, tf.norm(w).numpy())</span><br></pre></td></tr></table></figure>
 <p>当<code>lambd</code>设为0时，我们没有使用权重衰减。结果训练误差远小于测试集上的误差。这是典型的过拟合现象。</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">fit_and_plot</span><span class="params">(lambd=<span class="number">0</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/24/machine_learning/overfit_underfit/3.12_output1.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.12_output1.png" alt></p>
 <p>下面使用权重衰减。可以看出，训练误差虽然有所提高，但测试集上的误差有所下降。过拟合现象得到一定程度的缓解。另外，权重参数的\(L_2\)范数比不使用权重衰减时的更小，此时的权重参数更接近0。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fit_and_plot(lambd=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/05/24/machine_learning/overfit_underfit/3.12_output2.png" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.12_output2.png" alt></p>
 <h4 id="tensorflow-kuai-su-shi-xian">tensorflow快速实现</h4>
 <p>直接在构造优化器实例时通过<code>weight_decay</code>参数来指定权重衰减超参数。默认下，tensorflow会对权重和偏差同时衰减。可以分别对权重和偏差构造优化器实例，从而只对权重衰减。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fit_and_plot_tf2</span><span class="params">(wd, lr=<span class="number">1e-3</span>)</span>:</span></span><br><span class="line">    net = models.Sequential()</span><br><span class="line">    net.add(layers.Dense(<span class="number">1</span>))</span><br><span class="line">    net.build(input_shape=(<span class="number">1</span>, <span class="number">200</span>))</span><br><span class="line">    w, b = net.trainable_variables</span><br><span class="line">    optimizer = optimizers.SGD(learning_rate=lr)</span><br><span class="line">    train_ls, test_ls = [], []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> train_iter:</span><br><span class="line">            <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">                l = loss(net(X), y) + wd * l2_penalty(w)</span><br><span class="line">            grads = tape.gradient(l, net.trainable_variables)</span><br><span class="line">            optimizer.apply_gradients(zip(grads, net.trainable_variables))</span><br><span class="line">        train_ls.append(tf.reduce_mean(loss(net(train_features),</span><br><span class="line">                             train_labels)).numpy())</span><br><span class="line">        test_ls.append(tf.reduce_mean(loss(net(test_features),</span><br><span class="line">                            test_labels)).numpy())</span><br><span class="line">    semilogy(range(<span class="number">1</span>, num_epochs + <span class="number">1</span>), train_ls, <span class="string">'epochs'</span>, <span class="string">'loss'</span>,</span><br><span class="line">                 range(<span class="number">1</span>, num_epochs + <span class="number">1</span>), test_ls, [<span class="string">'train'</span>, <span class="string">'test'</span>])</span><br><span class="line">    print(<span class="string">'L2 norm of w:'</span>, tf.norm(w).numpy())</span><br></pre></td></tr></table></figure>
@@ -407,8 +407,8 @@ h_i' = \frac{\xi_i}{1-p} h_i
 E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
 \]</p>
 <p>即<strong>丢弃法不改变其输入的期望值</strong>。对图1中的隐藏层使用丢弃法，一种可能的结果如图2所示，其中\(h_2\)和\(h_5\)被清零。这时输出值的计算不再依赖\(h_2\)和\(h_5\)，在反向传播时，与这两个隐藏单元相关的权重的梯度均为0。由于在训练中隐藏层神经元的丢弃是随机的，即\(h_1, \ldots, h_5\)都有可能被清零，输出层的计算无法过度依赖\(h_1, \ldots, h_5\)中的任一个，从而在训练模型时起到正则化的作用，并可以用来应对过拟合。在测试模型时，我们为了拿到更加确定性的结果，一般不使用丢弃法。</p>
-<p><img src="/2020/05/24/machine_learning/overfit_underfit/3.8_mlp.svg" alt="图1"></p>
-<p><img src="/2020/05/24/machine_learning/overfit_underfit/3.13_dropout.svg" alt="图2"></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.8_mlp.svg" alt="图1"></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/overfit_underfit/3.13_dropout.svg" alt="图2"></p>
 <h4 id="dai-ma-shi-xian-1">代码实现</h4>
 <p>根据丢弃法的定义，可以很容易地实现它。下面的<code>dropout</code>函数将以<code>drop_prob</code>的概率丢弃<code>X</code>中的元素。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras, nn， losses</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.layers <span class="keyword">import</span> Dropout, Flatten, Dense</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dropout</span><span class="params">(X, drop_prob)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="number">0</span> &lt;= drop_prob &lt;= <span class="number">1</span></span><br><span class="line">    keep_prob = <span class="number">1</span> - drop_prob</span><br><span class="line">    <span class="comment"># 这种情况下把全部元素都丢弃</span></span><br><span class="line">    <span class="keyword">if</span> keep_prob == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> tf.zeros_like(X)</span><br><span class="line">    <span class="comment">#初始mask为一个bool型数组，故需要强制类型转换</span></span><br><span class="line">    mask = tf.random.uniform(shape=X.shape, minval=<span class="number">0</span>, maxval=<span class="number">1</span>) &lt; keep_prob</span><br><span class="line">    <span class="keyword">return</span> tf.cast(mask, dtype=tf.float32) * tf.cast(X, dtype=tf.float32) / keep_prob</span><br></pre></td></tr></table></figure>
@@ -641,7 +641,7 @@ E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -654,7 +654,7 @@ E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -700,7 +700,7 @@ E(h_i') = \frac{E(\xi_i)}{1-p}h_i = h_i
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         

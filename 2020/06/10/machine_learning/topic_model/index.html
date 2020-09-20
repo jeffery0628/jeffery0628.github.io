@@ -28,18 +28,18 @@
 <meta property="og:url" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/index.html">
 <meta property="og:site_name" content="火种2号">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg">
-<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
 <meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210125632.latex">
 <meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210124525.latex">
 <meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/gif-20200812210125430.latex">
-<meta property="og:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/quesbase64155351982937840324.png">
+<meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/quesbase64155351982937840324.png">
 <meta property="article:published_time" content="2020-06-10T12:51:08.000Z">
-<meta property="article:modified_time" content="2020-08-22T01:59:32.960Z">
+<meta property="article:modified_time" content="2020-09-20T02:30:44.939Z">
 <meta property="article:author" content="Li Zhen">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jeffery.ink/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
+<meta name="twitter:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg">
 
 <link rel="canonical" href="https://jeffery.ink/2020/06/10/machine_learning/topic_model/">
 
@@ -238,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-22 09:59:32" itemprop="dateModified" datetime="2020-08-22T09:59:32+08:00">2020-08-22</time>
+                <time title="修改时间：2020-09-20 10:30:44" itemprop="dateModified" datetime="2020-09-20T10:30:44+08:00">2020-09-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,7 +300,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
+        <p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
 <a id="more"></a>
 <h1 id="lda-mo-xing-shi-shi-yao">LDA模型是什么</h1>
 <p>LDA可以分为以下5个步骤：</p>
@@ -318,7 +318,7 @@
 </blockquote>
 <p>主题模型可以将文档集中每篇文档的主题以概率分布的形式给出，从而通过分析一些文档抽取出它们的主题出来后，便可以根据主题进行主题聚类或文本分类。同时，它是一种典型的<strong>词袋模型</strong>，即一篇文档是由一组词构成，词与词之间没有先后顺序的关系。此外，一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成。</p>
 <p>人类是怎么生成文档的呢？首先先列出几个主题，然后以一定的概率选择主题，以一定的概率选择这个主题包含的词汇，最终组合成一篇文章。如下图所示(不同颜色的词语分别对应不同主题下的词)。</p>
-<p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5f9yubudij30gh05rq4o.jpg" alt></p>
 <p>那么LDA就是跟这个反过来：<strong>根据给定的一篇文档，反推其主题分布。</strong></p>
 <p>在LDA模型中，一篇文档生成的方式如下：</p>
 <ul>
@@ -328,7 +328,7 @@
 <li>从词语的多项式分布 \(\phi_{z_{i,j}}\)中采样最终生成词语 \(w_{i,j}\)。</li>
 </ul>
 <p>其中，类似Beta分布是二项式分布的共轭先验概率分布，而狄利克雷分布（Dirichlet分布）是多项式分布的共轭先验概率分布。此外，LDA的图模型结构如下图所示（类似贝叶斯网络结构）：</p>
-<p><img src="/2020/06/10/machine_learning/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
+<p><img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/00630Defgy1g5facicxbej30bi0d30t5.jpg" alt></p>
 <h1 id="5-ge-fen-bu-de-li-jie">5个分布的理解</h1>
 <p>先解释一下以上出现的概念。</p>
 <h2 id="er-xiang-fen-bu-binomial-distribution">二项分布（Binomial distribution）</h2>
@@ -397,7 +397,7 @@ p(W)=p(z_1)\prod_{n=1}^{N}p(w_n|z_1)+...+p(z_k)\prod_{n=1}^{N}p(w_n|z_k)=\sum_{z
 <p>假定一共有K个可选的主题，有V个可选的词。</p>
 <ol>
 <li>
-<p>假设每写一篇文档会制作一颗K面的“文档-主题”骰子（扔此骰子能得到K个主题中的任意一个），和K个V面的“主题-词项” 骰子（每个骰子对应一个主题，K个骰子对应之前的K个主题，且骰子的每一面对应要选择的词项，V个面对应着V个可选的词）。比如可令K=3，即制作1个含有3个主题的“文档-主题”骰子，这3个主题可以是：教育、经济、交通。然后令V = 3，制作3个有着3面的“主题-词项”骰子，其中，教育主题骰子的3个面上的词可以是：大学、老师、课程，经济主题骰子的3个面上的词可以是：市场、企业、金融，交通主题骰子的3个面上的词可以是：高铁、汽车、飞机。<img src="/2020/06/10/machine_learning/topic_model/quesbase64155351982937840324.png" alt></p>
+<p>假设每写一篇文档会制作一颗K面的“文档-主题”骰子（扔此骰子能得到K个主题中的任意一个），和K个V面的“主题-词项” 骰子（每个骰子对应一个主题，K个骰子对应之前的K个主题，且骰子的每一面对应要选择的词项，V个面对应着V个可选的词）。比如可令K=3，即制作1个含有3个主题的“文档-主题”骰子，这3个主题可以是：教育、经济、交通。然后令V = 3，制作3个有着3面的“主题-词项”骰子，其中，教育主题骰子的3个面上的词可以是：大学、老师、课程，经济主题骰子的3个面上的词可以是：市场、企业、金融，交通主题骰子的3个面上的词可以是：高铁、汽车、飞机。<img src="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/topic_model/quesbase64155351982937840324.png" alt></p>
 </li>
 <li>
 <p>每写一个词，先扔该“文档-主题”骰子选择主题，得到主题的结果后，使用和主题结果对应的那颗“主题-词项”骰子，扔该骰子选择要写的词。先扔“文档-主题”的骰子，假设（以一定的概率）得到的主题是教育，所以下一步便是扔教育主题筛子，（以一定的概率）得到教育主题筛子对应的某个词：大学。上面这个投骰子产生词的过程简化下便是：<strong>“先以一定的概率选取主题，再以一定的概率选取词”。</strong></p>
@@ -512,7 +512,7 @@ P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
       <i class="fa fa-chevron-left"></i> 聚类算法
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/06/17/nature_language_process/word_embedding/" rel="next" title="词向量">
+    <a href="/2020/06/17/word_embedding/" rel="next" title="词向量">
       词向量 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -592,7 +592,7 @@ P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -605,7 +605,7 @@ P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -651,7 +651,7 @@ P(d_i,w_j)=P(d_i)P(w_j|d_i)=P(d_i)\sum_{k=1}^{K}P(w_j|z_k)P(z_k|d_i)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.2m</span>
 </div>
 
         
