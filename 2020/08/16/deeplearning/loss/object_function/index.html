@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://markdown-images-1257755739.cos.ap-guangzhou.myqcloud.com/hexo/posts/object_function/1603920-20200303095608682-983075434.png">
 <meta property="article:published_time" content="2020-08-16T13:03:52.000Z">
-<meta property="article:modified_time" content="2020-09-20T02:02:31.167Z">
+<meta property="article:modified_time" content="2020-10-26T11:12:47.399Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="目标函数">
 <meta property="article:tag" content="损失函数">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-20 10:02:31" itemprop="dateModified" datetime="2020-09-20T10:02:31+08:00">2020-09-20</time>
+                <time title="修改时间：2020-10-26 19:12:47" itemprop="dateModified" datetime="2020-10-26T19:12:47+08:00">2020-10-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -401,13 +401,15 @@ J = -\frac{1}{n}\sum_x[y\ln a + (1-y)\ln{(1-a)}] \\
 <h3 id="dui-shu-si-ran-han-shu-dai-jie-han-shu">对数似然函数代价函数</h3>
 <p>交叉熵一般与 sigmoid 结合，而<strong>对数似然代价函数</strong>一般与 softmax 结合。 对数似然代价函数在二分类时可以化简为交叉熵代价函数的形式。</p>
 <h1 id="chang-jian-wen-ti">常见问题</h1>
-<h2 id="sigmoid-wei-he-yao-yu-jiao-cha-shang-da-pei">sigmoid 为何要与交叉熵搭配</h2>
+<h2 id="sigmoid-wei-he-yao-yu-jiao-cha-shang-da-pei">sigmoid 为何要与交叉熵搭配？</h2>
 <p>交叉熵函数权值\(w\)和偏置\(b\)的梯度推导为：<br>
 \[
-\frac{\partial J}{\partial w_j}=\frac{1}{n}\sum_{x}x_j(\sigma{(z)}-y)\;，
-\frac{\partial J}{\partial b}=\frac{1}{n}\sum_{x}(\sigma{(z)}-y)
+\frac{\partial J}{\partial w_j}=\frac{1}{n}\sum_{x}x_j(\sigma{(z)}-y)，
 \]<br>
-由以上公式可知，权重学习的速度受到\(\sigma{(z)}-y\)影响，更大的误差，就有更快的学习速度，避免了二次方代价函数方程中因\(\sigma'{(z)}\)导致的学习缓慢的情况。</p>
+\[
+\frac{\partial J}{\partial b}=\frac{1}{n}\sum_{x}(\sigma{(z)}-y)
+\]</p>
+<p>由以上公式可知，权重学习的速度受到\(\sigma{(z)}-y\)影响，更大的误差，就有更快的学习速度，避免了二次方代价函数方程中因\(\sigma'{(z)}\)导致的学习缓慢的情况。</p>
 <h2 id="logistic-hui-gui-wei-he-yao-shi-yong-dui-shu-sun-shi-han-shu">Logistic 回归为何要使用对数损失函数？</h2>
 <p>逻辑回归它假设样本服从<strong>伯努利分布（0-1分布）</strong>，进而求得满足该分布的似然函数，接着取对数求极值等。整个过程如下：</p>
 <ul>
@@ -437,8 +439,10 @@ P(y=1|x_i)^{y_i}P(y=0|x_i)^{1-y_i}
 <li>
 <p>对应的对数似然函数为：<br>
 \[
-\ln L(\theta)=\sum_{i=1}^{m}[y_i\ln{P(y=1|x_i)}+(1-y_i)\ln{P(y=0|x_i)}]\\
-  =\sum_{i=1}^m[y_i\ln{P(y=1|x_i)}+(1-y_i)\ln(1-P(y=1|x_i))]
+\ln L(\theta)=\sum_{i=1}^{m}[y_i\ln{P(y=1|x_i)}+(1-y_i)\ln{P(y=0|x_i)}]
+\]</p>
+<p>\[
+=\sum_{i=1}^m[y_i\ln{P(y=1|x_i)}+(1-y_i)\ln(1-P(y=1|x_i))]
 \]</p>
 </li>
 </ul>
@@ -567,7 +571,7 @@ P(y=1|x_i)^{y_i}P(y=0|x_i)^{1-y_i}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mu-biao-han-shu-sun-shi-han-shu-dai-jie-han-shu"><span class="nav-number">1.</span> <span class="nav-text">目标函数，损失函数，代价函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jing-yan-feng-xian-yu-jie-gou-feng-xian"><span class="nav-number">1.1.</span> <span class="nav-text">经验风险与结构风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu-dai-jie-han-shu-mu-biao-han-shu"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数，代价函数，目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-yong-de-sun-shi-han-shu"><span class="nav-number">1.3.</span> <span class="nav-text">常用的损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-sun-shi-han-shu"><span class="nav-number">1.3.1.</span> <span class="nav-text">0-1 损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jue-dui-zhi-sun-shi-han-shu"><span class="nav-number">1.3.2.</span> <span class="nav-text">绝对值损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-fang-sun-shi-han-shu"><span class="nav-number">1.3.3.</span> <span class="nav-text">平方损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dui-shu-sun-shi-han-shu"><span class="nav-number">1.3.4.</span> <span class="nav-text">对数损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-shu-sun-shi-han-shu"><span class="nav-number">1.3.5.</span> <span class="nav-text">指数损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hinge-sun-shi-han-shu"><span class="nav-number">1.3.6.</span> <span class="nav-text">Hinge损失函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-yong-de-dai-jie-han-shu"><span class="nav-number">1.4.</span> <span class="nav-text">常用的代价函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#er-ci-dai-jie-han-shu"><span class="nav-number">1.4.1.</span> <span class="nav-text">二次代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jiao-cha-shang-dai-jie-han-shu"><span class="nav-number">1.4.2.</span> <span class="nav-text">交叉熵代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dui-shu-si-ran-han-shu-dai-jie-han-shu"><span class="nav-number">1.4.3.</span> <span class="nav-text">对数似然函数代价函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-wei-he-yao-yu-jiao-cha-shang-da-pei"><span class="nav-number">2.1.</span> <span class="nav-text">sigmoid 为何要与交叉熵搭配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logistic-hui-gui-wei-he-yao-shi-yong-dui-shu-sun-shi-han-shu"><span class="nav-number">2.2.</span> <span class="nav-text">Logistic 回归为何要使用对数损失函数？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-jiao-cha-shang-sun-shi-xiang-bi-jun-fang-wu-chai-sun-shi-neng-ti-gao-yi-sigmoid-he-softmax-zuo-wei-ji-huo-han-shu-de-ceng-de-xing-neng"><span class="nav-number">2.3.</span> <span class="nav-text">为什么交叉熵损失相比均方误差损失能提高以 sigmoid 和 softmax 作为激活函数的层的性能？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu-you-na-xie-zen-yao-yong"><span class="nav-number">2.4.</span> <span class="nav-text">损失函数有哪些？ 怎么用？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mu-biao-han-shu-sun-shi-han-shu-dai-jie-han-shu"><span class="nav-number">1.</span> <span class="nav-text">目标函数，损失函数，代价函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jing-yan-feng-xian-yu-jie-gou-feng-xian"><span class="nav-number">1.1.</span> <span class="nav-text">经验风险与结构风险</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu-dai-jie-han-shu-mu-biao-han-shu"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数，代价函数，目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-yong-de-sun-shi-han-shu"><span class="nav-number">1.3.</span> <span class="nav-text">常用的损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-sun-shi-han-shu"><span class="nav-number">1.3.1.</span> <span class="nav-text">0-1 损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jue-dui-zhi-sun-shi-han-shu"><span class="nav-number">1.3.2.</span> <span class="nav-text">绝对值损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-fang-sun-shi-han-shu"><span class="nav-number">1.3.3.</span> <span class="nav-text">平方损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dui-shu-sun-shi-han-shu"><span class="nav-number">1.3.4.</span> <span class="nav-text">对数损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-shu-sun-shi-han-shu"><span class="nav-number">1.3.5.</span> <span class="nav-text">指数损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hinge-sun-shi-han-shu"><span class="nav-number">1.3.6.</span> <span class="nav-text">Hinge损失函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-yong-de-dai-jie-han-shu"><span class="nav-number">1.4.</span> <span class="nav-text">常用的代价函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#er-ci-dai-jie-han-shu"><span class="nav-number">1.4.1.</span> <span class="nav-text">二次代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jiao-cha-shang-dai-jie-han-shu"><span class="nav-number">1.4.2.</span> <span class="nav-text">交叉熵代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dui-shu-si-ran-han-shu-dai-jie-han-shu"><span class="nav-number">1.4.3.</span> <span class="nav-text">对数似然函数代价函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chang-jian-wen-ti"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid-wei-he-yao-yu-jiao-cha-shang-da-pei"><span class="nav-number">2.1.</span> <span class="nav-text">sigmoid 为何要与交叉熵搭配？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logistic-hui-gui-wei-he-yao-shi-yong-dui-shu-sun-shi-han-shu"><span class="nav-number">2.2.</span> <span class="nav-text">Logistic 回归为何要使用对数损失函数？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-jiao-cha-shang-sun-shi-xiang-bi-jun-fang-wu-chai-sun-shi-neng-ti-gao-yi-sigmoid-he-softmax-zuo-wei-ji-huo-han-shu-de-ceng-de-xing-neng"><span class="nav-number">2.3.</span> <span class="nav-text">为什么交叉熵损失相比均方误差损失能提高以 sigmoid 和 softmax 作为激活函数的层的性能？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sun-shi-han-shu-you-na-xie-zen-yao-yong"><span class="nav-number">2.4.</span> <span class="nav-text">损失函数有哪些？ 怎么用？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -585,7 +589,7 @@ P(y=1|x_i)^{y_i}P(y=0|x_i)^{1-y_i}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">87</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -634,7 +638,7 @@ P(y=1|x_i)^{y_i}P(y=0|x_i)^{1-y_i}
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heartbeat"></i>
   </span>
