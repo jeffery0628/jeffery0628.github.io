@@ -23,15 +23,15 @@
     var CONFIG = {"hostname":"jeffery.ink","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":270,"display":"hide","padding":15,"offset":12,"onmobile":true,"dimmer":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="李震  简体中文|English                   个人技能             软件工程专业研二在读，2021年毕业。 熟悉使用Python开发，熟悉pytorch、sklearn等深度学习机器学习工具，熟悉爬虫技术。 有自然语言处理开发经验，了解文本分类、序列标注任务及机器学习常用算法，主要研究事件抽取相关内容。                教育背景">
+  <meta name="description" content="李震  简体中文|English                   个人技能             软件工程专业研二在读，2021年毕业。 熟悉使用Python开发，熟悉pytorch、sklearn等深度学习机器学习工具，熟悉爬虫技术。 有自然语言处理开发经验，了解文本分类、序列标注、实体链接，主要研究事件抽取、主动学习相关内容。                教育背景">
 <meta property="og:type" content="website">
 <meta property="og:title" content="火种2号">
 <meta property="og:url" content="https://jeffery.ink/about/index.html">
 <meta property="og:site_name" content="火种2号">
-<meta property="og:description" content="李震  简体中文|English                   个人技能             软件工程专业研二在读，2021年毕业。 熟悉使用Python开发，熟悉pytorch、sklearn等深度学习机器学习工具，熟悉爬虫技术。 有自然语言处理开发经验，了解文本分类、序列标注任务及机器学习常用算法，主要研究事件抽取相关内容。                教育背景">
+<meta property="og:description" content="李震  简体中文|English                   个人技能             软件工程专业研二在读，2021年毕业。 熟悉使用Python开发，熟悉pytorch、sklearn等深度学习机器学习工具，熟悉爬虫技术。 有自然语言处理开发经验，了解文本分类、序列标注、实体链接，主要研究事件抽取、主动学习相关内容。                教育背景">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-17T14:42:12.027Z">
-<meta property="article:modified_time" content="2020-10-06T04:30:49.807Z">
+<meta property="article:published_time" content="2021-01-04T09:57:27.622Z">
+<meta property="article:modified_time" content="2021-01-04T09:57:27.614Z">
 <meta property="article:author" content="Li Zhen">
 <meta property="article:tag" content="自然语言处理">
 <meta property="article:tag" content=" 算法工程师">
@@ -246,21 +246,46 @@
 <ul>
 <li>软件工程专业研二在读，2021年毕业。</li>
 <li>熟悉使用Python开发，熟悉pytorch、sklearn等深度学习机器学习工具，熟悉爬虫技术。</li>
-<li>有自然语言处理开发经验，了解文本分类、序列标注任务及机器学习常用算法，主要研究事件抽取相关内容。</li>
+<li>有自然语言处理开发经验，了解文本分类、序列标注、实体链接，主要研究事件抽取、主动学习相关内容。</li>
 </ul>
 <div class="note info">
             <h2 id="i-class-fas-fa-user-graduate-i-jiao-yu-bei-jing"><i class="fas fa-user-graduate"></i> 教育背景</h2>
           </div>
 <p><strong>2018.09-2021.06       东南大学      软件工程(硕士)</strong></p>
-<p>导师：漆桂林教授。个人研究方向：事件抽取、自然语言处理、机器学习。</p>
+<p>导师：漆桂林教授。个人研究方向：事件抽取、主动学习。</p>
 <p><strong>2014.09-2018.06     江苏理工学院       软件工程(本科)</strong></p>
+<div class="note info">
+            <h2 id="i-class-fa-fa-building-i-shi-xi"><i class="fa fa-building"></i> 实习</h2>
+          </div>
+<p><strong>2020.06-2020.09        平安科技智能疾病管理团队（实习）                  </strong></p>
+<p><strong>信息抽取工作</strong>：</p>
+<ul>
+<li>负责从手术并发症、适应症、禁忌症的医疗文本描述中抽取疾病实体；</li>
+<li>负责从检查检验医疗文本中抽取疾病实体以及与疾病实体对应的文本介绍；</li>
+<li>负责从医疗检查检验文本及诊断文本中抽取危急值，并判断病患是否达到危急值标准；</li>
+</ul>
+<p><strong>研究探索性工作</strong>：</p>
+<ul>
+<li><strong>主要任务</strong>：在 mimic3 数据上给病患的病历描述匹配对应的 ICD code，是一个文本多标签分类任务。任务难点是标 签空间大（有 8921 个不同类别标签），尝试通过检索排序减少候选标签个数来解决该问题。</li>
+<li><strong>遇到的问题</strong>：
+<ul>
+<li>病历表述文本平均长度 2500 左右，远超预训练模型 512 的限制。尝试了修改 position embedding 和 longformer 两种方式来解决该问题。</li>
+<li>文本过长，预训练模型参数量大，难以在显存设备上训练。使用 gradient check 跨层权重共享等技术来降低模型对显存的需求。</li>
+</ul>
+</li>
+</ul>
+<p><strong>专利</strong>：</p>
+<ul>
+<li>《预训练模型处理、下游任务处理方法、装置及存储介质》</li>
+<li>《句子对匹配方法、装置和计算机设备和存储介质》</li>
+</ul>
 <div class="note info">
             <h2 id="i-class-fas-fa-user-tie-i-xiang-mu-jing-li"><i class="fas fa-user-tie"></i> 项目经历</h2>
           </div>
 <hr>
 <p><strong>2019.06-至今        军事语料样本集构建                  项目成员</strong></p>
 <p><strong>项目简介</strong>：构建大型军事语料样本集，由数据处理组件、数据标注组件、军事语料组件、自然语言处理组件组成。</p>
-<p><strong>主要工作</strong>：数据处理方面，负责网络数据信息的获取，清洗 。自然语言处理方面，使用同类别实体替换的方式，增强文本数据，提升ner模型约3%的性能。</p>
+<p><strong>主要工作</strong>：：数据处理方面，负责网络数据信息的获取，清洗 。自然语言处理方面，使用数据增强、对 提升命名实体识别模型性能表现。复现 PLMEE 解决数据中单句多事件问题，改善事件抽取模型表现。</p>
 <hr>
 <p><strong>2018.12-2019.03     银行信用卡活动信息抽取            项目负责人</strong></p>
 <p><strong>项目简介</strong>：面向信用卡行业，从新卡、新活动的新闻、活动条款及细则文本中，抽取出结构化的知识。比如从官网活动公告中抽取活动时间、活动对象、活动的条件细节及相应奖励等。</p>
@@ -274,31 +299,15 @@
             <h2 id="i-class-fa-fa-graduation-cap-i-lun-wen"><i class="fa fa-graduation-cap"></i> 论文</h2>
           </div>
 <p><strong>Hierarchical Chinese Legal event extraction via Pedal Attention Mechanism</strong></p>
-<p><strong>简介</strong>：从法律文书中抽取结构化的信息，为类案推送和辅助判决等应用提供支持。</p>
-<p><strong>主要工作</strong>：负责数据获取及处理，事件结构的定义，模型设计及实验。传统事件抽取方法无法建立论元和论元之间的关系以及事件之间的因果关系，而这些元素通常会直接影响量刑结果，为了建立论元和论元之间的关系以及事件之间的因果关系，定义了层级事件类型，设计了动态事件结构。其次，法律文书对于被告人的犯罪事实描述较为详实，造成语句序列长的问题，因此，抽取过程中不可避免的需要解决长依赖问题和指代消解问题，利用踏板注意力机制解决了长依赖问题和指代消解的问题。</p>
-<hr>
-<div class="note info">
-            <h2 id="i-class-fa-fa-building-i-shi-xi"><i class="fa fa-building"></i> 实习</h2>
-          </div>
-<p><strong>2020.06 – 2020.09</strong>   <strong>平安科技智能疾病管理团队</strong></p>
-<p><strong>信息抽取工作：</strong></p>
-<ul>
-<li>负责从手术并发症、适应症、禁忌症的医疗文本描述中抽取疾病实体；</li>
-<li>负责从检查检验医疗文本中抽取疾病实体以及与疾病实体对应的文本介绍；</li>
-<li>负责从医疗检查检验文本及诊断文本中抽取危急值，并判断病患是否达到危急值标准；</li>
-</ul>
-<p><strong>研究探索性工作：</strong></p>
-<ul>
-<li>
-<p>主要任务：</p>
-<p>在mimic3数据上给病患的病历描述匹配对应的ICD code，是一个文本多标签分类任务。任务的主要难点是标签空间大（有8921个不同类别标签），尝试通过检索排序减少候选标签个数来解决该问题。</p>
-</li>
-<li>
-<p>遇到的问题：</p>
-<p>病历表述文本平均长度2500左右，远超预训练模型512的限制。尝试了修改position embedding和longformer两种方式来解决该问题。</p>
-<p>文本过长，预训练模型参数量大，难以在显存设备上训练。使用gradient checkpointing、混合精度、跨层权重共享等技术来降低模型对显存的需求。</p>
-</li>
-</ul>
+<p><strong>简介</strong>：针对裁判文书事件特点，定义法律事件结构，设计事件抽取模型。</p>
+<p><strong>主要工作</strong>：负责数据获取及处理，事件结构的定义，模型设计及实验。</p>
+<p><strong>问题</strong>：</p>
+<ol>
+<li>传统事件结构不能反应论元之间的联系，导致法律事件存在语义模糊问题。</li>
+<li>传统事件类型定义不 利于法律领域应用。</li>
+<li>需要解决词之间的长距离依赖和指代消解问题。</li>
+</ol>
+<p><strong>方案</strong>：针对问题 1，2 定义层级法律事件结构，针对问题 3 提出踏板注意力机制的解决方案。</p>
 <hr>
 <div class="note info">
             <h2 id="i-class-fab-fa-github-i-kai-yuan-gong-xian"><i class="fab fa-github"></i> 开源贡献</h2>
@@ -324,8 +333,11 @@
 <div class="note info">
             <h2 id="i-class-fas-fa-award-i-rong-yu"><i class="fas fa-award"></i> 荣誉</h2>
           </div>
-<p><strong>2016-2017：</strong>                      国家励志奖学金</p>
-<p><strong>2015-2016：</strong>                      国家励志奖学金</p>
+<p><strong>2019-2020：</strong>  学业二等奖学金</p>
+<p><strong>2018-2019：</strong>  学业二等奖学金</p>
+<p><strong>2017-2018：</strong>  第八届蓝桥杯全国软件设计大赛 JAVA 江苏省二等奖</p>
+<p><strong>2016-2017：</strong>  国家励志奖学金、第一学期一等奖学金、第二学期一等奖学金、“三好学生”称号</p>
+<p><strong>2015-2016：</strong>  国家励志奖学金、第一学期二等奖学金、第二学期一等奖学金、“三好学生”称号</p>
 <div class="note info">
             <h2 id="i-class-fa-fa-list-ol-i-qi-ta"><i class="fa fa-list-ol"></i> 其他</h2>
           </div>
@@ -401,7 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">李震</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-cog-i-ge-ren-ji-neng"><span class="nav-number">1.1.</span> <span class="nav-text">个人技能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-user-graduate-i-jiao-yu-bei-jing"><span class="nav-number">1.2.</span> <span class="nav-text"> 教育背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-user-tie-i-xiang-mu-jing-li"><span class="nav-number">1.3.</span> <span class="nav-text"> 项目经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-graduation-cap-i-lun-wen"><span class="nav-number">1.4.</span> <span class="nav-text"> 论文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-building-i-shi-xi"><span class="nav-number">1.5.</span> <span class="nav-text"> 实习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fab-fa-github-i-kai-yuan-gong-xian"><span class="nav-number">1.6.</span> <span class="nav-text"> 开源贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-trophy-i-jing-sai"><span class="nav-number">1.7.</span> <span class="nav-text"> 竞赛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-award-i-rong-yu"><span class="nav-number">1.8.</span> <span class="nav-text"> 荣誉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-list-ol-i-qi-ta"><span class="nav-number">1.9.</span> <span class="nav-text"> 其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-phone-alt-i-yu-wo-lian-xi"><span class="nav-number">1.10.</span> <span class="nav-text"> 与我联系</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">李震</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-cog-i-ge-ren-ji-neng"><span class="nav-number">1.1.</span> <span class="nav-text">个人技能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-user-graduate-i-jiao-yu-bei-jing"><span class="nav-number">1.2.</span> <span class="nav-text"> 教育背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-building-i-shi-xi"><span class="nav-number">1.3.</span> <span class="nav-text"> 实习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-user-tie-i-xiang-mu-jing-li"><span class="nav-number">1.4.</span> <span class="nav-text"> 项目经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-graduation-cap-i-lun-wen"><span class="nav-number">1.5.</span> <span class="nav-text"> 论文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fab-fa-github-i-kai-yuan-gong-xian"><span class="nav-number">1.6.</span> <span class="nav-text"> 开源贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-trophy-i-jing-sai"><span class="nav-number">1.7.</span> <span class="nav-text"> 竞赛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-award-i-rong-yu"><span class="nav-number">1.8.</span> <span class="nav-text"> 荣誉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fa-fa-list-ol-i-qi-ta"><span class="nav-number">1.9.</span> <span class="nav-text"> 其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i-class-fas-fa-phone-alt-i-yu-wo-lian-xi"><span class="nav-number">1.10.</span> <span class="nav-text"> 与我联系</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
